@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="QSAR Editor"
+            filenames="qsar.xml"
+            icon="icons/sample.gif"
+            contributorClass="net.bioclipse.qsar.editors.QSAREditorContributor"
+            class="net.bioclipse.qsar.editors.QSAREditor"
+            id="net.bioclipse.qsar.editors.QSAREditor">
+      </editor>
+   </extension>
+
+
+   <extension
+         id="net.bioclipse.qsar.QSARBuilder"
+         name="QSAR Builder"
+         point="org.eclipse.core.resources.builders">
+      <builder
+            hasNature="true">
+         <run
+               class="net.bioclipse.qsar.builder.QSARBuilder">
+         </run>
+      </builder>
+   </extension>
+   
+   <extension
+         id="net.bioclipse.qsar.QSARNature"
+         name="QSAR Nature"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run
+               class="net.bioclipse.qsar.builder.QSARNature">
+         </run>
+      </runtime>
+      <builder
+            id="net.bioclipse.qsar.QSARBuilder">
+      </builder>
+   </extension>
+   <extension
+         point="org.eclipse.ui.ide.projectNatureImages">
+      <image
+            icon="icons/qsar_ovr.gif"
+            id="net.bioclipse.images.QsarProjectImage"
+            natureId="net.bioclipse.qsar.QSARNature"/>
+   </extension>
+
+   
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="true"
+            objectClass="org.eclipse.core.resources.IProject"
+            nameFilter="*"
+            id="net.bioclipse.qsar.contribution1">
+         <action
+               label="Add/Remove QSAR Nature"
+               class="net.bioclipse.qsar.builder.ToggleNatureAction"
+               menubarPath="additions"
+               enablesFor="+"
+               id="net.bioclipse.qsar.addRemoveNatureAction">
+         </action>
+      </objectContribution>
+   </extension>
+   
+   <extension
+      point = "org.eclipse.ui.newWizards">
+	<category
+	   id = "net.bioclipse.categories.qsar"
+	   name="QSAR">
+	</category>
+ 	<wizard
+	   id = "net.bioclipse.qsar.wizards.NewQSARRProjectWizard"
+	   name = "New QSAR project"
+	   project="true"
+	   class="net.bioclipse.qsar.wizards.NewQSARProjectWizard"
+	   category="net.bioclipse.categories.qsar"
+	   icon="icons/sample.gif">
+   	   <description>New QSAR Wizard</description>
+	   <selection class="org.eclipse.core.resources.IResource"/>
+	</wizard>
+</extension>
+   
+   
+   <!--extension
+         id="xmlProblem"
+         name="XML Problem"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.eclipse.core.resources.problemmarker">
+      </super>
+      <persistent
+            value="true">
+      </persistent>
+   </extension-->
+
+   <!--extension
+         id="net.bioclipse.ui.QsarNature"
+         name="QSAR Project Nature"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run class="net.bioclipse.ui.QsarNature"/>
+      </runtime>
+   </extension>
+   <extension
+         point="org.eclipse.ui.ide.projectNatureImages">
+      <image
+            icon="icons/ovr_16/r_ovr.gif"
+            id="net.bioclipse.images.QsarProjectImage"
+            natureId="net.bioclipse.ui.QsarNature"/>
+   </extension-->
+
+
+</plugin>
