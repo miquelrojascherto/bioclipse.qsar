@@ -22,8 +22,6 @@ import java.util.Set;
 
 import javax.swing.JScrollPane;
 
-import net.bioclipse.qsar.Activator;
-
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -88,8 +86,10 @@ import org.eclipse.ui.part.MultiPageEditorPart;
  */
 public class QSAREditor extends MultiPageEditorPart implements IResourceChangeListener, IAdaptable{
 
-	private static final Logger logger = Activator.getLogManager()
-	.getLogger(QSAREditor.class.toString());
+    private static final Logger logger = Logger.getLogger(QSAREditor.class);
+    //TODO remove
+    /*private static final Logger logger = Activator.getLogManager()
+	.getLogger(QSAREditor.class.toString());*/
 
 	private FormToolkit toolkit;
 	private ScrolledForm moleculesForm;		

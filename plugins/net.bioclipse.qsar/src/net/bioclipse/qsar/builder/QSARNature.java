@@ -11,8 +11,6 @@
  ******************************************************************************/
 package net.bioclipse.qsar.builder;
 
-import net.bioclipse.qsar.Activator;
-
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectNature;
@@ -37,8 +35,10 @@ public class QSARNature
 	 */
 	public static final String NATURE_ID = "net.bioclipse.qsar.QSARNature";
 
-	private static final Logger logger = Activator.getLogManager()
-	.getLogger(QSARNature.class.toString());
+	private static final Logger logger = Logger.getLogger(QSARNature.class);
+	//TODO remove
+	/*private static final Logger logger = Activator.getLogManager()
+	.getLogger(QSARNature.class.toString());*/
 
 	
    private IProject project;

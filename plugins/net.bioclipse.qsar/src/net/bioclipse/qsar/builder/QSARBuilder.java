@@ -23,9 +23,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-
-import net.bioclipse.qsar.Activator;
-
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IFile;
@@ -51,8 +48,10 @@ import org.eclipse.core.runtime.OperationCanceledException;
 public class QSARBuilder extends IncrementalProjectBuilder
 {
 	
-	private static final Logger logger = Activator.getLogManager()
-	.getLogger(QSARBuilder.class.toString());
+    private static final Logger logger = Logger.getLogger(QSARBuilder.class);
+    //TODO remove
+    /*private static final Logger logger = Activator.getLogManager()
+	.getLogger(QSARBuilder.class.toString());*/
 
 	
    public static final int MISSING_KEY_VIOLATION = 1;
