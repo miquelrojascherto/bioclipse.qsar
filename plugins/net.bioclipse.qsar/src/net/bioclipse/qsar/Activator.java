@@ -11,8 +11,6 @@
  ******************************************************************************/
 package net.bioclipse.qsar;
 
-import java.net.URL;
-
 import net.bioclipse.ui.BioclipseActivator;
 
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -28,9 +26,6 @@ public class Activator extends BioclipseActivator {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "net.bioclipse.qsar";
-
-	//The file for logger properties
-	private static final String LOG_PROPERTIES_FILE = "logger.properties";
 
 	//Colors for the Forms
 	private FormColors formColors;
@@ -53,13 +48,6 @@ public class Activator extends BioclipseActivator {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
 
-	/**
-	 * Need to provide this plugin's logger.properties to abstract class
-	 */
-	@Override
-	public URL getLoggerURL() {
-		return getBundle().getEntry("/" + LOG_PROPERTIES_FILE);
-	}
 
 	/**
 	 * Returns the shared instance.
