@@ -9,8 +9,8 @@
             filenames="qsar.xml"
             icon="icons/sample.gif"
             contributorClass="net.bioclipse.qsar.editors.QSAREditorContributor"
-            class="net.bioclipse.qsar.editors.QSAREditor"
-            id="net.bioclipse.qsar.editors.QSAREditor">
+            class="net.bioclipse.qsar.editors.QSARFormEditor"
+            id="net.bioclipse.qsar.editors.QSARFormEditor">
       </editor>
    </extension>
 
