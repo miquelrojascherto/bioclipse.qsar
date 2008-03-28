@@ -16,6 +16,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 
+import org.apache.log4j.Logger;
+import net.bioclipse.core.util.LogUtils;
+
 import net.bioclipse.qsar.builder.QSARBuilder;
 import net.bioclipse.qsar.builder.QSARNature;
 
@@ -49,7 +52,8 @@ import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
  * @author ola
  */
 public class NewQSARProjectWizard extends Wizard implements INewWizard {
-
+    
+    private static final Logger logger = Logger.getLogger(NewQSARProjectWizard.class);
 
 	private WizardNewProjectCreationPage fFirstPage;
 
@@ -103,7 +107,7 @@ public class NewQSARProjectWizard extends Wizard implements INewWizard {
 		}
 		catch(InvocationTargetException x)
 		{
-			x.printStackTrace();
+		    LogUtils.debugTrace(logger, x);
 			return false;
 		}
 		catch(InterruptedException x)
@@ -184,9 +188,9 @@ public class NewQSARProjectWizard extends Wizard implements INewWizard {
 		}
 		catch(CoreException x)
 		{
-			x.printStackTrace();
+		    LogUtils.debugTrace(logger, x);
 		} catch (IOException e) {
-			e.printStackTrace();
+		    LogUtils.debugTrace(logger, e);
 		}
 		finally
 		{
@@ -214,7 +218,7 @@ public class NewQSARProjectWizard extends Wizard implements INewWizard {
 				folder.create(false,true,monitor);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+		    LogUtils.debugTrace(logger, e);
 		}
 	}
 

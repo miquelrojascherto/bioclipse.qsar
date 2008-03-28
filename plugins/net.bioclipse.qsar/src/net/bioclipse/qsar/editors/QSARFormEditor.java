@@ -11,6 +11,9 @@
  ******************************************************************************/
 package net.bioclipse.qsar.editors;
 
+import org.apache.log4j.Logger;
+import net.bioclipse.core.util.LogUtils;
+
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResourceChangeEvent;
@@ -31,7 +34,9 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 
 public class QSARFormEditor extends FormEditor implements IResourceChangeListener, IAdaptable{
 
-	private TextEditor textEditor;
+    private static final Logger logger = Logger.getLogger(QSARFormEditor.class);
+    
+    private TextEditor textEditor;
 	private MoleculesPage molPage;
 	
 	public QSARFormEditor() {
@@ -73,7 +78,7 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
 			setPageText(index, textEditor.getTitle());
 
 		} catch (PartInitException e) {
-			e.printStackTrace();
+			LogUtils.debugTrace(logger, e);
 		}
 	}
 

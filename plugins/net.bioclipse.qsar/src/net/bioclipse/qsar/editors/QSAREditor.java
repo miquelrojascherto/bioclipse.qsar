@@ -23,6 +23,8 @@ import java.util.Set;
 import javax.swing.JScrollPane;
 
 import org.apache.log4j.Logger;
+import net.bioclipse.core.util.LogUtils;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IMarker;
@@ -345,10 +347,10 @@ public class QSAREditor extends MultiPageEditorPart implements IResourceChangeLi
 
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LogUtils.debugTrace(logger, e);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+		    LogUtils.debugTrace(logger, e);
 		}
 
 		return null;
