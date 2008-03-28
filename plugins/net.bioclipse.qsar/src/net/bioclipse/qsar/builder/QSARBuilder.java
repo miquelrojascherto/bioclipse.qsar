@@ -49,11 +49,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
 {
 	
     private static final Logger logger = Logger.getLogger(QSARBuilder.class);
-    //TODO remove
-    /*private static final Logger logger = Activator.getLogManager()
-	.getLogger(QSARBuilder.class.toString());*/
-
-	
+    
    public static final int MISSING_KEY_VIOLATION = 1;
    public static final int UNUSED_KEY_VIOLATION = 2;
 

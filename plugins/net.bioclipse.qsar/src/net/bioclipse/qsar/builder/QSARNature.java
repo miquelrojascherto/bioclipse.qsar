@@ -36,10 +36,6 @@ public class QSARNature
 	public static final String NATURE_ID = "net.bioclipse.qsar.QSARNature";
 
 	private static final Logger logger = Logger.getLogger(QSARNature.class);
-	//TODO remove
-	/*private static final Logger logger = Activator.getLogManager()
-	.getLogger(QSARNature.class.toString());*/
-
 	
    private IProject project;
 

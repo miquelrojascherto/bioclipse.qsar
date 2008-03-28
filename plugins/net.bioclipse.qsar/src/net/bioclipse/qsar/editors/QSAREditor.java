@@ -87,10 +87,7 @@ import org.eclipse.ui.part.MultiPageEditorPart;
 public class QSAREditor extends MultiPageEditorPart implements IResourceChangeListener, IAdaptable{
 
     private static final Logger logger = Logger.getLogger(QSAREditor.class);
-    //TODO remove
-    /*private static final Logger logger = Activator.getLogManager()
-	.getLogger(QSAREditor.class.toString());*/
-
+    
 	private FormToolkit toolkit;
 	private ScrolledForm moleculesForm;		
 
