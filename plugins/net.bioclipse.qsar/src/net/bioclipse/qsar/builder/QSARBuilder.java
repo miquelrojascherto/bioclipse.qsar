@@ -47,7 +47,7 @@ import org.eclipse.core.runtime.OperationCanceledException;
  */
 public class QSARBuilder extends IncrementalProjectBuilder
 {
-	
+    
     private static final Logger logger = Logger.getLogger(QSARBuilder.class);
     
    public static final int MISSING_KEY_VIOLATION = 1;
@@ -56,12 +56,12 @@ public class QSARBuilder extends IncrementalProjectBuilder
    /**
     * The unique identifier for this builder
     */
-	public static final String BUILDER_ID = "net.bioclipse.qsar.QSARBuilder";
+    public static final String BUILDER_ID = "net.bioclipse.qsar.QSARBuilder";
    
    /**
     * The unique identifier for the audit marker
     */
-	private static final String MARKER_ID = "net.bioclipse.qsar.qsarMarker";
+    private static final String MARKER_ID = "net.bioclipse.qsar.qsarMarker";
 
    // auditMarker attributes
    public static final String KEY = "key";
@@ -297,7 +297,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
                stream.close();
          }
          catch (IOException e) {
-        	 logger.error(e);
+             logger.error(e);
             return "";
          }
       }
@@ -324,7 +324,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
          return true;
       }
       catch (CoreException e) {
-    	  logger.error(e);
+          logger.error(e);
          return false;
       }
    }
@@ -354,7 +354,7 @@ public static void addBuilderToProject(IProject project) {
          description = project.getDescription();
       }
       catch (CoreException e) {
-    	  logger.error(e);
+          logger.error(e);
          return;
       }
       
@@ -377,7 +377,7 @@ public static void addBuilderToProject(IProject project) {
          project.setDescription(description, null);
       }
       catch (CoreException e) {
-    	  logger.error(e);
+          logger.error(e);
       }
    }
    
@@ -402,7 +402,7 @@ public static void addBuilderToProject(IProject project) {
          description = project.getDescription();
       }
       catch (CoreException e) {
-    	  logger.error(e);
+          logger.error(e);
          return false;
       }
       
@@ -433,7 +433,7 @@ public static void removeBuilderFromProject(IProject project) {
          description = project.getDescription();
       }
       catch (CoreException e) {
-    	  logger.error(e);
+          logger.error(e);
          return;
       }
       
@@ -460,7 +460,7 @@ public static void removeBuilderFromProject(IProject project) {
          project.setDescription(description, null);
       }
       catch (CoreException e) {
-    	  logger.error(e);
+          logger.error(e);
       }
    }
 }

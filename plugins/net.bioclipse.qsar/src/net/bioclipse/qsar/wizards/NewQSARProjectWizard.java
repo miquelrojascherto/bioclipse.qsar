@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * www.eclipse.org—epl-v10.html <http://www.eclipse.org/legal/epl-v10.html>
- * 
+ *
  * Contributors:
  *     Ola Spjuth - initial API and implementation
- *     
+ *
  *******************************************************************************/
 
 package net.bioclipse.qsar.wizards;
@@ -52,174 +52,174 @@ import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
  * @author ola
  */
 public class NewQSARProjectWizard extends Wizard implements INewWizard {
-    
+
     private static final Logger logger = Logger.getLogger(NewQSARProjectWizard.class);
 
-	private WizardNewProjectCreationPage fFirstPage;
+    private WizardNewProjectCreationPage fFirstPage;
 
-	private IWorkbench workbench;
-	private IStructuredSelection selection;
+    private IWorkbench workbench;
+    private IStructuredSelection selection;
 
-	public NewQSARProjectWizard() {
-		super();
-//		setDefaultPageImageDescriptor();
-		setWindowTitle("New QSAR project"); 
-	}
+    public NewQSARProjectWizard() {
+        super();
+//        setDefaultPageImageDescriptor();
+        setWindowTitle("New QSAR project");
+    }
 
-	/**
-	 * Add WizardNewProjectCreationPage from IDE
-	 */
-	public void addPages() {
+    /**
+     * Add WizardNewProjectCreationPage from IDE
+     */
+    public void addPages() {
 
-		super.addPages();
-		fFirstPage = new WizardNewProjectCreationPage("New QSAR project");
-		fFirstPage.setTitle("New QSAR project");
-		fFirstPage.setDescription("Create a new QSAR project");
-//		fFirstPage.setImageDescriptor(ImageDescriptor.createFromFile(getClass(),
-//		"/org/ananas/xm/eclipse/resources/newproject58.gif"));        
+        super.addPages();
+        fFirstPage = new WizardNewProjectCreationPage("New QSAR project");
+        fFirstPage.setTitle("New QSAR project");
+        fFirstPage.setDescription("Create a new QSAR project");
+//        fFirstPage.setImageDescriptor(ImageDescriptor.createFromFile(getClass(),
+//        "/org/ananas/xm/eclipse/resources/newproject58.gif"));
 
-		addPage(fFirstPage);
+        addPage(fFirstPage);
 
-	}
+    }
 
-	/**
-	 * Create project and add QSARNature
-	 */
-	@Override
-	public boolean performFinish() {
+    /**
+     * Create project and add QSARNature
+     */
+    @Override
+    public boolean performFinish() {
 
-		try
-		{
-			WorkspaceModifyOperation op =
-				new WorkspaceModifyOperation()
-			{
+        try
+        {
+            WorkspaceModifyOperation op =
+                new WorkspaceModifyOperation()
+            {
 
-				@Override
-				protected void execute(IProgressMonitor monitor)
-				throws CoreException, InvocationTargetException,
-				InterruptedException {
-					createProject(monitor != null ?
-							monitor : new NullProgressMonitor());
+                @Override
+                protected void execute(IProgressMonitor monitor)
+                throws CoreException, InvocationTargetException,
+                InterruptedException {
+                    createProject(monitor != null ?
+                            monitor : new NullProgressMonitor());
 
-				}
-			};
-			getContainer().run(false,true,op);
-		}
-		catch(InvocationTargetException x)
-		{
-		    LogUtils.debugTrace(logger, x);
-			return false;
-		}
-		catch(InterruptedException x)
-		{
-			return false;
-		}
-		return true;     }
+                }
+            };
+            getContainer().run(false,true,op);
+        }
+        catch(InvocationTargetException x)
+        {
+            LogUtils.debugTrace(logger, x);
+            return false;
+        }
+        catch(InterruptedException x)
+        {
+            return false;
+        }
+        return true;     }
 
-	/**
-	 * Init wizard
-	 */
-	public void init(IWorkbench workbench, IStructuredSelection selection) {
-		this.workbench = workbench;
-		this.selection = selection;
-		setWindowTitle("New QSAR Project");
-//		setDefaultPageImageDescriptor(TBC);
-	}
+    /**
+     * Init wizard
+     */
+    public void init(IWorkbench workbench, IStructuredSelection selection) {
+        this.workbench = workbench;
+        this.selection = selection;
+        setWindowTitle("New QSAR Project");
+//        setDefaultPageImageDescriptor(TBC);
+    }
 
 
-	/**
-	 * Create project and add required natures, builders, folders, and files
-	 * @param monitor
-	 */
-	protected void createProject(IProgressMonitor monitor)
-	{
-		monitor.beginTask("Creating QSAR project",50);
-		try
-		{
+    /**
+     * Create project and add required natures, builders, folders, and files
+     * @param monitor
+     */
+    protected void createProject(IProgressMonitor monitor)
+    {
+        monitor.beginTask("Creating QSAR project",50);
+        try
+        {
 
-			//Get WS root
-			IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-			monitor.subTask("Creating directories");
+            //Get WS root
+            IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+            monitor.subTask("Creating directories");
 
-			//Create the project
-			IProject project = root.getProject(fFirstPage.getProjectName());
+            //Create the project
+            IProject project = root.getProject(fFirstPage.getProjectName());
 
-			//Add natures and builders
-			IProjectDescription description = ResourcesPlugin.getWorkspace().newProjectDescription(project.getName());
-			if(!Platform.getLocation().equals(fFirstPage.getLocationPath()))
-				description.setLocation(fFirstPage.getLocationPath());
-			description.setNatureIds(new String[] { QSARNature.NATURE_ID });
-			ICommand command = description.newCommand();
-			command.setBuilderName(QSARBuilder.BUILDER_ID);
-			description.setBuildSpec(new ICommand[] { command });
-			project.create(description,monitor);
+            //Add natures and builders
+            IProjectDescription description = ResourcesPlugin.getWorkspace().newProjectDescription(project.getName());
+            if(!Platform.getLocation().equals(fFirstPage.getLocationPath()))
+                description.setLocation(fFirstPage.getLocationPath());
+            description.setNatureIds(new String[] { QSARNature.NATURE_ID });
+            ICommand command = description.newCommand();
+            command.setBuilderName(QSARBuilder.BUILDER_ID);
+            description.setBuildSpec(new ICommand[] { command });
+            project.create(description,monitor);
 
-			monitor.worked(10);
+            monitor.worked(10);
 
-			//Open project
-			project.open(monitor);
+            //Open project
+            project.open(monitor);
 
-			//Set persistent properties (not used here/yet)
-//			project.setPersistentProperty(PluginConstants.SOURCE_PROPERTY_NAME,"src");
-//			project.setPersistentProperty(PluginConstants.RULES_PROPERTY_NAME,"rules");
-//			project.setPersistentProperty(PluginConstants.PUBLISH_PROPERTY_NAME,"publish");
-//			project.setPersistentProperty(PluginConstants.BUILD_PROPERTY_NAME,"false");
+            //Set persistent properties (not used here/yet)
+//            project.setPersistentProperty(PluginConstants.SOURCE_PROPERTY_NAME,"src");
+//            project.setPersistentProperty(PluginConstants.RULES_PROPERTY_NAME,"rules");
+//            project.setPersistentProperty(PluginConstants.PUBLISH_PROPERTY_NAME,"publish");
+//            project.setPersistentProperty(PluginConstants.BUILD_PROPERTY_NAME,"false");
 
-			monitor.worked(10);
-			
-			//Create folders
-			IPath projectPath = project.getFullPath(),
-			molPath = projectPath.append("molecules"),
-			descPath = projectPath.append("descriptors");
-			IFolder molFolder = root.getFolder(molPath),
-			descFolder = root.getFolder(descPath);
-			createFolderHelper(molFolder,monitor);
-			createFolderHelper(descFolder,monitor);
+            monitor.worked(10);
 
-			monitor.worked(10);
+            //Create folders
+            IPath projectPath = project.getFullPath(),
+            molPath = projectPath.append("molecules"),
+            descPath = projectPath.append("descriptors");
+            IFolder molFolder = root.getFolder(molPath),
+            descFolder = root.getFolder(descPath);
+            createFolderHelper(molFolder,monitor);
+            createFolderHelper(descFolder,monitor);
 
-			//Create files (qsar.xml)
-			monitor.subTask("Creating files");
-			IPath qsarPath = projectPath.append("qsar.xml");
-			IFile qsarFile = root.getFile(qsarPath);
-			InputStream qsarIS = getClass().getResourceAsStream("/net/bioclipse/qsar/resources/qsar.xml");
-			qsarFile.create(qsarIS,true,new SubProgressMonitor(monitor,10));
-			qsarIS.close();
-		}
-		catch(CoreException x)
-		{
-		    LogUtils.debugTrace(logger, x);
-		} catch (IOException e) {
-		    LogUtils.debugTrace(logger, e);
-		}
-		finally
-		{
-			monitor.done();
-		}
-	}	
+            monitor.worked(10);
 
-	/**
-	 * Create the folder in the closest parent which is a folder
-	 * @param folder
-	 * @param monitor
-	 */
-	private void createFolderHelper (IFolder folder, IProgressMonitor monitor)
-	{
-		try {
-			if(!folder.exists()) {
-				IContainer parent = folder.getParent();
+            //Create files (qsar.xml)
+            monitor.subTask("Creating files");
+            IPath qsarPath = projectPath.append("qsar.xml");
+            IFile qsarFile = root.getFile(qsarPath);
+            InputStream qsarIS = getClass().getResourceAsStream("/net/bioclipse/qsar/resources/qsar.xml");
+            qsarFile.create(qsarIS,true,new SubProgressMonitor(monitor,10));
+            qsarIS.close();
+        }
+        catch(CoreException x)
+        {
+            LogUtils.debugTrace(logger, x);
+        } catch (IOException e) {
+            LogUtils.debugTrace(logger, e);
+        }
+        finally
+        {
+            monitor.done();
+        }
+    }
 
-				if(parent instanceof IFolder
-						&& (!((IFolder)parent).exists())) {
+    /**
+     * Create the folder in the closest parent which is a folder
+     * @param folder
+     * @param monitor
+     */
+    private void createFolderHelper (IFolder folder, IProgressMonitor monitor)
+    {
+        try {
+            if(!folder.exists()) {
+                IContainer parent = folder.getParent();
 
-					createFolderHelper((IFolder)parent, monitor);
-				}
+                if(parent instanceof IFolder
+                        && (!((IFolder)parent).exists())) {
 
-				folder.create(false,true,monitor);
-			}
-		} catch (Exception e) {
-		    LogUtils.debugTrace(logger, e);
-		}
-	}
+                    createFolderHelper((IFolder)parent, monitor);
+                }
+
+                folder.create(false,true,monitor);
+            }
+        } catch (Exception e) {
+            LogUtils.debugTrace(logger, e);
+        }
+    }
 
 }

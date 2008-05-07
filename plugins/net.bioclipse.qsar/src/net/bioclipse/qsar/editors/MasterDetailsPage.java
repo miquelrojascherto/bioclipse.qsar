@@ -19,17 +19,17 @@ import org.eclipse.ui.forms.widgets.*;
  * Preferences - Java - Code Generation - Code and Comments
  */
 public class MasterDetailsPage extends FormPage {
-	private ScrolledPropertiesBlock block;
-	public MasterDetailsPage(FormEditor editor) {
-		super(editor, "fourth", "Molecules");
-		block = new ScrolledPropertiesBlock(this);
-	}
-	protected void createFormContent(final IManagedForm managedForm) {
-		final ScrolledForm form = managedForm.getForm();
-		//FormToolkit toolkit = managedForm.getToolkit();
-		form.setText("Molecules");
-//		form.setBackgroundImage(FormArticlePlugin.getDefault().getImage(
-//				FormArticlePlugin.IMG_FORM_BG));
-		block.createContent(managedForm);
-	}
+    private ScrolledPropertiesBlock block;
+    public MasterDetailsPage(FormEditor editor) {
+        super(editor, "fourth", "Molecules");
+        block = new ScrolledPropertiesBlock(this);
+    }
+    protected void createFormContent(final IManagedForm managedForm) {
+        final ScrolledForm form = managedForm.getForm();
+        //FormToolkit toolkit = managedForm.getToolkit();
+        form.setText("Molecules");
+//        form.setBackgroundImage(FormArticlePlugin.getDefault().getImage(
+//                FormArticlePlugin.IMG_FORM_BG));
+        block.createContent(managedForm);
+    }
 }

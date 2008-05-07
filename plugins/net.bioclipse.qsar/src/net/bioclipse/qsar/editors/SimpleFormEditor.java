@@ -24,61 +24,61 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
  * form colors that is shared between multiple editor instances.
  */
 public class SimpleFormEditor extends FormEditor {
-	/**
-	 *  
-	 */
-	public SimpleFormEditor() {
-	}
-	/*
-	 *  (non-Javadoc)
-	 * @see org.eclipse.ui.forms.editor.FormEditor#createToolkit(org.eclipse.swt.widgets.Display)
-	 */
-	protected FormToolkit createToolkit(Display display) {
-		// Create a toolkit that shares colors between editors.
-		return new FormToolkit(Activator.getDefault().getFormColors(
-				display));
-	}
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.ui.forms.editor.FormEditor#addPages()
-	 */
-	protected void addPages() {
-		/*
-		try {
-		addPage(new FreeFormPage(this));
-		addPage(new SecondPage(this));
-		int index = addPage(new Composite(getContainer(), SWT.NULL));
-		setPageText(index, "Composite"); //$NON-NLS-1$
-		addPage(new ThirdPage(this));
-		addPage(new MasterDetailsPage(this));
-		addPage(new PageWithSubPages(this));
-		}
-		catch (PartInitException e) {
-			//
-		}
-		*/
-	}
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.ui.ISaveablePart#doSave(org.eclipse.core.runtime.IProgressMonitor)
-	 */
-	public void doSave(IProgressMonitor monitor) {
-	}
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.ui.ISaveablePart#doSaveAs()
-	 */
-	public void doSaveAs() {
-	}
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipse.ui.ISaveablePart#isSaveAsAllowed()
-	 */
-	public boolean isSaveAsAllowed() {
-		return false;
-	}
+    /**
+     *  
+     */
+    public SimpleFormEditor() {
+    }
+    /*
+     *  (non-Javadoc)
+     * @see org.eclipse.ui.forms.editor.FormEditor#createToolkit(org.eclipse.swt.widgets.Display)
+     */
+    protected FormToolkit createToolkit(Display display) {
+        // Create a toolkit that shares colors between editors.
+        return new FormToolkit(Activator.getDefault().getFormColors(
+                display));
+    }
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.ui.forms.editor.FormEditor#addPages()
+     */
+    protected void addPages() {
+        /*
+        try {
+        addPage(new FreeFormPage(this));
+        addPage(new SecondPage(this));
+        int index = addPage(new Composite(getContainer(), SWT.NULL));
+        setPageText(index, "Composite"); //$NON-NLS-1$
+        addPage(new ThirdPage(this));
+        addPage(new MasterDetailsPage(this));
+        addPage(new PageWithSubPages(this));
+        }
+        catch (PartInitException e) {
+            //
+        }
+        */
+    }
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.ui.ISaveablePart#doSave(org.eclipse.core.runtime.IProgressMonitor)
+     */
+    public void doSave(IProgressMonitor monitor) {
+    }
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.ui.ISaveablePart#doSaveAs()
+     */
+    public void doSaveAs() {
+    }
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.ui.ISaveablePart#isSaveAsAllowed()
+     */
+    public boolean isSaveAsAllowed() {
+        return false;
+    }
 }

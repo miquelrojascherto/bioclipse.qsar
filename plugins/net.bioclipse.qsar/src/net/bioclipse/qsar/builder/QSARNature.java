@@ -29,14 +29,14 @@ import org.eclipse.core.runtime.jobs.Job;
 public class QSARNature
       implements IProjectNature
 {
-	
-	/**
-	 * ID of this project nature
-	 */
-	public static final String NATURE_ID = "net.bioclipse.qsar.QSARNature";
+    
+    /**
+     * ID of this project nature
+     */
+    public static final String NATURE_ID = "net.bioclipse.qsar.QSARNature";
 
-	private static final Logger logger = Logger.getLogger(QSARNature.class);
-	
+    private static final Logger logger = Logger.getLogger(QSARNature.class);
+    
    private IProject project;
 
    /**
@@ -61,12 +61,12 @@ public class QSARNature
     * background when the project is configured.
     */
    public void configure() throws CoreException {
-	   QSARBuilder.addBuilderToProject(project);
+       QSARBuilder.addBuilderToProject(project);
       new Job("QSAR Builder") {
          protected IStatus run(IProgressMonitor monitor) {
             try {
                project.build(
-            		   QSARBuilder.FULL_BUILD,
+                       QSARBuilder.FULL_BUILD,
                   QSARBuilder.BUILDER_ID,
                   null,
                   monitor);

@@ -25,47 +25,47 @@ import org.eclipse.jface.viewers.Viewer;
  */
 public class MoleculesContentProvider implements ITreeContentProvider {
 
-	//Same as getChildren
-	public Object[] getElements(Object inputElement) {
-		return getChildren(inputElement);
-	}
+    //Same as getChildren
+    public Object[] getElements(Object inputElement) {
+        return getChildren(inputElement);
+    }
 
-	public Object[] getChildren(Object parentElement) {
-		if (parentElement==null) return null;
+    public Object[] getChildren(Object parentElement) {
+        if (parentElement==null) return null;
 
-		if (parentElement instanceof IContainer) {
-			IContainer container = (IContainer) parentElement;
-			try {
-				if (container.members().length<=0) return new Object[0];
-				else return container.members();
+        if (parentElement instanceof IContainer) {
+            IContainer container = (IContainer) parentElement;
+            try {
+                if (container.members().length<=0) return new Object[0];
+                else return container.members();
 
-			} catch (CoreException e) {
-				return new Object[0];
-			}
-		}
+            } catch (CoreException e) {
+                return new Object[0];
+            }
+        }
 
-		return null;
+        return null;
 
-	}
+    }
 
-	public Object getParent(Object element) {
-		if (element instanceof IResource) {
-			IResource res = (IResource) element;
-			res.getParent();
-		}
+    public Object getParent(Object element) {
+        if (element instanceof IResource) {
+            IResource res = (IResource) element;
+            res.getParent();
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	public boolean hasChildren(Object element) {
-		if (getChildren(element)==null) return false;
-		return getChildren(element).length>0;
-	}
+    public boolean hasChildren(Object element) {
+        if (getChildren(element)==null) return false;
+        return getChildren(element).length>0;
+    }
 
-	public void dispose() {
-	}
+    public void dispose() {
+    }
 
-	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-	}
+    public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+    }
 
 }

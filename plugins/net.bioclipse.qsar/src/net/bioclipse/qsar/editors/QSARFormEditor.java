@@ -37,77 +37,77 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
     private static final Logger logger = Logger.getLogger(QSARFormEditor.class);
     
     private TextEditor textEditor;
-	private MoleculesPage molPage;
-	
-	public QSARFormEditor() {
-		ResourcesPlugin.getWorkspace().addResourceChangeListener(this);
-		initialize();
-	}
+    private MoleculesPage molPage;
+    
+    public QSARFormEditor() {
+        ResourcesPlugin.getWorkspace().addResourceChangeListener(this);
+        initialize();
+    }
 
-	/**
-	 * Do customizations based on project
-	 */
-	private void initialize() {
-		//Get project
-		if (!(getEditorInput() instanceof IFileEditorInput)) {
-			return;
-		}
-		IFileEditorInput edin = (IFileEditorInput) getEditorInput();
-		IProject project=edin.getFile().getProject();
+    /**
+     * Do customizations based on project
+     */
+    private void initialize() {
+        //Get project
+        if (!(getEditorInput() instanceof IFileEditorInput)) {
+            return;
+        }
+        IFileEditorInput edin = (IFileEditorInput) getEditorInput();
+        IProject project=edin.getFile().getProject();
 
-		//Get molecules folder if exists
-		IFolder molFolder=project.getFolder("molecules");
-		if (!(molFolder.exists())){
-			System.out.println("Folder 'molecules'  does not exist.");
-			//TODO: report error in some way
-			return;
-		}
-		
-	}
+        //Get molecules folder if exists
+        IFolder molFolder=project.getFolder("molecules");
+        if (!(molFolder.exists())){
+            System.out.println("Folder 'molecules'  does not exist.");
+            //TODO: report error in some way
+            return;
+        }
+        
+    }
 
-	@Override
-	protected void addPages() {
-		molPage=new MoleculesPage(this);
-		try {
-			//Molecules page
-			addPage(molPage);
+    @Override
+    protected void addPages() {
+        molPage=new MoleculesPage(this);
+        try {
+            //Molecules page
+            addPage(molPage);
 
-			//Texteditor, should be XMLEditor: TODO
-			textEditor = new TextEditor();
-			int index = addPage(textEditor, getEditorInput());
-			setPageText(index, textEditor.getTitle());
+            //Texteditor, should be XMLEditor: TODO
+            textEditor = new TextEditor();
+            int index = addPage(textEditor, getEditorInput());
+            setPageText(index, textEditor.getTitle());
 
-		} catch (PartInitException e) {
-			LogUtils.debugTrace(logger, e);
-		}
-	}
+        } catch (PartInitException e) {
+            LogUtils.debugTrace(logger, e);
+        }
+    }
 
 
 
-	@Override
-	public void doSave(IProgressMonitor monitor) {
-		//TODO
-	}
+    @Override
+    public void doSave(IProgressMonitor monitor) {
+        //TODO
+    }
 
-	@Override
-	public void doSaveAs() {
-		//TODO
-	}
+    @Override
+    public void doSaveAs() {
+        //TODO
+    }
 
-	@Override
-	public boolean isSaveAsAllowed() {
-		//TODO
-		return false;
-	}
-	
-	@Override
-	public void dispose() {
-		ResourcesPlugin.getWorkspace().removeResourceChangeListener(this);
-		super.dispose();
-	}
+    @Override
+    public boolean isSaveAsAllowed() {
+        //TODO
+        return false;
+    }
+    
+    @Override
+    public void dispose() {
+        ResourcesPlugin.getWorkspace().removeResourceChangeListener(this);
+        super.dispose();
+    }
 
-	public void resourceChanged(IResourceChangeEvent event) {
-		//TODO
-	}
+    public void resourceChanged(IResourceChangeEvent event) {
+        //TODO
+    }
 
 }

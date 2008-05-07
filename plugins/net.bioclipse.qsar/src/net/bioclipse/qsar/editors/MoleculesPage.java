@@ -35,28 +35,28 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 
 public class MoleculesPage extends FormPage {
 
-	private Tree tree;
-	public MoleculesPage(FormEditor editor) {
-		super(editor, "bc.molecules", "Molecules"); //$NON-NLS-1$ //$NON-NLS-2$
-	}
+    private Tree tree;
+    public MoleculesPage(FormEditor editor) {
+        super(editor, "bc.molecules", "Molecules"); //$NON-NLS-1$ //$NON-NLS-2$
+    }
 
-	/**
-	 * Add content to form
-	 */
-	@Override
-	protected void createFormContent(IManagedForm managedForm) {
+    /**
+     * Add content to form
+     */
+    @Override
+    protected void createFormContent(IManagedForm managedForm) {
 
-		FormToolkit toolkit = managedForm.getToolkit();
-		ScrolledForm form = managedForm.getForm();
-		form.setText("Select molecules");
-//		form.setBackgroundImage(FormArticlePlugin.getDefault().getImage(FormArticlePlugin.IMG_FORM_BG));
-		final Composite body = form.getBody();
+        FormToolkit toolkit = managedForm.getToolkit();
+        ScrolledForm form = managedForm.getForm();
+        form.setText("Select molecules");
+//        form.setBackgroundImage(FormArticlePlugin.getDefault().getImage(FormArticlePlugin.IMG_FORM_BG));
+        final Composite body = form.getBody();
 
-		
-		final CheckboxTreeViewer checkboxTreeViewer = new CheckboxTreeViewer(body, SWT.NONE);
-		tree = checkboxTreeViewer.getTree();
-		toolkit.adapt(tree, true, true);
-		tree.setBounds(10, 10, 244, 326);
-	
-	}
+        
+        final CheckboxTreeViewer checkboxTreeViewer = new CheckboxTreeViewer(body, SWT.NONE);
+        tree = checkboxTreeViewer.getTree();
+        toolkit.adapt(tree, true, true);
+        tree.setBounds(10, 10, 244, 326);
+    
+    }
 }

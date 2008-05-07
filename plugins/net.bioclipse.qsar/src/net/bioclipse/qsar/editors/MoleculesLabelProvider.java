@@ -25,29 +25,29 @@ import org.eclipse.ui.PlatformUI;
  */
 public class MoleculesLabelProvider implements ILabelProvider{
 
-	public Image getImage(Object element) {
-		String imageKey = ISharedImages.IMG_OBJ_ELEMENT;
-		return PlatformUI.getWorkbench().getSharedImages().getImage(imageKey);
-	}
+    public Image getImage(Object element) {
+        String imageKey = ISharedImages.IMG_OBJ_ELEMENT;
+        return PlatformUI.getWorkbench().getSharedImages().getImage(imageKey);
+    }
 
-	public String getText(Object element) {
-		if (element instanceof IResource) {
-			IResource resource = (IResource) element;
-			return resource.getName();
-		}
-		return null;
-	}
+    public String getText(Object element) {
+        if (element instanceof IResource) {
+            IResource resource = (IResource) element;
+            return resource.getName();
+        }
+        return null;
+    }
 
-	public void addListener(ILabelProviderListener listener) {
-	}
+    public void addListener(ILabelProviderListener listener) {
+    }
 
-	public void dispose() {
-	}
+    public void dispose() {
+    }
 
-	public boolean isLabelProperty(Object element, String property) {
-		return false;
-	}
+    public boolean isLabelProperty(Object element, String property) {
+        return false;
+    }
 
-	public void removeListener(ILabelProviderListener listener) {
-	}
+    public void removeListener(ILabelProviderListener listener) {
+    }
 }

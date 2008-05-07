@@ -17,8 +17,8 @@ package net.bioclipse.qsar.editors;
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
 public interface IModelListener {
-	String ADDED="__added"; //$NON-NLS-1$
-	String REMOVED="__removed"; //$NON-NLS-1$
-	String CHANGED = "__changed"; //$NON-NLS-1$
-	void modelChanged(Object[] objects, String type, String property);
+    String ADDED="__added"; //$NON-NLS-1$
+    String REMOVED="__removed"; //$NON-NLS-1$
+    String CHANGED = "__changed"; //$NON-NLS-1$
+    void modelChanged(Object[] objects, String type, String property);
 }

@@ -1,10 +1,10 @@
 /*******************************************************************************
  * Copyright (c) 2000, 2004 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials 
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Common Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/cpl-v10.html
- * 
+ *
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *******************************************************************************/
@@ -13,24 +13,24 @@ package net.bioclipse.qsar.editors;
 /**
  *
  */
-public	class NamedObject {
-	private String name;
-	protected SimpleModel model;
-	
-	public NamedObject(String name) {
-		this.name = name;
-	}
-	public void setModel(SimpleModel model) {
-		this.model = model;
-	}
-	public String getName() {
-		return name;
-	}
-	public String toString() {
-		return getName();
-	}
-	public void setName(String name) {
-		this.name = name;
-		model.fireModelChanged(new Object [] {this}, IModelListener.CHANGED, ""); //$NON-NLS-1$
-	}
+public class NamedObject {
+    private String name;
+    protected SimpleModel model;
+
+    public NamedObject(String name) {
+        this.name = name;
+    }
+    public void setModel(SimpleModel model) {
+        this.model = model;
+    }
+    public String getName() {
+        return name;
+    }
+    public String toString() {
+        return getName();
+    }
+    public void setName(String name) {
+        this.name = name;
+        model.fireModelChanged(new Object [] {this}, IModelListener.CHANGED, ""); //$NON-NLS-1$
+    }
 }

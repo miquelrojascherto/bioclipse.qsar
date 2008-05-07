@@ -24,45 +24,45 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
  */
 public class Activator extends BioclipseActivator {
 
-	// The plug-in ID
-	public static final String PLUGIN_ID = "net.bioclipse.qsar";
+    // The plug-in ID
+    public static final String PLUGIN_ID = "net.bioclipse.qsar";
 
-	//Colors for the Forms
-	private FormColors formColors;
+    //Colors for the Forms
+    private FormColors formColors;
 
-	// The shared instance.
-	private static Activator plugin;
-	
-	public Activator() {
-		plugin = this;
-	}
+    // The shared instance.
+    private static Activator plugin;
+    
+    public Activator() {
+        plugin = this;
+    }
 
-	/**
-	 * Returns an image descriptor for the image file at the given
-	 * plug-in relative path
-	 *
-	 * @param path the path
-	 * @return the image descriptor
-	 */
-	public static ImageDescriptor getImageDescriptor(String path) {
-		return imageDescriptorFromPlugin(PLUGIN_ID, path);
-	}
+    /**
+     * Returns an image descriptor for the image file at the given
+     * plug-in relative path
+     *
+     * @param path the path
+     * @return the image descriptor
+     */
+    public static ImageDescriptor getImageDescriptor(String path) {
+        return imageDescriptorFromPlugin(PLUGIN_ID, path);
+    }
 
 
-	/**
-	 * Returns the shared instance.
-	 */
-	public static Activator getDefault() {
-		return plugin;
-	}
+    /**
+     * Returns the shared instance.
+     */
+    public static Activator getDefault() {
+        return plugin;
+    }
 
-	
-	public FormColors getFormColors(Display display) {
-		if (formColors == null) {
-			formColors = new FormColors(display);
-			formColors.markShared();
-		}
-		return formColors;
-	}
+    
+    public FormColors getFormColors(Display display) {
+        if (formColors == null) {
+            formColors = new FormColors(display);
+            formColors.markShared();
+        }
+        return formColors;
+    }
 
 }

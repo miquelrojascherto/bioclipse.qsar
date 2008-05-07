@@ -25,38 +25,38 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 
 public class DescriptorsPage extends FormPage {
 
-	public DescriptorsPage(FormEditor editor) {
-		super(editor, "bc.molecules", "Molecules"); //$NON-NLS-1$ //$NON-NLS-2$
-	}
+    public DescriptorsPage(FormEditor editor) {
+        super(editor, "bc.molecules", "Molecules"); //$NON-NLS-1$ //$NON-NLS-2$
+    }
 
-	/**
-	 * Add content to form
-	 */
-	@Override
-	protected void createFormContent(IManagedForm managedForm) {
+    /**
+     * Add content to form
+     */
+    @Override
+    protected void createFormContent(IManagedForm managedForm) {
 
-		ScrolledForm form = managedForm.getForm();
-		FormToolkit toolkit = managedForm.getToolkit();
-		form.setText("Select molecules");
-//		form.setBackgroundImage(FormArticlePlugin.getDefault().getImage(FormArticlePlugin.IMG_FORM_BG));
-		TableWrapLayout layout = new TableWrapLayout();
-		layout.leftMargin = 10;
-		layout.rightMargin = 10;
-		form.getBody().setLayout(layout);
-		TableWrapData td;
-		Hyperlink link = toolkit.createHyperlink(form.getBody(),
-				"weehoow", SWT.WRAP);
-		link.addHyperlinkListener(new HyperlinkAdapter() {
-			public void linkActivated(HyperlinkEvent e) {
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException ex) {
-				}
-			}
-		});
-		td = new TableWrapData();
-		td.align = TableWrapData.LEFT;
-		link.setLayoutData(td);
-	
-	}
+        ScrolledForm form = managedForm.getForm();
+        FormToolkit toolkit = managedForm.getToolkit();
+        form.setText("Select molecules");
+//        form.setBackgroundImage(FormArticlePlugin.getDefault().getImage(FormArticlePlugin.IMG_FORM_BG));
+        TableWrapLayout layout = new TableWrapLayout();
+        layout.leftMargin = 10;
+        layout.rightMargin = 10;
+        form.getBody().setLayout(layout);
+        TableWrapData td;
+        Hyperlink link = toolkit.createHyperlink(form.getBody(),
+                "weehoow", SWT.WRAP);
+        link.addHyperlinkListener(new HyperlinkAdapter() {
+            public void linkActivated(HyperlinkEvent e) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                }
+            }
+        });
+        td = new TableWrapData();
+        td.align = TableWrapData.LEFT;
+        link.setLayoutData(td);
+    
+    }
 }

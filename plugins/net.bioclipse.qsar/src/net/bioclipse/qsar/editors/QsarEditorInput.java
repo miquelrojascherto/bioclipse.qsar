@@ -16,10 +16,10 @@ import org.eclipse.ui.part.FileEditorInput;
 
 public class QsarEditorInput extends FileEditorInput {
 
-	public QsarEditorInput(IFile file) {
-		super(file);
-	}
-	
-	
+    public QsarEditorInput(IFile file) {
+        super(file);
+    }
+    
+    
 
 }
