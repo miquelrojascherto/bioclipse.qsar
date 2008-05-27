@@ -169,12 +169,9 @@ public class NewQSARProjectWizard extends Wizard implements INewWizard {
 
             //Create folders
             IPath projectPath = project.getFullPath(),
-            molPath = projectPath.append("molecules"),
-            descPath = projectPath.append("descriptors");
-            IFolder molFolder = root.getFolder(molPath),
-            descFolder = root.getFolder(descPath);
+            molPath = projectPath.append("molecules");
+            IFolder molFolder = root.getFolder(molPath);
             createFolderHelper(molFolder,monitor);
-            createFolderHelper(descFolder,monitor);
 
             monitor.worked(10);
 

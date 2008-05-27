@@ -21,16 +21,12 @@ import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.forms.editor.FormEditor;
-import org.eclipse.ui.forms.widgets.ScrolledForm;
-import org.eclipse.ui.forms.widgets.TableWrapData;
-import org.eclipse.ui.forms.widgets.TableWrapLayout;
 
 public class QSARFormEditor extends FormEditor implements IResourceChangeListener, IAdaptable{
 
@@ -39,7 +35,26 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
     private TextEditor textEditor;
     private MoleculesPage molPage;
     
-    public QSARFormEditor() {
+    private IProject activeProject;
+    
+    
+    public IProject getActiveProject() {
+    
+        return activeProject;
+    }
+
+    
+    public void setActiveProject( IProject activeProject ) {
+    
+        this.activeProject = activeProject;
+    }
+
+    /**
+     * Overrides super to plug in a different selection provider.
+     */
+    public void init(IEditorSite site, IEditorInput input)
+    throws PartInitException {
+        super.init(site, input);
         ResourcesPlugin.getWorkspace().addResourceChangeListener(this);
         initialize();
     }
@@ -53,10 +68,10 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
             return;
         }
         IFileEditorInput edin = (IFileEditorInput) getEditorInput();
-        IProject project=edin.getFile().getProject();
+        activeProject=edin.getFile().getProject();
 
         //Get molecules folder if exists
-        IFolder molFolder=project.getFolder("molecules");
+        IFolder molFolder=activeProject.getFolder("molecules");
         if (!(molFolder.exists())){
             System.out.println("Folder 'molecules'  does not exist.");
             //TODO: report error in some way
@@ -69,8 +84,11 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
     protected void addPages() {
         molPage=new MoleculesPage(this);
         try {
-            //Molecules page
+            //Molecules page with interactions
             addPage(molPage);
+
+            //Descriptors page
+//            addPage(descPage);
 
             //Texteditor, should be XMLEditor: TODO
             textEditor = new TextEditor();

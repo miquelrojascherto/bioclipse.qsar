@@ -17,12 +17,13 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.forms.FormColors;
 import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
  * The activator class controls the plug-in life cycle
  * @author ola
  */
-public class Activator extends BioclipseActivator {
+public class Activator extends AbstractUIPlugin {
 
     // The plug-in ID
     public static final String PLUGIN_ID = "net.bioclipse.qsar";
