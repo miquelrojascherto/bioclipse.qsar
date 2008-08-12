@@ -9,7 +9,7 @@
  *    Ola Spjuth - initial API and implementation
  *******************************************************************************/
 
-package net.bioclipse.qsar.wizards;
+package net.bioclipse.qsar.ui.wizards;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,8 +18,8 @@ import java.lang.reflect.InvocationTargetException;
 import org.apache.log4j.Logger;
 import net.bioclipse.core.util.LogUtils;
 
-import net.bioclipse.qsar.builder.QSARBuilder;
-import net.bioclipse.qsar.builder.QSARNature;
+import net.bioclipse.qsar.ui.builder.QSARBuilder;
+import net.bioclipse.qsar.ui.builder.QSARNature;
 
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IContainer;

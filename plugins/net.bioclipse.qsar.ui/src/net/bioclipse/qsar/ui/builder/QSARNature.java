@@ -8,7 +8,7 @@
  *Contributors:
  *    Ola Spjuth - initial API and implementation
  *******************************************************************************/
-package net.bioclipse.qsar.builder;
+package net.bioclipse.qsar.ui.builder;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IProject;

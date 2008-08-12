@@ -8,8 +8,8 @@
  *Contributors:
  *    Ola Spjuth - initial API and implementation
  *******************************************************************************/
-package net.bioclipse.qsar.editors;
-import net.bioclipse.qsar.Activator;
+package net.bioclipse.qsar.ui.editors;
+import net.bioclipse.qsar.ui.Activator;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.viewers.*;

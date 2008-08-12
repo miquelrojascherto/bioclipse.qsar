@@ -8,17 +8,17 @@
  *Contributors:
  *    Ola Spjuth - initial API and implementation
  *******************************************************************************/
-package net.bioclipse.qsar.editors;
+package net.bioclipse.qsar.ui.editors;
 
-/**
- * @author dejan
- *
- * To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Generation - Code and Comments
- */
-public interface IModelListener {
-    String ADDED="__added"; //$NON-NLS-1$
-    String REMOVED="__removed"; //$NON-NLS-1$
-    String CHANGED = "__changed"; //$NON-NLS-1$
-    void modelChanged(Object[] objects, String type, String property);
+import org.eclipse.core.resources.IFile;
+import org.eclipse.ui.part.FileEditorInput;
+
+public class QsarEditorInput extends FileEditorInput {
+
+    public QsarEditorInput(IFile file) {
+        super(file);
+    }
+    
+    
+
 }

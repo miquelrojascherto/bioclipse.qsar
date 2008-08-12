@@ -8,8 +8,8 @@
             name="QSAR Editor"
             filenames="qsar.xml"
             icon="icons/sample.gif"
-            contributorClass="net.bioclipse.qsar.editors.QSAREditorContributor"
-            class="net.bioclipse.qsar.editors.QSARFormEditor"
+            contributorClass="net.bioclipse.qsar.ui.editors.QSAREditorContributor"
+            class="net.bioclipse.qsar.ui.editors.QSARFormEditor"
             id="net.bioclipse.qsar.editors.QSARFormEditor">
       </editor>
    </extension>
@@ -22,7 +22,7 @@
       <builder
             hasNature="true">
          <run
-               class="net.bioclipse.qsar.builder.QSARBuilder">
+               class="net.bioclipse.qsar.ui.builder.QSARBuilder">
          </run>
       </builder>
    </extension>
@@ -33,7 +33,7 @@
          point="org.eclipse.core.resources.natures">
       <runtime>
          <run
-               class="net.bioclipse.qsar.builder.QSARNature">
+               class="net.bioclipse.qsar.ui.builder.QSARNature">
          </run>
       </runtime>
       <builder
@@ -58,7 +58,7 @@
             id="net.bioclipse.qsar.contribution1">
          <action
                label="Add/Remove QSAR Nature"
-               class="net.bioclipse.qsar.builder.ToggleNatureAction"
+               class="net.bioclipse.qsar.ui.builder.ToggleNatureAction"
                menubarPath="additions"
                enablesFor="+"
                id="net.bioclipse.qsar.addRemoveNatureAction">
@@ -76,7 +76,7 @@
 	   id = "net.bioclipse.qsar.wizards.NewQSARRProjectWizard"
 	   name = "New QSAR project"
 	   project="true"
-	   class="net.bioclipse.qsar.wizards.NewQSARProjectWizard"
+	   class="net.bioclipse.qsar.ui.wizards.NewQSARProjectWizard"
 	   category="net.bioclipse.categories.qsar"
 	   icon="icons/sample.gif">
    	   <description>New QSAR Wizard</description>

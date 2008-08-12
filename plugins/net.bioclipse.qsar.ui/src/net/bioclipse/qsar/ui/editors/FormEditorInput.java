@@ -8,7 +8,7 @@
  *Contributors:
  *    Ola Spjuth - initial API and implementation
  *******************************************************************************/
-package net.bioclipse.qsar.editors;
+package net.bioclipse.qsar.ui.editors;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.*;
 

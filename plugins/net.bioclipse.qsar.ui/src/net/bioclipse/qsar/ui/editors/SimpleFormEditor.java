@@ -8,9 +8,9 @@
  *Contributors:
  *    Ola Spjuth - initial API and implementation
  *******************************************************************************/
-package net.bioclipse.qsar.editors;
+package net.bioclipse.qsar.ui.editors;
 
-import net.bioclipse.qsar.Activator;
+import net.bioclipse.qsar.ui.Activator;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.SWT;

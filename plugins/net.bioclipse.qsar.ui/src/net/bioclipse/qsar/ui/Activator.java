@@ -8,7 +8,7 @@
  *Contributors:
  *    Ola Spjuth - initial API and implementation
  *******************************************************************************/
-package net.bioclipse.qsar;
+package net.bioclipse.qsar.ui;
 
 import net.bioclipse.ui.BioclipseActivator;
 

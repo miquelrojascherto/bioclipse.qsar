@@ -8,7 +8,7 @@
  *Contributors:
  *    Ola Spjuth - initial API and implementation
  *******************************************************************************/
-package net.bioclipse.qsar.builder;
+package net.bioclipse.qsar.ui.builder;
 
 import java.util.Iterator;
 
