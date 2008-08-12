@@ -8,17 +8,19 @@
  *Contributors:
  *    Ola Spjuth - initial API and implementation
  *******************************************************************************/
-package net.bioclipse.qsar.ui.editors;
+package net.bioclipse.qsar.ui.editors.old;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.ui.part.FileEditorInput;
+import net.bioclipse.qsar.ui.editors.FormEditorInput;
 
-public class QsarEditorInput extends FileEditorInput {
-
-    public QsarEditorInput(IFile file) {
-        super(file);
+public class SimpleFormEditorInput extends FormEditorInput {
+    private SimpleModel model;
+    
+    public SimpleFormEditorInput(String name) {
+        super(name);
+        model = new SimpleModel();
     }
     
-    
-
+    public SimpleModel getModel() {
+        return model;
+    }
 }

@@ -13,10 +13,21 @@ package net.bioclipse.qsar.ui.editors;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bioclipse.qsar.MoleculeType;
+import net.bioclipse.qsar.MoleculelistType;
+import net.bioclipse.qsar.QsarFactory;
+import net.bioclipse.qsar.QsarPackage;
+import net.bioclipse.qsar.QsarType;
+import net.bioclipse.qsar.util.QsarAdapterFactory;
 import net.bioclipse.ui.dialogs.WSFileDialog;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.emf.common.command.BasicCommandStack;
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.window.Window;
@@ -42,88 +53,128 @@ import org.eclipse.ui.model.WorkbenchLabelProvider;
  */
 public class MoleculesPage extends FormPage {
 
-    private TableViewer viewer;
-    private Table table;
-    
-    private List<IResource> molecules;
+	private TableViewer viewer;
+	private Table table;
 
-    public MoleculesPage(FormEditor editor) {
-        super(editor, "qsar.molecules", "Molecules");
-        molecules=new ArrayList<IResource>();
-    }
+	private List<IResource> molecules;
 
-    /**
-     * Add content to form
-     */
-    @Override
-    protected void createFormContent(IManagedForm managedForm) {
+	//This is the stored model from the MPE
+	private QsarType qsarModel;
 
-        FormToolkit toolkit = managedForm.getToolkit();
-        ScrolledForm form = managedForm.getForm();
-        form.setText("Select molecules");
-//        form.setBackgroundImage(FormArticlePlugin.getDefault().getImage(FormArticlePlugin.IMG_FORM_BG));
-        final Composite body = form.getBody();
-        GridLayout layout = new GridLayout(2, false);
-        body.setLayout(layout);
+	//The list of molecules in the Qsar model, for convenience
+	private MoleculelistType moleculeList;
+	private EditingDomain editingDomain;
 
-        viewer = new TableViewer(body, SWT.BORDER | SWT.SINGLE);
-        viewer.setContentProvider( new ArrayContentProvider() );
-        viewer.setLabelProvider( new WorkbenchLabelProvider() );
-        table=viewer.getTable();
-        toolkit.adapt(table, true, true);
-        GridData gd=new GridData();
-        gd.widthHint=200;
-        gd.heightHint=300;
-        gd.verticalSpan=2;
-        table.setLayoutData( gd );
+	public MoleculesPage(FormEditor editor, QsarType qsarModel, EditingDomain editingDomain) {
+		super(editor, "qsar.molecules", "Molecules");
+		this.qsarModel=qsarModel;
+		this.editingDomain=editingDomain;
 
-        Button btnAdd=new Button(body,SWT.NONE);
-        btnAdd.setText( "Add..." );
-        btnAdd.addListener(SWT.Selection, new Listener() {
-            public void handleEvent(Event e) {
-                
-                IProject proj=((QSARFormEditor)getEditor()).getActiveProject();
-                
-                WSFileDialog dlg=new WSFileDialog(getEditorSite().getShell()
-                                                 ,SWT.MULTI,"Select molecules"
-                                                 ,proj,true,null,null);
-                
-                //Collect a list of resources currently in viewer 
-                //to hide them in dialog
-                
-                
-                if (molecules!=null && molecules.size()>0)
-                    dlg.addBlacklistFilter( molecules );
-                
-                int r=dlg.open();
-                if (r==Window.CANCEL){
-                    return;
-                }
-                
-                System.out.println("Selected mols to add: ");
-                for (IResource resource : dlg.getMultiResult()){
-                    if (!(molecules.contains( resource )))
-                        molecules.add( resource );
-                }
-                
-                viewer.setInput( molecules.toArray() );
-                
-            }
-          });
-        GridData gd2=new GridData();
-        gd2.verticalAlignment=SWT.BEGINNING;
-        btnAdd.setLayoutData( gd2 );
+		//Currently displayed in table, duplicates teh model moleculeList
+		molecules=new ArrayList<IResource>();
 
-        Button btnDel=new Button(body,SWT.NONE);
-        btnDel.setText( "Remove" );
-        btnDel.addListener(SWT.Selection, new Listener() {
-            public void handleEvent(Event e) {
-                System.out.println("Remove XX ");
-            }
-          });
-        gd2=new GridData();
-        gd2.verticalAlignment=SWT.BEGINNING;
-        btnDel.setLayoutData( gd2 );
+		//Get mollist from qsar model, init if empty (should not be)
+		moleculeList=qsarModel.getMoleculelist();
+		if (moleculeList==null){
+			moleculeList=QsarFactory.eINSTANCE.createMoleculelistType();
+			qsarModel.setMoleculelist(moleculeList);
+		}else{
 
-    }
+			//Read into molecules list from qsarModel
+
+		}
+
+	}
+
+	/**
+	 * Add content to form
+	 */
+	@Override
+	protected void createFormContent(IManagedForm managedForm) {
+
+		FormToolkit toolkit = managedForm.getToolkit();
+		ScrolledForm form = managedForm.getForm();
+		form.setText("Select molecules");
+		//        form.setBackgroundImage(FormArticlePlugin.getDefault().getImage(FormArticlePlugin.IMG_FORM_BG));
+		final Composite body = form.getBody();
+		GridLayout layout = new GridLayout(2, false);
+		body.setLayout(layout);
+
+		viewer = new TableViewer(body, SWT.BORDER | SWT.SINGLE);
+		viewer.setContentProvider( new ArrayContentProvider() );
+		viewer.setLabelProvider( new WorkbenchLabelProvider() );
+		table=viewer.getTable();
+		toolkit.adapt(table, true, true);
+		GridData gd=new GridData();
+		gd.widthHint=200;
+		gd.heightHint=300;
+		gd.verticalSpan=2;
+		table.setLayoutData( gd );
+
+		Button btnAdd=new Button(body,SWT.NONE);
+		btnAdd.setText( "Add..." );
+		btnAdd.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+
+				IProject proj=((QSARFormEditor)getEditor()).getActiveProject();
+
+				WSFileDialog dlg=new WSFileDialog(getEditorSite().getShell()
+						,SWT.MULTI,"Select molecules"
+						,proj,true,null,null);
+
+				//Collect a list of resources currently in viewer 
+				//to hide them in dialog
+
+
+				if (molecules!=null && molecules.size()>0)
+					dlg.addBlacklistFilter( molecules );
+
+				int r=dlg.open();
+				if (r==Window.CANCEL){
+					return;
+				}
+
+				System.out.println("Selected mols to add: ");
+				for (IResource resource : dlg.getMultiResult()){
+					if (!(molecules.contains( resource ))){
+
+						//Add to List of resources
+						molecules.add( resource );
+
+						//Also add to QSAR model
+						MoleculeType mol1=QsarFactory.eINSTANCE.createMoleculeType();
+						mol1.setId(resource.getName());
+						mol1.setName(resource.getName());
+						mol1.setPath(resource.getFullPath().toString());
+						Command cmd=AddCommand.create(editingDomain, moleculeList, QsarPackage.Literals.MOLECULELIST_TYPE__MOLECULE, mol1);
+
+						//Execute the CompoundCommand
+						editingDomain.getCommandStack().execute(cmd); 		
+					}
+				}
+
+				viewer.setInput( molecules.toArray() );
+
+			}
+		});
+		GridData gd2=new GridData();
+		gd2.verticalAlignment=SWT.BEGINNING;
+		btnAdd.setLayoutData( gd2 );
+
+		Button btnDel=new Button(body,SWT.NONE);
+		btnDel.setText( "Remove" );
+		btnDel.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event e) {
+				System.out.println("Remove XX ");
+			}
+		});
+		gd2=new GridData();
+		gd2.verticalAlignment=SWT.BEGINNING;
+		btnDel.setLayoutData( gd2 );
+		
+		getSite().setSelectionProvider(viewer);
+		
+
+	}
+
 }

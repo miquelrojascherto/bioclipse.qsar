@@ -8,8 +8,9 @@
  *Contributors:
  *    Ola Spjuth - initial API and implementation
  *******************************************************************************/
-package net.bioclipse.qsar.ui.editors;
+package net.bioclipse.qsar.ui.editors.old;
 import java.util.ArrayList;
+
 /**
  * @author dejan
  * 
