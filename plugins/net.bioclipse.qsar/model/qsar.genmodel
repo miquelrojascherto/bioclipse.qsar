@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2007-2008 The Bioclipse Project and others.&#xA;All rights reserved. This program and the accompanying materials&#xA;are made available under the terms of the Eclipse Public License v1.0&#xA;which accompanies this distribution, and is available at&#xA;www.eclipse.orgï¿Ωepl-v10.html &lt;http://www.eclipse.org/legal/epl-v10.html>&#xA;&#xA;Contributors:&#xA;    Ola Spjuth - initial API and implementation&#xA;"
+    modelDirectory="/net.bioclipse.qsar/src" editDirectory="/net.bioclipse.qsar.edit/src"
+    editorDirectory="/net.bioclipse.qsar.editor/src" modelPluginID="net.bioclipse.qsar"
+    modelName="Qsar" richClientPlatform="true" importerID="org.eclipse.xsd.ecore.importer"
+    complianceLevel="5.0" editPluginID="net.bioclipse.qsar.edit" language="">
+  <foreignModel>qsar.xsd</foreignModel>
+  <genPackages prefix="Qsar" basePackage="net.bioclipse" resource="XML" disposableProviderFactory="true"
+      ecorePackage="qsar.ecore#/">
+    <genClasses ecoreClass="qsar.ecore#//DescriptorimplType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorimplType/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorimplType/jar"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorimplType/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorimplType/namespace"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorimplType/plugin"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorimplType/url"/>
+    </genClasses>
+    <genClasses ecoreClass="qsar.ecore#//DescriptorlistType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//DescriptorlistType/descriptor"/>
+    </genClasses>
+    <genClasses ecoreClass="qsar.ecore#//DescriptorType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//DescriptorType/parameter"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference qsar.ecore#//DescriptorType/descriptorimpl"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorType/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorType/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorType/namespace"/>
+    </genClasses>
+    <genClasses ecoreClass="qsar.ecore#//DocumentRoot">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DocumentRoot/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference qsar.ecore#//DocumentRoot/xMLNSPrefixMap"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference qsar.ecore#//DocumentRoot/xSISchemaLocation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//DocumentRoot/qsar"/>
+    </genClasses>
+    <genClasses ecoreClass="qsar.ecore#//MoleculelistType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//MoleculelistType/molecule"/>
+    </genClasses>
+    <genClasses ecoreClass="qsar.ecore#//MoleculeType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MoleculeType/url"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MoleculeType/path"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MoleculeType/smiles"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MoleculeType/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MoleculeType/name"/>
+    </genClasses>
+    <genClasses ecoreClass="qsar.ecore#//ParameterType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ParameterType/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ParameterType/value"/>
+    </genClasses>
+    <genClasses ecoreClass="qsar.ecore#//QsarType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//QsarType/moleculelist"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//QsarType/descriptorlist"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//QsarType/descriptorimpl"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

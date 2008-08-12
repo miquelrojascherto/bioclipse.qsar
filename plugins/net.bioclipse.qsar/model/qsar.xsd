@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.bioclipse.net/qsar" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.bioclipse.net/qsar">
+
+    <element name="qsar" type="tns:qsarType"></element>
+    
+    <complexType name="qsarType">
+    	<sequence>
+    		<element name="moleculelist" type="tns:moleculelistType"
+    			maxOccurs="1" minOccurs="0">
+    		</element>
+    		<element name="descriptorlist" type="tns:descriptorlistType"
+    			maxOccurs="1" minOccurs="0">
+    		</element>
+    		<element name="descriptorimpl"
+    			type="tns:descriptorimplType" maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="moleculelistType">
+    	<sequence>
+    		<element name="molecule" type="tns:moleculeType"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="descriptorlistType">
+    	<sequence>
+    		<element name="descriptor" type="tns:descriptorType"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="moleculeType">
+    	<choice minOccurs="1" maxOccurs="1">
+    		<element name="url" type="string"></element>
+    		<element name="path" type="string"></element>
+    		<element name="smiles" type="string"></element>
+    	</choice>
+    	<attribute name="id" type="string" use="required"></attribute>
+    	<attribute name="name" type="string"></attribute>
+    </complexType>
+
+    <complexType name="descriptorType">
+    	<sequence>
+    		<element name="parameter" type="tns:parameterType"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    		<element name="descriptorimpl"
+    			type="tns:descriptorimplType">
+    		</element>
+    	</sequence>
+    	<attribute name="id" type="string" use="required"></attribute>
+    	<attribute name="name" type="string"></attribute>
+    	<attribute name="namespace" type="string"></attribute>
+    </complexType>
+    
+    <complexType name="parameterType">
+    	<attribute name="key" type="string" use="required"></attribute>
+    	<attribute name="value" type="string"></attribute>
+    </complexType>
+
+
+    <complexType name="descriptorimplType">
+    	<attribute name="id" type="string"></attribute>
+    	<attribute name="name" type="string"></attribute>
+    	<attribute name="jar" type="string"></attribute>
+    	<attribute name="plugin" type="string"></attribute>
+    	<attribute name="url" type="string"></attribute>
+    	<attribute name="namespace" type="string"></attribute>
+    </complexType>
+</schema>
