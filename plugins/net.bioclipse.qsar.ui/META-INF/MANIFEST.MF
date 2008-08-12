@@ -15,6 +15,11 @@ Require-Bundle: net.bioclipse.core,
  org.eclipse.ui.workbench.texteditor,
  org.eclipse.ui.editors,
  org.eclipse.ui.forms,
- org.eclipse.ui.navigator
+ org.eclipse.ui.navigator,
+ org.eclipse.emf.ecore;bundle-version="2.4.0",
+ org.eclipse.emf.ecore.edit;bundle-version="2.4.0",
+ org.eclipse.emf.ecore.xmi;bundle-version="2.4.0",
+ net.bioclipse.qsar;bundle-version="1.0.0",
+ net.bioclipse.qsar.edit;bundle-version="1.0.0"
 Eclipse-LazyStart: true
 Import-Package: org.apache.log4j

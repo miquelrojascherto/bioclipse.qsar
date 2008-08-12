@@ -11,6 +11,7 @@
 
 package net.bioclipse.qsar.ui.wizards;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -20,6 +21,7 @@ import net.bioclipse.core.util.LogUtils;
 
 import net.bioclipse.qsar.ui.builder.QSARBuilder;
 import net.bioclipse.qsar.ui.builder.QSARNature;
+import net.bioclipse.qsar.ui.util.QsarXMLUtils;
 
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IContainer;
@@ -178,9 +180,13 @@ public class NewQSARProjectWizard extends Wizard implements INewWizard {
             monitor.subTask("Creating files");
             IPath qsarPath = projectPath.append("qsar.xml");
             IFile qsarFile = root.getFile(qsarPath);
-            InputStream qsarIS = getClass().getResourceAsStream("/net/bioclipse/qsar/resources/qsar.xml");
-            qsarFile.create(qsarIS,true,new SubProgressMonitor(monitor,10));
-            qsarIS.close();
+            ByteArrayInputStream bos=new ByteArrayInputStream(QsarXMLUtils.getEmptyContent());
+            qsarFile.create(bos,true,new SubProgressMonitor(monitor,10));
+            bos.close();
+//            
+//            InputStream qsarIS = getClass().getResourceAsStream("/net/bioclipse/qsar/resources/qsar.xml");
+//            qsarFile.create(qsarIS,true,new SubProgressMonitor(monitor,10));
+//            qsarIS.close();
         }
         catch(CoreException x)
         {
