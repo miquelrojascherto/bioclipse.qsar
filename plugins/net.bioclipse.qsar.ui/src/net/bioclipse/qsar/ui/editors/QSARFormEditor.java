@@ -11,15 +11,12 @@
 package net.bioclipse.qsar.ui.editors;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Collections;
 
 import org.apache.log4j.Logger;
 import net.bioclipse.core.util.LogUtils;
 import net.bioclipse.qsar.DocumentRoot;
-import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
 import net.bioclipse.qsar.util.QsarAdapterFactory;
@@ -36,26 +33,21 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.forms.editor.FormEditor;
 
 public class QSARFormEditor extends FormEditor implements IResourceChangeListener, IAdaptable{
 
     private static final Logger logger = Logger.getLogger(QSARFormEditor.class);
     
-    private TextEditor textEditor;
+    private QsarXMLEditor xmlEditor;
     private MoleculesPage molPage;
     
     private IProject activeProject;
@@ -198,8 +190,8 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
 //            addPage(descPage);
 
             //Texteditor, should be XMLEditor: TODO
-            textEditor = new TextEditor();
-            textEditorIndex = addPage(textEditor, getEditorInput());
+            xmlEditor = new QsarXMLEditor(this);
+            textEditorIndex = addPage(xmlEditor, getEditorInput());
             setPageText(textEditorIndex, "Source");
 
         } catch (PartInitException e) {
@@ -214,7 +206,11 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
     	
     	//Take QSAR model and save it
 		try {
-
+			
+			updateTextEditorFromModel();
+			xmlEditor.doSave(monitor);
+			
+/*
 			//Clear resource and add current model
 			resource.getContents().clear();
 			DocumentRoot root=QsarFactory.eINSTANCE.createDocumentRoot();
@@ -222,6 +218,9 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
 			
 			resource.getContents().add(root);
 			resource.save(Collections.EMPTY_MAP);
+*/
+			//Clean all dirty flags
+			setDirty(false);
 
 			//Serialize to byte[] and print to sysout
 //			ByteArrayOutputStream os=new ByteArrayOutputStream();
@@ -234,6 +233,19 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
 		}
     	
     }
+
+	private void setDirty(boolean b) {
+
+		if (pages != null) {
+			for (int i = 0; i < pages.size(); i++) {
+				if (pages.get(i) instanceof MoleculesPage) {
+					MoleculesPage mpage = (MoleculesPage) pages.get(i);
+					mpage.setDirty(false);
+				}
+			}
+		}
+	}
+
 
 	@Override
 	public void doSaveAs() {
@@ -258,34 +270,36 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
     protected void pageChange(int newPageIndex) {
     	
     	if (newPageIndex==textEditorIndex){
-    		//Serialize to XML
-            // Print the contents of the resource to System.out.
-            try
-            {
-            	ByteArrayOutputStream bos=new ByteArrayOutputStream();
-            	resource.save(bos, Collections.EMPTY_MAP);
-            	
-            	String strContent=new String(bos.toByteArray());
-            	
-                textEditor.getDocumentProvider().
-                getDocument(textEditor.getEditorInput()).set(strContent);
-            }
-            catch (IOException e) {
-            }
-    		
+
+    		//Only serialize if dirty on mols page
+    		if (molPage.isDirty()){
+
+    			try {
+    	    		//Serialize to XML, update editor
+    				updateTextEditorFromModel();
+    			} catch (IOException e) {
+    				e.printStackTrace();
+    			}
+    		}    		
     	}
     	
     	// TODO Auto-generated method stub
     	super.pageChange(newPageIndex);
     }
-
-
-    @Override
-    public boolean isDirty() {
-    	// TODO Auto-generated method stub
-    	return super.isDirty();
-    }
     
+	private void updateTextEditorFromModel() throws IOException {
+
+        	ByteArrayOutputStream bos=new ByteArrayOutputStream();
+        	resource.save(bos, Collections.EMPTY_MAP);
+        	
+        	String strContent=new String(bos.toByteArray());
+        	
+            xmlEditor.getDocumentProvider().
+            getDocument(xmlEditor.getEditorInput()).set(strContent);
+
+	}
+
+
 	protected void fireDirtyChanged() {
         Runnable r= new Runnable() {
             public void run() {
@@ -297,5 +311,9 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
         
 	}
 
+
+	public void markPagesSaved() {
+		molPage.setDirty(false);
+	}
 
 }

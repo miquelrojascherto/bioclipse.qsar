@@ -240,8 +240,7 @@ public class MoleculesPage extends FormPage {
 
 			viewer.setInput(getMolecules());
 			
-			dirty=true;
-			((QSARFormEditor)getEditor()).fireDirtyChanged();
+			setDirty(true);
 		}
 	}
 
@@ -299,9 +298,13 @@ public class MoleculesPage extends FormPage {
 
 		viewer.setInput( molecules.toArray() );
 		
-		dirty=true;
-		((QSARFormEditor)getEditor()).fireDirtyChanged();
+		setDirty(true);
 
+	}
+
+	public void setDirty(boolean dirty) {
+		this.dirty=dirty;
+		((QSARFormEditor)getEditor()).fireDirtyChanged();
 	}
 
 }
