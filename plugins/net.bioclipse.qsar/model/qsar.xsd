@@ -11,15 +11,13 @@
     		<element name="descriptorlist" type="tns:descriptorlistType"
     			maxOccurs="1" minOccurs="0">
     		</element>
-    		<element name="descriptorimpl"
-    			type="tns:descriptorimplType" maxOccurs="unbounded" minOccurs="0">
-    		</element>
+    		<element name="descriptorimpl" type="tns:descriptorimplType" maxOccurs="unbounded" minOccurs="0"></element>
     	</sequence>
     </complexType>
 
     <complexType name="moleculelistType">
     	<sequence>
-    		<element name="molecule" type="tns:moleculeType"
+    		<element name="moleculeResource" type="tns:moleculeResourceType"
     			maxOccurs="unbounded" minOccurs="0">
     		</element>
     	</sequence>
@@ -33,7 +31,7 @@
     	</sequence>
     </complexType>
 
-    <complexType name="moleculeType">
+    <complexType name="moleculeResourceType">
     	<choice minOccurs="1" maxOccurs="1">
     		<element name="url" type="string"></element>
     		<element name="path" type="string"></element>
@@ -41,6 +39,7 @@
     	</choice>
     	<attribute name="id" type="string" use="required"></attribute>
     	<attribute name="name" type="string"></attribute>
+    	<attribute name="namespace" type="string"></attribute>
     </complexType>
 
     <complexType name="descriptorType">
@@ -65,10 +64,14 @@
 
     <complexType name="descriptorimplType">
     	<attribute name="id" type="string"></attribute>
-    	<attribute name="name" type="string"></attribute>
-    	<attribute name="jar" type="string"></attribute>
-    	<attribute name="plugin" type="string"></attribute>
-    	<attribute name="url" type="string"></attribute>
     	<attribute name="namespace" type="string"></attribute>
+    	<attribute name="name" type="string"></attribute>
+    	<attribute name="path" type="string"></attribute>
+    	<attribute name="jar" type="string"></attribute>
+    	<attribute name="url" type="string"></attribute>
+    	<attribute name="vendor" type="string"></attribute>
+    	<attribute name="reference" type="string"></attribute>
+    	<attribute name="version" type="string"></attribute>
+    	<attribute name="type" type="string"></attribute>
     </complexType>
 </schema>

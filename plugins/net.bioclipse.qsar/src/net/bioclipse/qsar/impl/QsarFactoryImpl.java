@@ -79,7 +79,7 @@ public class QsarFactoryImpl extends EFactoryImpl implements QsarFactory {
 			case QsarPackage.DESCRIPTOR_TYPE: return createDescriptorType();
 			case QsarPackage.DOCUMENT_ROOT: return createDocumentRoot();
 			case QsarPackage.MOLECULELIST_TYPE: return createMoleculelistType();
-			case QsarPackage.MOLECULE_TYPE: return createMoleculeType();
+			case QsarPackage.MOLECULE_RESOURCE_TYPE: return createMoleculeResourceType();
 			case QsarPackage.PARAMETER_TYPE: return createParameterType();
 			case QsarPackage.QSAR_TYPE: return createQsarType();
 			default:
@@ -142,9 +142,9 @@ public class QsarFactoryImpl extends EFactoryImpl implements QsarFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public MoleculeType createMoleculeType() {
-		MoleculeTypeImpl moleculeType = new MoleculeTypeImpl();
-		return moleculeType;
+	public MoleculeResourceType createMoleculeResourceType() {
+		MoleculeResourceTypeImpl moleculeResourceType = new MoleculeResourceTypeImpl();
+		return moleculeResourceType;
 	}
 
 	/**

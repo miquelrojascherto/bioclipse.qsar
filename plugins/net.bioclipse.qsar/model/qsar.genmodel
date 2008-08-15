@@ -14,8 +14,12 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorimplType/jar"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorimplType/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorimplType/namespace"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorimplType/plugin"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorimplType/path"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorimplType/reference"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorimplType/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorimplType/url"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorimplType/vendor"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorimplType/version"/>
     </genClasses>
     <genClasses ecoreClass="qsar.ecore#//DescriptorlistType">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//DescriptorlistType/descriptor"/>
@@ -34,14 +38,15 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//DocumentRoot/qsar"/>
     </genClasses>
     <genClasses ecoreClass="qsar.ecore#//MoleculelistType">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//MoleculelistType/molecule"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//MoleculelistType/moleculeResource"/>
     </genClasses>
-    <genClasses ecoreClass="qsar.ecore#//MoleculeType">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MoleculeType/url"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MoleculeType/path"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MoleculeType/smiles"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MoleculeType/id"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MoleculeType/name"/>
+    <genClasses ecoreClass="qsar.ecore#//MoleculeResourceType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MoleculeResourceType/url"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MoleculeResourceType/path"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MoleculeResourceType/smiles"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MoleculeResourceType/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MoleculeResourceType/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MoleculeResourceType/namespace"/>
     </genClasses>
     <genClasses ecoreClass="qsar.ecore#//ParameterType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ParameterType/key"/>

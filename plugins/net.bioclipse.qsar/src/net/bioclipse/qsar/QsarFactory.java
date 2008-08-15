@@ -85,13 +85,13 @@ public interface QsarFactory extends EFactory {
 	MoleculelistType createMoleculelistType();
 
 	/**
-	 * Returns a new object of class '<em>Molecule Type</em>'.
+	 * Returns a new object of class '<em>Molecule Resource Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Molecule Type</em>'.
+	 * @return a new object of class '<em>Molecule Resource Type</em>'.
 	 * @generated
 	 */
-	MoleculeType createMoleculeType();
+	MoleculeResourceType createMoleculeResourceType();
 
 	/**
 	 * Returns a new object of class '<em>Parameter Type</em>'.

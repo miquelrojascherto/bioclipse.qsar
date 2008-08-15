@@ -34,8 +34,12 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *   <li>{@link net.bioclipse.qsar.impl.DescriptorimplTypeImpl#getJar <em>Jar</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.DescriptorimplTypeImpl#getName <em>Name</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.DescriptorimplTypeImpl#getNamespace <em>Namespace</em>}</li>
- *   <li>{@link net.bioclipse.qsar.impl.DescriptorimplTypeImpl#getPlugin <em>Plugin</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.impl.DescriptorimplTypeImpl#getPath <em>Path</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.impl.DescriptorimplTypeImpl#getReference <em>Reference</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.impl.DescriptorimplTypeImpl#getType <em>Type</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.DescriptorimplTypeImpl#getUrl <em>Url</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.impl.DescriptorimplTypeImpl#getVendor <em>Vendor</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.impl.DescriptorimplTypeImpl#getVersion <em>Version</em>}</li>
  * </ul>
  * </p>
  *
@@ -130,24 +134,64 @@ public class DescriptorimplTypeImpl extends EObjectImpl implements Descriptorimp
 	protected String namespace = NAMESPACE_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getPlugin() <em>Plugin</em>}' attribute.
+	 * The default value of the '{@link #getPath() <em>Path</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getPlugin()
+	 * @see #getPath()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String PLUGIN_EDEFAULT = null;
+	protected static final String PATH_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getPlugin() <em>Plugin</em>}' attribute.
+	 * The cached value of the '{@link #getPath() <em>Path</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getPlugin()
+	 * @see #getPath()
 	 * @generated
 	 * @ordered
 	 */
-	protected String plugin = PLUGIN_EDEFAULT;
+	protected String path = PATH_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getReference() <em>Reference</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getReference()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String REFERENCE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getReference() <em>Reference</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getReference()
+	 * @generated
+	 * @ordered
+	 */
+	protected String reference = REFERENCE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getType()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String TYPE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getType()
+	 * @generated
+	 * @ordered
+	 */
+	protected String type = TYPE_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getUrl() <em>Url</em>}' attribute.
@@ -168,6 +212,46 @@ public class DescriptorimplTypeImpl extends EObjectImpl implements Descriptorimp
 	 * @ordered
 	 */
 	protected String url = URL_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getVendor() <em>Vendor</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getVendor()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String VENDOR_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getVendor() <em>Vendor</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getVendor()
+	 * @generated
+	 * @ordered
+	 */
+	protected String vendor = VENDOR_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getVersion() <em>Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getVersion()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String VERSION_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getVersion() <em>Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getVersion()
+	 * @generated
+	 * @ordered
+	 */
+	protected String version = VERSION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -277,8 +361,8 @@ public class DescriptorimplTypeImpl extends EObjectImpl implements Descriptorimp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getPlugin() {
-		return plugin;
+	public String getPath() {
+		return path;
 	}
 
 	/**
@@ -286,11 +370,53 @@ public class DescriptorimplTypeImpl extends EObjectImpl implements Descriptorimp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setPlugin(String newPlugin) {
-		String oldPlugin = plugin;
-		plugin = newPlugin;
+	public void setPath(String newPath) {
+		String oldPath = path;
+		path = newPath;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.DESCRIPTORIMPL_TYPE__PLUGIN, oldPlugin, plugin));
+			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.DESCRIPTORIMPL_TYPE__PATH, oldPath, path));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getReference() {
+		return reference;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setReference(String newReference) {
+		String oldReference = reference;
+		reference = newReference;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.DESCRIPTORIMPL_TYPE__REFERENCE, oldReference, reference));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getType() {
+		return type;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setType(String newType) {
+		String oldType = type;
+		type = newType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.DESCRIPTORIMPL_TYPE__TYPE, oldType, type));
 	}
 
 	/**
@@ -319,6 +445,48 @@ public class DescriptorimplTypeImpl extends EObjectImpl implements Descriptorimp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getVendor() {
+		return vendor;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setVendor(String newVendor) {
+		String oldVendor = vendor;
+		vendor = newVendor;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.DESCRIPTORIMPL_TYPE__VENDOR, oldVendor, vendor));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getVersion() {
+		return version;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setVersion(String newVersion) {
+		String oldVersion = version;
+		version = newVersion;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.DESCRIPTORIMPL_TYPE__VERSION, oldVersion, version));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -330,10 +498,18 @@ public class DescriptorimplTypeImpl extends EObjectImpl implements Descriptorimp
 				return getName();
 			case QsarPackage.DESCRIPTORIMPL_TYPE__NAMESPACE:
 				return getNamespace();
-			case QsarPackage.DESCRIPTORIMPL_TYPE__PLUGIN:
-				return getPlugin();
+			case QsarPackage.DESCRIPTORIMPL_TYPE__PATH:
+				return getPath();
+			case QsarPackage.DESCRIPTORIMPL_TYPE__REFERENCE:
+				return getReference();
+			case QsarPackage.DESCRIPTORIMPL_TYPE__TYPE:
+				return getType();
 			case QsarPackage.DESCRIPTORIMPL_TYPE__URL:
 				return getUrl();
+			case QsarPackage.DESCRIPTORIMPL_TYPE__VENDOR:
+				return getVendor();
+			case QsarPackage.DESCRIPTORIMPL_TYPE__VERSION:
+				return getVersion();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -358,11 +534,23 @@ public class DescriptorimplTypeImpl extends EObjectImpl implements Descriptorimp
 			case QsarPackage.DESCRIPTORIMPL_TYPE__NAMESPACE:
 				setNamespace((String)newValue);
 				return;
-			case QsarPackage.DESCRIPTORIMPL_TYPE__PLUGIN:
-				setPlugin((String)newValue);
+			case QsarPackage.DESCRIPTORIMPL_TYPE__PATH:
+				setPath((String)newValue);
+				return;
+			case QsarPackage.DESCRIPTORIMPL_TYPE__REFERENCE:
+				setReference((String)newValue);
+				return;
+			case QsarPackage.DESCRIPTORIMPL_TYPE__TYPE:
+				setType((String)newValue);
 				return;
 			case QsarPackage.DESCRIPTORIMPL_TYPE__URL:
 				setUrl((String)newValue);
+				return;
+			case QsarPackage.DESCRIPTORIMPL_TYPE__VENDOR:
+				setVendor((String)newValue);
+				return;
+			case QsarPackage.DESCRIPTORIMPL_TYPE__VERSION:
+				setVersion((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -388,11 +576,23 @@ public class DescriptorimplTypeImpl extends EObjectImpl implements Descriptorimp
 			case QsarPackage.DESCRIPTORIMPL_TYPE__NAMESPACE:
 				setNamespace(NAMESPACE_EDEFAULT);
 				return;
-			case QsarPackage.DESCRIPTORIMPL_TYPE__PLUGIN:
-				setPlugin(PLUGIN_EDEFAULT);
+			case QsarPackage.DESCRIPTORIMPL_TYPE__PATH:
+				setPath(PATH_EDEFAULT);
+				return;
+			case QsarPackage.DESCRIPTORIMPL_TYPE__REFERENCE:
+				setReference(REFERENCE_EDEFAULT);
+				return;
+			case QsarPackage.DESCRIPTORIMPL_TYPE__TYPE:
+				setType(TYPE_EDEFAULT);
 				return;
 			case QsarPackage.DESCRIPTORIMPL_TYPE__URL:
 				setUrl(URL_EDEFAULT);
+				return;
+			case QsarPackage.DESCRIPTORIMPL_TYPE__VENDOR:
+				setVendor(VENDOR_EDEFAULT);
+				return;
+			case QsarPackage.DESCRIPTORIMPL_TYPE__VERSION:
+				setVersion(VERSION_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -414,10 +614,18 @@ public class DescriptorimplTypeImpl extends EObjectImpl implements Descriptorimp
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case QsarPackage.DESCRIPTORIMPL_TYPE__NAMESPACE:
 				return NAMESPACE_EDEFAULT == null ? namespace != null : !NAMESPACE_EDEFAULT.equals(namespace);
-			case QsarPackage.DESCRIPTORIMPL_TYPE__PLUGIN:
-				return PLUGIN_EDEFAULT == null ? plugin != null : !PLUGIN_EDEFAULT.equals(plugin);
+			case QsarPackage.DESCRIPTORIMPL_TYPE__PATH:
+				return PATH_EDEFAULT == null ? path != null : !PATH_EDEFAULT.equals(path);
+			case QsarPackage.DESCRIPTORIMPL_TYPE__REFERENCE:
+				return REFERENCE_EDEFAULT == null ? reference != null : !REFERENCE_EDEFAULT.equals(reference);
+			case QsarPackage.DESCRIPTORIMPL_TYPE__TYPE:
+				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
 			case QsarPackage.DESCRIPTORIMPL_TYPE__URL:
 				return URL_EDEFAULT == null ? url != null : !URL_EDEFAULT.equals(url);
+			case QsarPackage.DESCRIPTORIMPL_TYPE__VENDOR:
+				return VENDOR_EDEFAULT == null ? vendor != null : !VENDOR_EDEFAULT.equals(vendor);
+			case QsarPackage.DESCRIPTORIMPL_TYPE__VERSION:
+				return VERSION_EDEFAULT == null ? version != null : !VERSION_EDEFAULT.equals(version);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -440,10 +648,18 @@ public class DescriptorimplTypeImpl extends EObjectImpl implements Descriptorimp
 		result.append(name);
 		result.append(", namespace: ");
 		result.append(namespace);
-		result.append(", plugin: ");
-		result.append(plugin);
+		result.append(", path: ");
+		result.append(path);
+		result.append(", reference: ");
+		result.append(reference);
+		result.append(", type: ");
+		result.append(type);
 		result.append(", url: ");
 		result.append(url);
+		result.append(", vendor: ");
+		result.append(vendor);
+		result.append(", version: ");
+		result.append(version);
 		result.append(')');
 		return result.toString();
 	}

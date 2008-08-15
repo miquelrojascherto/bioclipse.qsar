@@ -27,8 +27,12 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link net.bioclipse.qsar.DescriptorimplType#getJar <em>Jar</em>}</li>
  *   <li>{@link net.bioclipse.qsar.DescriptorimplType#getName <em>Name</em>}</li>
  *   <li>{@link net.bioclipse.qsar.DescriptorimplType#getNamespace <em>Namespace</em>}</li>
- *   <li>{@link net.bioclipse.qsar.DescriptorimplType#getPlugin <em>Plugin</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.DescriptorimplType#getPath <em>Path</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.DescriptorimplType#getReference <em>Reference</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.DescriptorimplType#getType <em>Type</em>}</li>
  *   <li>{@link net.bioclipse.qsar.DescriptorimplType#getUrl <em>Url</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.DescriptorimplType#getVendor <em>Vendor</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.DescriptorimplType#getVersion <em>Version</em>}</li>
  * </ul>
  * </p>
  *
@@ -153,31 +157,85 @@ public interface DescriptorimplType extends EObject {
 	void setNamespace(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Plugin</b></em>' attribute.
+	 * Returns the value of the '<em><b>Path</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Plugin</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Path</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Plugin</em>' attribute.
-	 * @see #setPlugin(String)
-	 * @see net.bioclipse.qsar.QsarPackage#getDescriptorimplType_Plugin()
+	 * @return the value of the '<em>Path</em>' attribute.
+	 * @see #setPath(String)
+	 * @see net.bioclipse.qsar.QsarPackage#getDescriptorimplType_Path()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
-	 *        extendedMetaData="kind='attribute' name='plugin'"
+	 *        extendedMetaData="kind='attribute' name='path'"
 	 * @generated
 	 */
-	String getPlugin();
+	String getPath();
 
 	/**
-	 * Sets the value of the '{@link net.bioclipse.qsar.DescriptorimplType#getPlugin <em>Plugin</em>}' attribute.
+	 * Sets the value of the '{@link net.bioclipse.qsar.DescriptorimplType#getPath <em>Path</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Plugin</em>' attribute.
-	 * @see #getPlugin()
+	 * @param value the new value of the '<em>Path</em>' attribute.
+	 * @see #getPath()
 	 * @generated
 	 */
-	void setPlugin(String value);
+	void setPath(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Reference</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Reference</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Reference</em>' attribute.
+	 * @see #setReference(String)
+	 * @see net.bioclipse.qsar.QsarPackage#getDescriptorimplType_Reference()
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+	 *        extendedMetaData="kind='attribute' name='reference'"
+	 * @generated
+	 */
+	String getReference();
+
+	/**
+	 * Sets the value of the '{@link net.bioclipse.qsar.DescriptorimplType#getReference <em>Reference</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Reference</em>' attribute.
+	 * @see #getReference()
+	 * @generated
+	 */
+	void setReference(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Type</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Type</em>' attribute.
+	 * @see #setType(String)
+	 * @see net.bioclipse.qsar.QsarPackage#getDescriptorimplType_Type()
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+	 *        extendedMetaData="kind='attribute' name='type'"
+	 * @generated
+	 */
+	String getType();
+
+	/**
+	 * Sets the value of the '{@link net.bioclipse.qsar.DescriptorimplType#getType <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Type</em>' attribute.
+	 * @see #getType()
+	 * @generated
+	 */
+	void setType(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Url</b></em>' attribute.
@@ -205,5 +263,59 @@ public interface DescriptorimplType extends EObject {
 	 * @generated
 	 */
 	void setUrl(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Vendor</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Vendor</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Vendor</em>' attribute.
+	 * @see #setVendor(String)
+	 * @see net.bioclipse.qsar.QsarPackage#getDescriptorimplType_Vendor()
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+	 *        extendedMetaData="kind='attribute' name='vendor'"
+	 * @generated
+	 */
+	String getVendor();
+
+	/**
+	 * Sets the value of the '{@link net.bioclipse.qsar.DescriptorimplType#getVendor <em>Vendor</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Vendor</em>' attribute.
+	 * @see #getVendor()
+	 * @generated
+	 */
+	void setVendor(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Version</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Version</em>' attribute.
+	 * @see #setVersion(String)
+	 * @see net.bioclipse.qsar.QsarPackage#getDescriptorimplType_Version()
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+	 *        extendedMetaData="kind='attribute' name='version'"
+	 * @generated
+	 */
+	String getVersion();
+
+	/**
+	 * Sets the value of the '{@link net.bioclipse.qsar.DescriptorimplType#getVersion <em>Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Version</em>' attribute.
+	 * @see #getVersion()
+	 * @generated
+	 */
+	void setVersion(String value);
 
 } // DescriptorimplType
