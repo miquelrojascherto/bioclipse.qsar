@@ -38,10 +38,12 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IFileEditorInput;
@@ -137,11 +139,17 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
         resourceSet = new ResourceSetImpl();
 
         // Register the default resource factory -- only needed for stand-alone!
+        
+        //Use XMI
+//        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
+//        		Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
+
+        //Use EcoresXMI, = UTF-8 and 80 char cols.
         resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
-        		Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
+        		Resource.Factory.Registry.DEFAULT_EXTENSION, new EcoreResourceFactoryImpl());
+
 
         // Register the package -- only needed for stand-alone!
-        //Is this needed?
         QsarPackage qsarPackage=QsarPackage.eINSTANCE;
 
         // Get the URI of the model file.
@@ -216,12 +224,11 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
 			resource.save(Collections.EMPTY_MAP);
 
 			//Serialize to byte[] and print to sysout
-			ByteArrayOutputStream os=new ByteArrayOutputStream();
-			resource.save(os, Collections.EMPTY_MAP);
+//			ByteArrayOutputStream os=new ByteArrayOutputStream();
+//			resource.save(os, Collections.EMPTY_MAP);
+//
+//			System.out.println(new String(os.toByteArray()));
 
-			System.out.println(new String(os.toByteArray()));
-
-			System.out.println("end");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -272,6 +279,23 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
     	super.pageChange(newPageIndex);
     }
 
+
+    @Override
+    public boolean isDirty() {
+    	// TODO Auto-generated method stub
+    	return super.isDirty();
+    }
+    
+	protected void fireDirtyChanged() {
+        Runnable r= new Runnable() {
+            public void run() {
+                firePropertyChange(PROP_DIRTY);
+            }
+        };
+        Display fDisplay = getSite().getShell().getDisplay();
+        fDisplay.asyncExec(r);
+        
+	}
 
 
 }
