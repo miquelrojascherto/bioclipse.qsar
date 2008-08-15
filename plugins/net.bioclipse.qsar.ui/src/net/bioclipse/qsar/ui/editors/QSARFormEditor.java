@@ -48,7 +48,7 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
     private static final Logger logger = Logger.getLogger(QSARFormEditor.class);
     
     private QsarXMLEditor xmlEditor;
-    private MoleculesPage2 molPage;
+    private MoleculesPage molPage;
     
     private IProject activeProject;
 
@@ -183,7 +183,7 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
     protected void addPages() {
 
 		//Create the MoleculesPage
-		molPage=new MoleculesPage2(this, qsarModel, editingDomain, selectionProvider);
+		molPage=new MoleculesPage(this, qsarModel, editingDomain, selectionProvider);
 
         try {
             //Molecules page with interactions
@@ -245,8 +245,8 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
 
 		if (pages != null) {
 			for (int i = 0; i < pages.size(); i++) {
-				if (pages.get(i) instanceof MoleculesPage2) {
-					MoleculesPage2 mpage = (MoleculesPage2) pages.get(i);
+				if (pages.get(i) instanceof MoleculesPage) {
+					MoleculesPage mpage = (MoleculesPage) pages.get(i);
 					mpage.setDirty(false);
 				}
 			}

@@ -74,7 +74,7 @@ import org.eclipse.ui.forms.widgets.Section;
  * @author ola
  *
  */
-public class MoleculesPage2 extends FormPage{
+public class MoleculesPage extends FormPage{
 
     private TableViewer molViewer;
     private Table molTable;
@@ -85,7 +85,7 @@ public class MoleculesPage2 extends FormPage{
     
     private MoleculesContentProvider molContentProv;
 
-    private static final Logger logger = Logger.getLogger(MoleculesPage2.class);
+    private static final Logger logger = Logger.getLogger(MoleculesPage.class);
     
     ICDKManager cdk;
     DecimalFormat formatter;
@@ -97,7 +97,7 @@ public class MoleculesPage2 extends FormPage{
 	private boolean dirty;
 
     
-	public MoleculesPage2(FormEditor editor, QsarType qsarModel, 
+	public MoleculesPage(FormEditor editor, QsarType qsarModel, 
 			EditingDomain editingDomain, MoleculesEditorSelectionProvider selectionProvider) {
 
 		super(editor, "qsar.molecules", "Molecules");
