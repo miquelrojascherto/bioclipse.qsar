@@ -11,8 +11,8 @@
 package net.bioclipse.qsar.ui.editors;
 
 import org.eclipse.core.resources.IResource;
-import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
+import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
@@ -22,20 +22,7 @@ import org.eclipse.ui.PlatformUI;
  * @author ola
  *
  */
-public class MoleculesLabelProvider implements ILabelProvider{
-
-    public Image getImage(Object element) {
-        String imageKey = ISharedImages.IMG_OBJ_ELEMENT;
-        return PlatformUI.getWorkbench().getSharedImages().getImage(imageKey);
-    }
-
-    public String getText(Object element) {
-        if (element instanceof IResource) {
-            IResource resource = (IResource) element;
-            return resource.getName();
-        }
-        return null;
-    }
+public class MoleculesLabelProvider implements ITableLabelProvider{
 
     public void addListener(ILabelProviderListener listener) {
     }
@@ -49,4 +36,32 @@ public class MoleculesLabelProvider implements ILabelProvider{
 
     public void removeListener(ILabelProviderListener listener) {
     }
+
+	public Image getColumnImage(Object element, int columnIndex) {
+		if (columnIndex==0){
+	        String imageKey = ISharedImages.IMG_OBJ_ELEMENT;
+	        return PlatformUI.getWorkbench().getSharedImages().getImage(imageKey);
+		}
+		return null;
+	}
+
+	public String getColumnText(Object element, int columnIndex) {
+		if (element instanceof MoleculeResource) {
+			MoleculeResource mr=(MoleculeResource)element;
+			if (columnIndex==0){
+				IResource resource = mr.getResource();
+				return resource.getName();
+			}
+			else if (columnIndex==1){
+				return "" + mr.noMols;
+			}
+			else if (columnIndex==2){
+				return "" + mr.has2D;
+			}
+			else if (columnIndex==3){
+				return "" + mr.has3D;
+			}
+		}
+		return "N/A";
+	}
 }
