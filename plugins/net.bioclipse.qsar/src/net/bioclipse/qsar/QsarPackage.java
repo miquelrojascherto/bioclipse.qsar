@@ -93,22 +93,13 @@ public interface QsarPackage extends EPackage {
 	int DESCRIPTORIMPL_TYPE__ID = 0;
 
 	/**
-	 * The feature id for the '<em><b>Jar</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DESCRIPTORIMPL_TYPE__JAR = 1;
-
-	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DESCRIPTORIMPL_TYPE__NAME = 2;
+	int DESCRIPTORIMPL_TYPE__NAME = 1;
 
 	/**
 	 * The feature id for the '<em><b>Namespace</b></em>' attribute.
@@ -117,16 +108,7 @@ public interface QsarPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DESCRIPTORIMPL_TYPE__NAMESPACE = 3;
-
-	/**
-	 * The feature id for the '<em><b>Path</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DESCRIPTORIMPL_TYPE__PATH = 4;
+	int DESCRIPTORIMPL_TYPE__NAMESPACE = 2;
 
 	/**
 	 * The feature id for the '<em><b>Reference</b></em>' attribute.
@@ -135,25 +117,7 @@ public interface QsarPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DESCRIPTORIMPL_TYPE__REFERENCE = 5;
-
-	/**
-	 * The feature id for the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DESCRIPTORIMPL_TYPE__TYPE = 6;
-
-	/**
-	 * The feature id for the '<em><b>Url</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DESCRIPTORIMPL_TYPE__URL = 7;
+	int DESCRIPTORIMPL_TYPE__REFERENCE = 3;
 
 	/**
 	 * The feature id for the '<em><b>Vendor</b></em>' attribute.
@@ -162,7 +126,7 @@ public interface QsarPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DESCRIPTORIMPL_TYPE__VENDOR = 8;
+	int DESCRIPTORIMPL_TYPE__VENDOR = 4;
 
 	/**
 	 * The feature id for the '<em><b>Version</b></em>' attribute.
@@ -171,7 +135,7 @@ public interface QsarPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DESCRIPTORIMPL_TYPE__VERSION = 9;
+	int DESCRIPTORIMPL_TYPE__VERSION = 5;
 
 	/**
 	 * The number of structural features of the '<em>Descriptorimpl Type</em>' class.
@@ -180,7 +144,7 @@ public interface QsarPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DESCRIPTORIMPL_TYPE_FEATURE_COUNT = 10;
+	int DESCRIPTORIMPL_TYPE_FEATURE_COUNT = 6;
 
 	/**
 	 * The meta object id for the '{@link net.bioclipse.qsar.impl.DescriptorlistTypeImpl <em>Descriptorlist Type</em>}' class.
@@ -368,31 +332,13 @@ public interface QsarPackage extends EPackage {
 	int MOLECULE_RESOURCE_TYPE = 5;
 
 	/**
-	 * The feature id for the '<em><b>Url</b></em>' attribute.
+	 * The feature id for the '<em><b>File</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MOLECULE_RESOURCE_TYPE__URL = 0;
-
-	/**
-	 * The feature id for the '<em><b>Path</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MOLECULE_RESOURCE_TYPE__PATH = 1;
-
-	/**
-	 * The feature id for the '<em><b>Smiles</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MOLECULE_RESOURCE_TYPE__SMILES = 2;
+	int MOLECULE_RESOURCE_TYPE__FILE = 0;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -401,7 +347,7 @@ public interface QsarPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MOLECULE_RESOURCE_TYPE__ID = 3;
+	int MOLECULE_RESOURCE_TYPE__ID = 1;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -410,7 +356,7 @@ public interface QsarPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MOLECULE_RESOURCE_TYPE__NAME = 4;
+	int MOLECULE_RESOURCE_TYPE__NAME = 2;
 
 	/**
 	 * The feature id for the '<em><b>Namespace</b></em>' attribute.
@@ -419,7 +365,16 @@ public interface QsarPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MOLECULE_RESOURCE_TYPE__NAMESPACE = 5;
+	int MOLECULE_RESOURCE_TYPE__NAMESPACE = 3;
+
+	/**
+	 * The feature id for the '<em><b>Url</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MOLECULE_RESOURCE_TYPE__URL = 4;
 
 	/**
 	 * The number of structural features of the '<em>Molecule Resource Type</em>' class.
@@ -428,7 +383,7 @@ public interface QsarPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MOLECULE_RESOURCE_TYPE_FEATURE_COUNT = 6;
+	int MOLECULE_RESOURCE_TYPE_FEATURE_COUNT = 5;
 
 	/**
 	 * The meta object id for the '{@link net.bioclipse.qsar.impl.ParameterTypeImpl <em>Parameter Type</em>}' class.
@@ -468,6 +423,98 @@ public interface QsarPackage extends EPackage {
 	int PARAMETER_TYPE_FEATURE_COUNT = 2;
 
 	/**
+	 * The meta object id for the '{@link net.bioclipse.qsar.impl.PreprocessingStepTypeImpl <em>Preprocessing Step Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see net.bioclipse.qsar.impl.PreprocessingStepTypeImpl
+	 * @see net.bioclipse.qsar.impl.QsarPackageImpl#getPreprocessingStepType()
+	 * @generated
+	 */
+	int PREPROCESSING_STEP_TYPE = 7;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREPROCESSING_STEP_TYPE__ID = 0;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREPROCESSING_STEP_TYPE__NAME = 1;
+
+	/**
+	 * The feature id for the '<em><b>Namespace</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREPROCESSING_STEP_TYPE__NAMESPACE = 2;
+
+	/**
+	 * The feature id for the '<em><b>Order</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREPROCESSING_STEP_TYPE__ORDER = 3;
+
+	/**
+	 * The feature id for the '<em><b>Vendor</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREPROCESSING_STEP_TYPE__VENDOR = 4;
+
+	/**
+	 * The number of structural features of the '<em>Preprocessing Step Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREPROCESSING_STEP_TYPE_FEATURE_COUNT = 5;
+
+	/**
+	 * The meta object id for the '{@link net.bioclipse.qsar.impl.PreprocessingTypeImpl <em>Preprocessing Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see net.bioclipse.qsar.impl.PreprocessingTypeImpl
+	 * @see net.bioclipse.qsar.impl.QsarPackageImpl#getPreprocessingType()
+	 * @generated
+	 */
+	int PREPROCESSING_TYPE = 8;
+
+	/**
+	 * The feature id for the '<em><b>Preprocessing Step</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREPROCESSING_TYPE__PREPROCESSING_STEP = 0;
+
+	/**
+	 * The number of structural features of the '<em>Preprocessing Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PREPROCESSING_TYPE_FEATURE_COUNT = 1;
+
+	/**
 	 * The meta object id for the '{@link net.bioclipse.qsar.impl.QsarTypeImpl <em>Type</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -475,7 +522,7 @@ public interface QsarPackage extends EPackage {
 	 * @see net.bioclipse.qsar.impl.QsarPackageImpl#getQsarType()
 	 * @generated
 	 */
-	int QSAR_TYPE = 7;
+	int QSAR_TYPE = 9;
 
 	/**
 	 * The feature id for the '<em><b>Moleculelist</b></em>' containment reference.
@@ -505,13 +552,22 @@ public interface QsarPackage extends EPackage {
 	int QSAR_TYPE__DESCRIPTORIMPL = 2;
 
 	/**
+	 * The feature id for the '<em><b>Preprocessing</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int QSAR_TYPE__PREPROCESSING = 3;
+
+	/**
 	 * The number of structural features of the '<em>Type</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int QSAR_TYPE_FEATURE_COUNT = 3;
+	int QSAR_TYPE_FEATURE_COUNT = 4;
 
 
 	/**
@@ -536,17 +592,6 @@ public interface QsarPackage extends EPackage {
 	EAttribute getDescriptorimplType_Id();
 
 	/**
-	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.DescriptorimplType#getJar <em>Jar</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Jar</em>'.
-	 * @see net.bioclipse.qsar.DescriptorimplType#getJar()
-	 * @see #getDescriptorimplType()
-	 * @generated
-	 */
-	EAttribute getDescriptorimplType_Jar();
-
-	/**
 	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.DescriptorimplType#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -569,17 +614,6 @@ public interface QsarPackage extends EPackage {
 	EAttribute getDescriptorimplType_Namespace();
 
 	/**
-	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.DescriptorimplType#getPath <em>Path</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Path</em>'.
-	 * @see net.bioclipse.qsar.DescriptorimplType#getPath()
-	 * @see #getDescriptorimplType()
-	 * @generated
-	 */
-	EAttribute getDescriptorimplType_Path();
-
-	/**
 	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.DescriptorimplType#getReference <em>Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -589,28 +623,6 @@ public interface QsarPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getDescriptorimplType_Reference();
-
-	/**
-	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.DescriptorimplType#getType <em>Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Type</em>'.
-	 * @see net.bioclipse.qsar.DescriptorimplType#getType()
-	 * @see #getDescriptorimplType()
-	 * @generated
-	 */
-	EAttribute getDescriptorimplType_Type();
-
-	/**
-	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.DescriptorimplType#getUrl <em>Url</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Url</em>'.
-	 * @see net.bioclipse.qsar.DescriptorimplType#getUrl()
-	 * @see #getDescriptorimplType()
-	 * @generated
-	 */
-	EAttribute getDescriptorimplType_Url();
 
 	/**
 	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.DescriptorimplType#getVendor <em>Vendor</em>}'.
@@ -806,37 +818,15 @@ public interface QsarPackage extends EPackage {
 	EClass getMoleculeResourceType();
 
 	/**
-	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.MoleculeResourceType#getUrl <em>Url</em>}'.
+	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.MoleculeResourceType#getFile <em>File</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Url</em>'.
-	 * @see net.bioclipse.qsar.MoleculeResourceType#getUrl()
+	 * @return the meta object for the attribute '<em>File</em>'.
+	 * @see net.bioclipse.qsar.MoleculeResourceType#getFile()
 	 * @see #getMoleculeResourceType()
 	 * @generated
 	 */
-	EAttribute getMoleculeResourceType_Url();
-
-	/**
-	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.MoleculeResourceType#getPath <em>Path</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Path</em>'.
-	 * @see net.bioclipse.qsar.MoleculeResourceType#getPath()
-	 * @see #getMoleculeResourceType()
-	 * @generated
-	 */
-	EAttribute getMoleculeResourceType_Path();
-
-	/**
-	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.MoleculeResourceType#getSmiles <em>Smiles</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Smiles</em>'.
-	 * @see net.bioclipse.qsar.MoleculeResourceType#getSmiles()
-	 * @see #getMoleculeResourceType()
-	 * @generated
-	 */
-	EAttribute getMoleculeResourceType_Smiles();
+	EAttribute getMoleculeResourceType_File();
 
 	/**
 	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.MoleculeResourceType#getId <em>Id</em>}'.
@@ -872,6 +862,17 @@ public interface QsarPackage extends EPackage {
 	EAttribute getMoleculeResourceType_Namespace();
 
 	/**
+	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.MoleculeResourceType#getUrl <em>Url</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Url</em>'.
+	 * @see net.bioclipse.qsar.MoleculeResourceType#getUrl()
+	 * @see #getMoleculeResourceType()
+	 * @generated
+	 */
+	EAttribute getMoleculeResourceType_Url();
+
+	/**
 	 * Returns the meta object for class '{@link net.bioclipse.qsar.ParameterType <em>Parameter Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -902,6 +903,92 @@ public interface QsarPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getParameterType_Value();
+
+	/**
+	 * Returns the meta object for class '{@link net.bioclipse.qsar.PreprocessingStepType <em>Preprocessing Step Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Preprocessing Step Type</em>'.
+	 * @see net.bioclipse.qsar.PreprocessingStepType
+	 * @generated
+	 */
+	EClass getPreprocessingStepType();
+
+	/**
+	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.PreprocessingStepType#getId <em>Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see net.bioclipse.qsar.PreprocessingStepType#getId()
+	 * @see #getPreprocessingStepType()
+	 * @generated
+	 */
+	EAttribute getPreprocessingStepType_Id();
+
+	/**
+	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.PreprocessingStepType#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see net.bioclipse.qsar.PreprocessingStepType#getName()
+	 * @see #getPreprocessingStepType()
+	 * @generated
+	 */
+	EAttribute getPreprocessingStepType_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.PreprocessingStepType#getNamespace <em>Namespace</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Namespace</em>'.
+	 * @see net.bioclipse.qsar.PreprocessingStepType#getNamespace()
+	 * @see #getPreprocessingStepType()
+	 * @generated
+	 */
+	EAttribute getPreprocessingStepType_Namespace();
+
+	/**
+	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.PreprocessingStepType#getOrder <em>Order</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Order</em>'.
+	 * @see net.bioclipse.qsar.PreprocessingStepType#getOrder()
+	 * @see #getPreprocessingStepType()
+	 * @generated
+	 */
+	EAttribute getPreprocessingStepType_Order();
+
+	/**
+	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.PreprocessingStepType#getVendor <em>Vendor</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Vendor</em>'.
+	 * @see net.bioclipse.qsar.PreprocessingStepType#getVendor()
+	 * @see #getPreprocessingStepType()
+	 * @generated
+	 */
+	EAttribute getPreprocessingStepType_Vendor();
+
+	/**
+	 * Returns the meta object for class '{@link net.bioclipse.qsar.PreprocessingType <em>Preprocessing Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Preprocessing Type</em>'.
+	 * @see net.bioclipse.qsar.PreprocessingType
+	 * @generated
+	 */
+	EClass getPreprocessingType();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link net.bioclipse.qsar.PreprocessingType#getPreprocessingStep <em>Preprocessing Step</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Preprocessing Step</em>'.
+	 * @see net.bioclipse.qsar.PreprocessingType#getPreprocessingStep()
+	 * @see #getPreprocessingType()
+	 * @generated
+	 */
+	EReference getPreprocessingType_PreprocessingStep();
 
 	/**
 	 * Returns the meta object for class '{@link net.bioclipse.qsar.QsarType <em>Type</em>}'.
@@ -947,6 +1034,17 @@ public interface QsarPackage extends EPackage {
 	EReference getQsarType_Descriptorimpl();
 
 	/**
+	 * Returns the meta object for the containment reference '{@link net.bioclipse.qsar.QsarType#getPreprocessing <em>Preprocessing</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Preprocessing</em>'.
+	 * @see net.bioclipse.qsar.QsarType#getPreprocessing()
+	 * @see #getQsarType()
+	 * @generated
+	 */
+	EReference getQsarType_Preprocessing();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -987,14 +1085,6 @@ public interface QsarPackage extends EPackage {
 		EAttribute DESCRIPTORIMPL_TYPE__ID = eINSTANCE.getDescriptorimplType_Id();
 
 		/**
-		 * The meta object literal for the '<em><b>Jar</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute DESCRIPTORIMPL_TYPE__JAR = eINSTANCE.getDescriptorimplType_Jar();
-
-		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1011,36 +1101,12 @@ public interface QsarPackage extends EPackage {
 		EAttribute DESCRIPTORIMPL_TYPE__NAMESPACE = eINSTANCE.getDescriptorimplType_Namespace();
 
 		/**
-		 * The meta object literal for the '<em><b>Path</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute DESCRIPTORIMPL_TYPE__PATH = eINSTANCE.getDescriptorimplType_Path();
-
-		/**
 		 * The meta object literal for the '<em><b>Reference</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EAttribute DESCRIPTORIMPL_TYPE__REFERENCE = eINSTANCE.getDescriptorimplType_Reference();
-
-		/**
-		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute DESCRIPTORIMPL_TYPE__TYPE = eINSTANCE.getDescriptorimplType_Type();
-
-		/**
-		 * The meta object literal for the '<em><b>Url</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute DESCRIPTORIMPL_TYPE__URL = eINSTANCE.getDescriptorimplType_Url();
 
 		/**
 		 * The meta object literal for the '<em><b>Vendor</b></em>' attribute feature.
@@ -1197,28 +1263,12 @@ public interface QsarPackage extends EPackage {
 		EClass MOLECULE_RESOURCE_TYPE = eINSTANCE.getMoleculeResourceType();
 
 		/**
-		 * The meta object literal for the '<em><b>Url</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>File</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute MOLECULE_RESOURCE_TYPE__URL = eINSTANCE.getMoleculeResourceType_Url();
-
-		/**
-		 * The meta object literal for the '<em><b>Path</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute MOLECULE_RESOURCE_TYPE__PATH = eINSTANCE.getMoleculeResourceType_Path();
-
-		/**
-		 * The meta object literal for the '<em><b>Smiles</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute MOLECULE_RESOURCE_TYPE__SMILES = eINSTANCE.getMoleculeResourceType_Smiles();
+		EAttribute MOLECULE_RESOURCE_TYPE__FILE = eINSTANCE.getMoleculeResourceType_File();
 
 		/**
 		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
@@ -1245,6 +1295,14 @@ public interface QsarPackage extends EPackage {
 		EAttribute MOLECULE_RESOURCE_TYPE__NAMESPACE = eINSTANCE.getMoleculeResourceType_Namespace();
 
 		/**
+		 * The meta object literal for the '<em><b>Url</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MOLECULE_RESOURCE_TYPE__URL = eINSTANCE.getMoleculeResourceType_Url();
+
+		/**
 		 * The meta object literal for the '{@link net.bioclipse.qsar.impl.ParameterTypeImpl <em>Parameter Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1269,6 +1327,74 @@ public interface QsarPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PARAMETER_TYPE__VALUE = eINSTANCE.getParameterType_Value();
+
+		/**
+		 * The meta object literal for the '{@link net.bioclipse.qsar.impl.PreprocessingStepTypeImpl <em>Preprocessing Step Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see net.bioclipse.qsar.impl.PreprocessingStepTypeImpl
+		 * @see net.bioclipse.qsar.impl.QsarPackageImpl#getPreprocessingStepType()
+		 * @generated
+		 */
+		EClass PREPROCESSING_STEP_TYPE = eINSTANCE.getPreprocessingStepType();
+
+		/**
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PREPROCESSING_STEP_TYPE__ID = eINSTANCE.getPreprocessingStepType_Id();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PREPROCESSING_STEP_TYPE__NAME = eINSTANCE.getPreprocessingStepType_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Namespace</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PREPROCESSING_STEP_TYPE__NAMESPACE = eINSTANCE.getPreprocessingStepType_Namespace();
+
+		/**
+		 * The meta object literal for the '<em><b>Order</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PREPROCESSING_STEP_TYPE__ORDER = eINSTANCE.getPreprocessingStepType_Order();
+
+		/**
+		 * The meta object literal for the '<em><b>Vendor</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PREPROCESSING_STEP_TYPE__VENDOR = eINSTANCE.getPreprocessingStepType_Vendor();
+
+		/**
+		 * The meta object literal for the '{@link net.bioclipse.qsar.impl.PreprocessingTypeImpl <em>Preprocessing Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see net.bioclipse.qsar.impl.PreprocessingTypeImpl
+		 * @see net.bioclipse.qsar.impl.QsarPackageImpl#getPreprocessingType()
+		 * @generated
+		 */
+		EClass PREPROCESSING_TYPE = eINSTANCE.getPreprocessingType();
+
+		/**
+		 * The meta object literal for the '<em><b>Preprocessing Step</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PREPROCESSING_TYPE__PREPROCESSING_STEP = eINSTANCE.getPreprocessingType_PreprocessingStep();
 
 		/**
 		 * The meta object literal for the '{@link net.bioclipse.qsar.impl.QsarTypeImpl <em>Type</em>}' class.
@@ -1303,6 +1429,14 @@ public interface QsarPackage extends EPackage {
 		 * @generated
 		 */
 		EReference QSAR_TYPE__DESCRIPTORIMPL = eINSTANCE.getQsarType_Descriptorimpl();
+
+		/**
+		 * The meta object literal for the '<em><b>Preprocessing</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference QSAR_TYPE__PREPROCESSING = eINSTANCE.getQsarType_Preprocessing();
 
 	}
 

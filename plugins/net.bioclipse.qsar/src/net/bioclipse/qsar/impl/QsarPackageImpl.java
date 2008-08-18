@@ -20,6 +20,8 @@ import net.bioclipse.qsar.DocumentRoot;
 import net.bioclipse.qsar.MoleculeResourceType;
 import net.bioclipse.qsar.MoleculelistType;
 import net.bioclipse.qsar.ParameterType;
+import net.bioclipse.qsar.PreprocessingStepType;
+import net.bioclipse.qsar.PreprocessingType;
 import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
@@ -95,6 +97,20 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 	 * @generated
 	 */
 	private EClass parameterTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass preprocessingStepTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass preprocessingTypeEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -197,7 +213,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDescriptorimplType_Jar() {
+	public EAttribute getDescriptorimplType_Name() {
 		return (EAttribute)descriptorimplTypeEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -206,7 +222,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDescriptorimplType_Name() {
+	public EAttribute getDescriptorimplType_Namespace() {
 		return (EAttribute)descriptorimplTypeEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -215,7 +231,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDescriptorimplType_Namespace() {
+	public EAttribute getDescriptorimplType_Reference() {
 		return (EAttribute)descriptorimplTypeEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -224,7 +240,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDescriptorimplType_Path() {
+	public EAttribute getDescriptorimplType_Vendor() {
 		return (EAttribute)descriptorimplTypeEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -233,44 +249,8 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDescriptorimplType_Reference() {
-		return (EAttribute)descriptorimplTypeEClass.getEStructuralFeatures().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getDescriptorimplType_Type() {
-		return (EAttribute)descriptorimplTypeEClass.getEStructuralFeatures().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getDescriptorimplType_Url() {
-		return (EAttribute)descriptorimplTypeEClass.getEStructuralFeatures().get(7);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getDescriptorimplType_Vendor() {
-		return (EAttribute)descriptorimplTypeEClass.getEStructuralFeatures().get(8);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getDescriptorimplType_Version() {
-		return (EAttribute)descriptorimplTypeEClass.getEStructuralFeatures().get(9);
+		return (EAttribute)descriptorimplTypeEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -422,7 +402,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getMoleculeResourceType_Url() {
+	public EAttribute getMoleculeResourceType_File() {
 		return (EAttribute)moleculeResourceTypeEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -431,7 +411,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getMoleculeResourceType_Path() {
+	public EAttribute getMoleculeResourceType_Id() {
 		return (EAttribute)moleculeResourceTypeEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -440,7 +420,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getMoleculeResourceType_Smiles() {
+	public EAttribute getMoleculeResourceType_Name() {
 		return (EAttribute)moleculeResourceTypeEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -449,7 +429,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getMoleculeResourceType_Id() {
+	public EAttribute getMoleculeResourceType_Namespace() {
 		return (EAttribute)moleculeResourceTypeEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -458,17 +438,8 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getMoleculeResourceType_Name() {
+	public EAttribute getMoleculeResourceType_Url() {
 		return (EAttribute)moleculeResourceTypeEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getMoleculeResourceType_Namespace() {
-		return (EAttribute)moleculeResourceTypeEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -496,6 +467,78 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 	 */
 	public EAttribute getParameterType_Value() {
 		return (EAttribute)parameterTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getPreprocessingStepType() {
+		return preprocessingStepTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getPreprocessingStepType_Id() {
+		return (EAttribute)preprocessingStepTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getPreprocessingStepType_Name() {
+		return (EAttribute)preprocessingStepTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getPreprocessingStepType_Namespace() {
+		return (EAttribute)preprocessingStepTypeEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getPreprocessingStepType_Order() {
+		return (EAttribute)preprocessingStepTypeEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getPreprocessingStepType_Vendor() {
+		return (EAttribute)preprocessingStepTypeEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getPreprocessingType() {
+		return preprocessingTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPreprocessingType_PreprocessingStep() {
+		return (EReference)preprocessingTypeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -539,6 +582,15 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getQsarType_Preprocessing() {
+		return (EReference)qsarTypeEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public QsarFactory getQsarFactory() {
 		return (QsarFactory)getEFactoryInstance();
 	}
@@ -564,13 +616,9 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 		// Create classes and their features
 		descriptorimplTypeEClass = createEClass(DESCRIPTORIMPL_TYPE);
 		createEAttribute(descriptorimplTypeEClass, DESCRIPTORIMPL_TYPE__ID);
-		createEAttribute(descriptorimplTypeEClass, DESCRIPTORIMPL_TYPE__JAR);
 		createEAttribute(descriptorimplTypeEClass, DESCRIPTORIMPL_TYPE__NAME);
 		createEAttribute(descriptorimplTypeEClass, DESCRIPTORIMPL_TYPE__NAMESPACE);
-		createEAttribute(descriptorimplTypeEClass, DESCRIPTORIMPL_TYPE__PATH);
 		createEAttribute(descriptorimplTypeEClass, DESCRIPTORIMPL_TYPE__REFERENCE);
-		createEAttribute(descriptorimplTypeEClass, DESCRIPTORIMPL_TYPE__TYPE);
-		createEAttribute(descriptorimplTypeEClass, DESCRIPTORIMPL_TYPE__URL);
 		createEAttribute(descriptorimplTypeEClass, DESCRIPTORIMPL_TYPE__VENDOR);
 		createEAttribute(descriptorimplTypeEClass, DESCRIPTORIMPL_TYPE__VERSION);
 
@@ -594,21 +642,31 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 		createEReference(moleculelistTypeEClass, MOLECULELIST_TYPE__MOLECULE_RESOURCE);
 
 		moleculeResourceTypeEClass = createEClass(MOLECULE_RESOURCE_TYPE);
-		createEAttribute(moleculeResourceTypeEClass, MOLECULE_RESOURCE_TYPE__URL);
-		createEAttribute(moleculeResourceTypeEClass, MOLECULE_RESOURCE_TYPE__PATH);
-		createEAttribute(moleculeResourceTypeEClass, MOLECULE_RESOURCE_TYPE__SMILES);
+		createEAttribute(moleculeResourceTypeEClass, MOLECULE_RESOURCE_TYPE__FILE);
 		createEAttribute(moleculeResourceTypeEClass, MOLECULE_RESOURCE_TYPE__ID);
 		createEAttribute(moleculeResourceTypeEClass, MOLECULE_RESOURCE_TYPE__NAME);
 		createEAttribute(moleculeResourceTypeEClass, MOLECULE_RESOURCE_TYPE__NAMESPACE);
+		createEAttribute(moleculeResourceTypeEClass, MOLECULE_RESOURCE_TYPE__URL);
 
 		parameterTypeEClass = createEClass(PARAMETER_TYPE);
 		createEAttribute(parameterTypeEClass, PARAMETER_TYPE__KEY);
 		createEAttribute(parameterTypeEClass, PARAMETER_TYPE__VALUE);
 
+		preprocessingStepTypeEClass = createEClass(PREPROCESSING_STEP_TYPE);
+		createEAttribute(preprocessingStepTypeEClass, PREPROCESSING_STEP_TYPE__ID);
+		createEAttribute(preprocessingStepTypeEClass, PREPROCESSING_STEP_TYPE__NAME);
+		createEAttribute(preprocessingStepTypeEClass, PREPROCESSING_STEP_TYPE__NAMESPACE);
+		createEAttribute(preprocessingStepTypeEClass, PREPROCESSING_STEP_TYPE__ORDER);
+		createEAttribute(preprocessingStepTypeEClass, PREPROCESSING_STEP_TYPE__VENDOR);
+
+		preprocessingTypeEClass = createEClass(PREPROCESSING_TYPE);
+		createEReference(preprocessingTypeEClass, PREPROCESSING_TYPE__PREPROCESSING_STEP);
+
 		qsarTypeEClass = createEClass(QSAR_TYPE);
 		createEReference(qsarTypeEClass, QSAR_TYPE__MOLECULELIST);
 		createEReference(qsarTypeEClass, QSAR_TYPE__DESCRIPTORLIST);
 		createEReference(qsarTypeEClass, QSAR_TYPE__DESCRIPTORIMPL);
+		createEReference(qsarTypeEClass, QSAR_TYPE__PREPROCESSING);
 	}
 
 	/**
@@ -646,13 +704,9 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 		// Initialize classes and features; add operations and parameters
 		initEClass(descriptorimplTypeEClass, DescriptorimplType.class, "DescriptorimplType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getDescriptorimplType_Id(), theXMLTypePackage.getString(), "id", null, 0, 1, DescriptorimplType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDescriptorimplType_Jar(), theXMLTypePackage.getString(), "jar", null, 0, 1, DescriptorimplType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDescriptorimplType_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, DescriptorimplType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDescriptorimplType_Namespace(), theXMLTypePackage.getString(), "namespace", null, 0, 1, DescriptorimplType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDescriptorimplType_Path(), theXMLTypePackage.getString(), "path", null, 0, 1, DescriptorimplType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDescriptorimplType_Reference(), theXMLTypePackage.getString(), "reference", null, 0, 1, DescriptorimplType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDescriptorimplType_Type(), theXMLTypePackage.getString(), "type", null, 0, 1, DescriptorimplType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDescriptorimplType_Url(), theXMLTypePackage.getString(), "url", null, 0, 1, DescriptorimplType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDescriptorimplType_Vendor(), theXMLTypePackage.getString(), "vendor", null, 0, 1, DescriptorimplType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDescriptorimplType_Version(), theXMLTypePackage.getString(), "version", null, 0, 1, DescriptorimplType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -676,21 +730,31 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 		initEReference(getMoleculelistType_MoleculeResource(), this.getMoleculeResourceType(), null, "moleculeResource", null, 0, -1, MoleculelistType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(moleculeResourceTypeEClass, MoleculeResourceType.class, "MoleculeResourceType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getMoleculeResourceType_Url(), theXMLTypePackage.getString(), "url", null, 0, 1, MoleculeResourceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getMoleculeResourceType_Path(), theXMLTypePackage.getString(), "path", null, 0, 1, MoleculeResourceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getMoleculeResourceType_Smiles(), theXMLTypePackage.getString(), "smiles", null, 0, 1, MoleculeResourceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getMoleculeResourceType_File(), theXMLTypePackage.getString(), "file", null, 0, 1, MoleculeResourceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getMoleculeResourceType_Id(), theXMLTypePackage.getString(), "id", null, 1, 1, MoleculeResourceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getMoleculeResourceType_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, MoleculeResourceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getMoleculeResourceType_Namespace(), theXMLTypePackage.getString(), "namespace", null, 0, 1, MoleculeResourceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getMoleculeResourceType_Url(), theXMLTypePackage.getString(), "url", null, 0, 1, MoleculeResourceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(parameterTypeEClass, ParameterType.class, "ParameterType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getParameterType_Key(), theXMLTypePackage.getString(), "key", null, 1, 1, ParameterType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameterType_Value(), theXMLTypePackage.getString(), "value", null, 0, 1, ParameterType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEClass(preprocessingStepTypeEClass, PreprocessingStepType.class, "PreprocessingStepType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getPreprocessingStepType_Id(), theXMLTypePackage.getString(), "id", null, 0, 1, PreprocessingStepType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPreprocessingStepType_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, PreprocessingStepType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPreprocessingStepType_Namespace(), theXMLTypePackage.getString(), "namespace", null, 0, 1, PreprocessingStepType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPreprocessingStepType_Order(), theXMLTypePackage.getString(), "order", null, 0, 1, PreprocessingStepType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPreprocessingStepType_Vendor(), theXMLTypePackage.getString(), "vendor", null, 0, 1, PreprocessingStepType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(preprocessingTypeEClass, PreprocessingType.class, "PreprocessingType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getPreprocessingType_PreprocessingStep(), this.getPreprocessingStepType(), null, "preprocessingStep", null, 0, -1, PreprocessingType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		initEClass(qsarTypeEClass, QsarType.class, "QsarType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getQsarType_Moleculelist(), this.getMoleculelistType(), null, "moleculelist", null, 0, 1, QsarType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getQsarType_Descriptorlist(), this.getDescriptorlistType(), null, "descriptorlist", null, 0, 1, QsarType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getQsarType_Descriptorimpl(), this.getDescriptorimplType(), null, "descriptorimpl", null, 0, -1, QsarType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getQsarType_Preprocessing(), this.getPreprocessingType(), null, "preprocessing", null, 0, 1, QsarType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);
@@ -723,13 +787,6 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 			 "name", "id"
 		   });		
 		addAnnotation
-		  (getDescriptorimplType_Jar(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "jar"
-		   });		
-		addAnnotation
 		  (getDescriptorimplType_Name(), 
 		   source, 
 		   new String[] {
@@ -744,32 +801,11 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 			 "name", "namespace"
 		   });		
 		addAnnotation
-		  (getDescriptorimplType_Path(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "path"
-		   });		
-		addAnnotation
 		  (getDescriptorimplType_Reference(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "reference"
-		   });		
-		addAnnotation
-		  (getDescriptorimplType_Type(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "type"
-		   });		
-		addAnnotation
-		  (getDescriptorimplType_Url(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "url"
 		   });		
 		addAnnotation
 		  (getDescriptorimplType_Vendor(), 
@@ -900,31 +936,14 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 		   source, 
 		   new String[] {
 			 "name", "moleculeResourceType",
-			 "kind", "elementOnly"
+			 "kind", "empty"
 		   });		
 		addAnnotation
-		  (getMoleculeResourceType_Url(), 
+		  (getMoleculeResourceType_File(), 
 		   source, 
 		   new String[] {
-			 "kind", "element",
-			 "name", "url",
-			 "namespace", "##targetNamespace"
-		   });		
-		addAnnotation
-		  (getMoleculeResourceType_Path(), 
-		   source, 
-		   new String[] {
-			 "kind", "element",
-			 "name", "path",
-			 "namespace", "##targetNamespace"
-		   });		
-		addAnnotation
-		  (getMoleculeResourceType_Smiles(), 
-		   source, 
-		   new String[] {
-			 "kind", "element",
-			 "name", "smiles",
-			 "namespace", "##targetNamespace"
+			 "kind", "attribute",
+			 "name", "file"
 		   });		
 		addAnnotation
 		  (getMoleculeResourceType_Id(), 
@@ -948,6 +967,13 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 			 "name", "namespace"
 		   });		
 		addAnnotation
+		  (getMoleculeResourceType_Url(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "url"
+		   });		
+		addAnnotation
 		  (parameterTypeEClass, 
 		   source, 
 		   new String[] {
@@ -967,6 +993,63 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "value"
+		   });		
+		addAnnotation
+		  (preprocessingStepTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "preprocessingStepType",
+			 "kind", "empty"
+		   });		
+		addAnnotation
+		  (getPreprocessingStepType_Id(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "id"
+		   });		
+		addAnnotation
+		  (getPreprocessingStepType_Name(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "name"
+		   });		
+		addAnnotation
+		  (getPreprocessingStepType_Namespace(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "namespace"
+		   });		
+		addAnnotation
+		  (getPreprocessingStepType_Order(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "order"
+		   });		
+		addAnnotation
+		  (getPreprocessingStepType_Vendor(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "vendor"
+		   });		
+		addAnnotation
+		  (preprocessingTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "preprocessingType",
+			 "kind", "elementOnly"
+		   });		
+		addAnnotation
+		  (getPreprocessingType_PreprocessingStep(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "preprocessingStep",
+			 "namespace", "##targetNamespace"
 		   });		
 		addAnnotation
 		  (qsarTypeEClass, 
@@ -997,6 +1080,14 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 		   new String[] {
 			 "kind", "element",
 			 "name", "descriptorimpl",
+			 "namespace", "##targetNamespace"
+		   });		
+		addAnnotation
+		  (getQsarType_Preprocessing(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "preprocessing",
 			 "namespace", "##targetNamespace"
 		   });
 	}

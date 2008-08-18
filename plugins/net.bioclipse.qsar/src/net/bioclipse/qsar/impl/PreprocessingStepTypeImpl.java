@@ -13,7 +13,7 @@
  */
 package net.bioclipse.qsar.impl;
 
-import net.bioclipse.qsar.DescriptorimplType;
+import net.bioclipse.qsar.PreprocessingStepType;
 import net.bioclipse.qsar.QsarPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -25,23 +25,22 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Descriptorimpl Type</b></em>'.
+ * An implementation of the model object '<em><b>Preprocessing Step Type</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link net.bioclipse.qsar.impl.DescriptorimplTypeImpl#getId <em>Id</em>}</li>
- *   <li>{@link net.bioclipse.qsar.impl.DescriptorimplTypeImpl#getName <em>Name</em>}</li>
- *   <li>{@link net.bioclipse.qsar.impl.DescriptorimplTypeImpl#getNamespace <em>Namespace</em>}</li>
- *   <li>{@link net.bioclipse.qsar.impl.DescriptorimplTypeImpl#getReference <em>Reference</em>}</li>
- *   <li>{@link net.bioclipse.qsar.impl.DescriptorimplTypeImpl#getVendor <em>Vendor</em>}</li>
- *   <li>{@link net.bioclipse.qsar.impl.DescriptorimplTypeImpl#getVersion <em>Version</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.impl.PreprocessingStepTypeImpl#getId <em>Id</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.impl.PreprocessingStepTypeImpl#getName <em>Name</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.impl.PreprocessingStepTypeImpl#getNamespace <em>Namespace</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.impl.PreprocessingStepTypeImpl#getOrder <em>Order</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.impl.PreprocessingStepTypeImpl#getVendor <em>Vendor</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class DescriptorimplTypeImpl extends EObjectImpl implements DescriptorimplType {
+public class PreprocessingStepTypeImpl extends EObjectImpl implements PreprocessingStepType {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -110,24 +109,24 @@ public class DescriptorimplTypeImpl extends EObjectImpl implements Descriptorimp
 	protected String namespace = NAMESPACE_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getReference() <em>Reference</em>}' attribute.
+	 * The default value of the '{@link #getOrder() <em>Order</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getReference()
+	 * @see #getOrder()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String REFERENCE_EDEFAULT = null;
+	protected static final String ORDER_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getReference() <em>Reference</em>}' attribute.
+	 * The cached value of the '{@link #getOrder() <em>Order</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getReference()
+	 * @see #getOrder()
 	 * @generated
 	 * @ordered
 	 */
-	protected String reference = REFERENCE_EDEFAULT;
+	protected String order = ORDER_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getVendor() <em>Vendor</em>}' attribute.
@@ -150,31 +149,11 @@ public class DescriptorimplTypeImpl extends EObjectImpl implements Descriptorimp
 	protected String vendor = VENDOR_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getVersion() <em>Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getVersion()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String VERSION_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getVersion() <em>Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getVersion()
-	 * @generated
-	 * @ordered
-	 */
-	protected String version = VERSION_EDEFAULT;
-
-	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected DescriptorimplTypeImpl() {
+	protected PreprocessingStepTypeImpl() {
 		super();
 	}
 
@@ -185,7 +164,7 @@ public class DescriptorimplTypeImpl extends EObjectImpl implements Descriptorimp
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QsarPackage.Literals.DESCRIPTORIMPL_TYPE;
+		return QsarPackage.Literals.PREPROCESSING_STEP_TYPE;
 	}
 
 	/**
@@ -206,7 +185,7 @@ public class DescriptorimplTypeImpl extends EObjectImpl implements Descriptorimp
 		String oldId = id;
 		id = newId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.DESCRIPTORIMPL_TYPE__ID, oldId, id));
+			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.PREPROCESSING_STEP_TYPE__ID, oldId, id));
 	}
 
 	/**
@@ -227,7 +206,7 @@ public class DescriptorimplTypeImpl extends EObjectImpl implements Descriptorimp
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.DESCRIPTORIMPL_TYPE__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.PREPROCESSING_STEP_TYPE__NAME, oldName, name));
 	}
 
 	/**
@@ -248,7 +227,7 @@ public class DescriptorimplTypeImpl extends EObjectImpl implements Descriptorimp
 		String oldNamespace = namespace;
 		namespace = newNamespace;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.DESCRIPTORIMPL_TYPE__NAMESPACE, oldNamespace, namespace));
+			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.PREPROCESSING_STEP_TYPE__NAMESPACE, oldNamespace, namespace));
 	}
 
 	/**
@@ -256,8 +235,8 @@ public class DescriptorimplTypeImpl extends EObjectImpl implements Descriptorimp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getReference() {
-		return reference;
+	public String getOrder() {
+		return order;
 	}
 
 	/**
@@ -265,11 +244,11 @@ public class DescriptorimplTypeImpl extends EObjectImpl implements Descriptorimp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setReference(String newReference) {
-		String oldReference = reference;
-		reference = newReference;
+	public void setOrder(String newOrder) {
+		String oldOrder = order;
+		order = newOrder;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.DESCRIPTORIMPL_TYPE__REFERENCE, oldReference, reference));
+			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.PREPROCESSING_STEP_TYPE__ORDER, oldOrder, order));
 	}
 
 	/**
@@ -290,28 +269,7 @@ public class DescriptorimplTypeImpl extends EObjectImpl implements Descriptorimp
 		String oldVendor = vendor;
 		vendor = newVendor;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.DESCRIPTORIMPL_TYPE__VENDOR, oldVendor, vendor));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getVersion() {
-		return version;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setVersion(String newVersion) {
-		String oldVersion = version;
-		version = newVersion;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.DESCRIPTORIMPL_TYPE__VERSION, oldVersion, version));
+			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.PREPROCESSING_STEP_TYPE__VENDOR, oldVendor, vendor));
 	}
 
 	/**
@@ -322,18 +280,16 @@ public class DescriptorimplTypeImpl extends EObjectImpl implements Descriptorimp
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case QsarPackage.DESCRIPTORIMPL_TYPE__ID:
+			case QsarPackage.PREPROCESSING_STEP_TYPE__ID:
 				return getId();
-			case QsarPackage.DESCRIPTORIMPL_TYPE__NAME:
+			case QsarPackage.PREPROCESSING_STEP_TYPE__NAME:
 				return getName();
-			case QsarPackage.DESCRIPTORIMPL_TYPE__NAMESPACE:
+			case QsarPackage.PREPROCESSING_STEP_TYPE__NAMESPACE:
 				return getNamespace();
-			case QsarPackage.DESCRIPTORIMPL_TYPE__REFERENCE:
-				return getReference();
-			case QsarPackage.DESCRIPTORIMPL_TYPE__VENDOR:
+			case QsarPackage.PREPROCESSING_STEP_TYPE__ORDER:
+				return getOrder();
+			case QsarPackage.PREPROCESSING_STEP_TYPE__VENDOR:
 				return getVendor();
-			case QsarPackage.DESCRIPTORIMPL_TYPE__VERSION:
-				return getVersion();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -346,23 +302,20 @@ public class DescriptorimplTypeImpl extends EObjectImpl implements Descriptorimp
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case QsarPackage.DESCRIPTORIMPL_TYPE__ID:
+			case QsarPackage.PREPROCESSING_STEP_TYPE__ID:
 				setId((String)newValue);
 				return;
-			case QsarPackage.DESCRIPTORIMPL_TYPE__NAME:
+			case QsarPackage.PREPROCESSING_STEP_TYPE__NAME:
 				setName((String)newValue);
 				return;
-			case QsarPackage.DESCRIPTORIMPL_TYPE__NAMESPACE:
+			case QsarPackage.PREPROCESSING_STEP_TYPE__NAMESPACE:
 				setNamespace((String)newValue);
 				return;
-			case QsarPackage.DESCRIPTORIMPL_TYPE__REFERENCE:
-				setReference((String)newValue);
+			case QsarPackage.PREPROCESSING_STEP_TYPE__ORDER:
+				setOrder((String)newValue);
 				return;
-			case QsarPackage.DESCRIPTORIMPL_TYPE__VENDOR:
+			case QsarPackage.PREPROCESSING_STEP_TYPE__VENDOR:
 				setVendor((String)newValue);
-				return;
-			case QsarPackage.DESCRIPTORIMPL_TYPE__VERSION:
-				setVersion((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -376,23 +329,20 @@ public class DescriptorimplTypeImpl extends EObjectImpl implements Descriptorimp
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case QsarPackage.DESCRIPTORIMPL_TYPE__ID:
+			case QsarPackage.PREPROCESSING_STEP_TYPE__ID:
 				setId(ID_EDEFAULT);
 				return;
-			case QsarPackage.DESCRIPTORIMPL_TYPE__NAME:
+			case QsarPackage.PREPROCESSING_STEP_TYPE__NAME:
 				setName(NAME_EDEFAULT);
 				return;
-			case QsarPackage.DESCRIPTORIMPL_TYPE__NAMESPACE:
+			case QsarPackage.PREPROCESSING_STEP_TYPE__NAMESPACE:
 				setNamespace(NAMESPACE_EDEFAULT);
 				return;
-			case QsarPackage.DESCRIPTORIMPL_TYPE__REFERENCE:
-				setReference(REFERENCE_EDEFAULT);
+			case QsarPackage.PREPROCESSING_STEP_TYPE__ORDER:
+				setOrder(ORDER_EDEFAULT);
 				return;
-			case QsarPackage.DESCRIPTORIMPL_TYPE__VENDOR:
+			case QsarPackage.PREPROCESSING_STEP_TYPE__VENDOR:
 				setVendor(VENDOR_EDEFAULT);
-				return;
-			case QsarPackage.DESCRIPTORIMPL_TYPE__VERSION:
-				setVersion(VERSION_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -406,18 +356,16 @@ public class DescriptorimplTypeImpl extends EObjectImpl implements Descriptorimp
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case QsarPackage.DESCRIPTORIMPL_TYPE__ID:
+			case QsarPackage.PREPROCESSING_STEP_TYPE__ID:
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-			case QsarPackage.DESCRIPTORIMPL_TYPE__NAME:
+			case QsarPackage.PREPROCESSING_STEP_TYPE__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case QsarPackage.DESCRIPTORIMPL_TYPE__NAMESPACE:
+			case QsarPackage.PREPROCESSING_STEP_TYPE__NAMESPACE:
 				return NAMESPACE_EDEFAULT == null ? namespace != null : !NAMESPACE_EDEFAULT.equals(namespace);
-			case QsarPackage.DESCRIPTORIMPL_TYPE__REFERENCE:
-				return REFERENCE_EDEFAULT == null ? reference != null : !REFERENCE_EDEFAULT.equals(reference);
-			case QsarPackage.DESCRIPTORIMPL_TYPE__VENDOR:
+			case QsarPackage.PREPROCESSING_STEP_TYPE__ORDER:
+				return ORDER_EDEFAULT == null ? order != null : !ORDER_EDEFAULT.equals(order);
+			case QsarPackage.PREPROCESSING_STEP_TYPE__VENDOR:
 				return VENDOR_EDEFAULT == null ? vendor != null : !VENDOR_EDEFAULT.equals(vendor);
-			case QsarPackage.DESCRIPTORIMPL_TYPE__VERSION:
-				return VERSION_EDEFAULT == null ? version != null : !VERSION_EDEFAULT.equals(version);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -438,14 +386,12 @@ public class DescriptorimplTypeImpl extends EObjectImpl implements Descriptorimp
 		result.append(name);
 		result.append(", namespace: ");
 		result.append(namespace);
-		result.append(", reference: ");
-		result.append(reference);
+		result.append(", order: ");
+		result.append(order);
 		result.append(", vendor: ");
 		result.append(vendor);
-		result.append(", version: ");
-		result.append(version);
 		result.append(')');
 		return result.toString();
 	}
 
-} //DescriptorimplTypeImpl
+} //PreprocessingStepTypeImpl

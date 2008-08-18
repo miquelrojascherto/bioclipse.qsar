@@ -143,6 +143,18 @@ public class QsarSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case QsarPackage.PREPROCESSING_STEP_TYPE: {
+				PreprocessingStepType preprocessingStepType = (PreprocessingStepType)theEObject;
+				T result = casePreprocessingStepType(preprocessingStepType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case QsarPackage.PREPROCESSING_TYPE: {
+				PreprocessingType preprocessingType = (PreprocessingType)theEObject;
+				T result = casePreprocessingType(preprocessingType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case QsarPackage.QSAR_TYPE: {
 				QsarType qsarType = (QsarType)theEObject;
 				T result = caseQsarType(qsarType);
@@ -255,6 +267,36 @@ public class QsarSwitch<T> {
 	 * @generated
 	 */
 	public T caseParameterType(ParameterType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Preprocessing Step Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Preprocessing Step Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T casePreprocessingStepType(PreprocessingStepType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Preprocessing Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Preprocessing Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T casePreprocessingType(PreprocessingType object) {
 		return null;
 	}
 

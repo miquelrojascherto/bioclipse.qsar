@@ -11,7 +11,12 @@
     		<element name="descriptorlist" type="tns:descriptorlistType"
     			maxOccurs="1" minOccurs="0">
     		</element>
-    		<element name="descriptorimpl" type="tns:descriptorimplType" maxOccurs="unbounded" minOccurs="0"></element>
+    		<element name="descriptorimpl" type="tns:descriptorimplType"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    		<element name="preprocessing"
+    			type="tns:preprocessingType" maxOccurs="1" minOccurs="0">
+    		</element>
     	</sequence>
     </complexType>
 
@@ -32,14 +37,11 @@
     </complexType>
 
     <complexType name="moleculeResourceType">
-    	<choice minOccurs="1" maxOccurs="1">
-    		<element name="url" type="string"></element>
-    		<element name="path" type="string"></element>
-    		<element name="smiles" type="string"></element>
-    	</choice>
     	<attribute name="id" type="string" use="required"></attribute>
     	<attribute name="name" type="string"></attribute>
     	<attribute name="namespace" type="string"></attribute>
+    	<attribute name="url" type="string"></attribute>
+    	<attribute name="file" type="string"></attribute>
     </complexType>
 
     <complexType name="descriptorType">
@@ -66,12 +68,25 @@
     	<attribute name="id" type="string"></attribute>
     	<attribute name="namespace" type="string"></attribute>
     	<attribute name="name" type="string"></attribute>
-    	<attribute name="path" type="string"></attribute>
-    	<attribute name="jar" type="string"></attribute>
-    	<attribute name="url" type="string"></attribute>
     	<attribute name="vendor" type="string"></attribute>
     	<attribute name="reference" type="string"></attribute>
     	<attribute name="version" type="string"></attribute>
-    	<attribute name="type" type="string"></attribute>
+    </complexType>
+
+    <complexType name="preprocessingType">
+    	<sequence>
+    		<element name="preprocessingStep"
+    			type="tns:preprocessingStepType" maxOccurs="unbounded"
+    			minOccurs="0">
+    		</element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="preprocessingStepType">
+    	<attribute name="id" type="string"></attribute>
+    	<attribute name="namespace" type="string"></attribute>
+    	<attribute name="name" type="string"></attribute>
+    	<attribute name="vendor" type="string"></attribute>
+    	<attribute name="order" type="string"></attribute>
     </complexType>
 </schema>

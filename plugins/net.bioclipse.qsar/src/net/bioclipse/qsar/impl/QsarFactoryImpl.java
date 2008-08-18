@@ -81,6 +81,8 @@ public class QsarFactoryImpl extends EFactoryImpl implements QsarFactory {
 			case QsarPackage.MOLECULELIST_TYPE: return createMoleculelistType();
 			case QsarPackage.MOLECULE_RESOURCE_TYPE: return createMoleculeResourceType();
 			case QsarPackage.PARAMETER_TYPE: return createParameterType();
+			case QsarPackage.PREPROCESSING_STEP_TYPE: return createPreprocessingStepType();
+			case QsarPackage.PREPROCESSING_TYPE: return createPreprocessingType();
 			case QsarPackage.QSAR_TYPE: return createQsarType();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -155,6 +157,26 @@ public class QsarFactoryImpl extends EFactoryImpl implements QsarFactory {
 	public ParameterType createParameterType() {
 		ParameterTypeImpl parameterType = new ParameterTypeImpl();
 		return parameterType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public PreprocessingStepType createPreprocessingStepType() {
+		PreprocessingStepTypeImpl preprocessingStepType = new PreprocessingStepTypeImpl();
+		return preprocessingStepType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public PreprocessingType createPreprocessingType() {
+		PreprocessingTypeImpl preprocessingType = new PreprocessingTypeImpl();
+		return preprocessingType;
 	}
 
 	/**

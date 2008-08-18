@@ -18,6 +18,7 @@ import java.util.Collection;
 import net.bioclipse.qsar.DescriptorimplType;
 import net.bioclipse.qsar.DescriptorlistType;
 import net.bioclipse.qsar.MoleculelistType;
+import net.bioclipse.qsar.PreprocessingType;
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
 
@@ -45,6 +46,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link net.bioclipse.qsar.impl.QsarTypeImpl#getMoleculelist <em>Moleculelist</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.QsarTypeImpl#getDescriptorlist <em>Descriptorlist</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.QsarTypeImpl#getDescriptorimpl <em>Descriptorimpl</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.impl.QsarTypeImpl#getPreprocessing <em>Preprocessing</em>}</li>
  * </ul>
  * </p>
  *
@@ -87,6 +89,16 @@ public class QsarTypeImpl extends EObjectImpl implements QsarType {
 	 * @ordered
 	 */
 	protected EList<DescriptorimplType> descriptorimpl;
+
+	/**
+	 * The cached value of the '{@link #getPreprocessing() <em>Preprocessing</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPreprocessing()
+	 * @generated
+	 * @ordered
+	 */
+	protected PreprocessingType preprocessing;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -210,6 +222,49 @@ public class QsarTypeImpl extends EObjectImpl implements QsarType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public PreprocessingType getPreprocessing() {
+		return preprocessing;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetPreprocessing(PreprocessingType newPreprocessing, NotificationChain msgs) {
+		PreprocessingType oldPreprocessing = preprocessing;
+		preprocessing = newPreprocessing;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QsarPackage.QSAR_TYPE__PREPROCESSING, oldPreprocessing, newPreprocessing);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setPreprocessing(PreprocessingType newPreprocessing) {
+		if (newPreprocessing != preprocessing) {
+			NotificationChain msgs = null;
+			if (preprocessing != null)
+				msgs = ((InternalEObject)preprocessing).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QsarPackage.QSAR_TYPE__PREPROCESSING, null, msgs);
+			if (newPreprocessing != null)
+				msgs = ((InternalEObject)newPreprocessing).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QsarPackage.QSAR_TYPE__PREPROCESSING, null, msgs);
+			msgs = basicSetPreprocessing(newPreprocessing, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.QSAR_TYPE__PREPROCESSING, newPreprocessing, newPreprocessing));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -219,6 +274,8 @@ public class QsarTypeImpl extends EObjectImpl implements QsarType {
 				return basicSetDescriptorlist(null, msgs);
 			case QsarPackage.QSAR_TYPE__DESCRIPTORIMPL:
 				return ((InternalEList<?>)getDescriptorimpl()).basicRemove(otherEnd, msgs);
+			case QsarPackage.QSAR_TYPE__PREPROCESSING:
+				return basicSetPreprocessing(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -237,6 +294,8 @@ public class QsarTypeImpl extends EObjectImpl implements QsarType {
 				return getDescriptorlist();
 			case QsarPackage.QSAR_TYPE__DESCRIPTORIMPL:
 				return getDescriptorimpl();
+			case QsarPackage.QSAR_TYPE__PREPROCESSING:
+				return getPreprocessing();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -260,6 +319,9 @@ public class QsarTypeImpl extends EObjectImpl implements QsarType {
 				getDescriptorimpl().clear();
 				getDescriptorimpl().addAll((Collection<? extends DescriptorimplType>)newValue);
 				return;
+			case QsarPackage.QSAR_TYPE__PREPROCESSING:
+				setPreprocessing((PreprocessingType)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -281,6 +343,9 @@ public class QsarTypeImpl extends EObjectImpl implements QsarType {
 			case QsarPackage.QSAR_TYPE__DESCRIPTORIMPL:
 				getDescriptorimpl().clear();
 				return;
+			case QsarPackage.QSAR_TYPE__PREPROCESSING:
+				setPreprocessing((PreprocessingType)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -299,6 +364,8 @@ public class QsarTypeImpl extends EObjectImpl implements QsarType {
 				return descriptorlist != null;
 			case QsarPackage.QSAR_TYPE__DESCRIPTORIMPL:
 				return descriptorimpl != null && !descriptorimpl.isEmpty();
+			case QsarPackage.QSAR_TYPE__PREPROCESSING:
+				return preprocessing != null;
 		}
 		return super.eIsSet(featureID);
 	}

@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link net.bioclipse.qsar.QsarType#getMoleculelist <em>Moleculelist</em>}</li>
  *   <li>{@link net.bioclipse.qsar.QsarType#getDescriptorlist <em>Descriptorlist</em>}</li>
  *   <li>{@link net.bioclipse.qsar.QsarType#getDescriptorimpl <em>Descriptorimpl</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.QsarType#getPreprocessing <em>Preprocessing</em>}</li>
  * </ul>
  * </p>
  *
@@ -113,5 +114,32 @@ public interface QsarType extends EObject {
 	 * @generated
 	 */
 	EList<DescriptorimplType> getDescriptorimpl();
+
+	/**
+	 * Returns the value of the '<em><b>Preprocessing</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Preprocessing</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Preprocessing</em>' containment reference.
+	 * @see #setPreprocessing(PreprocessingType)
+	 * @see net.bioclipse.qsar.QsarPackage#getQsarType_Preprocessing()
+	 * @model containment="true"
+	 *        extendedMetaData="kind='element' name='preprocessing' namespace='##targetNamespace'"
+	 * @generated
+	 */
+	PreprocessingType getPreprocessing();
+
+	/**
+	 * Sets the value of the '{@link net.bioclipse.qsar.QsarType#getPreprocessing <em>Preprocessing</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Preprocessing</em>' containment reference.
+	 * @see #getPreprocessing()
+	 * @generated
+	 */
+	void setPreprocessing(PreprocessingType value);
 
 } // QsarType

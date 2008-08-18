@@ -103,6 +103,24 @@ public interface QsarFactory extends EFactory {
 	ParameterType createParameterType();
 
 	/**
+	 * Returns a new object of class '<em>Preprocessing Step Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Preprocessing Step Type</em>'.
+	 * @generated
+	 */
+	PreprocessingStepType createPreprocessingStepType();
+
+	/**
+	 * Returns a new object of class '<em>Preprocessing Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Preprocessing Type</em>'.
+	 * @generated
+	 */
+	PreprocessingType createPreprocessingType();
+
+	/**
 	 * Returns a new object of class '<em>Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

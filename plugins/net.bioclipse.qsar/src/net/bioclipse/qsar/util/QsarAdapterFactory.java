@@ -114,6 +114,14 @@ public class QsarAdapterFactory extends AdapterFactoryImpl {
 				return createParameterTypeAdapter();
 			}
 			@Override
+			public Adapter casePreprocessingStepType(PreprocessingStepType object) {
+				return createPreprocessingStepTypeAdapter();
+			}
+			@Override
+			public Adapter casePreprocessingType(PreprocessingType object) {
+				return createPreprocessingTypeAdapter();
+			}
+			@Override
 			public Adapter caseQsarType(QsarType object) {
 				return createQsarTypeAdapter();
 			}
@@ -232,6 +240,34 @@ public class QsarAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createParameterTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link net.bioclipse.qsar.PreprocessingStepType <em>Preprocessing Step Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see net.bioclipse.qsar.PreprocessingStepType
+	 * @generated
+	 */
+	public Adapter createPreprocessingStepTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link net.bioclipse.qsar.PreprocessingType <em>Preprocessing Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see net.bioclipse.qsar.PreprocessingType
+	 * @generated
+	 */
+	public Adapter createPreprocessingTypeAdapter() {
 		return null;
 	}
 

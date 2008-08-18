@@ -17,26 +17,25 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Descriptorimpl Type</b></em>'.
+ * A representation of the model object '<em><b>Preprocessing Step Type</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link net.bioclipse.qsar.DescriptorimplType#getId <em>Id</em>}</li>
- *   <li>{@link net.bioclipse.qsar.DescriptorimplType#getName <em>Name</em>}</li>
- *   <li>{@link net.bioclipse.qsar.DescriptorimplType#getNamespace <em>Namespace</em>}</li>
- *   <li>{@link net.bioclipse.qsar.DescriptorimplType#getReference <em>Reference</em>}</li>
- *   <li>{@link net.bioclipse.qsar.DescriptorimplType#getVendor <em>Vendor</em>}</li>
- *   <li>{@link net.bioclipse.qsar.DescriptorimplType#getVersion <em>Version</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.PreprocessingStepType#getId <em>Id</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.PreprocessingStepType#getName <em>Name</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.PreprocessingStepType#getNamespace <em>Namespace</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.PreprocessingStepType#getOrder <em>Order</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.PreprocessingStepType#getVendor <em>Vendor</em>}</li>
  * </ul>
  * </p>
  *
- * @see net.bioclipse.qsar.QsarPackage#getDescriptorimplType()
- * @model extendedMetaData="name='descriptorimplType' kind='empty'"
+ * @see net.bioclipse.qsar.QsarPackage#getPreprocessingStepType()
+ * @model extendedMetaData="name='preprocessingStepType' kind='empty'"
  * @generated
  */
-public interface DescriptorimplType extends EObject {
+public interface PreprocessingStepType extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -54,7 +53,7 @@ public interface DescriptorimplType extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Id</em>' attribute.
 	 * @see #setId(String)
-	 * @see net.bioclipse.qsar.QsarPackage#getDescriptorimplType_Id()
+	 * @see net.bioclipse.qsar.QsarPackage#getPreprocessingStepType_Id()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='attribute' name='id'"
 	 * @generated
@@ -62,7 +61,7 @@ public interface DescriptorimplType extends EObject {
 	String getId();
 
 	/**
-	 * Sets the value of the '{@link net.bioclipse.qsar.DescriptorimplType#getId <em>Id</em>}' attribute.
+	 * Sets the value of the '{@link net.bioclipse.qsar.PreprocessingStepType#getId <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Id</em>' attribute.
@@ -81,7 +80,7 @@ public interface DescriptorimplType extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
-	 * @see net.bioclipse.qsar.QsarPackage#getDescriptorimplType_Name()
+	 * @see net.bioclipse.qsar.QsarPackage#getPreprocessingStepType_Name()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='attribute' name='name'"
 	 * @generated
@@ -89,7 +88,7 @@ public interface DescriptorimplType extends EObject {
 	String getName();
 
 	/**
-	 * Sets the value of the '{@link net.bioclipse.qsar.DescriptorimplType#getName <em>Name</em>}' attribute.
+	 * Sets the value of the '{@link net.bioclipse.qsar.PreprocessingStepType#getName <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Name</em>' attribute.
@@ -108,7 +107,7 @@ public interface DescriptorimplType extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Namespace</em>' attribute.
 	 * @see #setNamespace(String)
-	 * @see net.bioclipse.qsar.QsarPackage#getDescriptorimplType_Namespace()
+	 * @see net.bioclipse.qsar.QsarPackage#getPreprocessingStepType_Namespace()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='attribute' name='namespace'"
 	 * @generated
@@ -116,7 +115,7 @@ public interface DescriptorimplType extends EObject {
 	String getNamespace();
 
 	/**
-	 * Sets the value of the '{@link net.bioclipse.qsar.DescriptorimplType#getNamespace <em>Namespace</em>}' attribute.
+	 * Sets the value of the '{@link net.bioclipse.qsar.PreprocessingStepType#getNamespace <em>Namespace</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Namespace</em>' attribute.
@@ -126,31 +125,31 @@ public interface DescriptorimplType extends EObject {
 	void setNamespace(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Reference</b></em>' attribute.
+	 * Returns the value of the '<em><b>Order</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Reference</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Order</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Reference</em>' attribute.
-	 * @see #setReference(String)
-	 * @see net.bioclipse.qsar.QsarPackage#getDescriptorimplType_Reference()
+	 * @return the value of the '<em>Order</em>' attribute.
+	 * @see #setOrder(String)
+	 * @see net.bioclipse.qsar.QsarPackage#getPreprocessingStepType_Order()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
-	 *        extendedMetaData="kind='attribute' name='reference'"
+	 *        extendedMetaData="kind='attribute' name='order'"
 	 * @generated
 	 */
-	String getReference();
+	String getOrder();
 
 	/**
-	 * Sets the value of the '{@link net.bioclipse.qsar.DescriptorimplType#getReference <em>Reference</em>}' attribute.
+	 * Sets the value of the '{@link net.bioclipse.qsar.PreprocessingStepType#getOrder <em>Order</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Reference</em>' attribute.
-	 * @see #getReference()
+	 * @param value the new value of the '<em>Order</em>' attribute.
+	 * @see #getOrder()
 	 * @generated
 	 */
-	void setReference(String value);
+	void setOrder(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Vendor</b></em>' attribute.
@@ -162,7 +161,7 @@ public interface DescriptorimplType extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Vendor</em>' attribute.
 	 * @see #setVendor(String)
-	 * @see net.bioclipse.qsar.QsarPackage#getDescriptorimplType_Vendor()
+	 * @see net.bioclipse.qsar.QsarPackage#getPreprocessingStepType_Vendor()
 	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="kind='attribute' name='vendor'"
 	 * @generated
@@ -170,7 +169,7 @@ public interface DescriptorimplType extends EObject {
 	String getVendor();
 
 	/**
-	 * Sets the value of the '{@link net.bioclipse.qsar.DescriptorimplType#getVendor <em>Vendor</em>}' attribute.
+	 * Sets the value of the '{@link net.bioclipse.qsar.PreprocessingStepType#getVendor <em>Vendor</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Vendor</em>' attribute.
@@ -179,31 +178,4 @@ public interface DescriptorimplType extends EObject {
 	 */
 	void setVendor(String value);
 
-	/**
-	 * Returns the value of the '<em><b>Version</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Version</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Version</em>' attribute.
-	 * @see #setVersion(String)
-	 * @see net.bioclipse.qsar.QsarPackage#getDescriptorimplType_Version()
-	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
-	 *        extendedMetaData="kind='attribute' name='version'"
-	 * @generated
-	 */
-	String getVersion();
-
-	/**
-	 * Sets the value of the '{@link net.bioclipse.qsar.DescriptorimplType#getVersion <em>Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Version</em>' attribute.
-	 * @see #getVersion()
-	 * @generated
-	 */
-	void setVersion(String value);
-
-} // DescriptorimplType
+} // PreprocessingStepType
