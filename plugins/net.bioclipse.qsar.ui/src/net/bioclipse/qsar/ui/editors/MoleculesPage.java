@@ -150,15 +150,15 @@ public class MoleculesPage extends FormPage{
 	private void populateMolsViewerFromModel() {
 
 		for (MoleculeResourceType mol: moleculeList.getMoleculeResource()){
-			if (mol.getPath()!=null){
-				IPath pth=new Path(mol.getPath());
+			if (mol.getFile()!=null){
+				IPath pth=new Path(mol.getFile());
 				if (pth!=null){
 					IFile file=ResourcesPlugin.getWorkspace().getRoot().getFile(pth);
 					MoleculeResource mr=new MoleculeResource(file);
 					molecules.add(mr);
 					System.out.println("Added mol: " + file.getName());
 				}else{
-					logger.error("could not parse path of mol: " + mol.getPath());
+					logger.error("could not parse path of mol: " + mol.getFile());
 				}
 			}else{
 				logger.error("could not parse mol: " + mol.getName() + ". path=null");
@@ -511,7 +511,7 @@ public class MoleculesPage extends FormPage{
 				MoleculeResourceType mol1=QsarFactory.eINSTANCE.createMoleculeResourceType();
 				mol1.setId(resource.getName());
 				mol1.setName(resource.getName());
-				mol1.setPath(resource.getFullPath().toString());
+				mol1.setFile(resource.getFullPath().toString());
 				Command cmd=AddCommand.create(editingDomain, moleculeList, 
    			   QsarPackage.Literals.MOLECULELIST_TYPE__MOLECULE_RESOURCE, mol1);
 
