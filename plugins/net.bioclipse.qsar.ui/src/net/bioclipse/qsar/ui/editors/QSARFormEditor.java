@@ -67,6 +67,10 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
 	//For delegating selections in MPE with two sections
     private MoleculesEditorSelectionProvider selectionProvider;
 
+	private DescriptorsPage descPage;
+
+	private int descPageIndex;
+
     
     public IProject getActiveProject() {
     
@@ -184,14 +188,16 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
 
 		//Create the MoleculesPage
 		molPage=new MoleculesPage(this, qsarModel, editingDomain, selectionProvider);
+		descPage=new DescriptorsPage(this, qsarModel, editingDomain, selectionProvider);
 
         try {
             //Molecules page with interactions
             molPageIndex=addPage(molPage);
-            setPageText(molPageIndex, "Molecules");
+//            setPageText(molPageIndex, "Molecules");
 
             //Descriptors page
-//            addPage(descPage);
+            descPageIndex=addPage(descPage);
+//            setPageText(descPageIndex, "Descriptors");
 
             //Texteditor, should be XMLEditor: TODO
             xmlEditor = new QsarXMLEditor(this);
