@@ -13,6 +13,7 @@ public interface IDescriptorCalculator {
 	 * @param descriptorIDs the id's of the descriptors we should calculate
 	 * @return Map<IMolecule, IDescriptorResult> results for each molecule
 	 */
-	public Map<IMolecule, IDescriptorResult> calculateDescriptor(List<IMolecule> molecules, String[] descriptorIDs);
+	public Map<IMolecule, IDescriptorResult> calculateDescriptor(
+			             List<IMolecule> molecules, List<String> descriptorIDs);
 
 }

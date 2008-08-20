@@ -12,7 +12,13 @@
 package net.bioclipse.qsar.business;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+
+import javax.security.auth.login.FailedLoginException;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.CoreException;
@@ -40,12 +46,10 @@ public class QsarManager implements IQsarManager{
 		return "qsar";
 	}
 
-	public IDescriptorResult calculate(IMolecule molecule, String descriptorID) {
-		if (model==null){
-			readModelFromEP();
-		}
-		throw new RuntimeException("Not implemented.");
-	}
+	/*====================================================
+	 * model initialization from EP below
+	 * ====================================================
+	 */
 
 	/**
 	 * Populate model from Extension Point.
@@ -197,7 +201,11 @@ public class QsarManager implements IQsarManager{
                           " for the descriptor: " + did + "could not be found");
                         }
                         
+                        //Add parent provider to descriptor
+                        desc.setProvider(provider);
+                        
                         provider.getDescriptors().add(desc);
+                        logger.debug("  Added descriptor: " + dname);
 
                     }
                    
@@ -218,7 +226,10 @@ public class QsarManager implements IQsarManager{
 	}
 
 	
-	
+	/*====================================================
+	 * Getter/setter for model below
+	 * ====================================================
+	 */
 	
 
 	/**
@@ -273,7 +284,7 @@ public class QsarManager implements IQsarManager{
 	 * @param providerID the ID of the provider
 	 * @return provider or null if not found
 	 */
-	private DescriptorProvider getProviderByID(String providerID) {
+	public DescriptorProvider getProviderByID(String providerID) {
 		
 		for (DescriptorProvider prov : getFullProviders() ){
 			if (prov.getId().equals(providerID)){
@@ -287,7 +298,7 @@ public class QsarManager implements IQsarManager{
 	 * @param categoryID the ID of the category
 	 * @return category or null if not found
 	 */
-	private DescriptorCategory getCategoryByID(String categoryID) {
+	public DescriptorCategory getCategoryByID(String categoryID) {
 		for (DescriptorCategory cat: getFullCategories() ){
 			if (cat.getId().equals(categoryID)){
 				return cat;
@@ -352,6 +363,108 @@ public class QsarManager implements IQsarManager{
 		}
 		return descriptors;
 	}
+	
+
+	public Descriptor getDescriptor(String descriptorID) {
+		
+		for (DescriptorProvider provider : getFullProviders()){
+			for (Descriptor desc : provider.getDescriptors()){
+				if (desc.getId().equals(descriptorID)){
+					return desc;
+				}
+			}
+		}
+		
+		throw new NoSuchElementException("Could not find a descriptor with id: " 
+				+ descriptorID);
+		
+	}
+
+	public boolean existsDescriptor(String descriptorID) {
+		
+		for (DescriptorProvider provider : getFullProviders()){
+			for (Descriptor desc : provider.getDescriptors()){
+				if (desc.getId().equals(descriptorID)){
+					return true;
+				}
+			}
+		}
+
+		return false;
+		
+	}
+
+
+	/*====================================================
+	 * Calculations below
+	 * ====================================================
+	 */
+
+	public IDescriptorResult calculate(IMolecule molecule, String descriptorID) {
+
+		Descriptor desc=getDescriptor(descriptorID);
+		DescriptorProvider provider=desc.getProvider();
+
+		IDescriptorCalculator calculator=provider.getCalculator();
+		
+		List<IMolecule> mollist=new ArrayList<IMolecule>();
+		mollist.add(molecule);
+
+		List<String> descIDlist=new ArrayList<String>();
+		descIDlist.add(descriptorID);
+
+		Map<IMolecule, IDescriptorResult> retMap = calculator.calculateDescriptor(mollist, descIDlist);
+		if (retMap==null || retMap.size()<1){
+			throw new NoSuchElementException("Calculation did not return a result");
+		}
+
+		return (IDescriptorResult) retMap.values().toArray()[0];
+		
+	}
+
+	public Map<IMolecule, List<IDescriptorResult>> calculate(List<IMolecule> molecules,
+			List<String> descriptors) {
+
+		Map<IMolecule, List<IDescriptorResult>> allResults=
+			 						new HashMap<IMolecule, List<IDescriptorResult>>();
+		
+		//The problem is to collect all descriptor ID's and group by provider
+		//Loop over all providers
+		for (DescriptorProvider provider : getFullProviders()){
+			
+			List<String> descriptorsToCalculate=new ArrayList<String>();
+
+			//Check if this descriptor is here, add if so
+			for (String descriptorID : descriptors){
+				Descriptor desc=getDescriptor(descriptorID);
+				if (desc.getProvider()==provider){
+					descriptorsToCalculate.add(descriptorID);
+				}
+			}
+			
+			//If we have descs to calculate, do so
+			if (descriptorsToCalculate.size()>0){
+				IDescriptorCalculator calculator=provider.getCalculator();
+				Map<IMolecule, IDescriptorResult> results = 
+						calculator.calculateDescriptor(molecules, 
+													   descriptorsToCalculate);
+				
+				//Add these results to the molecule
+				for (IMolecule mol : results.keySet()){
+					if (allResults.get(mol)==null) allResults.put(mol, new ArrayList<IDescriptorResult>());
+					List<IDescriptorResult> reslist=allResults.get(mol);
+					
+					//Add the computed result to the reslist
+					reslist.add(results.get(mol));
+				}
+				
+			}
+			
+		}
+
+		return allResults;
+	}
+
 	
 	
 }

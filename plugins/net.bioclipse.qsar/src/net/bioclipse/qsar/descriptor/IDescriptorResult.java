@@ -11,10 +11,17 @@
 
 package net.bioclipse.qsar.descriptor;
 
+import java.util.List;
+
 public interface IDescriptorResult {
 
-	public String  getDescriptorName();
-	public Float[] getValues();
-	public String[] getLabels();
+	List<String> getDescriptorIds();
+
+	void setDescriptorIds(List<String> descriptorIds);
+
+	List<Float> getValues();
+
+	void setValues(List<Float> values);
+
 	
 }

@@ -13,6 +13,7 @@ package net.bioclipse.qsar.business;
 
 
 import java.util.List;
+import java.util.Map;
 
 import net.bioclipse.core.PublishedMethod;
 import net.bioclipse.core.Recorded;
@@ -26,8 +27,14 @@ import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 public interface IQsarManager extends IBioclipseManager{
 
     @Recorded
-    @PublishedMethod( methodSummary = "Calculates the descriptor for the molecule" )
+    @PublishedMethod( methodSummary = "Calculates a descriptor for a molecule" )
     public IDescriptorResult calculate(IMolecule molecule, String descriptorID);
+
+    @Recorded
+    @PublishedMethod( methodSummary = "Calculates a list of descriptors for a " +
+    		"list of molecules" )
+    public Map<IMolecule, List<IDescriptorResult>> calculate(List<IMolecule> molecules, 
+    													List<String> descriptors);
 
  
     @PublishedMethod( methodSummary = "Returns the available descriptor providers" )
@@ -49,5 +56,19 @@ public interface IQsarManager extends IBioclipseManager{
     public List<String> getDescriptors(String providerID, String categoryID);
 	public List<Descriptor> getDescriptors(DescriptorProvider provider, 
 			DescriptorCategory category);
+
+
+    @PublishedMethod( methodSummary = "Returns the descriptor category class by ID" )
+	public DescriptorCategory getCategoryByID(String categoryID);
+
+    @PublishedMethod( methodSummary = "Returns the descriptor provider class by ID" )
+    public DescriptorProvider getProviderByID(String providerID);
+
+    @PublishedMethod( methodSummary = "Returns a descriptor class by ID" )
+	public Descriptor getDescriptor(String descriptorID);
+    
+    @PublishedMethod( methodSummary = "Returns a descriptor class by ID" )
+	boolean existsDescriptor(String descriptorID);
+
 
 }
