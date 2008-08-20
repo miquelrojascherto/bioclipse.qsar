@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="net.bioclipse.qsar.descriptorProvider">
+         <category
+               id="net.bioclipse.qsar.test.category1"
+               name="category1">
+         </category>
+         <category
+               id="net.bioclipse.qsar.test.category2"
+               name="category2">
+         </category>
+         <descriptorProvider
+               calculator="net.bioclipse.qsar.test.DummyCalculator"
+               id="net.bioclipse.qsar.test.descriptorProvider1"
+               name="descriptorProvider1">
+               <descriptor
+                     category="net.bioclipse.qsar.test.category1"
+                     id="net.bioclipse.qsar.test.descriptor1"
+                     name="descriptor1">
+               </descriptor>
+               <descriptor
+                     category="net.bioclipse.qsar.test.category2"
+                     id="net.bioclipse.qsar.test.descriptor2"
+                     name="descriptor2">
+               </descriptor>
+         </descriptorProvider>
+         <descriptorProvider
+               calculator="net.bioclipse.qsar.test.DummyCalculator"
+               id="net.bioclipse.qsar.test.descriptorProvider2"
+               name="descriptorProvider2">
+               <descriptor
+                     category="net.bioclipse.qsar.test.category1"
+                     id="net.bioclipse.qsar.test.descriptor3"
+                     name="descriptor3">
+               </descriptor>
+               <descriptor
+                     category="net.bioclipse.qsar.test.category2"
+                     id="net.bioclipse.qsar.test.descriptor4"
+                     name="descriptor4">
+               </descriptor>
+         </descriptorProvider>
+   </extension>
+
+</plugin>
