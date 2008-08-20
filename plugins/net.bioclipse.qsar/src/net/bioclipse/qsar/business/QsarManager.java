@@ -11,16 +11,347 @@
  ******************************************************************************/
 package net.bioclipse.qsar.business;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.Platform;
+
 import net.bioclipse.core.domain.IMolecule;
+import net.bioclipse.qsar.descriptor.IDescriptorCalculator;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
+import net.bioclipse.qsar.descriptor.model.Descriptor;
+import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
+import net.bioclipse.qsar.descriptor.model.DescriptorModel;
+import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 
 public class QsarManager implements IQsarManager{
 
-	public IDescriptorResult calculate(IMolecule molecule, String descriptorID) {
-		throw new RuntimeException("Not implemented.");
-	}
+    private static final Logger logger = Logger.getLogger(QsarManager.class);
+
+	DescriptorModel model;
 
 	public String getNamespace() {
 		return "qsar";
 	}
+
+	public IDescriptorResult calculate(IMolecule molecule, String descriptorID) {
+		if (model==null){
+			readModelFromEP();
+		}
+		throw new RuntimeException("Not implemented.");
+	}
+
+	/**
+	 * Populate model from Extension Point.
+	 */
+	private void readModelFromEP() {
+		
+        IExtensionRegistry registry = Platform.getExtensionRegistry();
+
+        if ( registry == null )
+            throw new RuntimeException("Registry is null, no services can " +
+            "be read. Workbench not started?");
+        // it likely means that the Eclipse workbench has not
+        // started, for example when running tests
+
+		/*
+         * service objects
+         */
+        IExtensionPoint serviceObjectExtensionPoint = registry
+        .getExtensionPoint("net.bioclipse.qsar.descriptorProvider");
+
+        IExtension[] serviceObjectExtensions
+        = serviceObjectExtensionPoint.getExtensions();
+
+        
+        model=new DescriptorModel();
+
+        //New lists
+        List<DescriptorCategory> catlist = new ArrayList<DescriptorCategory>();
+        model.setCategories(catlist);
+
+        List<DescriptorProvider> provlist = new ArrayList<DescriptorProvider>();
+        model.setProviders(provlist);
+
+
+        addCategories(serviceObjectExtensions, catlist);
+        addProviders(serviceObjectExtensions, provlist);
+		
+		
+		
+	}
+
+	private void addCategories(IExtension[] serviceObjectExtensions,
+			List<DescriptorCategory> catlist) {
+
+        for(IExtension extension : serviceObjectExtensions) {
+            for( IConfigurationElement element
+                    : extension.getConfigurationElements() ) {
+
+                if (element.getName().equals("category")){
+
+                    String pid=element.getAttribute("id");
+                    String pname=element.getAttribute("name");
+
+                    DescriptorCategory category=new DescriptorCategory(pid, pname);
+                    String picon=element.getAttribute("icon");
+                    category.setIcon_path(picon);
+                    
+                    catlist.add(category);
+                    
+                    logger.debug("Added descriptor category: " + pname);
+					
+                }
+
+            }
+        }
+		
+		
+		
+	}
+
+	private void addProviders(IExtension[] serviceObjectExtensions,
+			List<DescriptorProvider> provlist) {
+
+        for(IExtension extension : serviceObjectExtensions) {
+            for( IConfigurationElement element
+                    : extension.getConfigurationElements() ) {
+
+                if (element.getName().equals("descriptorProvider")){
+
+					try {
+                    String pid=element.getAttribute("id");
+                    String pname=element.getAttribute("name");
+
+                    DescriptorProvider provider=new DescriptorProvider(pid, pname);
+                    String picon=element.getAttribute("icon");
+                    provider.setIcon_path(picon);
+                    
+                    IDescriptorCalculator calculator;
+						calculator = (IDescriptorCalculator) 
+									element.createExecutableExtension("calculator");
+	                    provider.setCalculator(calculator);
+
+                    String cml=element.getAttribute("acceptsCml");
+                    if (cml!=null){
+                    	if (cml.equalsIgnoreCase("true")){
+                    		provider.setAcceptsCml(true);
+                    	}
+                    	else{
+                    		//If not explicitly true, then false
+                    		provider.setAcceptsCml(false);
+                    	}
+                    }
+
+                    String molfile=element.getAttribute("acceptsMolfile");
+                    if (molfile!=null){
+                    	if (molfile.equalsIgnoreCase("true")){
+                    		provider.setAcceptsMolfile(true);
+                    	}
+                    	else{
+                    		//If not explicitly true, then false
+                    		provider.setAcceptsMolfile(false);
+                    	}
+                    }
+
+                    String smiles=element.getAttribute("acceptsSmiles");
+                    if (smiles!=null){
+                    	if (smiles.equalsIgnoreCase("true")){
+                    		provider.setAcceptsSmiles(true);
+                    	}
+                    	else{
+                    		//If not explicitly true, then false
+                    		provider.setAcceptsSmiles(false);
+                    	}
+                    }
+                    
+                    //Get descriptor children
+                    provider.setDescriptors(new ArrayList<Descriptor>());
+                    for( IConfigurationElement providerChild
+                            : element.getChildren("descriptor") ) {
+                    	
+                        String did=providerChild.getAttribute("id");
+                        String dname=providerChild.getAttribute("name");
+
+                        Descriptor desc=new Descriptor(did, dname);
+                        String dicon=providerChild.getAttribute("icon");
+                        desc.setIcon_path(dicon);
+
+                        String dcat=providerChild.getAttribute("category");
+                        DescriptorCategory foundcat=null;
+                        for (DescriptorCategory cat : getFullCategories()){
+                        	if (cat.getId().equals(dcat)){
+                        		foundcat=cat;
+                        	}
+                        }
+                        if (foundcat!=null){
+                        	desc.setCategory(foundcat);
+                        }else {
+                        	logger.error("Descriptor category: " + dcat + 
+                          " for the descriptor: " + did + "could not be found");
+                        }
+                        
+                        provider.getDescriptors().add(desc);
+
+                    }
+                   
+                    provlist.add(provider);
+                    logger.debug("Added descriptor provider: " + pname);
+                    
+					} catch (CoreException e) {
+						logger.error("Could not initialize EP. Reason: " + e.getMessage());
+						e.printStackTrace();
+					}
+
+					
+
+                }
+
+            }
+        }
+	}
+
+	
+	
+	
+
+	/**
+	 * Get all descriptor categories. Read from EP if not initialized.
+	 * @return List<String> of category ID's.
+	 */
+	public List<String> getCategories() {
+		
+		if (model==null) readModelFromEP();
+		List<String> ret=new ArrayList<String>();
+		for (DescriptorCategory cat : model.getCategories()){
+			ret.add(cat.getId());
+		}
+
+		return ret;
+	}
+
+	/**
+	 * Get all descriptor providers. Read from EP if not initialized.
+	 * @return List<String> of provider ID's.
+	 */
+	public List<String> getProviders() {
+		
+		if (model==null) readModelFromEP();
+		List<String> ret=new ArrayList<String>();
+		for (DescriptorProvider prov : model.getProviders()){
+			ret.add(prov.getId());
+		}
+
+		return ret;
+	}
+
+	/**
+	 * Get all descriptor categories. Read from EP if not initialized.
+	 * @return List of categories.
+	 */
+	public List<DescriptorCategory> getFullCategories() {
+		if (model==null) readModelFromEP();
+		return model.getCategories();
+	}
+
+	/**
+	 * Get all descriptor providers. Read from EP if not initialized.
+	 * @return List of providers.
+	 */
+	public List<DescriptorProvider> getFullProviders() {
+		if (model==null) readModelFromEP();
+		return model.getProviders();
+	}
+
+	/**
+	 * @param providerID the ID of the provider
+	 * @return provider or null if not found
+	 */
+	private DescriptorProvider getProviderByID(String providerID) {
+		
+		for (DescriptorProvider prov : getFullProviders() ){
+			if (prov.getId().equals(providerID)){
+				return prov;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * @param categoryID the ID of the category
+	 * @return category or null if not found
+	 */
+	private DescriptorCategory getCategoryByID(String categoryID) {
+		for (DescriptorCategory cat: getFullCategories() ){
+			if (cat.getId().equals(categoryID)){
+				return cat;
+			}
+		}
+		return null;
+	}
+
+	
+	/**
+	 * Get all descriptor IDs for a provider.
+	 * @return List of descriptor IDs or empty List.
+	 */
+	public List<String> getDescriptors(String providerID) {
+
+		DescriptorProvider provider = getProviderByID(providerID);
+		List<String> ret=new ArrayList<String>();
+		for (Descriptor desc : provider.getDescriptors()){
+			ret.add(desc.getId());
+		}
+
+		return ret;
+	}
+
+	/**
+	 * Get all descriptors for a provider.
+	 * @return List of descriptors
+	 */
+	public List<Descriptor> getDescriptors(DescriptorProvider provider) {
+		return provider.getDescriptors();
+	}
+
+	/**
+	 * Get all descriptor IDs for a provider and within a certain category.
+	 * @return List of descriptor IDs or empty List.
+	 */
+	public List<String> getDescriptors(String providerID, String categoryID) {
+		DescriptorProvider provider=getProviderByID(providerID);
+		DescriptorCategory cat=getCategoryByID(categoryID);
+
+		List<String> ret= new ArrayList<String>();
+		for (Descriptor desc : provider.getDescriptors()){
+			if (desc.getCategory()==cat){
+				ret.add(desc.getId());
+			}
+		}
+		return ret;
+	}
+
+
+	/**
+	 * Get all descriptors for a provider and within a certain category.
+	 * @return List of descriptors or empty List.
+	 */
+	public List<Descriptor> getDescriptors(DescriptorProvider provider,
+			DescriptorCategory category) {
+		List<Descriptor> descriptors=new ArrayList<Descriptor>();
+		for (Descriptor desc : provider.getDescriptors()){
+			if (desc.getCategory()==category){
+				descriptors.add(desc);
+			}
+		}
+		return descriptors;
+	}
+	
+	
 }

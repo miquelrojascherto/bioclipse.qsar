@@ -80,7 +80,7 @@
                </appinfo>
             </annotation>
          </attribute>
-         <attribute name="class" type="string" use="required">
+         <attribute name="calculator" type="string" use="required">
             <annotation>
                <documentation>
                   

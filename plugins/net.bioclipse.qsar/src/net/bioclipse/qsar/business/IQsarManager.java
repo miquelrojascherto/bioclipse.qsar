@@ -12,15 +12,42 @@
 package net.bioclipse.qsar.business;
 
 
+import java.util.List;
+
 import net.bioclipse.core.PublishedMethod;
 import net.bioclipse.core.Recorded;
 import net.bioclipse.core.business.IBioclipseManager;
 import net.bioclipse.core.domain.IMolecule;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
+import net.bioclipse.qsar.descriptor.model.Descriptor;
+import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
+import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 
 public interface IQsarManager extends IBioclipseManager{
 
     @Recorded
-    @PublishedMethod( methodSummary = "Calculates the descriptor for teh molecule" )
+    @PublishedMethod( methodSummary = "Calculates the descriptor for the molecule" )
     public IDescriptorResult calculate(IMolecule molecule, String descriptorID);
+
+ 
+    @PublishedMethod( methodSummary = "Returns the available descriptor providers" )
+    public List<String> getProviders();
+    public List<DescriptorProvider> getFullProviders();
+
+    @PublishedMethod( methodSummary = "Returns the available descriptor categories" )
+    public List<String> getCategories();
+    public List<DescriptorCategory> getFullCategories();
+
+
+    @PublishedMethod( methodSummary = "Returns the ID's of available descriptors " +
+    		"for a provider" )
+    public List<String> getDescriptors(String providerID);
+    public List<Descriptor> getDescriptors(DescriptorProvider provider);
+
+    @PublishedMethod( methodSummary = "Returns the ID's of available descriptors " +
+	"for a provider in a certain category" )
+    public List<String> getDescriptors(String providerID, String categoryID);
+	public List<Descriptor> getDescriptors(DescriptorProvider provider, 
+			DescriptorCategory category);
+
 }
