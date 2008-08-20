@@ -10,7 +10,7 @@ import net.bioclipse.qsar.descriptor.IDescriptorResult;
 public class CDKDescriptorCalculator implements IDescriptorCalculator {
 
 	public Map<IMolecule, IDescriptorResult> calculateDescriptor(
-			List<IMolecule> molecules, String[] descriptorIDs) {
+			List<IMolecule> molecules, List<String> descriptorIDs) {
 		// TODO Auto-generated method stub
 		return null;
 	}
