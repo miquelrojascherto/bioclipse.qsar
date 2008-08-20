@@ -33,4 +33,13 @@
             class="net.bioclipse.qsar.util.QsarResourceFactoryImpl"/>
    </extension>
 
+
+   <extension
+         point="net.bioclipse.scripting.contribution">
+      <scriptContribution
+            id="net.bioclipse.qsar.business.QsarManager"
+            service="net.bioclipse.qsar.business.QsarManagerFactory">
+      </scriptContribution>
+   </extension>
+
 </plugin>
