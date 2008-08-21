@@ -30,5 +30,9 @@ public interface IDescriptorResult {
 
 	void setValues(Float[] values);
 
+	String getErrorMessage();
+
+	void setErrorMessage(String errorMessage);
+
 	
 }
