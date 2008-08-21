@@ -128,7 +128,7 @@ public class QsarManager implements IQsarManager{
             for( IConfigurationElement element
                     : extension.getConfigurationElements() ) {
 
-                if (element.getName().equals("descriptorProvider")){
+                if (element.getName().equals("provider")){
 
 					try {
                     String pid=element.getAttribute("id");
@@ -187,6 +187,17 @@ public class QsarManager implements IQsarManager{
                         Descriptor desc=new Descriptor(did, dname);
                         String dicon=providerChild.getAttribute("icon");
                         desc.setIcon_path(dicon);
+
+                        String req3d=providerChild.getAttribute("requires3D");
+                        if (req3d!=null){
+                        	if (req3d.equalsIgnoreCase("true")){
+                        		desc.setRequires3D(true);
+                        	}
+                        	else{
+                        		//If not explicitly true, then false
+                        		desc.setRequires3D(false);
+                        	}
+                        }
 
                         String dcat=providerChild.getAttribute("category");
                         DescriptorCategory foundcat=null;

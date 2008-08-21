@@ -19,7 +19,7 @@
       <complexType>
          <sequence>
             <element ref="category" minOccurs="0" maxOccurs="unbounded"/>
-            <element ref="descriptorProvider" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="provider" minOccurs="0" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -48,7 +48,7 @@
       </complexType>
    </element>
 
-   <element name="descriptorProvider">
+   <element name="provider">
       <complexType>
          <sequence>
             <element ref="descriptor" minOccurs="0" maxOccurs="unbounded"/>
@@ -116,6 +116,9 @@
 
    <element name="descriptor">
       <complexType>
+         <sequence>
+            <element ref="parameter" minOccurs="0" maxOccurs="unbounded"/>
+         </sequence>
          <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
@@ -150,6 +153,13 @@
                </appinfo>
             </annotation>
          </attribute>
+         <attribute name="requires3D" type="boolean">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
       </complexType>
    </element>
 
@@ -180,6 +190,25 @@
                <appinfo>
                   <meta.attribute kind="resource"/>
                </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="parameter">
+      <complexType>
+         <attribute name="key" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="defaultvalue" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
             </annotation>
          </attribute>
       </complexType>

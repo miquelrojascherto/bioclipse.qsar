@@ -4,8 +4,15 @@ public class Descriptor extends BaseEPObject{
 
 	private DescriptorCategory category;
 	private DescriptorProvider provider;
+	private boolean requires3D;
 
 
+	public boolean isRequires3D() {
+		return requires3D;
+	}
+	public void setRequires3D(boolean requires3D) {
+		this.requires3D = requires3D;
+	}
 	public DescriptorProvider getProvider() {
 		return provider;
 	}
