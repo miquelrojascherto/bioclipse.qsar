@@ -22,16 +22,11 @@
 <extension
       point="net.bioclipse.qsar.descriptorProvider">
       <category
-            id="net.bioclipse.qsar.cdk.category1"
-            name="CDK cat 1"
+            id="net.bioclipse.qsar.cdk.molecular"
+            name="Molecular"
             icon="icons/molecule2D.png">
       </category>
-      <category
-            id="net.bioclipse.qsar.cdk.category2"
-            name="CDK cat 2"
-            icon="icons/molecule2D.png">
-      </category>
-      <descriptorProvider
+         <provider
             id="net.bioclipse.cdk.descriptorprovider"
             name="Chemistry Development Kit (CDK)"
             icon="icons/molecule2D.png"
@@ -40,16 +35,24 @@
             acceptsCml="true"
             acceptsMolfile="true">
             <descriptor
-                  category="net.bioclipse.qsar.cdk.category1"
-                  id="net.bioclipse.cdk.qsar.descriptor.desc1"
-                  name="CDK Desc1">
+                  category="net.bioclipse.qsar.cdk.molecular"
+                  id="org.openscience.cdk.qsar.descriptors.molecular.XLogPDescriptor"
+                  name="XLogP">
+                  <parameter
+                        defaultvalue="true"
+                        key="checkAromaticity">
+                  </parameter>
+                  <parameter
+                        defaultvalue="true"
+                        key="salicylFlag">
+                  </parameter>
             </descriptor>
             <descriptor
-                  category="net.bioclipse.qsar.cdk.category2"
-                  id="net.bioclipse.cdk.qsar.descriptor.desc2"
-                  name="CDK Desc2">
+                  category="net.bioclipse.qsar.cdk.molecular"
+                  id="org.openscience.cdk.qsar.descriptors.molecular.BPolDescriptor"
+                  name="BPol">
             </descriptor>
-      </descriptorProvider>
+         </provider>
 </extension>
 
 </plugin>
