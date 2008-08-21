@@ -11,7 +11,7 @@
                id="net.bioclipse.qsar.test.category2"
                name="category2">
          </category>
-         <descriptorProvider
+         <provider
                calculator="net.bioclipse.qsar.test.DummyCalculator"
                id="net.bioclipse.qsar.test.descriptorProvider1"
                name="descriptorProvider1">
@@ -25,8 +25,8 @@
                      id="net.bioclipse.qsar.test.descriptor2"
                      name="descriptor2">
                </descriptor>
-         </descriptorProvider>
-         <descriptorProvider
+         </provider>
+         <provider
                calculator="net.bioclipse.qsar.test.DummyCalculator"
                id="net.bioclipse.qsar.test.descriptorProvider2"
                name="descriptorProvider2">
@@ -40,7 +40,13 @@
                      id="net.bioclipse.qsar.test.descriptorERROR"
                      name="ErrorDescriptor">
                </descriptor>
-         </descriptorProvider>
+               <descriptor
+                     category="net.bioclipse.qsar.test.category2"
+                     id="net.bioclipse.qsar.test.descriptor3D"
+                     requires3D="true"
+                     name="Requires3D">
+               </descriptor>
+         </provider>
    </extension>
 
 </plugin>

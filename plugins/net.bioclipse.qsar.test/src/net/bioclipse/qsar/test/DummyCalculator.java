@@ -36,11 +36,19 @@ public class DummyCalculator implements IDescriptorCalculator {
 
 				//If descriptor is supported, add content
 				if (getSupportedDescriptorIDs().contains(descriptorID)){
-					if (descriptorID.equals("net.bioclipse.qsar.test.descriptorERROR")){
+
+					if (descriptorID.equals("net.bioclipse.qsar.test.descriptor3D")){
 						//Return error result, fake a calculation has gone wrong
 						res.setErrorMessage("Failed to calculate descriptor " +
 								"'" + descriptorID + 
-						". Molecule has no 3D coordinates.");
+						"'. Molecule has no 3D coordinates.");
+					}
+
+					else if (descriptorID.equals("net.bioclipse.qsar.test.descriptorERROR")){
+						//Return error result, fake a calculation has gone wrong
+						res.setErrorMessage("Failed to calculate descriptor " +
+								"'" + descriptorID + 
+						"'. Reason: Unknown");
 					}
 					else{
 						//Return correct result
@@ -81,6 +89,7 @@ public class DummyCalculator implements IDescriptorCalculator {
 			supported.add("net.bioclipse.qsar.test.descriptor2");
 			supported.add("net.bioclipse.qsar.test.descriptor3");
 			supported.add("net.bioclipse.qsar.test.descriptorERROR");
+			supported.add("net.bioclipse.qsar.test.descriptor3D");
 		}
 		return supported;
 	}

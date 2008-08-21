@@ -89,23 +89,32 @@ public class TestQsarManager {
 		String cat2id="net.bioclipse.qsar.test.category2";
 		
 		String descriptorID="net.bioclipse.qsar.test.descriptor3";
+		String descriptorID3D="net.bioclipse.qsar.test.descriptor3D";
 
 		assertEquals(2, qsar.getDescriptors(providerID).size());
-		assertEquals(2, qsar.getDescriptors(providerID2).size());
+		assertEquals(3, qsar.getDescriptors(providerID2).size());
 		
 		assertEquals(1, qsar.getDescriptors(providerID, cat1id).size());
 		assertEquals(1, qsar.getDescriptors(providerID2, cat1id).size());
 		assertEquals(1, qsar.getDescriptors(providerID, cat2id).size());
-		assertEquals(1, qsar.getDescriptors(providerID2, cat2id).size());
+		assertEquals(2, qsar.getDescriptors(providerID2, cat2id).size());
 
 		assertTrue(qsar.existsDescriptor(descriptorID));
 		
 		//Get decriptor by hardcoded id
 		Descriptor desc=qsar.getDescriptor(descriptorID);
 		assertNotNull(desc);
+		assertFalse(desc.isRequires3D());
 		assertEquals("category1", desc.getCategory().getName());
 		assertEquals("descriptorProvider2", desc.getProvider().getName());
-		
+
+		//Get decriptor by hardcoded id
+		desc=qsar.getDescriptor(descriptorID3D);
+		assertNotNull(desc);
+		assertTrue(desc.isRequires3D());
+		assertEquals("category2", desc.getCategory().getName());
+		assertEquals("descriptorProvider2", desc.getProvider().getName());
+	
 	}
 	
 	
@@ -140,10 +149,26 @@ public class TestQsarManager {
 		assertNotNull(res.getErrorMessage());
 		
 		System.out.println("Error message: " + res.getErrorMessage());
-		assertEquals("Failed to calculate descriptor 'net.bioclipse.qsar.test." +
-				"descriptorERROR. Molecule has no 3D coordinates.", 
+		assertEquals("Failed to calculate descriptor '" +
+				descriptorID + "'. Reason: Unknown", 
 				res.getErrorMessage());
+
+	}
+
+	@Test
+	public void testCalculateDescriptorWithMissing3D(){
+
+		IMolecule mol=new SmilesMolecule("C1CCCCC1CC(CC)CC");
+		String descriptorID="net.bioclipse.qsar.test.descriptor3D";
 		
+		IDescriptorResult res = qsar.calculate(mol, descriptorID);
+		assertNotNull(res.getErrorMessage());
+		
+		System.out.println("Error message: " + res.getErrorMessage());
+		assertEquals("Failed to calculate descriptor '" +
+				descriptorID + "'. Molecule has no 3D coordinates.", 
+				res.getErrorMessage());
+
 	}
 
 	@Test
