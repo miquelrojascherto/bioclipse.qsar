@@ -1,12 +1,26 @@
 package net.bioclipse.qsar.descriptor;
 
-import java.util.List;
-
+/**
+ * Base implementation of a descriptor result.
+ * @author ola
+ *
+ */
 public class DescriptorResult implements IDescriptorResult{
 
 	String descriptorId;
 	String[] labels;
 	Float[] values;
+
+	String errorMessage;
+
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
 
 
 	//Constructor
