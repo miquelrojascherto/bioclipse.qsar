@@ -213,6 +213,20 @@ public class QsarManager implements IQsarManager{
                           " for the descriptor: " + did + "could not be found");
                         }
                         
+                        //Get descriptor children
+                        Map<String, String> pParams=new HashMap<String, String>(); 
+                        for( IConfigurationElement param
+                                : providerChild.getChildren("parameter") ) {
+
+                            String pakey=param.getAttribute("key");
+                            String padef=param.getAttribute("defaultvalue");
+                            pParams.put(pakey, padef);
+                        	
+                        }
+                        //Only set parameters if we have any
+                        if (pParams.size()>0) desc.setParameters(pParams);
+                        
+                        
                         //Add parent provider to descriptor
                         desc.setProvider(provider);
                         

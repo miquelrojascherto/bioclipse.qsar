@@ -197,14 +197,14 @@
 
    <element name="parameter">
       <complexType>
-         <attribute name="key" type="string">
+         <attribute name="key" type="string" use="required">
             <annotation>
                <documentation>
                   
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="defaultvalue" type="string">
+         <attribute name="defaultvalue" type="string" use="required">
             <annotation>
                <documentation>
                   
