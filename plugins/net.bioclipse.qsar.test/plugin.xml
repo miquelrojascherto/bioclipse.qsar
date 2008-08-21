@@ -37,8 +37,8 @@
                </descriptor>
                <descriptor
                      category="net.bioclipse.qsar.test.category2"
-                     id="net.bioclipse.qsar.test.descriptor4"
-                     name="descriptor4">
+                     id="net.bioclipse.qsar.test.descriptorERROR"
+                     name="ErrorDescriptor">
                </descriptor>
          </descriptorProvider>
    </extension>

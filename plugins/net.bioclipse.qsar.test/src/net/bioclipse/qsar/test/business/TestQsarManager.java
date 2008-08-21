@@ -120,12 +120,29 @@ public class TestQsarManager {
 		
 		IDescriptorResult res = qsar.calculate(mol, descriptorID);
 		assertNotNull(res);
+		assertNull(res.getErrorMessage());
 		assertEquals(descriptorID, res.getDescriptorId());
 		assertEquals(3, res.getLabels().length);
 		assertEquals(3, res.getValues().length);
 
 		//Dummycalculator returns 15.2456 as first result in array
 		assertEquals(new Float(15.2456), res.getValues()[0]);
+		
+	}
+
+	@Test
+	public void testCalculateDescriptorWithError(){
+
+		IMolecule mol=new SmilesMolecule("C1CCCCC1CC(CC)CC");
+		String descriptorID="net.bioclipse.qsar.test.descriptorERROR";
+		
+		IDescriptorResult res = qsar.calculate(mol, descriptorID);
+		assertNotNull(res.getErrorMessage());
+		
+		System.out.println("Error message: " + res.getErrorMessage());
+		assertEquals("Failed to calculate descriptor 'net.bioclipse.qsar.test." +
+				"descriptorERROR. Molecule has no 3D coordinates.", 
+				res.getErrorMessage());
 		
 	}
 
@@ -158,6 +175,11 @@ public class TestQsarManager {
 		IDescriptorResult dres11=res1.get(1);
 		IDescriptorResult dres2=res2.get(0);
 		IDescriptorResult dres22=res2.get(1);
+
+		assertNull(dres1.getErrorMessage());
+		assertNull(dres11.getErrorMessage());
+		assertNull(dres2.getErrorMessage());
+		assertNull(dres22.getErrorMessage());
 
 		System.out.println("Mol: " + mol1.getSmiles());
 		System.out.println("Desc " + dres1.getDescriptorId() +": " + 
