@@ -46,6 +46,19 @@
                      requires3D="true"
                      name="Requires3D">
                </descriptor>
+               <descriptor
+                     category="net.bioclipse.qsar.test.category1"
+                     id="net.bioclipse.qsar.test.descriptorParams"
+                     name="descriptorParams">
+                     <parameter
+                           defaultvalue="true"
+                           key="bogusParameter">
+                     </parameter>
+                     <parameter
+                           defaultvalue="101.67"
+                           key="bogusParameter2">
+                     </parameter>
+               </descriptor>
          </provider>
    </extension>
 

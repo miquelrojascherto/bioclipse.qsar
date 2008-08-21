@@ -89,35 +89,66 @@ public class TestQsarManager {
 		String cat2id="net.bioclipse.qsar.test.category2";
 		
 		String descriptorID="net.bioclipse.qsar.test.descriptor3";
-		String descriptorID3D="net.bioclipse.qsar.test.descriptor3D";
 
 		assertEquals(2, qsar.getDescriptors(providerID).size());
-		assertEquals(3, qsar.getDescriptors(providerID2).size());
+		assertEquals(4, qsar.getDescriptors(providerID2).size());
 		
 		assertEquals(1, qsar.getDescriptors(providerID, cat1id).size());
-		assertEquals(1, qsar.getDescriptors(providerID2, cat1id).size());
+		assertEquals(2, qsar.getDescriptors(providerID2, cat1id).size());
 		assertEquals(1, qsar.getDescriptors(providerID, cat2id).size());
 		assertEquals(2, qsar.getDescriptors(providerID2, cat2id).size());
 
 		assertTrue(qsar.existsDescriptor(descriptorID));
-		
+	}
+
+	@Test
+		public void testGetDescriptorsByID(){
+		//Matches plugin.xml
+		String descriptorID="net.bioclipse.qsar.test.descriptor3";
+
 		//Get decriptor by hardcoded id
 		Descriptor desc=qsar.getDescriptor(descriptorID);
 		assertNotNull(desc);
+		assertNull(desc.getParameters());
 		assertFalse(desc.isRequires3D());
 		assertEquals("category1", desc.getCategory().getName());
 		assertEquals("descriptorProvider2", desc.getProvider().getName());
+	}
 
-		//Get decriptor by hardcoded id
-		desc=qsar.getDescriptor(descriptorID3D);
+	@Test
+	public void testGetDescriptorsByIDRequire3D(){
+		//Matches plugin.xml
+		String descriptorID3D="net.bioclipse.qsar.test.descriptor3D";
+
+		//Get decriptor by hardcoded id requiring 3D
+		Descriptor desc=qsar.getDescriptor(descriptorID3D);
 		assertNotNull(desc);
+		assertNull(desc.getParameters());
 		assertTrue(desc.isRequires3D());
 		assertEquals("category2", desc.getCategory().getName());
 		assertEquals("descriptorProvider2", desc.getProvider().getName());
-	
 	}
-	
-	
+	@Test
+	public void testGetDescriptorsByIDWithParameters(){
+		//Matches plugin.xml
+		String descriptorIDParams="net.bioclipse.qsar.test.descriptorParams";
+
+		//Get decriptor by hardcoded id with parameters
+		Descriptor desc=qsar.getDescriptor(descriptorIDParams);
+		assertNotNull(desc);
+		assertNotNull(desc.getParameters());
+
+		for (String key: desc.getParameters().keySet()){
+			System.out.println("Param: " + key + " = " + desc.getParameters().get(key));
+		}
+		
+		assertTrue(desc.getParameters().keySet().contains("bogusParameter"));
+		assertTrue(desc.getParameters().keySet().contains("bogusParameter2"));
+		
+		assertEquals("true", desc.getParameters().get("bogusParameter"));
+		assertEquals("101.67", desc.getParameters().get("bogusParameter2"));
+
+	}
 	
 	
 	
