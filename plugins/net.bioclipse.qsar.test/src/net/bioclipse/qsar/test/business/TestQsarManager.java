@@ -2,7 +2,6 @@ package net.bioclipse.qsar.test.business;
 
 import static org.junit.Assert.*;
 
-import java.io.ObjectInputStream.GetField;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -158,7 +157,11 @@ public class TestQsarManager {
 		IMolecule mol=new SmilesMolecule("C1CCCCC1CC(CC)CC");
 		String descriptorID="net.bioclipse.qsar.test.descriptor3";
 		
-		IDescriptorResult res = qsar.calculate(mol, descriptorID);
+		List<IDescriptorResult> reslist = qsar.calculate(mol, descriptorID);
+		
+		//We know only one result as we only asked for one descriptor
+		assertEquals(1, reslist.size());
+		IDescriptorResult res=reslist.get(0);
 		assertNotNull(res);
 		assertNull(res.getErrorMessage());
 		assertEquals(descriptorID, res.getDescriptorId());
@@ -176,7 +179,11 @@ public class TestQsarManager {
 		IMolecule mol=new SmilesMolecule("C1CCCCC1CC(CC)CC");
 		String descriptorID="net.bioclipse.qsar.test.descriptorERROR";
 		
-		IDescriptorResult res = qsar.calculate(mol, descriptorID);
+		List<IDescriptorResult> reslist = qsar.calculate(mol, descriptorID);
+		
+		//We know only one result as we only asked for one descriptor
+		assertEquals(1, reslist.size());
+		IDescriptorResult res=reslist.get(0);
 		assertNotNull(res.getErrorMessage());
 		
 		System.out.println("Error message: " + res.getErrorMessage());
@@ -192,7 +199,11 @@ public class TestQsarManager {
 		IMolecule mol=new SmilesMolecule("C1CCCCC1CC(CC)CC");
 		String descriptorID="net.bioclipse.qsar.test.descriptor3D";
 		
-		IDescriptorResult res = qsar.calculate(mol, descriptorID);
+		List<IDescriptorResult> reslist = qsar.calculate(mol, descriptorID);
+		
+		//We know only one result as we only asked for one descriptor
+		assertEquals(1, reslist.size());
+		IDescriptorResult res=reslist.get(0);
 		assertNotNull(res.getErrorMessage());
 		
 		System.out.println("Error message: " + res.getErrorMessage());
