@@ -426,7 +426,7 @@ public class QsarManager implements IQsarManager{
 	 * ====================================================
 	 */
 
-	public IDescriptorResult calculate(IMolecule molecule, String descriptorID) {
+	public List<IDescriptorResult> calculate(IMolecule molecule, String descriptorID) {
 
 		Descriptor desc=getDescriptor(descriptorID);
 		DescriptorProvider provider=desc.getProvider();
@@ -443,8 +443,11 @@ public class QsarManager implements IQsarManager{
 		if (retMap==null || retMap.size()<1){
 			throw new NoSuchElementException("Calculation did not return a result");
 		}
+		List<IDescriptorResult> res=retMap.get(molecule);
+		if (res==null || res.size()<=0)
+			throw new NoSuchElementException("Calculation returned empty result");
 
-		return retMap.get(molecule).get(0);
+		return res;
 		
 	}
 

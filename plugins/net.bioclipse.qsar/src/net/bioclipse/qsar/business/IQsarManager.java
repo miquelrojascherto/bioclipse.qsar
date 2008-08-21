@@ -28,7 +28,7 @@ public interface IQsarManager extends IBioclipseManager{
 
     @Recorded
     @PublishedMethod( methodSummary = "Calculates a descriptor for a molecule" )
-    public IDescriptorResult calculate(IMolecule molecule, String descriptorID);
+    public List<IDescriptorResult> calculate(IMolecule molecule, String descriptorID);
 
     @Recorded
     @PublishedMethod( methodSummary = "Calculates a list of descriptors for a " +
