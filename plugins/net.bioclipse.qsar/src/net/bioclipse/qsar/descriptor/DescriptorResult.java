@@ -4,8 +4,9 @@ import java.util.List;
 
 public class DescriptorResult implements IDescriptorResult{
 
-	List<String> descriptorIds;
-	List<Float> values;
+	String descriptorId;
+	String[] labels;
+	Float[] values;
 
 
 	//Constructor
@@ -13,24 +14,33 @@ public class DescriptorResult implements IDescriptorResult{
 	}
 
 
-	public List<String> getDescriptorIds() {
-		return descriptorIds;
+	public String getDescriptorId() {
+		return descriptorId;
 	}
 
 
-	public void setDescriptorIds(List<String> descriptorIds) {
-		this.descriptorIds = descriptorIds;
+	public void setDescriptorId(String descriptorId) {
+		this.descriptorId = descriptorId;
 	}
 
 
-	public List<Float> getValues() {
+	public String[] getLabels() {
+		return labels;
+	}
+
+
+	public void setLabels(String[] labels) {
+		this.labels = labels;
+	}
+
+
+	public Float[] getValues() {
 		return values;
 	}
 
 
-	public void setValues(List<Float> values) {
+	public void setValues(Float[] values) {
 		this.values = values;
 	}
-
 
 }

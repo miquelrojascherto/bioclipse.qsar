@@ -12,6 +12,7 @@
 package net.bioclipse.qsar.business;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -413,12 +414,12 @@ public class QsarManager implements IQsarManager{
 		List<String> descIDlist=new ArrayList<String>();
 		descIDlist.add(descriptorID);
 
-		Map<IMolecule, IDescriptorResult> retMap = calculator.calculateDescriptor(mollist, descIDlist);
+		Map<IMolecule, List<IDescriptorResult>> retMap = calculator.calculateDescriptor(mollist, descIDlist);
 		if (retMap==null || retMap.size()<1){
 			throw new NoSuchElementException("Calculation did not return a result");
 		}
 
-		return (IDescriptorResult) retMap.values().toArray()[0];
+		return retMap.get(molecule).get(0);
 		
 	}
 
@@ -445,7 +446,7 @@ public class QsarManager implements IQsarManager{
 			//If we have descs to calculate, do so
 			if (descriptorsToCalculate.size()>0){
 				IDescriptorCalculator calculator=provider.getCalculator();
-				Map<IMolecule, IDescriptorResult> results = 
+				Map<IMolecule, List<IDescriptorResult>> results = 
 						calculator.calculateDescriptor(molecules, 
 													   descriptorsToCalculate);
 				
@@ -455,7 +456,7 @@ public class QsarManager implements IQsarManager{
 					List<IDescriptorResult> reslist=allResults.get(mol);
 					
 					//Add the computed result to the reslist
-					reslist.add(results.get(mol));
+					reslist.addAll(results.get(mol));
 				}
 				
 			}
