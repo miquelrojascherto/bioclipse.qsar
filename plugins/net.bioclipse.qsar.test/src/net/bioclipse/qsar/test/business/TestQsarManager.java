@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.domain.IMolecule;
 import net.bioclipse.core.domain.SmilesMolecule;
 import net.bioclipse.qsar.business.IQsarManager;
@@ -119,17 +120,17 @@ public class TestQsarManager {
 		
 		IDescriptorResult res = qsar.calculate(mol, descriptorID);
 		assertNotNull(res);
-		
-		assertEquals(1, res.getDescriptorIds().size());
-		assertEquals(1, res.getValues().size());
+		assertEquals(descriptorID, res.getDescriptorId());
+		assertEquals(3, res.getLabels().length);
+		assertEquals(3, res.getValues().length);
 
-		//Dummycalculator returns 100 as first result
-		assertEquals(100, res.getValues().get(0));
+		//Dummycalculator returns 15.2456 as first result in array
+		assertEquals(new Float(15.2456), res.getValues()[0]);
 		
 	}
 
 	@Test
-	public void testCalculateMultipleMolMultipleDescriptor(){
+	public void testCalculateMultipleMolMultipleDescriptor() throws BioclipseException{
 		
 		IMolecule mol1=new SmilesMolecule("C1CCCCC1CC(CC)CC");
 		IMolecule mol2=new SmilesMolecule("C1CCCCC1CC(CC)CCCCCO");
@@ -157,20 +158,40 @@ public class TestQsarManager {
 		IDescriptorResult dres11=res1.get(1);
 		IDescriptorResult dres2=res2.get(0);
 		IDescriptorResult dres22=res2.get(1);
-		
-		assertEquals(1, dres1.getDescriptorIds().size());
-		assertEquals(1, dres1.getValues().size());
-		assertEquals(100, dres1.getValues().get(0));
-		assertEquals(1, dres11.getDescriptorIds().size());
-		assertEquals(1, dres11.getValues().size());
-		assertEquals(100, dres11.getValues().get(0));
 
-		assertEquals(1, dres2.getDescriptorIds().size());
-		assertEquals(1, dres2.getValues().size());
-		assertEquals(100, dres2.getValues().get(0));
-		assertEquals(1, dres22.getDescriptorIds().size());
-		assertEquals(1, dres22.getValues().size());
-		assertEquals(100, dres22.getValues().get(0));
+		System.out.println("Mol: " + mol1.getSmiles());
+		System.out.println("Desc " + dres1.getDescriptorId() +": " + 
+				dres1.getLabels()[0] + "=" + dres1.getValues()[0] +", " + 
+				dres1.getLabels()[1] + "=" + dres1.getValues()[1] +", " + 
+				dres1.getLabels()[2] + "=" + dres1.getValues()[2] +", ");
+
+		System.out.println("Mol: " + mol1.getSmiles());
+		System.out.println("Desc " + dres11.getDescriptorId() +": " + 
+				dres11.getLabels()[0] + "=" + dres11.getValues()[0] +", " + 
+				dres11.getLabels()[1] + "=" + dres11.getValues()[1] +", " + 
+				dres11.getLabels()[2] + "=" + dres11.getValues()[2] +", ");
+
+		System.out.println("Mol: " + mol2.getSmiles());
+		System.out.println("Desc " + dres2.getDescriptorId() +": " + 
+				dres2.getLabels()[0] + "=" + dres2.getValues()[0] +", " + 
+				dres2.getLabels()[1] + "=" + dres2.getValues()[1] +", " + 
+				dres2.getLabels()[2] + "=" + dres2.getValues()[2] +", ");
+
+		System.out.println("Mol: " + mol2.getSmiles());
+		System.out.println("Desc " + dres22.getDescriptorId() +": " + 
+				dres22.getLabels()[0] + "=" + dres22.getValues()[0] +", " + 
+				dres22.getLabels()[1] + "=" + dres22.getValues()[1] +", " + 
+				dres22.getLabels()[2] + "=" + dres22.getValues()[2] +", ");
+
+		assertEquals(3, dres1.getLabels().length);
+		assertEquals(3, dres1.getValues().length);
+		assertEquals("label1", dres1.getLabels()[0]);
+		assertEquals("label2", dres1.getLabels()[1]);
+		assertEquals("label3", dres1.getLabels()[2]);
+		assertEquals(new Float(15.2456), dres1.getValues()[0]);
+		assertEquals(new Float(47.01), dres1.getValues()[1]);
+		assertEquals(new Float(-6.44), dres1.getValues()[2]);
+		
 
 	}
 

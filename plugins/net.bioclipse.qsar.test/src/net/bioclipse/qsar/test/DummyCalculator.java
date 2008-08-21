@@ -12,28 +12,41 @@ import net.bioclipse.qsar.descriptor.IDescriptorResult;
 
 public class DummyCalculator implements IDescriptorCalculator {
 
-	public Map<IMolecule, IDescriptorResult> calculateDescriptor(
+	/**
+	 * For each molecule and descriptor, return an array of values
+	 */
+	public Map<IMolecule, List<IDescriptorResult>> calculateDescriptor(
 			List<IMolecule> molecules, List<String> descriptorIDs) {
 
-		//Return a dummy result
-		DescriptorResult res=new DescriptorResult();
-		res.setDescriptorIds(descriptorIDs);
-		List<Float> retValues=new ArrayList<Float>();
-		float startfloat=100;
-		for (int i=0; i<descriptorIDs.size();i++){
-			retValues.add(new Float(startfloat+i));
-		}
-		res.setDescriptorIds(descriptorIDs);
-		res.setValues(retValues);
+		Map<IMolecule, List<IDescriptorResult>> allResults = 
+			                  new HashMap<IMolecule, List<IDescriptorResult>>();
+		
+		//Loop over all molecules
+		for (IMolecule mol : molecules){
 
-		//Dummy result
-		Map<IMolecule, IDescriptorResult> retmap=
-									new HashMap<IMolecule, IDescriptorResult>();
-		for (int i=0; i<molecules.size();i++){
-			retmap.put(molecules.get(i), res);
+			List<IDescriptorResult> molresults=new ArrayList<IDescriptorResult>();
+			
+			//Loop over all descriptors
+			for (String descriptorID : descriptorIDs){
+
+				//Dummy result
+				DescriptorResult res=new DescriptorResult();
+				res.setDescriptorId(descriptorID);
+				Float[] returnvalue=new Float[]{new Float(15.2456), new Float(47.01), new Float(-6.44)};
+				res.setValues(returnvalue);
+				String[] labels=new String[]{"label1","label2","label3"};
+				res.setLabels(labels);
+
+				//Add to results for this molecule
+				molresults.add(res);
+			}
+
+			//Put this molecules result in map to return
+			allResults.put(mol, molresults);
+			
 		}
 		
-		return retmap;
+		return allResults;
 	}
 
 
