@@ -12,14 +12,10 @@
 package net.bioclipse.qsar.business;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-
-import javax.security.auth.login.FailedLoginException;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.CoreException;
@@ -46,11 +42,20 @@ public class QsarManager implements IQsarManager{
 	public String getNamespace() {
 		return "qsar";
 	}
+	
+	
 
 	/*====================================================
 	 * model initialization from EP below
 	 * ====================================================
 	 */
+
+	public DescriptorModel getModel() {
+		if (model==null) readModelFromEP();
+		return model;
+	}
+
+
 
 	/**
 	 * Populate model from Extension Point.

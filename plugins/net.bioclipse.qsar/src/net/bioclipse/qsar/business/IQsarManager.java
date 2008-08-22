@@ -22,6 +22,7 @@ import net.bioclipse.core.domain.IMolecule;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
+import net.bioclipse.qsar.descriptor.model.DescriptorModel;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 
 public interface IQsarManager extends IBioclipseManager{
@@ -69,6 +70,12 @@ public interface IQsarManager extends IBioclipseManager{
     
     @PublishedMethod( methodSummary = "Returns a descriptor class by ID" )
 	boolean existsDescriptor(String descriptorID);
+
+    /**
+     * Get the descriptorModel as read from EP
+     * @return
+     */
+	DescriptorModel getModel();
 
 
 }
