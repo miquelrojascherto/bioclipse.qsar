@@ -2,6 +2,8 @@ package net.bioclipse.qsar.descriptor.model;
 
 import java.util.List;
 
+import org.eclipse.ui.views.properties.IPropertySource;
+
 import net.bioclipse.qsar.descriptor.IDescriptorCalculator;
 
 public class DescriptorProvider extends BaseEPObject{
@@ -49,6 +51,14 @@ public class DescriptorProvider extends BaseEPObject{
 		this.acceptsMolfile = acceptsMolfile;
 	}
 	
-	
+	public Object getAdapter(Class adapter) {
+
+		if (IPropertySource.class.equals(adapter)) {
+			return new DescriptorProviderPropertySource(this);
+		}
+
+		return super.getAdapter(adapter);
+	}
+
 	
 }

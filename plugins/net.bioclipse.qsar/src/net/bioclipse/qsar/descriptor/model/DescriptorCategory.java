@@ -10,6 +10,8 @@
  *******************************************************************************/
 package net.bioclipse.qsar.descriptor.model;
 
+import org.eclipse.ui.views.properties.IPropertySource;
+
 public class DescriptorCategory extends BaseEPObject{
 
 	public DescriptorCategory(String id, String name) {
@@ -17,6 +19,15 @@ public class DescriptorCategory extends BaseEPObject{
 	}
 	public DescriptorCategory(String id, String name, String icon_path) {
 		super(id, name, icon_path);
+	}
+
+	public Object getAdapter(Class adapter) {
+
+		if (IPropertySource.class.equals(adapter)) {
+			return new DescriptorCategoryPropertySource(this);
+		}
+
+		return super.getAdapter(adapter);
 	}
 
 	

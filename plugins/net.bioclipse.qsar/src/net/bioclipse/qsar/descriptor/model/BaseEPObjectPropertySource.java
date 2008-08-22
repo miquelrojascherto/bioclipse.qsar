@@ -14,13 +14,20 @@ public class BaseEPObjectPropertySource implements IPropertySource{
     protected static final String PROPERTY_ID = "ID";
     protected static final String PROPERTY_NAME = "Name";
 
-    private Object[][] PropertiesTable;
     private BaseEPObject item;
     private ArrayList<IPropertyDescriptor> properties;
     private HashMap<String, Object> valueMap;
 
+    
 
-    /**
+    public BaseEPObject getItem() {
+		return item;
+	}
+
+
+
+
+	/**
      * Constructor
      */
     public BaseEPObjectPropertySource(BaseEPObject item) {
@@ -37,7 +44,7 @@ public class BaseEPObjectPropertySource implements IPropertySource{
 	/**
      * Can be overridden by extending classes
      */
-    private void addPropertiesWithValues() {
+    public void addPropertiesWithValues() {
 
     	//Add ID prop
         PropertyDescriptor descriptor;
