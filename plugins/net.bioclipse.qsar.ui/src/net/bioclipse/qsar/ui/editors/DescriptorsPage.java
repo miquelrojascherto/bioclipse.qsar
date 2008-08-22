@@ -154,7 +154,6 @@ public class DescriptorsPage extends FormPage {
 
         //Post selections to Eclipse via our intermediate selectionprovider
         selectionProvider.setSelectionProviderDelegate( descViewer );
-        
     }
     
 
