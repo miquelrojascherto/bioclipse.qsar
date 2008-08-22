@@ -14,6 +14,7 @@ import net.bioclipse.qsar.business.QsarManager;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
+import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 
 import org.junit.Test;
@@ -170,16 +171,27 @@ public class TestQsarManager {
 		Descriptor desc=qsar.getDescriptor(descriptorIDParams);
 		assertNotNull(desc);
 		assertNotNull(desc.getParameters());
+		
+		assertEquals(2, desc.getParameters().size());
 
-		for (String key: desc.getParameters().keySet()){
-			System.out.println("Param: " + key + " = " + desc.getParameters().get(key));
+		List<String> paramKeys=new ArrayList<String>();
+		List<String> paramVals=new ArrayList<String>();
+		List<String> paramDesc=new ArrayList<String>();
+		for (DescriptorParameter param: desc.getParameters()){
+			System.out.println("Param: " + param.getKey() + " = " + param.getDefaultvalue() + " ; " + param.getDescription());
+			paramKeys.add(param.getKey());
+			paramVals.add(param.getDefaultvalue());
+			paramDesc.add(param.getDescription());
 		}
 		
-		assertTrue(desc.getParameters().keySet().contains("bogusParameter"));
-		assertTrue(desc.getParameters().keySet().contains("bogusParameter2"));
+		assertEquals(paramKeys.get(0), "bogusParameter");
+		assertEquals(paramKeys.get(1), "bogusParameter2");
 		
-		assertEquals("true", desc.getParameters().get("bogusParameter"));
-		assertEquals("101.67", desc.getParameters().get("bogusParameter2"));
+		assertEquals(paramVals.get(0), "true");
+		assertEquals(paramVals.get(1), "101.67");
+		
+		assertEquals(paramDesc.get(0), "description1");
+		assertEquals(paramDesc.get(1), "description2");
 
 	}
 	

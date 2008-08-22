@@ -64,10 +64,12 @@
                      name="descriptorParams">
                      <parameter
                            defaultvalue="true"
+                           description="description1"
                            key="bogusParameter">
                      </parameter>
                      <parameter
                            defaultvalue="101.67"
+                           description="description2"
                            key="bogusParameter2">
                      </parameter>
                </descriptor>
