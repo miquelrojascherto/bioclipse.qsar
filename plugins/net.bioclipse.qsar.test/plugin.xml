@@ -19,12 +19,14 @@
                      category="net.bioclipse.qsar.test.category1"
                      id="net.bioclipse.qsar.test.descriptor1"
                      definition="net.bioclipse.qsar.test.definition1"
+                     description="net.bioclipse.qsar.test.description1"
                      name="descriptor1">
                </descriptor>
                <descriptor
                      category="net.bioclipse.qsar.test.category2"
                      id="net.bioclipse.qsar.test.descriptor2"
                      definition="net.bioclipse.qsar.test.definition2"
+                     description="net.bioclipse.qsar.test.description2"
                      name="descriptor2">
                </descriptor>
          </provider>
@@ -36,18 +38,21 @@
                      category="net.bioclipse.qsar.test.category1"
                      id="net.bioclipse.qsar.test.descriptor3"
                      definition="net.bioclipse.qsar.test.definition3"
+                     description="net.bioclipse.qsar.test.description3"
                      name="descriptor3">
                </descriptor>
                <descriptor
                      category="net.bioclipse.qsar.test.category2"
                      id="net.bioclipse.qsar.test.descriptorERROR"
                      definition="net.bioclipse.qsar.test.definitionERROR"
+                     description="net.bioclipse.qsar.test.descriptionERROR"
                      name="ErrorDescriptor">
                </descriptor>
                <descriptor
                      category="net.bioclipse.qsar.test.category2"
                      id="net.bioclipse.qsar.test.descriptor3D"
                      definition="net.bioclipse.qsar.test.definition3D"
+                     description="net.bioclipse.qsar.test.description3D"
                      requires3D="true"
                      name="Requires3D">
                </descriptor>
@@ -55,6 +60,7 @@
                      category="net.bioclipse.qsar.test.category1"
                      id="net.bioclipse.qsar.test.descriptorParams"
                      definition="net.bioclipse.qsar.test.definitionParams"
+                     description="net.bioclipse.qsar.test.descriptionParams"
                      name="descriptorParams">
                      <parameter
                            defaultvalue="true"

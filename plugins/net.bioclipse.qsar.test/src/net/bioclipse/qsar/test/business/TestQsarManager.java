@@ -114,6 +114,7 @@ public class TestQsarManager {
 		assertEquals("category1", desc.getCategory().getName());
 		assertEquals("descriptorProvider2", desc.getProvider().getName());
 		assertEquals("net.bioclipse.qsar.test.definition3", desc.getDefinition());
+		assertEquals("net.bioclipse.qsar.test.description3", desc.getDescription());
 	}
 
 	@Test
@@ -157,6 +158,7 @@ public class TestQsarManager {
 		assertEquals("category2", desc.getCategory().getName());
 		assertEquals("descriptorProvider2", desc.getProvider().getName());
 		assertEquals("net.bioclipse.qsar.test.definition3D", desc.getDefinition());
+		assertEquals("net.bioclipse.qsar.test.description3D", desc.getDescription());
 	}
 
 	@Test
