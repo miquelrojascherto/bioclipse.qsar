@@ -23,6 +23,8 @@ import net.bioclipse.qsar.MoleculelistType;
 import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
+import net.bioclipse.qsar.business.IQsarManager;
+import net.bioclipse.qsar.descriptor.model.DescriptorModel;
 import net.bioclipse.ui.dialogs.WSFileDialog;
 
 import org.apache.log4j.Logger;
@@ -93,6 +95,8 @@ public class DescriptorsPage extends FormPage {
 	private DescriptorlistType descriptorList;
 	
 	private boolean dirty;
+	
+	IQsarManager qsar;
 
 	@Deprecated
 	private List<MoleculeResource> molecules;
@@ -108,6 +112,9 @@ public class DescriptorsPage extends FormPage {
         molContentProv=new MoleculesContentProvider();
         formatter = new DecimalFormat("0.00");
         this.selectionProvider=selectionProvider;
+
+        //Get qsarmanager via OSGI
+        qsar=net.bioclipse.qsar.init.Activator.getDefault().getQsarManager();
 	    
 		//Currently displayed in table, duplicates the model in moleculeList
 		molecules=new ArrayList<MoleculeResource>();
@@ -140,20 +147,16 @@ public class DescriptorsPage extends FormPage {
         form.getBody().setLayout(layout);
         createDescriptorSection(form, toolkit);
         createRightSection(form, toolkit);
-        populateMolsViewerFromModel();
-        
+
+        //Set descriptor model as input object
+		DescriptorModel descModel=qsar.getModel();
+		descViewer.setInput(descModel);
+
         //Post selections to Eclipse via our intermediate selectionprovider
         selectionProvider.setSelectionProviderDelegate( descViewer );
-
         
     }
     
-	private void populateMolsViewerFromModel() {
-
-		//TODO
-		descViewer.setInput(getSite());
-
-	}
 
 
 
@@ -180,20 +183,19 @@ public class DescriptorsPage extends FormPage {
           layout.numColumns = 2;
           client.setLayout(layout);
 
-          descViewer = new TreeViewer(client, SWT.CHECK | SWT.BORDER | SWT.MULTI);
+          descViewer = new TreeViewer(client, SWT.BORDER | SWT.MULTI);
           descTree=descViewer.getTree();
           toolkit.adapt(descTree, true, true);
           GridData gd=new GridData(GridData.FILL_VERTICAL);
           gd.widthHint=300;
-          gd.verticalSpan=2;
           descTree.setLayoutData( gd );
           
           descTree.setHeaderVisible(true);
 //          molTable.setLinesVisible(true);
           toolkit.adapt(descTree, true, true);
           
-          descViewer.setContentProvider( new QsarContentProvider());
-          descViewer.setLabelProvider( new QsarLabelProvider() );
+          descViewer.setContentProvider( new DescriptorContentProvider());
+          descViewer.setLabelProvider( new DescriptorLabelProvider() );
           descViewer.setUseHashlookup(true);
           
           descTree.addKeyListener( new KeyListener(){
@@ -215,32 +217,37 @@ public class DescriptorsPage extends FormPage {
               }
           });
 
-          Button btnAdd=toolkit.createButton(client, " >> ", SWT.PUSH);
+          //Create composite centered vertically and add buttons to it
+          Composite comp = toolkit.createComposite(client, SWT.WRAP);
+          comp.setLayout(new GridLayout());
+          GridData gd2=new GridData(GridData.VERTICAL_ALIGN_CENTER);
+          comp.setLayoutData( gd2 );
+
+          Button btnAdd=toolkit.createButton(comp, " >> ", SWT.PUSH);
           btnAdd.addListener(SWT.Selection, new Listener() {
               public void handleEvent(Event e) {
-                  addDescriptor();
+                  addSelectedDescriptors();
               }
             });
-          GridData gd2=new GridData();
-          gd2.verticalAlignment=SWT.BEGINNING;
-          gd2.widthHint=60;
-          btnAdd.setLayoutData( gd2 );
+          GridData gda2=new GridData(GridData.VERTICAL_ALIGN_CENTER);
+          gda2.widthHint=60;
+          btnAdd.setLayoutData( gda2 );
 
-          Button btnDel=toolkit.createButton(client, " << ", SWT.PUSH);
+          Button btnDel=toolkit.createButton(comp, " << ", SWT.PUSH);
           btnDel.addListener(SWT.Selection, new Listener() {
               public void handleEvent(Event e) {
                   deleteSelectedDescriptors();
               }
             });
-          gd2=new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
-          gd2.widthHint=60;
-          btnDel.setLayoutData( gd2 );
-          
+          GridData gd21=new GridData(GridData.VERTICAL_ALIGN_CENTER);
+          gd21.widthHint=60;
+          btnDel.setLayoutData( gd21 );
+
           
           //Wrap up section
           toolkit.paintBordersFor(client);
-          descSection.setText("Descriptors");
-          descSection.setDescription("Descriptors for QSAR analysis");
+          descSection.setText("Avaliable descriptors");
+          descSection.setDescription("Descriptors available for QSAR analysis");
           descSection.setClient(client);
           descSection.setExpanded(true);
           descSection.addExpansionListener(new ExpansionAdapter() {
@@ -259,7 +266,7 @@ public class DescriptorsPage extends FormPage {
     /**
      * Handle the case when users press the ADD button next to moleculeviewer
      */
-    protected void addDescriptor() {
+    protected void addSelectedDescriptors() {
 
     	//TODO implement
     	showMessage("Not implemented");
@@ -333,8 +340,8 @@ public class DescriptorsPage extends FormPage {
 
     	//Wrap up section
     	toolkit.paintBordersFor(client);
-    	preSection.setText("Molecule preprocessing");
-    	preSection.setDescription("Add/remove and order preprocessing steps");
+    	preSection.setText("Selected descriptors");
+    	preSection.setDescription("Add descriptors here for calculation");
     	preSection.setClient(client);
     	preSection.setExpanded(true);
     	preSection.addExpansionListener(new ExpansionAdapter() {
