@@ -160,6 +160,13 @@
                </documentation>
             </annotation>
          </attribute>
+         <attribute name="definition" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Definition according to Blue Obelisk Descriptor Ontology.
+               </documentation>
+            </annotation>
+         </attribute>
       </complexType>
    </element>
 

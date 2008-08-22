@@ -10,7 +10,14 @@ public class Descriptor extends BaseEPObject{
 	private DescriptorProvider provider;
 	private boolean requires3D;
 	private Map<String, String> parameters;
+	private String definition;
 
+	public String getDefinition() {
+		return definition;
+	}
+	public void setDefinition(String definition) {
+		this.definition = definition;
+	}
 	public Map<String, String> getParameters() {
 		return parameters;
 	}
