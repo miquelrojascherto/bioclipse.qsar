@@ -31,6 +31,7 @@ import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
 import net.bioclipse.qsar.descriptor.model.DescriptorModel;
+import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 
 public class QsarManager implements IQsarManager{
@@ -224,18 +225,23 @@ public class QsarManager implements IQsarManager{
                           " for the descriptor: " + did + "could not be found");
                         }
                         
-                        //Get descriptor children
-                        Map<String, String> pParams=new HashMap<String, String>(); 
+                        //Get descriptor children=parameters
+                        List<DescriptorParameter> pparams=new ArrayList<DescriptorParameter>();
                         for( IConfigurationElement param
                                 : providerChild.getChildren("parameter") ) {
 
                             String pakey=param.getAttribute("key");
                             String padef=param.getAttribute("defaultvalue");
-                            pParams.put(pakey, padef);
-                        	
+                            DescriptorParameter dparam=new DescriptorParameter(pakey, padef);
+
+                            String padescr=param.getAttribute("description");
+                        	dparam.setDescription(padescr);
+
+                        	pparams.add(dparam);
                         }
-                        //Only set parameters if we have any
-                        if (pParams.size()>0) desc.setParameters(pParams);
+                        if (pparams.size()>0)
+                    	desc.setParameters(pparams);
+                        
                         
                         
                         //Add parent provider to descriptor

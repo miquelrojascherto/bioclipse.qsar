@@ -1,5 +1,6 @@
 package net.bioclipse.qsar.descriptor.model;
 
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.ui.views.properties.IPropertySource;
@@ -9,7 +10,7 @@ public class Descriptor extends BaseEPObject{
 	private DescriptorCategory category;
 	private DescriptorProvider provider;
 	private boolean requires3D;
-	private Map<String, String> parameters;
+	private List<DescriptorParameter> parameters;
 	private String definition;
 	private String description;
 
@@ -25,10 +26,10 @@ public class Descriptor extends BaseEPObject{
 	public void setDefinition(String definition) {
 		this.definition = definition;
 	}
-	public Map<String, String> getParameters() {
+	public List<DescriptorParameter> getParameters() {
 		return parameters;
 	}
-	public void setParameters(Map<String, String> parameters) {
+	public void setParameters(List<DescriptorParameter> parameters) {
 		this.parameters = parameters;
 	}
 	public boolean isRequires3D() {

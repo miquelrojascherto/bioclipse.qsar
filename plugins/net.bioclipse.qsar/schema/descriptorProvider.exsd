@@ -225,6 +225,13 @@
                </documentation>
             </annotation>
          </attribute>
+         <attribute name="description" type="string">
+            <annotation>
+               <documentation>
+                  Description for the parameter.
+               </documentation>
+            </annotation>
+         </attribute>
       </complexType>
    </element>
 
