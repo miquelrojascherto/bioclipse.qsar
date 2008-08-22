@@ -394,7 +394,16 @@ public class QsarManager implements IQsarManager{
 		}
 		return descriptors;
 	}
-	
+
+	public List<Descriptor> getDescriptorsInCategory(DescriptorCategory category) {
+		
+		List<Descriptor> allDescs=new ArrayList<Descriptor>();
+		for (DescriptorProvider provider : getFullProviders()){
+			allDescs.addAll(getDescriptors(provider, category));
+		}
+		return allDescs;
+	}
+
 
 	public Descriptor getDescriptor(String descriptorID) {
 		
@@ -498,6 +507,9 @@ public class QsarManager implements IQsarManager{
 
 		return allResults;
 	}
+
+
+
 
 	
 	

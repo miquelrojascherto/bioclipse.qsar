@@ -77,5 +77,7 @@ public interface IQsarManager extends IBioclipseManager{
      */
 	DescriptorModel getModel();
 
+	public List<Descriptor> getDescriptorsInCategory(DescriptorCategory category);
+
 
 }
