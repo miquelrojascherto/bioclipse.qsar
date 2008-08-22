@@ -100,6 +100,7 @@ public class TestQsarManager {
 		assertTrue(qsar.existsDescriptor(descriptorID));
 	}
 
+
 	@Test
 		public void testGetDescriptorsByID(){
 		//Matches plugin.xml
@@ -112,6 +113,7 @@ public class TestQsarManager {
 		assertFalse(desc.isRequires3D());
 		assertEquals("category1", desc.getCategory().getName());
 		assertEquals("descriptorProvider2", desc.getProvider().getName());
+		assertEquals("net.bioclipse.qsar.test.definition3", desc.getDefinition());
 	}
 
 	@Test
@@ -154,6 +156,7 @@ public class TestQsarManager {
 		assertTrue(desc.isRequires3D());
 		assertEquals("category2", desc.getCategory().getName());
 		assertEquals("descriptorProvider2", desc.getProvider().getName());
+		assertEquals("net.bioclipse.qsar.test.definition3D", desc.getDefinition());
 	}
 
 	@Test

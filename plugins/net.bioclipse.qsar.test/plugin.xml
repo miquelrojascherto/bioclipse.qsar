@@ -18,11 +18,13 @@
                <descriptor
                      category="net.bioclipse.qsar.test.category1"
                      id="net.bioclipse.qsar.test.descriptor1"
+                     definition="net.bioclipse.qsar.test.definition1"
                      name="descriptor1">
                </descriptor>
                <descriptor
                      category="net.bioclipse.qsar.test.category2"
                      id="net.bioclipse.qsar.test.descriptor2"
+                     definition="net.bioclipse.qsar.test.definition2"
                      name="descriptor2">
                </descriptor>
          </provider>
@@ -33,22 +35,26 @@
                <descriptor
                      category="net.bioclipse.qsar.test.category1"
                      id="net.bioclipse.qsar.test.descriptor3"
+                     definition="net.bioclipse.qsar.test.definition3"
                      name="descriptor3">
                </descriptor>
                <descriptor
                      category="net.bioclipse.qsar.test.category2"
                      id="net.bioclipse.qsar.test.descriptorERROR"
+                     definition="net.bioclipse.qsar.test.definitionERROR"
                      name="ErrorDescriptor">
                </descriptor>
                <descriptor
                      category="net.bioclipse.qsar.test.category2"
                      id="net.bioclipse.qsar.test.descriptor3D"
+                     definition="net.bioclipse.qsar.test.definition3D"
                      requires3D="true"
                      name="Requires3D">
                </descriptor>
                <descriptor
                      category="net.bioclipse.qsar.test.category1"
                      id="net.bioclipse.qsar.test.descriptorParams"
+                     definition="net.bioclipse.qsar.test.definitionParams"
                      name="descriptorParams">
                      <parameter
                            defaultvalue="true"
