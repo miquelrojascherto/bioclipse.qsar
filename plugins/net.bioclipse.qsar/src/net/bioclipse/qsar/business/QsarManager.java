@@ -196,6 +196,9 @@ public class QsarManager implements IQsarManager{
                         String ddef=providerChild.getAttribute("definition");
                         desc.setDefinition(ddef);
 
+                        String ddesc=providerChild.getAttribute("description");
+                        desc.setDescription(ddesc);
+
                         String req3d=providerChild.getAttribute("requires3D");
                         if (req3d!=null){
                         	if (req3d.equalsIgnoreCase("true")){
