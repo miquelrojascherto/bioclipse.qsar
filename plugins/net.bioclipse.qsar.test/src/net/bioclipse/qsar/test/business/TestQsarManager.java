@@ -115,6 +115,34 @@ public class TestQsarManager {
 	}
 
 	@Test
+	public void testGetDescriptorsByCategory(){
+		//Matches plugin.xml
+		String cat1id="net.bioclipse.qsar.test.category1";
+		String cat2id="net.bioclipse.qsar.test.category2";
+
+		DescriptorCategory cat1=qsar.getCategoryByID(cat1id);
+		assertNotNull(cat1);
+		DescriptorCategory cat2=qsar.getCategoryByID(cat2id);
+		assertNotNull(cat2);
+		
+		List<Descriptor> list1 = qsar.getDescriptorsInCategory(cat1);
+		List<Descriptor> list2 = qsar.getDescriptorsInCategory(cat2);
+
+		assertNotNull(list1);
+		assertNotNull(list2);
+		assertEquals(3, list1.size());
+		assertEquals(3, list2.size());
+		
+		//Test some hardcoded
+		String descriptorID="net.bioclipse.qsar.test.descriptor1";
+		String descriptorID2="net.bioclipse.qsar.test.descriptor2";
+
+		assertTrue(list1.contains(qsar.getDescriptor(descriptorID)));
+		assertTrue(list2.contains(qsar.getDescriptor(descriptorID2)));
+		
+	}
+
+	@Test
 	public void testGetDescriptorsByIDRequire3D(){
 		//Matches plugin.xml
 		String descriptorID3D="net.bioclipse.qsar.test.descriptor3D";
@@ -127,6 +155,7 @@ public class TestQsarManager {
 		assertEquals("category2", desc.getCategory().getName());
 		assertEquals("descriptorProvider2", desc.getProvider().getName());
 	}
+
 	@Test
 	public void testGetDescriptorsByIDWithParameters(){
 		//Matches plugin.xml
