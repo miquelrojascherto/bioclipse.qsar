@@ -1,12 +1,14 @@
 package net.bioclipse.qsar.descriptor.model;
 
+import net.bioclipse.core.domain.BioObject;
 import net.bioclipse.qsar.init.Activator;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.views.properties.IPropertySource;
 
 
-public class BaseEPObject {
+public class BaseEPObject extends BioObject{
 
 	String id;
 	String name;
@@ -54,6 +56,15 @@ public class BaseEPObject {
 	public BaseEPObject(String id, String name, String icon_path) {
 		this(id,name);
 		this.icon_path=icon_path;
+	}
+
+	public Object getAdapter(Class adapter) {
+
+		if (IPropertySource.class.equals(adapter)) {
+			return new BaseEPObjectPropertySource(this);
+		}
+
+		return super.getAdapter(adapter);
 	}
 
 }
