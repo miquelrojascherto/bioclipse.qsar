@@ -2,6 +2,7 @@ package net.bioclipse.qsar.descriptor.model;
 
 import net.bioclipse.qsar.init.Activator;
 
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 
 
@@ -34,8 +35,10 @@ public class BaseEPObject {
 			return null;
 		}
 		if (icon==null){
-			Activator.getDefault();
-			icon=Activator.getImageDescriptor(icon_path).createImage();
+			ImageDescriptor idesc=Activator.getImageDescriptor(icon_path);
+			if (idesc==null) return null;
+
+			icon=idesc.createImage();
 		}
 		return icon;
 	}
