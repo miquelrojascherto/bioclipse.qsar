@@ -15,16 +15,17 @@ public class DescriptorProvider extends BaseEPObject{
 		super(id, name, icon_path);
 	}
 
-	private List<Descriptor> descriptors;
+	private List<DescriptorImpl> descriptorImpls;
 	private IDescriptorCalculator calculator;
 	private boolean acceptsSmiles;
 	private boolean acceptsCml;
 	private boolean acceptsMolfile;
-	public List<Descriptor> getDescriptors() {
-		return descriptors;
+
+	public List<DescriptorImpl> getDescriptorImpls() {
+		return descriptorImpls;
 	}
-	public void setDescriptors(List<Descriptor> descriptors) {
-		this.descriptors = descriptors;
+	public void setDescriptorImpls(List<DescriptorImpl> descriptorImpls) {
+		this.descriptorImpls = descriptorImpls;
 	}
 	public IDescriptorCalculator getCalculator() {
 		return calculator;

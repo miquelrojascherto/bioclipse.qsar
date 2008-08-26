@@ -21,6 +21,7 @@ import net.bioclipse.core.business.IBioclipseManager;
 import net.bioclipse.core.domain.IMolecule;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
+import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
 import net.bioclipse.qsar.descriptor.model.DescriptorModel;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
@@ -49,14 +50,12 @@ public interface IQsarManager extends IBioclipseManager{
 
     @PublishedMethod( methodSummary = "Returns the ID's of available descriptors " +
     		"for a provider" )
-    public List<String> getDescriptors(String providerID);
-    public List<Descriptor> getDescriptors(DescriptorProvider provider);
+    public List<String> getDescriptorImpls(String providerID);
+    public List<DescriptorImpl> getFullDescriptorImpls(DescriptorProvider provider);
 
     @PublishedMethod( methodSummary = "Returns the ID's of available descriptors " +
 	"for a provider in a certain category" )
-    public List<String> getDescriptors(String providerID, String categoryID);
-	public List<Descriptor> getDescriptors(DescriptorProvider provider, 
-			DescriptorCategory category);
+    public List<String> getDescriptorImpls(String providerID, String categoryID);
 
 
     @PublishedMethod( methodSummary = "Returns the descriptor category class by ID" )
@@ -66,7 +65,7 @@ public interface IQsarManager extends IBioclipseManager{
     public DescriptorProvider getProviderByID(String providerID);
 
     @PublishedMethod( methodSummary = "Returns a descriptor class by ID" )
-	public Descriptor getDescriptor(String descriptorID);
+	public DescriptorImpl getDescriptorImpl(String descriptorID);
     
     @PublishedMethod( methodSummary = "Returns a descriptor class by ID" )
 	boolean existsDescriptor(String descriptorID);
@@ -77,7 +76,13 @@ public interface IQsarManager extends IBioclipseManager{
      */
 	DescriptorModel getModel();
 
-	public List<Descriptor> getDescriptorsInCategory(DescriptorCategory category);
+	List<String> getDescriptors();
+	List<Descriptor> getFullDescriptors();
+	Descriptor getDescriptorByID(String descriptorID);
+
+	List<Descriptor> getDescriptors(DescriptorCategory category);
+
+	List<String> getDescriptors(String categoryID);
 
 
 }

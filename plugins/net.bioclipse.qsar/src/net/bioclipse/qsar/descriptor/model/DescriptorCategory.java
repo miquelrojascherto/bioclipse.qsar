@@ -10,10 +10,21 @@
  *******************************************************************************/
 package net.bioclipse.qsar.descriptor.model;
 
+import java.util.List;
+
 import org.eclipse.ui.views.properties.IPropertySource;
 
 public class DescriptorCategory extends BaseEPObject{
 
+	private String date;
+	private List<Descriptor> descriptors;
+	
+	public List<Descriptor> getDescriptors() {
+		return descriptors;
+	}
+	public void setDescriptors(List<Descriptor> descriptors) {
+		this.descriptors = descriptors;
+	}
 	public DescriptorCategory(String id, String name) {
 		super(id, name);
 	}
@@ -21,11 +32,20 @@ public class DescriptorCategory extends BaseEPObject{
 		super(id, name, icon_path);
 	}
 
+
+	
+	
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
 	public Object getAdapter(Class adapter) {
 
-		if (IPropertySource.class.equals(adapter)) {
-			return new DescriptorCategoryPropertySource(this);
-		}
+//		if (IPropertySource.class.equals(adapter)) {
+//			return new DescriptorCategoryPropertySource(this);
+//		}
 
 		return super.getAdapter(adapter);
 	}

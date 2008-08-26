@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.eclipse.ui.views.properties.IPropertySource;
 
-public class Descriptor extends BaseEPObject{
+public class DescriptorImpl extends BaseEPObject{
 
 	private DescriptorCategory category;
 	private DescriptorProvider provider;
@@ -44,10 +44,10 @@ public class Descriptor extends BaseEPObject{
 	public void setProvider(DescriptorProvider provider) {
 		this.provider = provider;
 	}
-	public Descriptor(String id, String name) {
+	public DescriptorImpl(String id, String name) {
 		super(id, name);
 	}
-	public Descriptor(String id, String name, String icon_path) {
+	public DescriptorImpl(String id, String name, String icon_path) {
 		super(id, name, icon_path);
 	}
 

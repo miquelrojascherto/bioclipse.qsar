@@ -32,7 +32,7 @@ public class DescriptorPropertySource extends BaseEPObjectPropertySource{
         descriptor2.setCategory("General");
         getProperties().add(descriptor2);
     	//Add type value
-        getValueMap().put(PROPERTY_PROVIDER,((Descriptor)getItem()).getProvider().getName());
+        getValueMap().put(PROPERTY_PROVIDER,((DescriptorImpl)getItem()).getProvider().getName());
 
 	}
 

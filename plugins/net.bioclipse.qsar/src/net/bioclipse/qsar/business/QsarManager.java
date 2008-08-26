@@ -11,11 +11,16 @@
  ******************************************************************************/
 package net.bioclipse.qsar.business;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.CoreException;
@@ -29,6 +34,7 @@ import net.bioclipse.core.domain.IMolecule;
 import net.bioclipse.qsar.descriptor.IDescriptorCalculator;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
+import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
 import net.bioclipse.qsar.descriptor.model.DescriptorModel;
 import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
@@ -38,8 +44,14 @@ public class QsarManager implements IQsarManager{
 
     private static final Logger logger = Logger.getLogger(QsarManager.class);
 
+
+	private static final String DESCRIPTOR_EXTENSION_POINT = 
+					"net.bioclipse.qsar.descriptorProvider";
+
+	//The descriptor model
 	DescriptorModel model;
 
+	//For console namespace
 	public String getNamespace() {
 		return "qsar";
 	}
@@ -52,52 +64,54 @@ public class QsarManager implements IQsarManager{
 	 */
 
 	public DescriptorModel getModel() {
-		if (model==null) readModelFromEP();
+		if (model==null) initializeDescriptorModel();
 		return model;
 	}
 
-
-
+	
 	/**
-	 * Populate model from Extension Point.
+	 * Populate model from OWL Ontology and Extension Point.
 	 */
-	private void readModelFromEP() {
-		
-        IExtensionRegistry registry = Platform.getExtensionRegistry();
+	private void initializeDescriptorModel() {
 
-        if ( registry == null )
-            throw new RuntimeException("Registry is null, no services can " +
-            "be read. Workbench not started?");
-        // it likely means that the Eclipse workbench has not
-        // started, for example when running tests
+		//Firstly, build hierarchy from descriptor OWL with Jena
+		try {
+			model=JenaReader.populateHierarchy();
+		} catch (IOException e) {
+			logger.error("Could not initialize Jena model: " + e.getMessage());
+//			e.printStackTrace();
+			return;
+		} catch (URISyntaxException e) {
+			logger.error("Could not initialize Jena model: " + e.getMessage());
+//			e.printStackTrace();
+			return;
+		}
+		if (model==null){
+			logger.error("Could not initialize Jena model. ");
+			return;
+		}
 
-		/*
-         * service objects
-         */
-        IExtensionPoint serviceObjectExtensionPoint = registry
-        .getExtensionPoint("net.bioclipse.qsar.descriptorProvider");
-
-        IExtension[] serviceObjectExtensions
-        = serviceObjectExtensionPoint.getExtensions();
-
-        
-        model=new DescriptorModel();
-
-        //New lists
-        List<DescriptorCategory> catlist = new ArrayList<DescriptorCategory>();
-        model.setCategories(catlist);
-
+		//Create new list of providers
         List<DescriptorProvider> provlist = new ArrayList<DescriptorProvider>();
         model.setProviders(provlist);
 
+//        //Add categories from extension point
+//        addCategories(serviceObjectExtensions, catlist);
+//TODO: might be used to complement categories from ontology at later point
 
-        addCategories(serviceObjectExtensions, catlist);
-        addProviders(serviceObjectExtensions, provlist);
-		
-		
+        //Add descriptor providers and implementations from extension point
+        addProvidersAndDescriptorImpls(provlist);
 		
 	}
 
+	
+	/**
+	 * Remnant from when categories were contributed by extension points.
+	 * Could possibly be used in future to complement Ontology at runtime.
+	 * @param serviceObjectExtensions
+	 * @param catlist
+	 */
+	@Deprecated
 	private void addCategories(IExtension[] serviceObjectExtensions,
 			List<DescriptorCategory> catlist) {
 
@@ -122,14 +136,34 @@ public class QsarManager implements IQsarManager{
 
             }
         }
-		
-		
-		
 	}
 
-	private void addProviders(IExtension[] serviceObjectExtensions,
-			List<DescriptorProvider> provlist) {
+	/**
+	 * Add descriptor providers and their implementations. Requires that 
+	 * categories are properly intialized before from ontology. 
+	 * @param provlist The List to add providers to
+	 */
+	private void addProvidersAndDescriptorImpls(List<DescriptorProvider> provlist) {
 
+		//Initialize implementations via extension points
+        IExtensionRegistry registry = Platform.getExtensionRegistry();
+
+        if ( registry == null )
+            throw new RuntimeException("Registry is null, no services can " +
+            "be read. Workbench not started?");
+        // it likely means that the Eclipse workbench has not
+        // started, for example when running tests
+
+		/*
+         * service objects
+         */
+        IExtensionPoint serviceObjectExtensionPoint = registry
+        .getExtensionPoint(DESCRIPTOR_EXTENSION_POINT);
+
+        IExtension[] serviceObjectExtensions
+        = serviceObjectExtensionPoint.getExtensions();
+		
+		
         for(IExtension extension : serviceObjectExtensions) {
             for( IConfigurationElement element
                     : extension.getConfigurationElements() ) {
@@ -183,14 +217,14 @@ public class QsarManager implements IQsarManager{
                     }
                     
                     //Get descriptor children
-                    provider.setDescriptors(new ArrayList<Descriptor>());
+                    provider.setDescriptorImpls(new ArrayList<DescriptorImpl>());
                     for( IConfigurationElement providerChild
                             : element.getChildren("descriptor") ) {
                     	
                         String did=providerChild.getAttribute("id");
                         String dname=providerChild.getAttribute("name");
 
-                        Descriptor desc=new Descriptor(did, dname);
+                        DescriptorImpl desc=new DescriptorImpl(did, dname);
                         String dicon=providerChild.getAttribute("icon");
                         desc.setIcon_path(dicon);
 
@@ -247,7 +281,7 @@ public class QsarManager implements IQsarManager{
                         //Add parent provider to descriptor
                         desc.setProvider(provider);
                         
-                        provider.getDescriptors().add(desc);
+                        provider.getDescriptorImpls().add(desc);
                         logger.debug("  Added descriptor: " + dname);
 
                     }
@@ -281,7 +315,7 @@ public class QsarManager implements IQsarManager{
 	 */
 	public List<String> getCategories() {
 		
-		if (model==null) readModelFromEP();
+		if (model==null) initializeDescriptorModel();
 		List<String> ret=new ArrayList<String>();
 		for (DescriptorCategory cat : model.getCategories()){
 			ret.add(cat.getId());
@@ -296,7 +330,7 @@ public class QsarManager implements IQsarManager{
 	 */
 	public List<String> getProviders() {
 		
-		if (model==null) readModelFromEP();
+		if (model==null) initializeDescriptorModel();
 		List<String> ret=new ArrayList<String>();
 		for (DescriptorProvider prov : model.getProviders()){
 			ret.add(prov.getId());
@@ -310,7 +344,7 @@ public class QsarManager implements IQsarManager{
 	 * @return List of categories.
 	 */
 	public List<DescriptorCategory> getFullCategories() {
-		if (model==null) readModelFromEP();
+		if (model==null) initializeDescriptorModel();
 		return model.getCategories();
 	}
 
@@ -319,7 +353,7 @@ public class QsarManager implements IQsarManager{
 	 * @return List of providers.
 	 */
 	public List<DescriptorProvider> getFullProviders() {
-		if (model==null) readModelFromEP();
+		if (model==null) initializeDescriptorModel();
 		return model.getProviders();
 	}
 
@@ -350,16 +384,88 @@ public class QsarManager implements IQsarManager{
 		return null;
 	}
 
-	
 	/**
-	 * Get all descriptor IDs for a provider.
+	 * Get all available descriptors.
 	 * @return List of descriptor IDs or empty List.
 	 */
-	public List<String> getDescriptors(String providerID) {
+	public List<String> getDescriptors() {
+		//Collect all descriptors
+		List<String> ret=new ArrayList<String>();
+		for (Descriptor desc: getFullDescriptors()){
+			ret.add(desc.getId());
+		}
+
+		return ret;
+	}
+	
+	public Descriptor getDescriptorByID(String descriptorID) {
+
+		for (Descriptor desc : getFullDescriptors()){
+			if (desc.getId().equals(descriptorID))
+				return desc;
+		}
+
+		return null;
+	}
+
+	
+	/**
+	 * Get all available descriptors.
+	 * @return List of descriptor IDs or empty List.
+	 */
+	public List<Descriptor> getFullDescriptors() {
+		//Collect all descriptors
+		List<Descriptor> ret=new ArrayList<Descriptor>();
+		for (DescriptorCategory cat : getFullCategories()){
+			if (cat.getDescriptors()!=null){
+				for (Descriptor desc : cat.getDescriptors()){
+					ret.add(desc);
+				}
+			}
+		}
+
+		//Remove duplicates
+		Set<Descriptor> noDups=new LinkedHashSet<Descriptor>(ret);
+		List<Descriptor> noDupsList=new ArrayList<Descriptor>(noDups);
+
+		return noDupsList;
+	}
+
+
+	/**
+	 * Get all descriptors in a category
+	 * @return List of descriptors or empty List.
+	 */
+	public List<Descriptor> getDescriptors(DescriptorCategory category) {
+		return category.getDescriptors();
+	}
+
+	/**
+	 * Get all descriptor IDs in a category
+	 * @return List of descriptor IDs or empty List.
+	 */
+	public List<String> getDescriptors(String categoryID) {
+		DescriptorCategory category=getCategoryByID(categoryID);
+
+		//Collect all descriptors
+		List<String> ret=new ArrayList<String>();
+		for (Descriptor desc: category.getDescriptors()){
+			ret.add(desc.getId());
+		}
+
+		return ret;
+	}
+
+	
+	/**
+	 * Get all descriptor implementation IDs for a provider.
+	 * @return List of descriptor implementation IDs or empty List.
+	 */
+	public List<String> getDescriptorImpls(String providerID) {
 
 		DescriptorProvider provider = getProviderByID(providerID);
 		List<String> ret=new ArrayList<String>();
-		for (Descriptor desc : provider.getDescriptors()){
+		for (DescriptorImpl desc : provider.getDescriptorImpls()){
 			ret.add(desc.getId());
 		}
 
@@ -367,23 +473,24 @@ public class QsarManager implements IQsarManager{
 	}
 
 	/**
-	 * Get all descriptors for a provider.
+	 * Get all descriptor implementations for a provider.
 	 * @return List of descriptors
 	 */
-	public List<Descriptor> getDescriptors(DescriptorProvider provider) {
-		return provider.getDescriptors();
+	public List<DescriptorImpl> getFullDescriptorImpls(DescriptorProvider provider) {
+		return provider.getDescriptorImpls();
 	}
 
 	/**
-	 * Get all descriptor IDs for a provider and within a certain category.
+	 * Get all descriptor implementation IDs for a provider and within a 
+	 * certain category.
 	 * @return List of descriptor IDs or empty List.
 	 */
-	public List<String> getDescriptors(String providerID, String categoryID) {
+	public List<String> getDescriptorImpls(String providerID, String categoryID) {
 		DescriptorProvider provider=getProviderByID(providerID);
 		DescriptorCategory cat=getCategoryByID(categoryID);
 
 		List<String> ret= new ArrayList<String>();
-		for (Descriptor desc : provider.getDescriptors()){
+		for (DescriptorImpl desc : provider.getDescriptorImpls()){
 			if (desc.getCategory()==cat){
 				ret.add(desc.getId());
 			}
@@ -396,10 +503,10 @@ public class QsarManager implements IQsarManager{
 	 * Get all descriptors for a provider and within a certain category.
 	 * @return List of descriptors or empty List.
 	 */
-	public List<Descriptor> getDescriptors(DescriptorProvider provider,
+	public List<DescriptorImpl> getDescriptors(DescriptorProvider provider,
 			DescriptorCategory category) {
-		List<Descriptor> descriptors=new ArrayList<Descriptor>();
-		for (Descriptor desc : provider.getDescriptors()){
+		List<DescriptorImpl> descriptors=new ArrayList<DescriptorImpl>();
+		for (DescriptorImpl desc : provider.getDescriptorImpls()){
 			if (desc.getCategory()==category){
 				descriptors.add(desc);
 			}
@@ -407,20 +514,12 @@ public class QsarManager implements IQsarManager{
 		return descriptors;
 	}
 
-	public List<Descriptor> getDescriptorsInCategory(DescriptorCategory category) {
-		
-		List<Descriptor> allDescs=new ArrayList<Descriptor>();
-		for (DescriptorProvider provider : getFullProviders()){
-			allDescs.addAll(getDescriptors(provider, category));
-		}
-		return allDescs;
-	}
 
 
-	public Descriptor getDescriptor(String descriptorID) {
+	public DescriptorImpl getDescriptorImpl(String descriptorID) {
 		
 		for (DescriptorProvider provider : getFullProviders()){
-			for (Descriptor desc : provider.getDescriptors()){
+			for (DescriptorImpl desc : provider.getDescriptorImpls()){
 				if (desc.getId().equals(descriptorID)){
 					return desc;
 				}
@@ -435,7 +534,7 @@ public class QsarManager implements IQsarManager{
 	public boolean existsDescriptor(String descriptorID) {
 		
 		for (DescriptorProvider provider : getFullProviders()){
-			for (Descriptor desc : provider.getDescriptors()){
+			for (DescriptorImpl desc : provider.getDescriptorImpls()){
 				if (desc.getId().equals(descriptorID)){
 					return true;
 				}
@@ -454,7 +553,7 @@ public class QsarManager implements IQsarManager{
 
 	public List<IDescriptorResult> calculate(IMolecule molecule, String descriptorID) {
 
-		Descriptor desc=getDescriptor(descriptorID);
+		DescriptorImpl desc=getDescriptorImpl(descriptorID);
 		DescriptorProvider provider=desc.getProvider();
 
 		IDescriptorCalculator calculator=provider.getCalculator();
@@ -491,7 +590,7 @@ public class QsarManager implements IQsarManager{
 
 			//Check if this descriptor is here, add if so
 			for (String descriptorID : descriptors){
-				Descriptor desc=getDescriptor(descriptorID);
+				DescriptorImpl desc=getDescriptorImpl(descriptorID);
 				if (desc.getProvider()==provider){
 					descriptorsToCalculate.add(descriptorID);
 				}

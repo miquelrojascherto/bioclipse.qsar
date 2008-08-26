@@ -38,7 +38,7 @@ public class DescriptorProviderPropertySource extends BaseEPObjectPropertySource
         descriptor2.setCategory("General");
         getProperties().add(descriptor2);
     	//Add type value
-        getValueMap().put(PROPERTY_NO_DESCR,qsar.getDescriptors((DescriptorProvider)getItem()).size());
+        getValueMap().put(PROPERTY_NO_DESCR,qsar.getFullDescriptorImpls((DescriptorProvider)getItem()).size());
 
 	}
 

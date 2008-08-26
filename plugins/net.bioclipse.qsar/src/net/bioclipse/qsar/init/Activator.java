@@ -16,7 +16,7 @@ import org.osgi.util.tracker.ServiceTracker;
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "net.bioclipse.qsar.ui";
+	public static final String PLUGIN_ID = "net.bioclipse.qsar";
 
     private static final Logger logger = Logger.getLogger(Activator.class);
 
