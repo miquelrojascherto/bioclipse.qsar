@@ -54,7 +54,6 @@
     		</element>
     	</sequence>
     	<attribute name="id" type="string" use="required"></attribute>
-    	<attribute name="name" type="string"></attribute>
     	<attribute name="namespace" type="string"></attribute>
     </complexType>
     

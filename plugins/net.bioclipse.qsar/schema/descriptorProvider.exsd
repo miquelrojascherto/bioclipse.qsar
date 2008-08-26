@@ -51,7 +51,7 @@
    <element name="provider">
       <complexType>
          <sequence>
-            <element ref="descriptor" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="descriptorImpl" minOccurs="0" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="id" type="string" use="required">
             <annotation>
@@ -114,7 +114,7 @@
       </complexType>
    </element>
 
-   <element name="descriptor">
+   <element name="descriptorImpl">
       <complexType>
          <sequence>
             <element ref="parameter" minOccurs="0" maxOccurs="unbounded"/>
@@ -143,16 +143,6 @@
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="category" type="string" use="required">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-               <appinfo>
-                  <meta.attribute kind="identifier"/>
-               </appinfo>
-            </annotation>
-         </attribute>
          <attribute name="requires3D" type="boolean">
             <annotation>
                <documentation>
@@ -178,6 +168,11 @@
    </element>
 
    <element name="category">
+      <annotation>
+         <appinfo>
+            <meta.element deprecated="true"/>
+         </appinfo>
+      </annotation>
       <complexType>
          <attribute name="id" type="string" use="required">
             <annotation>

@@ -312,17 +312,8 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDescriptorType_Name() {
-		return (EAttribute)descriptorTypeEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getDescriptorType_Namespace() {
-		return (EAttribute)descriptorTypeEClass.getEStructuralFeatures().get(4);
+		return (EAttribute)descriptorTypeEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -629,7 +620,6 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 		createEReference(descriptorTypeEClass, DESCRIPTOR_TYPE__PARAMETER);
 		createEReference(descriptorTypeEClass, DESCRIPTOR_TYPE__DESCRIPTORIMPL);
 		createEAttribute(descriptorTypeEClass, DESCRIPTOR_TYPE__ID);
-		createEAttribute(descriptorTypeEClass, DESCRIPTOR_TYPE__NAME);
 		createEAttribute(descriptorTypeEClass, DESCRIPTOR_TYPE__NAMESPACE);
 
 		documentRootEClass = createEClass(DOCUMENT_ROOT);
@@ -717,7 +707,6 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 		initEReference(getDescriptorType_Parameter(), this.getParameterType(), null, "parameter", null, 0, -1, DescriptorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDescriptorType_Descriptorimpl(), this.getDescriptorimplType(), null, "descriptorimpl", null, 1, 1, DescriptorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDescriptorType_Id(), theXMLTypePackage.getString(), "id", null, 1, 1, DescriptorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDescriptorType_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, DescriptorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDescriptorType_Namespace(), theXMLTypePackage.getString(), "namespace", null, 0, 1, DescriptorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(documentRootEClass, DocumentRoot.class, "DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -865,13 +854,6 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "id"
-		   });		
-		addAnnotation
-		  (getDescriptorType_Name(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "name"
 		   });		
 		addAnnotation
 		  (getDescriptorType_Namespace(), 

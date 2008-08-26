@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link net.bioclipse.qsar.DescriptorType#getParameter <em>Parameter</em>}</li>
  *   <li>{@link net.bioclipse.qsar.DescriptorType#getDescriptorimpl <em>Descriptorimpl</em>}</li>
  *   <li>{@link net.bioclipse.qsar.DescriptorType#getId <em>Id</em>}</li>
- *   <li>{@link net.bioclipse.qsar.DescriptorType#getName <em>Name</em>}</li>
  *   <li>{@link net.bioclipse.qsar.DescriptorType#getNamespace <em>Namespace</em>}</li>
  * </ul>
  * </p>
@@ -115,33 +114,6 @@ public interface DescriptorType extends EObject {
 	 * @generated
 	 */
 	void setId(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Name</em>' attribute.
-	 * @see #setName(String)
-	 * @see net.bioclipse.qsar.QsarPackage#getDescriptorType_Name()
-	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
-	 *        extendedMetaData="kind='attribute' name='name'"
-	 * @generated
-	 */
-	String getName();
-
-	/**
-	 * Sets the value of the '{@link net.bioclipse.qsar.DescriptorType#getName <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Name</em>' attribute.
-	 * @see #getName()
-	 * @generated
-	 */
-	void setName(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Namespace</b></em>' attribute.

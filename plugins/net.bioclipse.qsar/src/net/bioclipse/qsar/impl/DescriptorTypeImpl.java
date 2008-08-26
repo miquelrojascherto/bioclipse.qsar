@@ -44,7 +44,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link net.bioclipse.qsar.impl.DescriptorTypeImpl#getParameter <em>Parameter</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.DescriptorTypeImpl#getDescriptorimpl <em>Descriptorimpl</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.DescriptorTypeImpl#getId <em>Id</em>}</li>
- *   <li>{@link net.bioclipse.qsar.impl.DescriptorTypeImpl#getName <em>Name</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.DescriptorTypeImpl#getNamespace <em>Namespace</em>}</li>
  * </ul>
  * </p>
@@ -98,26 +97,6 @@ public class DescriptorTypeImpl extends EObjectImpl implements DescriptorType {
 	 * @ordered
 	 */
 	protected String id = ID_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String name = NAME_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getNamespace() <em>Namespace</em>}' attribute.
@@ -239,27 +218,6 @@ public class DescriptorTypeImpl extends EObjectImpl implements DescriptorType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.DESCRIPTOR_TYPE__NAME, oldName, name));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public String getNamespace() {
 		return namespace;
 	}
@@ -306,8 +264,6 @@ public class DescriptorTypeImpl extends EObjectImpl implements DescriptorType {
 				return getDescriptorimpl();
 			case QsarPackage.DESCRIPTOR_TYPE__ID:
 				return getId();
-			case QsarPackage.DESCRIPTOR_TYPE__NAME:
-				return getName();
 			case QsarPackage.DESCRIPTOR_TYPE__NAMESPACE:
 				return getNamespace();
 		}
@@ -333,9 +289,6 @@ public class DescriptorTypeImpl extends EObjectImpl implements DescriptorType {
 			case QsarPackage.DESCRIPTOR_TYPE__ID:
 				setId((String)newValue);
 				return;
-			case QsarPackage.DESCRIPTOR_TYPE__NAME:
-				setName((String)newValue);
-				return;
 			case QsarPackage.DESCRIPTOR_TYPE__NAMESPACE:
 				setNamespace((String)newValue);
 				return;
@@ -360,9 +313,6 @@ public class DescriptorTypeImpl extends EObjectImpl implements DescriptorType {
 			case QsarPackage.DESCRIPTOR_TYPE__ID:
 				setId(ID_EDEFAULT);
 				return;
-			case QsarPackage.DESCRIPTOR_TYPE__NAME:
-				setName(NAME_EDEFAULT);
-				return;
 			case QsarPackage.DESCRIPTOR_TYPE__NAMESPACE:
 				setNamespace(NAMESPACE_EDEFAULT);
 				return;
@@ -384,8 +334,6 @@ public class DescriptorTypeImpl extends EObjectImpl implements DescriptorType {
 				return descriptorimpl != null;
 			case QsarPackage.DESCRIPTOR_TYPE__ID:
 				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-			case QsarPackage.DESCRIPTOR_TYPE__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case QsarPackage.DESCRIPTOR_TYPE__NAMESPACE:
 				return NAMESPACE_EDEFAULT == null ? namespace != null : !NAMESPACE_EDEFAULT.equals(namespace);
 		}
@@ -404,8 +352,6 @@ public class DescriptorTypeImpl extends EObjectImpl implements DescriptorType {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (id: ");
 		result.append(id);
-		result.append(", name: ");
-		result.append(name);
 		result.append(", namespace: ");
 		result.append(namespace);
 		result.append(')');

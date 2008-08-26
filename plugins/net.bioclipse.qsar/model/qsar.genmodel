@@ -24,7 +24,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//DescriptorType/parameter"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EReference qsar.ecore#//DescriptorType/descriptorimpl"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorType/id"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorType/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorType/namespace"/>
     </genClasses>
     <genClasses ecoreClass="qsar.ecore#//DocumentRoot">

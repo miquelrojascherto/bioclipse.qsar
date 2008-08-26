@@ -212,22 +212,13 @@ public interface QsarPackage extends EPackage {
 	int DESCRIPTOR_TYPE__ID = 2;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DESCRIPTOR_TYPE__NAME = 3;
-
-	/**
 	 * The feature id for the '<em><b>Namespace</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DESCRIPTOR_TYPE__NAMESPACE = 4;
+	int DESCRIPTOR_TYPE__NAMESPACE = 3;
 
 	/**
 	 * The number of structural features of the '<em>Descriptor Type</em>' class.
@@ -236,7 +227,7 @@ public interface QsarPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DESCRIPTOR_TYPE_FEATURE_COUNT = 5;
+	int DESCRIPTOR_TYPE_FEATURE_COUNT = 4;
 
 	/**
 	 * The meta object id for the '{@link net.bioclipse.qsar.impl.DocumentRootImpl <em>Document Root</em>}' class.
@@ -711,17 +702,6 @@ public interface QsarPackage extends EPackage {
 	EAttribute getDescriptorType_Id();
 
 	/**
-	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.DescriptorType#getName <em>Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see net.bioclipse.qsar.DescriptorType#getName()
-	 * @see #getDescriptorType()
-	 * @generated
-	 */
-	EAttribute getDescriptorType_Name();
-
-	/**
 	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.DescriptorType#getNamespace <em>Namespace</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1175,14 +1155,6 @@ public interface QsarPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute DESCRIPTOR_TYPE__ID = eINSTANCE.getDescriptorType_Id();
-
-		/**
-		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute DESCRIPTOR_TYPE__NAME = eINSTANCE.getDescriptorType_Name();
 
 		/**
 		 * The meta object literal for the '<em><b>Namespace</b></em>' attribute feature.
