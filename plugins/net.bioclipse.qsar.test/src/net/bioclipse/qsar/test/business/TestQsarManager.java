@@ -13,6 +13,7 @@ import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.business.QsarManager;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
+import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
 import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
@@ -56,6 +57,23 @@ public class TestQsarManager {
 	}
 
 	@Test
+	public void testGetCategoryByID(){
+
+		String cat1id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#molecularDescriptor";
+		String cat2id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#geometricalDescriptor";
+
+		//Get category IDs
+		DescriptorCategory cat1 = qsar.getCategoryByID(cat1id);
+		assertNotNull(cat1);
+		assertEquals(cat1id, cat1.getId());
+
+		DescriptorCategory cat2 = qsar.getCategoryByID(cat2id);
+		assertNotNull(cat2);
+		assertEquals(cat2id, cat2.getId());
+
+	}
+
+	@Test
 	public void testGetProviders(){
 
 		//Get provider IDs
@@ -82,93 +100,132 @@ public class TestQsarManager {
 	@Test
 	public void testGetDescriptors(){
 
+		List<String> desc=qsar.getDescriptors();
+		assertNotNull(desc);
+		assertTrue(desc.size()>0);
+
+		List<Descriptor> descList=qsar.getFullDescriptors();
+		assertNotNull(descList);
+		assertTrue(descList.size()>0);
+		
+		assertEquals(desc.size(), descList.size());
+
+	}
+	
+	@Test
+	public void testGetDescriptorByID(){
+		
+		String descriptorID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#momentOfInertia";
+		String cat1id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#molecularDescriptor";
+		String cat2id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#geometricalDescriptor";
+
+		Descriptor desc=qsar.getDescriptorByID(descriptorID);
+		assertNotNull(desc);
+		
+		DescriptorCategory cat1 = qsar.getCategoryByID(cat1id);
+		DescriptorCategory cat2 = qsar.getCategoryByID(cat2id);
+		
+		assertNotNull(desc.getCategories());
+		assertTrue(desc.getCategories().contains(cat1));
+		assertTrue(desc.getCategories().contains(cat2));
+		
+		assertNotNull(desc.getDate());
+		assertEquals(desc.getDate(), "2005-02-07");
+		
+		assertNotNull(desc.getDefinition());
+		
+	}
+	
+	
+	@Test
+	public void testGetDescriptorByCategory(){
+		
+		String cat1id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#molecularDescriptor";
+		String cat2id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#geometricalDescriptor";
+
+		String descriptorID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#momentOfInertia";
+
+		DescriptorCategory cat1 = qsar.getCategoryByID(cat1id);
+		DescriptorCategory cat2 = qsar.getCategoryByID(cat2id);
+		Descriptor desc=qsar.getDescriptorByID(descriptorID);
+		
+		List<Descriptor> descList1 = qsar.getDescriptors(cat1);
+		assertNotNull(descList1);
+		assertTrue(descList1.contains(desc));
+
+		List<Descriptor> descList2 = qsar.getDescriptors(cat2);
+		assertNotNull(descList2);
+		assertTrue(descList2.contains(desc));
+
+	}
+
+
+	@Test
+	public void testGetDescriptorImpls(){
+
 		//Matches plugin.xml
 		String providerID="net.bioclipse.qsar.test.descriptorProvider1";
 		String providerID2="net.bioclipse.qsar.test.descriptorProvider2";
-		String cat1id="net.bioclipse.qsar.test.category1";
-		String cat2id="net.bioclipse.qsar.test.category2";
+		String cat1id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#molecularDescriptor";
+		String cat2id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#constitutionalDescriptor";
 		
 		String descriptorID="net.bioclipse.qsar.test.descriptor3";
 
-		assertEquals(2, qsar.getDescriptors(providerID).size());
-		assertEquals(4, qsar.getDescriptors(providerID2).size());
+		assertEquals(2, qsar.getDescriptorImpls(providerID).size());
+		assertEquals(4, qsar.getDescriptorImpls(providerID2).size());
 		
-		assertEquals(1, qsar.getDescriptors(providerID, cat1id).size());
-		assertEquals(2, qsar.getDescriptors(providerID2, cat1id).size());
-		assertEquals(1, qsar.getDescriptors(providerID, cat2id).size());
-		assertEquals(2, qsar.getDescriptors(providerID2, cat2id).size());
+		assertEquals(1, qsar.getDescriptorImpls(providerID, cat1id).size());
+		assertEquals(2, qsar.getDescriptorImpls(providerID2, cat1id).size());
+		assertEquals(1, qsar.getDescriptorImpls(providerID, cat2id).size());
+		assertEquals(2, qsar.getDescriptorImpls(providerID2, cat2id).size());
 
 		assertTrue(qsar.existsDescriptor(descriptorID));
 	}
 
 
 	@Test
-		public void testGetDescriptorsByID(){
+		public void testGetDescriptorImplsByID(){
 		//Matches plugin.xml
 		String descriptorID="net.bioclipse.qsar.test.descriptor3";
+		String cat1id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#molecularDescriptor";
 
 		//Get decriptor by hardcoded id
-		Descriptor desc=qsar.getDescriptor(descriptorID);
+		DescriptorImpl desc=qsar.getDescriptorImpl(descriptorID);
 		assertNotNull(desc);
 		assertNull(desc.getParameters());
 		assertFalse(desc.isRequires3D());
-		assertEquals("category1", desc.getCategory().getName());
+		assertEquals(cat1id, desc.getCategory().getId());
 		assertEquals("descriptorProvider2", desc.getProvider().getName());
 		assertEquals("net.bioclipse.qsar.test.definition3", desc.getDefinition());
 		assertEquals("net.bioclipse.qsar.test.description3", desc.getDescription());
 	}
 
-	@Test
-	public void testGetDescriptorsByCategory(){
-		//Matches plugin.xml
-		String cat1id="net.bioclipse.qsar.test.category1";
-		String cat2id="net.bioclipse.qsar.test.category2";
-
-		DescriptorCategory cat1=qsar.getCategoryByID(cat1id);
-		assertNotNull(cat1);
-		DescriptorCategory cat2=qsar.getCategoryByID(cat2id);
-		assertNotNull(cat2);
-		
-		List<Descriptor> list1 = qsar.getDescriptorsInCategory(cat1);
-		List<Descriptor> list2 = qsar.getDescriptorsInCategory(cat2);
-
-		assertNotNull(list1);
-		assertNotNull(list2);
-		assertEquals(3, list1.size());
-		assertEquals(3, list2.size());
-		
-		//Test some hardcoded
-		String descriptorID="net.bioclipse.qsar.test.descriptor1";
-		String descriptorID2="net.bioclipse.qsar.test.descriptor2";
-
-		assertTrue(list1.contains(qsar.getDescriptor(descriptorID)));
-		assertTrue(list2.contains(qsar.getDescriptor(descriptorID2)));
-		
-	}
+	
 
 	@Test
-	public void testGetDescriptorsByIDRequire3D(){
+	public void testGetDescriptorImplsByIDRequire3D(){
 		//Matches plugin.xml
 		String descriptorID3D="net.bioclipse.qsar.test.descriptor3D";
+		String cat2id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#constitutionalDescriptor";
 
 		//Get decriptor by hardcoded id requiring 3D
-		Descriptor desc=qsar.getDescriptor(descriptorID3D);
+		DescriptorImpl desc=qsar.getDescriptorImpl(descriptorID3D);
 		assertNotNull(desc);
 		assertNull(desc.getParameters());
 		assertTrue(desc.isRequires3D());
-		assertEquals("category2", desc.getCategory().getName());
+		assertEquals(cat2id, desc.getCategory().getId());
 		assertEquals("descriptorProvider2", desc.getProvider().getName());
 		assertEquals("net.bioclipse.qsar.test.definition3D", desc.getDefinition());
 		assertEquals("net.bioclipse.qsar.test.description3D", desc.getDescription());
 	}
 
 	@Test
-	public void testGetDescriptorsByIDWithParameters(){
+	public void testGetDescriptorImplsByIDWithParameters(){
 		//Matches plugin.xml
 		String descriptorIDParams="net.bioclipse.qsar.test.descriptorParams";
 
 		//Get decriptor by hardcoded id with parameters
-		Descriptor desc=qsar.getDescriptor(descriptorIDParams);
+		DescriptorImpl desc=qsar.getDescriptorImpl(descriptorIDParams);
 		assertNotNull(desc);
 		assertNotNull(desc.getParameters());
 		
