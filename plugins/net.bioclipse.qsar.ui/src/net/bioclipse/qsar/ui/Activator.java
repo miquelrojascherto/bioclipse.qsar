@@ -25,7 +25,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 public class Activator extends AbstractUIPlugin {
 
     // The plug-in ID
-    public static final String PLUGIN_ID = "net.bioclipse.qsar";
+    public static final String PLUGIN_ID = "net.bioclipse.qsar.ui";
 
     //Colors for the Forms
     private FormColors formColors;
