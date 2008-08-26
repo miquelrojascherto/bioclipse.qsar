@@ -4,7 +4,6 @@ import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
 import net.bioclipse.qsar.descriptor.model.DescriptorModel;
 
-import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
@@ -22,7 +21,8 @@ public class DescriptorContentProvider implements ITreeContentProvider {
 		
 		if (parentElement instanceof DescriptorCategory) {
 			DescriptorCategory category = (DescriptorCategory) parentElement;
-			return qsar.getDescriptorsInCategory(category).toArray();
+			if (category.getDescriptors()!=null)
+				return category.getDescriptors().toArray();/*qsar.getDescriptorsInCategory(category).toArray();*/
 		}
 		
 		return new Object[0];

@@ -2,8 +2,9 @@ package net.bioclipse.qsar.ui.editors;
 
 import net.bioclipse.qsar.descriptor.model.BaseEPObject;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
+import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
-import net.bioclipse.qsar.init.Activator;
+import net.bioclipse.qsar.ui.Activator;
 
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
