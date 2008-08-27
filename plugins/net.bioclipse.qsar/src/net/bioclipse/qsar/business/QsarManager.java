@@ -493,7 +493,10 @@ public class QsarManager implements IQsarManager{
 		return ret;
 	}
 
-	
+
+	/**
+	 * Return list of implIDs for a given a descriptorID
+	 */
 	public List<String> getDescriptorImpls(String descriptorID) {
 		List<String> ret= new ArrayList<String>();
 		for (DescriptorImpl impl : getFullDescriptorImpls()){
@@ -503,7 +506,54 @@ public class QsarManager implements IQsarManager{
 		return ret;
 	}
 	
+	/**
+	 * Return list of descriptorImpls for a given a descriptorID
+	 */
+	public List<DescriptorImpl> getDescriptorImplsForDescriptor(String descriptorID) {
+		List<DescriptorImpl> ret= new ArrayList<DescriptorImpl>();
+		for (DescriptorImpl impl : getFullDescriptorImpls()){
+			if (impl.getDefinition().equals(descriptorID))
+				ret.add(impl);
+		}
+		return ret;
+	}
 	
+	
+	public DescriptorImpl getDescriptorImplByID(String descriptorImplID) {
+		
+		for (DescriptorProvider provider : getFullProviders()){
+			for (DescriptorImpl desc : provider.getDescriptorImpls()){
+				if (desc.getId().equals(descriptorImplID)){
+					return desc;
+				}
+			}
+		}
+		
+		throw new NoSuchElementException("Could not find a descriptor with id: " 
+				+ descriptorImplID);
+		
+	}
+
+	public boolean existsDescriptor(String descriptorID) {
+		
+		for (DescriptorProvider provider : getFullProviders()){
+			for (DescriptorImpl desc : provider.getDescriptorImpls()){
+				if (desc.getId().equals(descriptorID)){
+					return true;
+				}
+			}
+		}
+
+		return false;
+		
+	}
+
+	
+	/*
+	 * Below are necessary?
+	 * 
+	 * 
+	 */
 	
 	
 	
@@ -544,34 +594,7 @@ public class QsarManager implements IQsarManager{
 
 
 
-	public DescriptorImpl getDescriptorImpl(String descriptorID) {
-		
-		for (DescriptorProvider provider : getFullProviders()){
-			for (DescriptorImpl desc : provider.getDescriptorImpls()){
-				if (desc.getId().equals(descriptorID)){
-					return desc;
-				}
-			}
-		}
-		
-		throw new NoSuchElementException("Could not find a descriptor with id: " 
-				+ descriptorID);
-		
-	}
 
-	public boolean existsDescriptor(String descriptorID) {
-		
-		for (DescriptorProvider provider : getFullProviders()){
-			for (DescriptorImpl desc : provider.getDescriptorImpls()){
-				if (desc.getId().equals(descriptorID)){
-					return true;
-				}
-			}
-		}
-
-		return false;
-		
-	}
 
 
 	/*====================================================
@@ -581,7 +604,7 @@ public class QsarManager implements IQsarManager{
 
 	public List<IDescriptorResult> calculate(IMolecule molecule, String descriptorID) {
 
-		DescriptorImpl desc=getDescriptorImpl(descriptorID);
+		DescriptorImpl desc=getDescriptorImplByID(descriptorID);
 		DescriptorProvider provider=desc.getProvider();
 
 		IDescriptorCalculator calculator=provider.getCalculator();
@@ -618,7 +641,7 @@ public class QsarManager implements IQsarManager{
 
 			//Check if this descriptor is here, add if so
 			for (String descriptorID : descriptors){
-				DescriptorImpl desc=getDescriptorImpl(descriptorID);
+				DescriptorImpl desc=getDescriptorImplByID(descriptorID);
 				if (desc.getProvider()==provider){
 					descriptorsToCalculate.add(descriptorID);
 				}

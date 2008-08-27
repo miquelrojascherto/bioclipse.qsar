@@ -65,7 +65,7 @@ public interface IQsarManager extends IBioclipseManager{
     public DescriptorProvider getProviderByID(String providerID);
 
     @PublishedMethod( methodSummary = "Returns a descriptor class by ID" )
-	public DescriptorImpl getDescriptorImpl(String descriptorImplID);
+	public DescriptorImpl getDescriptorImplByID(String descriptorImplID);
     
     @PublishedMethod( methodSummary = "Returns a descriptor class by ID" )
 	boolean existsDescriptor(String descriptorID);
@@ -87,6 +87,8 @@ public interface IQsarManager extends IBioclipseManager{
 	List<DescriptorImpl> getFullDescriptorImpls();
 
 	List<String> getDescriptorImpls(String descriptorID);
+
+	List<DescriptorImpl> getDescriptorImplsForDescriptor(String descriptorID);
 
 
 }
