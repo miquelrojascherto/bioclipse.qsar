@@ -219,7 +219,7 @@ public class QsarManager implements IQsarManager{
                     //Get descriptor children
                     provider.setDescriptorImpls(new ArrayList<DescriptorImpl>());
                     for( IConfigurationElement providerChild
-                            : element.getChildren("descriptor") ) {
+                            : element.getChildren("descriptorImpl") ) {
                     	
                         String did=providerChild.getAttribute("id");
                         String dname=providerChild.getAttribute("name");
@@ -245,19 +245,19 @@ public class QsarManager implements IQsarManager{
                         	}
                         }
 
-                        String dcat=providerChild.getAttribute("category");
-                        DescriptorCategory foundcat=null;
-                        for (DescriptorCategory cat : getFullCategories()){
-                        	if (cat.getId().equals(dcat)){
-                        		foundcat=cat;
-                        	}
-                        }
-                        if (foundcat!=null){
-                        	desc.setCategory(foundcat);
-                        }else {
-                        	logger.error("Descriptor category: " + dcat + 
-                          " for the descriptor: " + did + "could not be found");
-                        }
+//                        String dcat=providerChild.getAttribute("category");
+//                        DescriptorCategory foundcat=null;
+//                        for (DescriptorCategory cat : getFullCategories()){
+//                        	if (cat.getId().equals(dcat)){
+//                        		foundcat=cat;
+//                        	}
+//                        }
+//                        if (foundcat!=null){
+//                        	desc.setCategory(foundcat);
+//                        }else {
+//                        	logger.error("Descriptor category: " + dcat + 
+//                          " for the descriptor: " + did + "could not be found");
+//                        }
                         
                         //Get descriptor children=parameters
                         List<DescriptorParameter> pparams=new ArrayList<DescriptorParameter>();
@@ -461,7 +461,7 @@ public class QsarManager implements IQsarManager{
 	 * Get all descriptor implementation IDs for a provider.
 	 * @return List of descriptor implementation IDs or empty List.
 	 */
-	public List<String> getDescriptorImpls(String providerID) {
+	public List<String> getDescriptorImplsByProvider(String providerID) {
 
 		DescriptorProvider provider = getProviderByID(providerID);
 		List<String> ret=new ArrayList<String>();
@@ -481,11 +481,39 @@ public class QsarManager implements IQsarManager{
 	}
 
 	/**
+	 * Get all descriptor implementations for a provider.
+	 * @return List of descriptors
+	 */
+	public List<DescriptorImpl> getFullDescriptorImpls() {
+		List<DescriptorImpl> ret=new ArrayList<DescriptorImpl>();
+		for (DescriptorProvider prov : getFullProviders()){
+			if (prov.getDescriptorImpls()!=null)
+				ret.addAll(prov.getDescriptorImpls());
+		}
+		return ret;
+	}
+
+	
+	public List<String> getDescriptorImpls(String descriptorID) {
+		List<String> ret= new ArrayList<String>();
+		for (DescriptorImpl impl : getFullDescriptorImpls()){
+			if (impl.getDefinition().equals(descriptorID))
+				ret.add(impl.getId());
+		}
+		return ret;
+	}
+	
+	
+	
+	
+	
+	/**
 	 * Get all descriptor implementation IDs for a provider and within a 
 	 * certain category.
 	 * @return List of descriptor IDs or empty List.
 	 */
 	public List<String> getDescriptorImpls(String providerID, String categoryID) {
+
 		DescriptorProvider provider=getProviderByID(providerID);
 		DescriptorCategory cat=getCategoryByID(categoryID);
 
