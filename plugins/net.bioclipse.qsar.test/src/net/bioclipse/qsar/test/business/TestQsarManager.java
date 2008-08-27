@@ -206,7 +206,7 @@ public class TestQsarManager {
 				//All is well
 			}
 			else{
-				System.out.println("Descriptor impl: " + impl.getName() + " with def: " + impl.getDefinition());
+				System.out.println("=.= Descriptor impl: " + impl.getName() + " with def: " + impl.getDefinition());
 				
 			}
 			
