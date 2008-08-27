@@ -14,7 +14,6 @@ package net.bioclipse.qsar.business;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -77,6 +76,7 @@ public class QsarManager implements IQsarManager{
 		//Firstly, build hierarchy from descriptor OWL with Jena
 		try {
 			model=JenaReader.populateHierarchy();
+			logger.debug("** descriptor model initialized from ontology **");
 		} catch (IOException e) {
 			logger.error("Could not initialize Jena model: " + e.getMessage());
 //			e.printStackTrace();
@@ -557,44 +557,6 @@ public class QsarManager implements IQsarManager{
 	
 	
 	
-	/**
-	 * Get all descriptor implementation IDs for a provider and within a 
-	 * certain category.
-	 * @return List of descriptor IDs or empty List.
-	 */
-	public List<String> getDescriptorImpls(String providerID, String categoryID) {
-
-		DescriptorProvider provider=getProviderByID(providerID);
-		DescriptorCategory cat=getCategoryByID(categoryID);
-
-		List<String> ret= new ArrayList<String>();
-		for (DescriptorImpl desc : provider.getDescriptorImpls()){
-			if (desc.getCategory()==cat){
-				ret.add(desc.getId());
-			}
-		}
-		return ret;
-	}
-
-
-	/**
-	 * Get all descriptors for a provider and within a certain category.
-	 * @return List of descriptors or empty List.
-	 */
-	public List<DescriptorImpl> getDescriptors(DescriptorProvider provider,
-			DescriptorCategory category) {
-		List<DescriptorImpl> descriptors=new ArrayList<DescriptorImpl>();
-		for (DescriptorImpl desc : provider.getDescriptorImpls()){
-			if (desc.getCategory()==category){
-				descriptors.add(desc);
-			}
-		}
-		return descriptors;
-	}
-
-
-
-
 
 
 	/*====================================================

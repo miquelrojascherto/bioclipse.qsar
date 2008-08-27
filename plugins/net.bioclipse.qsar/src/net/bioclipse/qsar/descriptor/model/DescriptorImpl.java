@@ -7,7 +7,6 @@ import org.eclipse.ui.views.properties.IPropertySource;
 
 public class DescriptorImpl extends BaseEPObject{
 
-	private DescriptorCategory category;
 	private DescriptorProvider provider;
 	private boolean requires3D;
 	private List<DescriptorParameter> parameters;
@@ -51,14 +50,6 @@ public class DescriptorImpl extends BaseEPObject{
 		super(id, name, icon_path);
 	}
 
-
-	public DescriptorCategory getCategory() {
-		return category;
-	}
-
-	public void setCategory(DescriptorCategory category) {
-		this.category = category;
-	}
 
 	public Object getAdapter(Class adapter) {
 

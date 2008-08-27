@@ -53,10 +53,6 @@ public interface IQsarManager extends IBioclipseManager{
     public List<String> getDescriptorImplsByProvider(String providerID);
     public List<DescriptorImpl> getFullDescriptorImpls(DescriptorProvider provider);
 
-    @PublishedMethod( methodSummary = "Returns the ID's of available descriptors " +
-	"for a provider in a certain category" )
-    public List<String> getDescriptorImpls(String providerID, String categoryID);
-
 
     @PublishedMethod( methodSummary = "Returns the descriptor category class by ID" )
 	public DescriptorCategory getCategoryByID(String categoryID);
