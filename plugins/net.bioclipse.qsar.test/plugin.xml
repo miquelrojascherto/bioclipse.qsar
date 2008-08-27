@@ -17,7 +17,7 @@
                name="descriptorProvider1">
            <descriptorImpl
                      id="net.bioclipse.qsar.test.descriptor1"
-                  definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#carbonTypes"
+                  definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#BCUT"
                      description="net.bioclipse.qsar.test.description1"
                      name="descriptor1">
             </descriptorImpl>

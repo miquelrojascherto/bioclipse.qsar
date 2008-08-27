@@ -28,6 +28,11 @@ public class TestQsarManager {
 		
 		//Unnecessary to use OSGI.
 		qsar=new QsarManager();
+		
+		//Initialize from ontology and EP
+		qsar.getFullCategories();
+		qsar.getFullDescriptors();
+		
 	}
 	
 	
@@ -127,22 +132,24 @@ public class TestQsarManager {
 	@Test
 	public void testGetDescriptorByID(){
 		
-		String descriptorID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#momentOfInertia";
+		String descriptorID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticAtomsCount";
 		String cat1id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#molecularDescriptor";
-		String cat2id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#geometricalDescriptor";
-
+		String cat2id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#constitutionalDescriptor";
+		String cat3id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#electronicDescriptor";
+		
 		Descriptor desc=qsar.getDescriptorByID(descriptorID);
 		assertNotNull(desc);
 		
 		DescriptorCategory cat1 = qsar.getCategoryByID(cat1id);
 		DescriptorCategory cat2 = qsar.getCategoryByID(cat2id);
+		DescriptorCategory cat3 = qsar.getCategoryByID(cat3id);
 		
 		assertNotNull(desc.getCategories());
 		assertTrue(desc.getCategories().contains(cat1));
 		assertTrue(desc.getCategories().contains(cat2));
+		assertFalse(desc.getCategories().contains(cat3));
 		
 		assertNotNull(desc.getDate());
-		assertEquals(desc.getDate(), "2005-02-07");
 		
 		assertNotNull(desc.getDefinition());
 		
@@ -181,15 +188,39 @@ public class TestQsarManager {
 		assertNotNull(descs);
 		assertTrue(descs.size()>0);
 		
-		DescriptorImpl impl=qsar.getDescriptorImpl(descriptorImplID);
+		DescriptorImpl impl=qsar.getDescriptorImplByID(descriptorImplID);
 		assertNotNull(impl);
 		
 		assertTrue(descs.contains(impl));
 		
 	}
+	
+	@Test
+	public void testGetDescriptorImplNotInOntology(){
+
+		System.out.println("=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.");
+		System.out.println("Impl not in onology:");
+		System.out.println("=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.");
+		for (DescriptorImpl impl : qsar.getFullDescriptorImpls()){
+			if (qsar.getDescriptors().contains(impl.getDefinition())){
+				//All is well
+			}
+			else{
+				System.out.println("Descriptor impl: " + impl.getName() + " with def: " + impl.getDefinition());
+				
+			}
+			
+		}
+		System.out.println("=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.");
+		
+		
+	}
+
+	
+	
 
 	@Test
-	public void testGetDescriptorImplsFromDescriptor(){
+	public void testGetDescriptorIDsImplsFromDescriptor(){
 
 		String expectedImpl="net.bioclipse.qsar.test.descriptor3";
         String expectedImpl2="net.bioclipse.qsar.test.descriptor3D";
@@ -205,13 +236,27 @@ public class TestQsarManager {
 		for (String dimpl : descImplIDs){
 			System.out.println("  -  " + dimpl);
 		}
+		System.out.println("================");
 
 		assertTrue(descImplIDs.contains(expectedImpl));
 		assertTrue(descImplIDs.contains(expectedImpl2));
 		assertFalse(descImplIDs.contains(expectedImpl3));
-		System.out.println("================");
+
+		DescriptorImpl impl1=qsar.getDescriptorImplByID(expectedImpl);
+		DescriptorImpl impl2=qsar.getDescriptorImplByID(expectedImpl2);
+		DescriptorImpl impl3=qsar.getDescriptorImplByID(expectedImpl3);
 		
+		List<DescriptorImpl> descImplIDsFull = qsar.getDescriptorImplsForDescriptor(descriptor);
+		assertNotNull(descImplIDsFull);
+		assertEquals(descImplIDs.size(), descImplIDsFull.size());
+
+		assertTrue(descImplIDsFull.contains(impl1));
+		assertTrue(descImplIDsFull.contains(impl2));
+		assertFalse(descImplIDsFull.contains(impl3));
+
 	}
+	
+
 
 	@Test
 	public void testGetDescriptorImplsByProvider(){
@@ -227,11 +272,6 @@ public class TestQsarManager {
 		assertEquals(2, qsar.getDescriptorImplsByProvider(providerID).size());
 		assertEquals(4, qsar.getDescriptorImplsByProvider(providerID2).size());
 		
-		assertEquals(1, qsar.getDescriptorImpls(providerID, cat1id).size());
-		assertEquals(2, qsar.getDescriptorImpls(providerID2, cat1id).size());
-		assertEquals(1, qsar.getDescriptorImpls(providerID, cat2id).size());
-		assertEquals(2, qsar.getDescriptorImpls(providerID2, cat2id).size());
-
 		assertTrue(qsar.existsDescriptor(descriptorImplID));
 	}
 
@@ -243,13 +283,12 @@ public class TestQsarManager {
 		String cat1id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#molecularDescriptor";
 
 		//Get decriptor by hardcoded id
-		DescriptorImpl desc=qsar.getDescriptorImpl(descriptorImplID);
+		DescriptorImpl desc=qsar.getDescriptorImplByID(descriptorImplID);
 		assertNotNull(desc);
 		assertNull(desc.getParameters());
 		assertFalse(desc.isRequires3D());
-		assertEquals(cat1id, desc.getCategory().getId());
 		assertEquals("descriptorProvider2", desc.getProvider().getName());
-		assertEquals("net.bioclipse.qsar.test.definition3", desc.getDefinition());
+		assertEquals("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain", desc.getDefinition());
 		assertEquals("net.bioclipse.qsar.test.description3", desc.getDescription());
 	}
 
@@ -262,13 +301,12 @@ public class TestQsarManager {
 		String cat2id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#constitutionalDescriptor";
 
 		//Get decriptor by hardcoded id requiring 3D
-		DescriptorImpl desc=qsar.getDescriptorImpl(descriptorID3D);
+		DescriptorImpl desc=qsar.getDescriptorImplByID(descriptorID3D);
 		assertNotNull(desc);
 		assertNull(desc.getParameters());
 		assertTrue(desc.isRequires3D());
-		assertEquals(cat2id, desc.getCategory().getId());
 		assertEquals("descriptorProvider2", desc.getProvider().getName());
-		assertEquals("net.bioclipse.qsar.test.definition3D", desc.getDefinition());
+		assertEquals("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain", desc.getDefinition());
 		assertEquals("net.bioclipse.qsar.test.description3D", desc.getDescription());
 	}
 
@@ -278,7 +316,7 @@ public class TestQsarManager {
 		String descriptorIDParams="net.bioclipse.qsar.test.descriptorParams";
 
 		//Get decriptor by hardcoded id with parameters
-		DescriptorImpl desc=qsar.getDescriptorImpl(descriptorIDParams);
+		DescriptorImpl desc=qsar.getDescriptorImplByID(descriptorIDParams);
 		assertNotNull(desc);
 		assertNotNull(desc.getParameters());
 		
