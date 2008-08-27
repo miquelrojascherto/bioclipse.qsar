@@ -98,6 +98,18 @@ public class TestQsarManager {
 	}
 
 	@Test
+	public void testGetProvidersByID(){
+
+		String providerID="net.bioclipse.qsar.test.descriptorProvider1";
+		
+		DescriptorProvider prov = qsar.getProviderByID(providerID);
+		assertNotNull(prov);
+		assertEquals(prov.getId(), providerID);
+	}
+	
+	
+	
+	@Test
 	public void testGetDescriptors(){
 
 		List<String> desc=qsar.getDescriptors();
@@ -163,34 +175,75 @@ public class TestQsarManager {
 	@Test
 	public void testGetDescriptorImpls(){
 
+		String descriptorImplID="net.bioclipse.qsar.test.descriptor3";
+		
+		List<DescriptorImpl> descs = qsar.getFullDescriptorImpls();
+		assertNotNull(descs);
+		assertTrue(descs.size()>0);
+		
+		DescriptorImpl impl=qsar.getDescriptorImpl(descriptorImplID);
+		assertNotNull(impl);
+		
+		assertTrue(descs.contains(impl));
+		
+	}
+
+	@Test
+	public void testGetDescriptorImplsFromDescriptor(){
+
+		String expectedImpl="net.bioclipse.qsar.test.descriptor3";
+        String expectedImpl2="net.bioclipse.qsar.test.descriptor3D";
+        String expectedImpl3="net.bioclipse.qsar.test.descriptor1";
+
+        String descriptor="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain";
+
+		List<String> descImplIDs = qsar.getDescriptorImpls(descriptor);
+		assertNotNull(descImplIDs);
+
+		System.out.println("================");
+		System.out.println(" ** Descriptor: " + descriptor + " has the following implementations:");
+		for (String dimpl : descImplIDs){
+			System.out.println("  -  " + dimpl);
+		}
+
+		assertTrue(descImplIDs.contains(expectedImpl));
+		assertTrue(descImplIDs.contains(expectedImpl2));
+		assertFalse(descImplIDs.contains(expectedImpl3));
+		System.out.println("================");
+		
+	}
+
+	@Test
+	public void testGetDescriptorImplsByProvider(){
+
 		//Matches plugin.xml
 		String providerID="net.bioclipse.qsar.test.descriptorProvider1";
 		String providerID2="net.bioclipse.qsar.test.descriptorProvider2";
 		String cat1id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#molecularDescriptor";
 		String cat2id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#constitutionalDescriptor";
 		
-		String descriptorID="net.bioclipse.qsar.test.descriptor3";
+		String descriptorImplID="net.bioclipse.qsar.test.descriptor3";
 
-		assertEquals(2, qsar.getDescriptorImpls(providerID).size());
-		assertEquals(4, qsar.getDescriptorImpls(providerID2).size());
+		assertEquals(2, qsar.getDescriptorImplsByProvider(providerID).size());
+		assertEquals(4, qsar.getDescriptorImplsByProvider(providerID2).size());
 		
 		assertEquals(1, qsar.getDescriptorImpls(providerID, cat1id).size());
 		assertEquals(2, qsar.getDescriptorImpls(providerID2, cat1id).size());
 		assertEquals(1, qsar.getDescriptorImpls(providerID, cat2id).size());
 		assertEquals(2, qsar.getDescriptorImpls(providerID2, cat2id).size());
 
-		assertTrue(qsar.existsDescriptor(descriptorID));
+		assertTrue(qsar.existsDescriptor(descriptorImplID));
 	}
 
 
 	@Test
 		public void testGetDescriptorImplsByID(){
 		//Matches plugin.xml
-		String descriptorID="net.bioclipse.qsar.test.descriptor3";
+		String descriptorImplID="net.bioclipse.qsar.test.descriptor3";
 		String cat1id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#molecularDescriptor";
 
 		//Get decriptor by hardcoded id
-		DescriptorImpl desc=qsar.getDescriptorImpl(descriptorID);
+		DescriptorImpl desc=qsar.getDescriptorImpl(descriptorImplID);
 		assertNotNull(desc);
 		assertNull(desc.getParameters());
 		assertFalse(desc.isRequires3D());

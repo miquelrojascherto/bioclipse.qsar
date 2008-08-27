@@ -15,51 +15,45 @@
                calculator="net.bioclipse.qsar.test.DummyCalculator"
                id="net.bioclipse.qsar.test.descriptorProvider1"
                name="descriptorProvider1">
-               <descriptor
-                     category="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#molecularDescriptor"
+           <descriptorImpl
                      id="net.bioclipse.qsar.test.descriptor1"
-                     definition="net.bioclipse.qsar.test.definition1"
+                  definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#carbonTypes"
                      description="net.bioclipse.qsar.test.description1"
                      name="descriptor1">
-               </descriptor>
-               <descriptor
-                     category="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#constitutionalDescriptor"
+            </descriptorImpl>
+           <descriptorImpl
                      id="net.bioclipse.qsar.test.descriptor2"
-                     definition="net.bioclipse.qsar.test.definition2"
+                  definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain"
                      description="net.bioclipse.qsar.test.description2"
                      name="descriptor2">
-               </descriptor>
+            </descriptorImpl>
          </provider>
          <provider
                calculator="net.bioclipse.qsar.test.DummyCalculator"
                id="net.bioclipse.qsar.test.descriptorProvider2"
                name="descriptorProvider2">
-               <descriptor
-                     category="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#molecularDescriptor"
+           <descriptorImpl
                      id="net.bioclipse.qsar.test.descriptor3"
-                     definition="net.bioclipse.qsar.test.definition3"
+                  definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain"
                      description="net.bioclipse.qsar.test.description3"
                      name="descriptor3">
-               </descriptor>
-               <descriptor
-                     category="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#constitutionalDescriptor"
+            </descriptorImpl>
+           <descriptorImpl
                      id="net.bioclipse.qsar.test.descriptorERROR"
-                     definition="net.bioclipse.qsar.test.definitionERROR"
+                  definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain"
                      description="net.bioclipse.qsar.test.descriptionERROR"
                      name="ErrorDescriptor">
-               </descriptor>
-               <descriptor
-                     category="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#constitutionalDescriptor"
+            </descriptorImpl>
+           <descriptorImpl
                      id="net.bioclipse.qsar.test.descriptor3D"
-                     definition="net.bioclipse.qsar.test.definition3D"
+                  definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain"
                      description="net.bioclipse.qsar.test.description3D"
                      requires3D="true"
                      name="Requires3D">
-               </descriptor>
-               <descriptor
-                     category="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#molecularDescriptor"
+            </descriptorImpl>
+           <descriptorImpl
                      id="net.bioclipse.qsar.test.descriptorParams"
-                     definition="net.bioclipse.qsar.test.definitionParams"
+                  definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain"
                      description="net.bioclipse.qsar.test.descriptionParams"
                      name="descriptorParams">
                      <parameter
@@ -72,7 +66,7 @@
                            description="description2"
                            key="bogusParameter2">
                      </parameter>
-               </descriptor>
+            </descriptorImpl>
          </provider>
    </extension>
 
