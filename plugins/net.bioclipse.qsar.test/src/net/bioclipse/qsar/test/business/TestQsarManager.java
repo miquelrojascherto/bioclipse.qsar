@@ -110,6 +110,8 @@ public class TestQsarManager {
 		DescriptorProvider prov = qsar.getProviderByID(providerID);
 		assertNotNull(prov);
 		assertEquals(prov.getId(), providerID);
+		assertNotNull(prov.getShortName());
+		assertEquals("provider1", prov.getShortName());
 	}
 	
 	
