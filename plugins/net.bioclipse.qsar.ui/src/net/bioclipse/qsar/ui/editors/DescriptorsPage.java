@@ -46,6 +46,7 @@ import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
@@ -58,6 +59,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
@@ -98,9 +100,6 @@ public class DescriptorsPage extends FormPage {
 	
 	IQsarManager qsar;
 
-	@Deprecated
-	private List<MoleculeResource> molecules;
-
     
 	public DescriptorsPage(FormEditor editor, QsarType qsarModel, 
 			EditingDomain editingDomain, MoleculesEditorSelectionProvider selectionProvider) {
@@ -116,9 +115,6 @@ public class DescriptorsPage extends FormPage {
         //Get qsarmanager via OSGI
         qsar=net.bioclipse.qsar.init.Activator.getDefault().getQsarManager();
 	    
-		//Currently displayed in table, duplicates the model in moleculeList
-		molecules=new ArrayList<MoleculeResource>();
-
 		//Get mollist from qsar model, init if empty (should not be)
 		descriptorList=qsarModel.getDescriptorlist();
 		if (descriptorList==null){
@@ -182,16 +178,28 @@ public class DescriptorsPage extends FormPage {
           layout.numColumns = 2;
           client.setLayout(layout);
 
-          descViewer = new TreeViewer(client, SWT.BORDER | SWT.MULTI);
+          descViewer = new TreeViewer(client, SWT.BORDER | SWT.MULTI );
           descTree=descViewer.getTree();
           toolkit.adapt(descTree, true, true);
           GridData gd=new GridData(GridData.FILL_VERTICAL);
-          gd.widthHint=300;
+          gd.widthHint=350;
           descTree.setLayoutData( gd );
           
           descTree.setHeaderVisible(true);
 //          molTable.setLinesVisible(true);
           toolkit.adapt(descTree, true, true);
+          
+          //Add providers columns
+          TableLayout tableLayout = new TableLayout();
+          descTree.setLayout(tableLayout);
+          
+          TreeViewerColumn firstCol=new TreeViewerColumn(descViewer, SWT.NONE);
+          firstCol.getColumn().setText("");
+          tableLayout.addColumnData(new ColumnPixelData(200));
+          
+          TreeViewerColumn providersCol=new TreeViewerColumn(descViewer, SWT.NONE);
+          providersCol.getColumn().setText("Providers");
+          tableLayout.addColumnData(new ColumnPixelData(150));
           
           descViewer.setContentProvider( new DescriptorContentProvider());
           descViewer.setLabelProvider( new DescriptorLabelProvider() );
@@ -255,8 +263,8 @@ public class DescriptorsPage extends FormPage {
             }
           });
 
-          gd = new GridData(GridData.FILL_BOTH);
-          descSection.setLayoutData(gd);        
+          GridData gd122 = new GridData(GridData.FILL_BOTH);
+          descSection.setLayoutData(gd122);        
           
     }
     
