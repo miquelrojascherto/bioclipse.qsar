@@ -47,10 +47,14 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
+import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -99,6 +103,8 @@ public class DescriptorsPage extends FormPage {
 	private boolean dirty;
 	
 	IQsarManager qsar;
+	
+	private OnlyWithImplFilter onlyWithImplFilter = new OnlyWithImplFilter();
 
     
 	public DescriptorsPage(FormEditor editor, QsarType qsarModel, 
@@ -187,6 +193,25 @@ public class DescriptorsPage extends FormPage {
           GridLayout layout = new GridLayout();
           layout.numColumns = 2;
           client.setLayout(layout);
+          
+          final Button btnOnlyImpl=toolkit.createButton(client, "Display only with implementation", SWT.CHECK);
+          btnOnlyImpl.setSelection(true);
+          btnOnlyImpl.addSelectionListener(new SelectionAdapter(){
+        	  @Override
+        	public void widgetSelected(SelectionEvent e) {
+        		  if (btnOnlyImpl.getSelection()==true){
+        			  descViewer.addFilter(onlyWithImplFilter);
+        		  }
+        		  else if (btnOnlyImpl.getSelection()==false){
+        			  descViewer.removeFilter(onlyWithImplFilter);
+        		  }
+        	}
+        	  
+          });
+          GridData gdBTN=new GridData(GridData.FILL_HORIZONTAL);
+          gdBTN.horizontalSpan=2;
+          btnOnlyImpl.setLayoutData( gdBTN );
+
 
           descViewer = new TreeViewer(client, SWT.BORDER | SWT.MULTI );
           descTree=descViewer.getTree();
@@ -215,6 +240,12 @@ public class DescriptorsPage extends FormPage {
           descViewer.setLabelProvider( new DescriptorLabelProvider() );
           descViewer.setUseHashlookup(true);
           
+          //Sort by name
+          descViewer.setSorter(new ViewerSorter());
+
+          //Default is to only show with impl (checkbox is selected!)
+          descViewer.addFilter(onlyWithImplFilter);
+
           descTree.addKeyListener( new KeyListener(){
               public void keyPressed( KeyEvent e ) {
                   //Delete key
