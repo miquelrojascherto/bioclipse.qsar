@@ -37,12 +37,15 @@ public class DescriptorContentProvider implements ITreeContentProvider {
 	}
 
 	public Object[] getElements(Object inputElement) {
-		
+
+		if (inputElement instanceof PendingObject) {
+			PendingObject po = (PendingObject) inputElement;
+			return new Object[]{po};
+		}
+
 		if (!(inputElement instanceof DescriptorModel)) {
 			return new Object[0];
 		}
-
-//		Alternative: by provider
 
 		return qsar.getFullCategories().toArray();
 

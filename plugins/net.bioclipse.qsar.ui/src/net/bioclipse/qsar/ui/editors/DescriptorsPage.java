@@ -144,9 +144,19 @@ public class DescriptorsPage extends FormPage {
         createDescriptorSection(form, toolkit);
         createRightSection(form, toolkit);
 
+		descViewer.setInput(new PendingObject());
+		descViewer.refresh();
+
+		descViewer.getTree().getDisplay().asyncExec(new Runnable() {
+
+			public void run() {
+				DescriptorModel descModel=qsar.getModel();
+				descViewer.setInput(descModel);
+			}
+		});
+
+        
         //Set descriptor model as input object
-		DescriptorModel descModel=qsar.getModel();
-		descViewer.setInput(descModel);
 
         //Post selections to Eclipse via our intermediate selectionprovider
         selectionProvider.setSelectionProviderDelegate( descViewer );
@@ -195,11 +205,11 @@ public class DescriptorsPage extends FormPage {
           
           TreeViewerColumn firstCol=new TreeViewerColumn(descViewer, SWT.NONE);
           firstCol.getColumn().setText("");
-          tableLayout.addColumnData(new ColumnPixelData(200));
+          tableLayout.addColumnData(new ColumnPixelData(250));
           
           TreeViewerColumn providersCol=new TreeViewerColumn(descViewer, SWT.NONE);
-          providersCol.getColumn().setText("Providers");
-          tableLayout.addColumnData(new ColumnPixelData(150));
+          providersCol.getColumn().setText("Provider(s)");
+          tableLayout.addColumnData(new ColumnPixelData(100));
           
           descViewer.setContentProvider( new DescriptorContentProvider());
           descViewer.setLabelProvider( new DescriptorLabelProvider() );

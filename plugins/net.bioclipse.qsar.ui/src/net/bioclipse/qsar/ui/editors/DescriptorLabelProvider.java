@@ -22,6 +22,9 @@ public class DescriptorLabelProvider implements ITableLabelProvider {
 
 	public Image getColumnImage(Object element, int columnIndex) {
 
+		if (element instanceof PendingObject) {
+			return null;
+		}
 
 		if (columnIndex==0){
 			if (element instanceof DescriptorCategory) {
@@ -44,6 +47,13 @@ public class DescriptorLabelProvider implements ITableLabelProvider {
 	}
 
 	public String getColumnText(Object element, int columnIndex) {
+		
+		if (element instanceof PendingObject) {
+			PendingObject po = (PendingObject) element;
+			if (columnIndex==0)
+				return po.getPendingString();
+			return "";
+		}
 
 		if (element instanceof Descriptor) {
 			Descriptor desc = (Descriptor) element;
