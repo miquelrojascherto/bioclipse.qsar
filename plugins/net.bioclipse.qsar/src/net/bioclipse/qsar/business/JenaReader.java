@@ -217,8 +217,9 @@ public class JenaReader {
 					
 					if (existingCategory==null){
 						//Should not happen
-						System.out.println("Descriptor refers to non-existing " +
-						    "category: " + processedCategoryID +". Skipping this category.");
+						System.out.println("Descriptor category: " + 
+								processedCategoryID +" not found in already " +
+							       "added categories. Skipping this category.");
 					}
 					else{
 						

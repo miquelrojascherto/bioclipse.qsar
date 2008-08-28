@@ -20,7 +20,14 @@ public class DescriptorProvider extends BaseEPObject{
 	private boolean acceptsSmiles;
 	private boolean acceptsCml;
 	private boolean acceptsMolfile;
+	private String shortName;
 
+	public String getShortName() {
+		return shortName;
+	}
+	public void setShortName(String shortName) {
+		this.shortName = shortName;
+	}
 	public List<DescriptorImpl> getDescriptorImpls() {
 		return descriptorImpls;
 	}

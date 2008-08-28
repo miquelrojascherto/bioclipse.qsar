@@ -178,6 +178,9 @@ public class QsarManager implements IQsarManager{
                     String picon=element.getAttribute("icon");
                     provider.setIcon_path(picon);
                     
+                    String pshortname=element.getAttribute("shortName");
+                    provider.setShortName(pshortname);
+                    
                     IDescriptorCalculator calculator;
 						calculator = (IDescriptorCalculator) 
 									element.createExecutableExtension("calculator");
