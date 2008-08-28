@@ -24,7 +24,8 @@
          <provider
             id="net.bioclipse.cdk.descriptorprovider"
             name="Chemistry Development Kit (CDK)"
-            icon="icons/molecule2D.png"
+            shortName="CDK"
+            icon="icons/cdklogo.png"
             calculator="net.bioclipse.cdk.qsar.impl.CDKDescriptorCalculator"
             acceptsSmiles="true"
             acceptsCml="true"
