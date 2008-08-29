@@ -33,7 +33,6 @@
   	<property name="interceptorNames">
   	    <list>
   	        <value>recordingAdvisor</value>
-  	        <value>wrapInProxyAdvice</value>
   	    </list>
   	</property>
   </bean>
