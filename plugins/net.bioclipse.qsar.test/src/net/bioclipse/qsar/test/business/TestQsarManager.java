@@ -353,11 +353,7 @@ public class TestQsarManager {
 		IMolecule mol=new SmilesMolecule("C1CCCCC1CC(CC)CC");
 		String descriptorID="net.bioclipse.qsar.test.descriptor3";
 		
-		List<IDescriptorResult> reslist = qsar.calculate(mol, descriptorID);
-		
-		//We know only one result as we only asked for one descriptor
-		assertEquals(1, reslist.size());
-		IDescriptorResult res=reslist.get(0);
+		IDescriptorResult res=qsar.calculate(mol, descriptorID);
 		assertNotNull(res);
 		assertNull(res.getErrorMessage());
 		assertEquals(descriptorID, res.getDescriptorId());
@@ -375,11 +371,8 @@ public class TestQsarManager {
 		IMolecule mol=new SmilesMolecule("C1CCCCC1CC(CC)CC");
 		String descriptorID="net.bioclipse.qsar.test.descriptorERROR";
 		
-		List<IDescriptorResult> reslist = qsar.calculate(mol, descriptorID);
-		
-		//We know only one result as we only asked for one descriptor
-		assertEquals(1, reslist.size());
-		IDescriptorResult res=reslist.get(0);
+		IDescriptorResult res=qsar.calculate(mol, descriptorID);
+		assertNotNull(res);
 		assertNotNull(res.getErrorMessage());
 		
 		System.out.println("Error message: " + res.getErrorMessage());
@@ -395,11 +388,8 @@ public class TestQsarManager {
 		IMolecule mol=new SmilesMolecule("C1CCCCC1CC(CC)CC");
 		String descriptorID="net.bioclipse.qsar.test.descriptor3D";
 		
-		List<IDescriptorResult> reslist = qsar.calculate(mol, descriptorID);
-		
-		//We know only one result as we only asked for one descriptor
-		assertEquals(1, reslist.size());
-		IDescriptorResult res=reslist.get(0);
+		IDescriptorResult res=qsar.calculate(mol, descriptorID);
+		assertNotNull(res);
 		assertNotNull(res.getErrorMessage());
 		
 		System.out.println("Error message: " + res.getErrorMessage());
@@ -425,7 +415,7 @@ public class TestQsarManager {
 		descs.add(descriptorID);
 		descs.add(descriptorID2);
 		
-		Map<IMolecule, List<IDescriptorResult>> res = qsar.calculate(mols, descs);
+		Map<IMolecule, List<IDescriptorResult>> res = qsar.calculateNoParams(mols, descs);
 		assertNotNull(res);
 		
 		List<IDescriptorResult> res1=res.get(mol1);
