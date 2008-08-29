@@ -329,6 +329,7 @@ public class DescriptorsPage extends FormPage {
 				Descriptor desc = (Descriptor) obj;
 				
 				//Find out impl
+//				DescriptorImpl impl2 = qsar.getDescriptorByID(desc.getId());
 				DescriptorImpl impl = qsar.getPreferredImpl(desc.getId());
 				if (impl!=null){
 					DescriptorInstance inst = new DescriptorInstance(impl);

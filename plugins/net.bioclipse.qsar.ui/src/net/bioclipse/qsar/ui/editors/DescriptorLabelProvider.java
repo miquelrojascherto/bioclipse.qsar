@@ -28,7 +28,7 @@ public class DescriptorLabelProvider implements ITableLabelProvider {
 		}
 		else if (element instanceof DescriptorInstance) {
 			if (desc==null) desc= Activator.getImageDescriptor(
-					"icons/descriptor.gif").createImage();
+					"icons/descriptor.png").createImage();
 			return desc;
 		}
 
@@ -40,7 +40,7 @@ public class DescriptorLabelProvider implements ITableLabelProvider {
 			}
 			else if (element instanceof Descriptor) {
 				if (desc==null) desc= Activator.getImageDescriptor(
-						"icons/descriptor.gif").createImage();
+						"icons/descriptor.png").createImage();
 				return desc;
 			}
 

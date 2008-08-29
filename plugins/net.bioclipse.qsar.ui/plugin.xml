@@ -7,7 +7,7 @@
       <editor
             name="QSAR Editor"
             filenames="qsar.xml"
-            icon="icons/sample.gif"
+            icon="icons/descriptor.png"
             contributorClass="net.bioclipse.qsar.ui.editors.QSAREditorContributor"
             class="net.bioclipse.qsar.ui.editors.QSARFormEditor"
             id="net.bioclipse.qsar.editors.QSARFormEditor">
@@ -78,7 +78,7 @@
 	   project="true"
 	   class="net.bioclipse.qsar.ui.wizards.NewQSARProjectWizard"
 	   category="net.bioclipse.categories.qsar"
-	   icon="icons/sample.gif">
+	   icon="icons/descriptor.png">
    	   <description>New QSAR Wizard</description>
 	   <selection class="org.eclipse.core.resources.IResource"/>
 	</wizard>
