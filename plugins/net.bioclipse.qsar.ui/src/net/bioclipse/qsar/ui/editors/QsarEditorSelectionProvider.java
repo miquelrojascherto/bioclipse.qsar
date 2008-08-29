@@ -16,7 +16,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
  * 
  * @author Marc R. Hoffmann
  */
-public class MoleculesEditorSelectionProvider implements IPostSelectionProvider {
+public class QsarEditorSelectionProvider implements IPostSelectionProvider {
 
   private final ListenerList selectionListeners = new ListenerList();
 

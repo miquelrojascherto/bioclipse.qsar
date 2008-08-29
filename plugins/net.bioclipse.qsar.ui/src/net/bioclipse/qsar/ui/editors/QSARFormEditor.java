@@ -65,7 +65,7 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
 	private AdapterFactoryEditingDomain editingDomain;
 
 	//For delegating selections in MPE with two sections
-    private MoleculesEditorSelectionProvider selectionProvider;
+    private QsarEditorSelectionProvider selectionProvider;
 
 	private DescriptorsPage descPage;
 
@@ -100,7 +100,7 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
 
 		QsarAdapterFactory factory=new QsarAdapterFactory();
 		editingDomain=new AdapterFactoryEditingDomain(factory, new BasicCommandStack());
-        selectionProvider=new MoleculesEditorSelectionProvider();
+        selectionProvider=new QsarEditorSelectionProvider();
 
     	
     	//Get project

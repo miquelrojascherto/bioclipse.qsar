@@ -45,7 +45,9 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnPixelData;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
@@ -54,6 +56,8 @@ import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -96,7 +100,7 @@ public class DescriptorsPage extends FormPage {
     ICDKManager cdk;
     DecimalFormat formatter;
     
-    private MoleculesEditorSelectionProvider selectionProvider;
+    private QsarEditorSelectionProvider selectionProvider;
 	private EditingDomain editingDomain;
 
 	private DescriptorlistType descriptorList;
@@ -112,7 +116,7 @@ public class DescriptorsPage extends FormPage {
 
     
 	public DescriptorsPage(FormEditor editor, QsarType qsarModel, 
-			EditingDomain editingDomain, MoleculesEditorSelectionProvider selectionProvider) {
+			EditingDomain editingDomain, QsarEditorSelectionProvider selectionProvider) {
 
 		super(editor, "qsar.descriptors", "Descriptors");
 		this.editingDomain=editingDomain;
@@ -249,7 +253,18 @@ public class DescriptorsPage extends FormPage {
 
           //Default is to only show with impl (checkbox is selected!)
           descViewer.addFilter(onlyWithImplFilter);
+          
+      	//If focus gained, make this viewer provide selections
+          descViewer.getTree().addFocusListener(new FocusListener(){
 
+			public void focusGained(FocusEvent e) {
+		        selectionProvider.setSelectionProviderDelegate( descViewer );
+			}
+
+			public void focusLost(FocusEvent e) {
+			}
+          });
+          
           descTree.addKeyListener( new KeyListener(){
               public void keyPressed( KeyEvent e ) {
                   //Delete key
@@ -398,6 +413,17 @@ public class DescriptorsPage extends FormPage {
     	gd6.widthHint=200;
     	rightTable.setLayoutData( gd6 );
 
+    	//If focus gained, make this viewer provide selections
+        rightTable.addFocusListener(new FocusListener(){
+
+			public void focusGained(FocusEvent e) {
+		        selectionProvider.setSelectionProviderDelegate( rightViewer );
+			}
+
+			public void focusLost(FocusEvent e) {
+			}
+          });
+    	
     	rightTable.addKeyListener( new KeyListener(){
     		public void keyPressed( KeyEvent e ) {
 

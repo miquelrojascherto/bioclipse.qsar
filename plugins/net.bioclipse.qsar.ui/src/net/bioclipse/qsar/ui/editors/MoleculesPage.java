@@ -90,7 +90,7 @@ public class MoleculesPage extends FormPage{
     ICDKManager cdk;
     DecimalFormat formatter;
     
-    private MoleculesEditorSelectionProvider selectionProvider;
+    private QsarEditorSelectionProvider selectionProvider;
 	private EditingDomain editingDomain;
 	private List<MoleculeResource> molecules;
 	private MoleculelistType moleculeList;
@@ -98,7 +98,7 @@ public class MoleculesPage extends FormPage{
 
     
 	public MoleculesPage(FormEditor editor, QsarType qsarModel, 
-			EditingDomain editingDomain, MoleculesEditorSelectionProvider selectionProvider) {
+			EditingDomain editingDomain, QsarEditorSelectionProvider selectionProvider) {
 
 		super(editor, "qsar.molecules", "Molecules");
 		this.editingDomain=editingDomain;
