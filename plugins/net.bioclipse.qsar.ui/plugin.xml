@@ -84,34 +84,19 @@
 	</wizard>
 </extension>
    
-   
-   <!--extension
-         id="xmlProblem"
-         name="XML Problem"
-         point="org.eclipse.core.resources.markers">
-      <super
-            type="org.eclipse.core.resources.problemmarker">
-      </super>
-      <persistent
-            value="true">
-      </persistent>
-   </extension-->
-
-   <!--extension
-         id="net.bioclipse.ui.QsarNature"
-         name="QSAR Project Nature"
-         point="org.eclipse.core.resources.natures">
-      <runtime>
-         <run class="net.bioclipse.ui.QsarNature"/>
-      </runtime>
-   </extension>
    <extension
-         point="org.eclipse.ui.ide.projectNatureImages">
-      <image
-            icon="icons/ovr_16/r_ovr.gif"
-            id="net.bioclipse.images.QsarProjectImage"
-            natureId="net.bioclipse.ui.QsarNature"/>
-   </extension-->
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="net.bioclipse.qsar.ui.prefs.QSARPreferenceInitializer">
+      </initializer>
+   </extension>
+   
+   <extension point="org.eclipse.ui.preferencePages">
+    	<page id="net.bioclipse.qsar.ui.prefs.ProvidersPreferencePage"
+  	      	name="QSAR"
+	      	class="net.bioclipse.qsar.ui.prefs.ProvidersPreferencePage">
+	   	</page>
+   </extension>
 
 
 </plugin>

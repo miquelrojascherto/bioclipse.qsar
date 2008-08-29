@@ -24,6 +24,8 @@ import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
 import net.bioclipse.qsar.business.IQsarManager;
+import net.bioclipse.qsar.descriptor.model.Descriptor;
+import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorModel;
 import net.bioclipse.ui.dialogs.WSFileDialog;
 
@@ -87,9 +89,6 @@ public class DescriptorsPage extends FormPage {
     private TableViewer rightViewer;
     private Table rightTable;
 
-    
-    private MoleculesContentProvider molContentProv;
-
     private static final Logger logger = Logger.getLogger(MoleculesPage.class);
     
     ICDKManager cdk;
@@ -114,7 +113,6 @@ public class DescriptorsPage extends FormPage {
 		this.editingDomain=editingDomain;
 	    
 		cdk=Activator.getDefault().getCDKManager();
-        molContentProv=new MoleculesContentProvider();
         formatter = new DecimalFormat("0.00");
         this.selectionProvider=selectionProvider;
 
@@ -316,6 +314,20 @@ public class DescriptorsPage extends FormPage {
      */
     protected void addSelectedDescriptors() {
 
+    	IStructuredSelection ssel=(IStructuredSelection) descViewer.getSelection();
+    	for (Object obj : ssel.toList()){
+    		
+    		if (obj instanceof Descriptor) {
+				Descriptor desc = (Descriptor) obj;
+				
+				//Find out impl
+				DescriptorImpl impl = qsar.getPreferredImpl(desc.getId());
+				
+			}
+    		
+    	}
+    	
+    	
     	//TODO implement
     	showMessage("Not implemented");
 
