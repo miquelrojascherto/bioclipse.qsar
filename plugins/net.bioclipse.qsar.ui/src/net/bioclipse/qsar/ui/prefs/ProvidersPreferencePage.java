@@ -3,6 +3,7 @@ package net.bioclipse.qsar.ui.prefs;
 import net.bioclipse.qsar.QSARConstants;
 import net.bioclipse.qsar.init.Activator;
 import net.bioclipse.qsar.prefs.QSARPreferenceInitializer;
+import net.bioclipse.qsar.prefs.QsarPreferenceHelper;
 
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -38,13 +39,13 @@ implements IWorkbenchPreferencePage {
 
 			@Override
 			protected String createList(String[] items) {
-				return QSARPreferenceInitializer.createQsarPreferenceListFromString(items);
+				return QsarPreferenceHelper.createQsarPreferenceListFromString(items);
 			}
 
 
 			@Override
 			protected String[] parseString(String stringList) {
-				return QSARPreferenceInitializer.parseQsarPreferenceString(stringList);
+				return QsarPreferenceHelper.parseQsarPreferenceString(stringList);
 			}
 			
 		};
