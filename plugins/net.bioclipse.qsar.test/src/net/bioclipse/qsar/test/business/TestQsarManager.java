@@ -19,7 +19,6 @@ import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
 import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 import net.bioclipse.qsar.init.Activator;
-import net.bioclipse.qsar.ui.QsarUIConstants;
 
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
@@ -43,10 +42,12 @@ public class TestQsarManager {
 	
 	@Test
 	public void testGetPreferences(){
-		
-		IEclipsePreferences prefs = new DefaultScope().getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
+
+        String descriptorID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain";
+
+		IEclipsePreferences prefs = new DefaultScope().getNode(Activator.PLUGIN_ID);
 		assertNotNull(prefs);
-		String prefsString=prefs.get(QsarUIConstants.QSAR_PROVIDERS_ORDER_PREFERENCE, null);
+		String prefsString=prefs.get(QSARConstants.QSAR_PROVIDERS_ORDER_PREFERENCE, null);
 		assertNotNull(prefsString);
 
 		System.out.println("Got prefs string: " + prefsString);
@@ -55,7 +56,10 @@ public class TestQsarManager {
 				"net.bioclipse.qsar.test.descriptorProvider2;",
 				prefsString);
 
-		
+		DescriptorImpl impl=qsar.getPreferredImpl(descriptorID);
+		assertNotNull(impl);
+		System.out.println("pref impl: " + impl.getId());
+		assertEquals("net.bioclipse.qsar.test.descriptor2", impl.getId());
 	}
 
 	@Test
