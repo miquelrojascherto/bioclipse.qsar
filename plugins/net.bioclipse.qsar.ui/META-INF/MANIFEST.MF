@@ -26,3 +26,9 @@ Require-Bundle: net.bioclipse.core,
  org.openscience.cdk;bundle-version="1.1.0"
 Eclipse-LazyStart: true
 Import-Package: org.apache.log4j
+Export-Package: net.bioclipse.qsar.ui,
+ net.bioclipse.qsar.ui.builder,
+ net.bioclipse.qsar.ui.editors,
+ net.bioclipse.qsar.ui.prefs,
+ net.bioclipse.qsar.ui.util,
+ net.bioclipse.qsar.ui.wizards
