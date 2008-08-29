@@ -28,6 +28,8 @@ import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.preferences.DefaultScope;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 
 import net.bioclipse.core.domain.IMolecule;
 import net.bioclipse.qsar.QSARConstants;
@@ -40,6 +42,8 @@ import net.bioclipse.qsar.descriptor.model.DescriptorInstance;
 import net.bioclipse.qsar.descriptor.model.DescriptorModel;
 import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
+import net.bioclipse.qsar.init.Activator;
+import net.bioclipse.qsar.prefs.QSARPreferenceInitializer;
 
 public class QsarManager implements IQsarManager{
 
@@ -678,14 +682,24 @@ public class QsarManager implements IQsarManager{
 	}
 
 	public DescriptorImpl getPreferredImpl(String descriptorID){
+		
+		//Read preference and get order of providers
 
-		List<DescriptorImpl> ret= new ArrayList<DescriptorImpl>();
-		for (DescriptorImpl impl : getFullDescriptorImpls()){
-			if (impl.getDefinition().equals(descriptorID))
-				ret.add(impl);
+		IEclipsePreferences prefs = new DefaultScope().getNode(Activator.PLUGIN_ID);
+		String ret=prefs.get(QSARConstants.QSAR_PROVIDERS_ORDER_PREFERENCE, null);
+		
+		String[] provArray=QSARPreferenceInitializer.parseQsarPreferenceString(ret);
+		
+		for (String providerID : provArray){
+			DescriptorProvider prov = getProviderByID(providerID);
+			for (DescriptorImpl impl : prov.getDescriptorImpls()){
+				if (impl.getDefinition().equals(descriptorID))
+					return impl;
+				int a=1;
+			}
 		}
-//		return ret;
 
+		//No impl found for this descrID
 		return null;
 	}
 

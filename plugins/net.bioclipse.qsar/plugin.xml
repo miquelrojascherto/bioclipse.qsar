@@ -42,4 +42,12 @@
       </scriptContribution>
    </extension>
 
+
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="net.bioclipse.qsar.prefs.QSARPreferenceInitializer">
+      </initializer>
+   </extension>
+
 </plugin>
