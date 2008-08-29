@@ -52,9 +52,8 @@ public class TestQsarManager {
 
 		System.out.println("Got prefs string: " + prefsString);
 		
-		assertEquals("net.bioclipse.qsar.test.descriptorProvider1;" +
-				"net.bioclipse.qsar.test.descriptorProvider2;",
-				prefsString);
+		assertTrue(prefsString.contains("descriptorProvider1"));
+		assertTrue(prefsString.contains("descriptorProvider2"));
 
 		DescriptorImpl impl=qsar.getPreferredImpl(descriptorID);
 		assertNotNull(impl);
