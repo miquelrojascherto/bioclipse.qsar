@@ -682,29 +682,36 @@ public class QsarManager implements IQsarManager{
 		
 	}
 
+	/**
+	 * Returns preferred impl for a descriptorID or null if none existing
+	 */
 	public DescriptorImpl getPreferredImpl(String descriptorID){
 		
 		//Read preference and get order of providers
 
 		IEclipsePreferences prefs = new DefaultScope().getNode(Activator.PLUGIN_ID);
 		String ret=prefs.get(QSARConstants.QSAR_PROVIDERS_ORDER_PREFERENCE, null);
-		
+
+		//String of names
 		String[] provArray=QsarPreferenceHelper.parseQsarPreferenceString(ret);
 		
-		for (String providerID : provArray){
-			DescriptorProvider prov = getProviderByID(providerID);
-			for (DescriptorImpl impl : prov.getDescriptorImpls()){
-				if (impl.getDefinition().equals(descriptorID))
-					return impl;
-				int a=1;
+		for (String providerName : provArray){
+			String providerID=QsarPreferenceHelper.getProviderID(providerName);
+			if (providerID!=null){
+				DescriptorProvider prov = getProviderByID(providerID);
+				if (prov!=null){
+					for (DescriptorImpl impl : prov.getDescriptorImpls()){
+						if (impl.getDefinition().equals(descriptorID))
+							return impl;
+					}
+				}
+			} else{
+				logger.error("Could not locate provider by name: " + providerName);
 			}
 		}
-
 		//No impl found for this descrID
 		return null;
 	}
-
-
 	
 	
 }

@@ -1,7 +1,9 @@
 package net.bioclipse.qsar.prefs;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import net.bioclipse.qsar.QSARConstants;
@@ -14,6 +16,7 @@ import org.eclipse.core.runtime.Platform;
 
 public class QsarPreferenceHelper {
 
+	static Map<String, String> providerNameToID = new HashMap<String, String>();
 
     public static String getAvailableProvidersFromEP(){
     	
@@ -35,7 +38,7 @@ public class QsarPreferenceHelper {
         IExtension[] serviceObjectExtensions
         = serviceObjectExtensionPoint.getExtensions();
 
-        List<String> providerIDs=new ArrayList<String>();
+        List<String> providerNames=new ArrayList<String>();
 		
         for(IExtension extension : serviceObjectExtensions) {
             for( IConfigurationElement element
@@ -43,14 +46,16 @@ public class QsarPreferenceHelper {
 
                 if (element.getName().equals(QSARConstants.PROVIDER_ELEMENT_NAME)){
                 	
-                	String providerID=element.getAttribute("name");
-                	String providerName=element.getAttribute("id");
-                	providerIDs.add(providerID);
+                	String providerID=element.getAttribute("id");
+                	String providerName=element.getAttribute("name");
+                	providerNames.add(providerName);
+                	providerNameToID.put(providerName, providerID);
+                	
                 }
             }
         }
-        if (providerIDs.size()>0){
-            String[] providersAsArray=providerIDs.toArray(new String[0]);
+        if (providerNames.size()>0){
+            String[] providersAsArray=providerNames.toArray(new String[0]);
             return createQsarPreferenceListFromString(
             		providersAsArray);
         }
@@ -79,6 +84,10 @@ public class QsarPreferenceHelper {
 			path.append(QSARConstants.PREFS_SEPERATOR);
 		}
 		return path.toString();
+	}
+	
+	public static String getProviderID(String providerName){
+		return providerNameToID.get(providerName);
 	}
 
 	
