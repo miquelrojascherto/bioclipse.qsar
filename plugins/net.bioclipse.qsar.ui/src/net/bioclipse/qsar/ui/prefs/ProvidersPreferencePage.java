@@ -1,11 +1,8 @@
 package net.bioclipse.qsar.ui.prefs;
 
-import java.util.ArrayList;
-import java.util.StringTokenizer;
-
 import net.bioclipse.qsar.QSARConstants;
-import net.bioclipse.qsar.ui.Activator;
-import net.bioclipse.qsar.ui.QsarUIConstants;
+import net.bioclipse.qsar.init.Activator;
+import net.bioclipse.qsar.prefs.QSARPreferenceInitializer;
 
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -21,7 +18,6 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 public class ProvidersPreferencePage extends FieldEditorPreferencePage 
 implements IWorkbenchPreferencePage {
 
-	private static final String DEFAULT_SEPERATOR = ";";
 
 	
 	public ProvidersPreferencePage() {
@@ -37,18 +33,18 @@ implements IWorkbenchPreferencePage {
 	protected void createFieldEditors() {
 
 		
-		UpDownListEditor listeditor=new UpDownListEditor(QsarUIConstants.QSAR_PROVIDERS_ORDER_PREFERENCE,
+		UpDownListEditor listeditor=new UpDownListEditor(QSARConstants.QSAR_PROVIDERS_ORDER_PREFERENCE,
 				"&Order of DescriptorProviders", getFieldEditorParent()){
 
 			@Override
 			protected String createList(String[] items) {
-				return createQsarPreferenceListFromString(items);
+				return QSARPreferenceInitializer.createQsarPreferenceListFromString(items);
 			}
 
 
 			@Override
 			protected String[] parseString(String stringList) {
-				return parseQsarPreferenceString(stringList);
+				return QSARPreferenceInitializer.parseQsarPreferenceString(stringList);
 			}
 			
 		};
@@ -64,27 +60,6 @@ implements IWorkbenchPreferencePage {
 	public void init(IWorkbench workbench) {
 	}
 	
-	public static String[] parseQsarPreferenceString(String stringList) {
-		StringTokenizer st = 
-			new StringTokenizer(stringList, DEFAULT_SEPERATOR); //$NON-NLS-1$
-		ArrayList v = new ArrayList();
-		while (st.hasMoreElements()) {
-			v.add(st.nextElement());
-		}
-		return (String[])v.toArray(new String[v.size()]);
-	}
-
-	
-	public static String createQsarPreferenceListFromString(String[] items) {
-		
-		StringBuffer path = new StringBuffer("");//$NON-NLS-1$
-		
-		for (int i = 0; i < items.length; i++) {
-			path.append(items[i]);
-			path.append(DEFAULT_SEPERATOR);
-		}
-		return path.toString();
-	}
 
 
 }

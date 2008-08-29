@@ -84,13 +84,6 @@
 	</wizard>
 </extension>
    
-   <extension
-         point="org.eclipse.core.runtime.preferences">
-      <initializer
-            class="net.bioclipse.qsar.ui.prefs.QSARPreferenceInitializer">
-      </initializer>
-   </extension>
-   
    <extension point="org.eclipse.ui.preferencePages">
     	<page id="net.bioclipse.qsar.ui.prefs.ProvidersPreferencePage"
   	      	name="QSAR"
