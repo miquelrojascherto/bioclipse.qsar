@@ -3,12 +3,12 @@ package net.bioclipse.qsar.descriptor.model;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
 
-public class DescriptorPropertySource extends BaseEPObjectPropertySource{
+public class DescriptorImplPropertySource extends BaseEPObjectPropertySource{
 
     protected static final String PROPERTY_TYPE = "Type";
     protected static final String PROPERTY_PROVIDER = "Provider";
 
-	public DescriptorPropertySource(BaseEPObject item) {
+	public DescriptorImplPropertySource(BaseEPObject item) {
 		super(item);
 	}
 	

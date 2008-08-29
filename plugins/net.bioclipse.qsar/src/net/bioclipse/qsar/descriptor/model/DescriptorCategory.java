@@ -43,9 +43,9 @@ public class DescriptorCategory extends BaseEPObject{
 	}
 	public Object getAdapter(Class adapter) {
 
-//		if (IPropertySource.class.equals(adapter)) {
-//			return new DescriptorCategoryPropertySource(this);
-//		}
+		if (IPropertySource.class.equals(adapter)) {
+			return new DescriptorCategoryPropertySource(this);
+		}
 
 		return super.getAdapter(adapter);
 	}

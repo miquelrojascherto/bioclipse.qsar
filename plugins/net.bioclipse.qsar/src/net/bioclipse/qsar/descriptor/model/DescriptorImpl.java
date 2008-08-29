@@ -57,7 +57,7 @@ public class DescriptorImpl extends BaseEPObject{
 	public Object getAdapter(Class adapter) {
 
 		if (IPropertySource.class.equals(adapter)) {
-			return new DescriptorPropertySource(this);
+			return new DescriptorImplPropertySource(this);
 		}
 
 		return super.getAdapter(adapter);
