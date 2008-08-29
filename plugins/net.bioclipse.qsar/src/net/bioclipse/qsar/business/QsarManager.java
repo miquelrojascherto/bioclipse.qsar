@@ -44,6 +44,7 @@ import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 import net.bioclipse.qsar.init.Activator;
 import net.bioclipse.qsar.prefs.QSARPreferenceInitializer;
+import net.bioclipse.qsar.prefs.QsarPreferenceHelper;
 
 public class QsarManager implements IQsarManager{
 
@@ -688,7 +689,7 @@ public class QsarManager implements IQsarManager{
 		IEclipsePreferences prefs = new DefaultScope().getNode(Activator.PLUGIN_ID);
 		String ret=prefs.get(QSARConstants.QSAR_PROVIDERS_ORDER_PREFERENCE, null);
 		
-		String[] provArray=QSARPreferenceInitializer.parseQsarPreferenceString(ret);
+		String[] provArray=QsarPreferenceHelper.parseQsarPreferenceString(ret);
 		
 		for (String providerID : provArray){
 			DescriptorProvider prov = getProviderByID(providerID);
