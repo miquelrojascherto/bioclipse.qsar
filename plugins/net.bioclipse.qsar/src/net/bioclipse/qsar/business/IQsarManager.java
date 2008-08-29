@@ -78,21 +78,23 @@ public interface IQsarManager extends IBioclipseManager{
      * Get the descriptorModel as read from EP
      * @return
      */
-	DescriptorModel getModel();
+    public DescriptorModel getModel();
 
-	List<String> getDescriptors();
-	List<Descriptor> getFullDescriptors();
-	Descriptor getDescriptorByID(String descriptorID);
+	public List<String> getDescriptors();
+	public List<Descriptor> getFullDescriptors();
+	public Descriptor getDescriptorByID(String descriptorID);
 
-	List<Descriptor> getDescriptors(DescriptorCategory category);
+	public List<Descriptor> getDescriptors(DescriptorCategory category);
 
-	List<String> getDescriptors(String categoryID);
+	public List<String> getDescriptors(String categoryID);
 
-	List<DescriptorImpl> getFullDescriptorImpls();
+	public List<DescriptorImpl> getFullDescriptorImpls();
 
-	List<String> getDescriptorImpls(String descriptorID);
+	public List<String> getDescriptorImpls(String descriptorID);
 
-	List<DescriptorImpl> getDescriptorImplsForDescriptor(String descriptorID);
+	public List<DescriptorImpl> getDescriptorImplsForDescriptor(String descriptorID);
+
+	public DescriptorImpl getPreferredImpl(String descriptorID);
 
 
 

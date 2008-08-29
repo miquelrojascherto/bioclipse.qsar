@@ -30,6 +30,7 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 
 import net.bioclipse.core.domain.IMolecule;
+import net.bioclipse.qsar.QSARConstants;
 import net.bioclipse.qsar.descriptor.IDescriptorCalculator;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
@@ -44,9 +45,6 @@ public class QsarManager implements IQsarManager{
 
     private static final Logger logger = Logger.getLogger(QsarManager.class);
 
-
-	private static final String DESCRIPTOR_EXTENSION_POINT = 
-					"net.bioclipse.qsar.descriptorProvider";
 
 	//The descriptor model
 	DescriptorModel model;
@@ -159,7 +157,7 @@ public class QsarManager implements IQsarManager{
          * service objects
          */
         IExtensionPoint serviceObjectExtensionPoint = registry
-        .getExtensionPoint(DESCRIPTOR_EXTENSION_POINT);
+        .getExtensionPoint(QSARConstants.DESCRIPTOR_EXTENSION_POINT);
 
         IExtension[] serviceObjectExtensions
         = serviceObjectExtensionPoint.getExtensions();
@@ -169,7 +167,7 @@ public class QsarManager implements IQsarManager{
             for( IConfigurationElement element
                     : extension.getConfigurationElements() ) {
 
-                if (element.getName().equals("provider")){
+                if (element.getName().equals(QSARConstants.PROVIDER_ELEMENT_NAME)){
 
 					try {
                     String pid=element.getAttribute("id");
@@ -223,7 +221,7 @@ public class QsarManager implements IQsarManager{
                     //Get descriptor children
                     provider.setDescriptorImpls(new ArrayList<DescriptorImpl>());
                     for( IConfigurationElement providerChild
-                            : element.getChildren("descriptorImpl") ) {
+                            : element.getChildren(QSARConstants.DESCRIMPL_ELEMENT_NAME) ) {
                     	
                         String did=providerChild.getAttribute("id");
                         String dname=providerChild.getAttribute("name");
@@ -266,7 +264,7 @@ public class QsarManager implements IQsarManager{
                         //Get descriptor children=parameters
                         List<DescriptorParameter> pparams=new ArrayList<DescriptorParameter>();
                         for( IConfigurationElement param
-                                : providerChild.getChildren("parameter") ) {
+                                : providerChild.getChildren(QSARConstants.PARAMETER_ELEMENT_NAME) ) {
 
                             String pakey=param.getAttribute("key");
                             String padef=param.getAttribute("defaultvalue");
@@ -679,6 +677,17 @@ public class QsarManager implements IQsarManager{
 		
 	}
 
+	public DescriptorImpl getPreferredImpl(String descriptorID){
+
+		List<DescriptorImpl> ret= new ArrayList<DescriptorImpl>();
+		for (DescriptorImpl impl : getFullDescriptorImpls()){
+			if (impl.getDefinition().equals(descriptorID))
+				ret.add(impl);
+		}
+//		return ret;
+
+		return null;
+	}
 
 
 	
