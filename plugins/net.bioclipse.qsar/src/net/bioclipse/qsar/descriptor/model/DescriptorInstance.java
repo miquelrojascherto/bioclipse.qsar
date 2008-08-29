@@ -1,5 +1,6 @@
 package net.bioclipse.qsar.descriptor.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DescriptorInstance extends BaseEPObject{
@@ -12,6 +13,22 @@ public class DescriptorInstance extends BaseEPObject{
 	public DescriptorInstance(DescriptorImpl impl,
 			List<DescriptorParameter> params) {
 		super (impl.getId(),impl.getName());
+		descriptorImpl=impl;
+		parameters=params;
+	}
+
+
+	/**
+	 * Constructor that clones the parameters in the impl and assigns to
+	 * instance.
+	 * @param impl DescriptorImpl to be used
+	 */
+	public DescriptorInstance(DescriptorImpl impl) {
+		super (impl.getId(),impl.getName());
+		List<DescriptorParameter> params=new ArrayList<DescriptorParameter>();
+		for (DescriptorParameter p : impl.getParameters()){
+			params.add(p.clone());
+		}
 		descriptorImpl=impl;
 		parameters=params;
 	}
