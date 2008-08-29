@@ -9,6 +9,7 @@ import java.util.Map;
 import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.domain.IMolecule;
 import net.bioclipse.core.domain.SmilesMolecule;
+import net.bioclipse.qsar.QSARConstants;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.business.QsarManager;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
@@ -17,7 +18,11 @@ import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
 import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
+import net.bioclipse.qsar.init.Activator;
+import net.bioclipse.qsar.ui.QsarUIConstants;
 
+import org.eclipse.core.runtime.preferences.DefaultScope;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.junit.Test;
 
 public class TestQsarManager {
@@ -36,6 +41,22 @@ public class TestQsarManager {
 	}
 	
 	
+	@Test
+	public void testGetPreferences(){
+		
+		IEclipsePreferences prefs = new DefaultScope().getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
+		assertNotNull(prefs);
+		String prefsString=prefs.get(QsarUIConstants.QSAR_PROVIDERS_ORDER_PREFERENCE, null);
+		assertNotNull(prefsString);
+
+		System.out.println("Got prefs string: " + prefsString);
+		
+		assertEquals("net.bioclipse.qsar.test.descriptorProvider1;" +
+				"net.bioclipse.qsar.test.descriptorProvider2;",
+				prefsString);
+
+		
+	}
 
 	@Test
 	public void testGetCategories(){
