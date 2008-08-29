@@ -26,6 +26,7 @@ import net.bioclipse.qsar.QsarType;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
+import net.bioclipse.qsar.descriptor.model.DescriptorInstance;
 import net.bioclipse.qsar.descriptor.model.DescriptorModel;
 import net.bioclipse.ui.dialogs.WSFileDialog;
 
@@ -42,6 +43,7 @@ import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnPixelData;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableLayout;
@@ -105,19 +107,24 @@ public class DescriptorsPage extends FormPage {
 	
 	private OnlyWithImplFilter onlyWithImplFilter = new OnlyWithImplFilter();
 
+	//This is the model for the rightViewer
+	private List<DescriptorInstance> selectedDescriptors;
+
     
 	public DescriptorsPage(FormEditor editor, QsarType qsarModel, 
 			EditingDomain editingDomain, MoleculesEditorSelectionProvider selectionProvider) {
 
 		super(editor, "qsar.descriptors", "Descriptors");
 		this.editingDomain=editingDomain;
-	    
-		cdk=Activator.getDefault().getCDKManager();
-        formatter = new DecimalFormat("0.00");
-        this.selectionProvider=selectionProvider;
 
-        //Get qsarmanager via OSGI
+		//Get Managers via OSGI
         qsar=net.bioclipse.qsar.init.Activator.getDefault().getQsarManager();
+		cdk=Activator.getDefault().getCDKManager();
+
+		formatter = new DecimalFormat("0.00");
+        this.selectionProvider=selectionProvider;
+        selectedDescriptors=new ArrayList<DescriptorInstance>();
+
 	    
 		//Get mollist from qsar model, init if empty (should not be)
 		descriptorList=qsarModel.getDescriptorlist();
@@ -137,7 +144,6 @@ public class DescriptorsPage extends FormPage {
     @Override
     protected void createFormContent(IManagedForm managedForm) {
 
-        
         ScrolledForm form = managedForm.getForm();
         FormToolkit toolkit = managedForm.getToolkit();
         form.setText("Descriptors for QSAR analysis");
@@ -314,6 +320,8 @@ public class DescriptorsPage extends FormPage {
      */
     protected void addSelectedDescriptors() {
 
+    	List<String> errorList=new ArrayList<String>();
+    	
     	IStructuredSelection ssel=(IStructuredSelection) descViewer.getSelection();
     	for (Object obj : ssel.toList()){
     		
@@ -322,14 +330,19 @@ public class DescriptorsPage extends FormPage {
 				
 				//Find out impl
 				DescriptorImpl impl = qsar.getPreferredImpl(desc.getId());
-				
+				if (impl!=null){
+					DescriptorInstance inst = new DescriptorInstance(impl);
+
+					//Add this instance to rightViewer's model
+					selectedDescriptors.add(inst);
+					
+				}else{
+					errorList.add("No implementation available for descriptor: " + desc);
+				}
 			}
-    		
     	}
-    	
-    	
-    	//TODO implement
-    	showMessage("Not implemented");
+
+    	rightViewer.setInput(selectedDescriptors);
 
     }
 
@@ -376,8 +389,8 @@ public class DescriptorsPage extends FormPage {
 
     	//Query TreeViewer
     	rightViewer = new TableViewer (client, SWT.BORDER | SWT.SINGLE);
-    	rightViewer.setContentProvider( new PreprocessingContentProvider() );
-    	rightViewer.setLabelProvider( new PreprocessingLabelProvider() );
+    	rightViewer.setContentProvider( new ArrayContentProvider() );
+    	rightViewer.setLabelProvider( new DescriptorLabelProvider() );
     	rightTable=rightViewer.getTable();
     	toolkit.adapt(rightTable, true, true);
     	GridData gd6=new GridData(GridData.FILL_VERTICAL);

@@ -5,6 +5,7 @@ import net.bioclipse.qsar.descriptor.model.BaseEPObject;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
 import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
+import net.bioclipse.qsar.descriptor.model.DescriptorInstance;
 import net.bioclipse.qsar.ui.Activator;
 
 import org.eclipse.jface.viewers.ILabelProviderListener;
@@ -24,6 +25,11 @@ public class DescriptorLabelProvider implements ITableLabelProvider {
 
 		if (element instanceof PendingObject) {
 			return null;
+		}
+		else if (element instanceof DescriptorInstance) {
+			if (desc==null) desc= Activator.getImageDescriptor(
+					"icons/descriptor.gif").createImage();
+			return desc;
 		}
 
 		if (columnIndex==0){
@@ -54,8 +60,12 @@ public class DescriptorLabelProvider implements ITableLabelProvider {
 				return po.getPendingString();
 			return "";
 		}
+		else if (element instanceof DescriptorInstance) {
+			DescriptorInstance inst = (DescriptorInstance) element;
+			return inst.getName();
+		}
 
-		if (element instanceof Descriptor) {
+		else if (element instanceof Descriptor) {
 			Descriptor desc = (Descriptor) element;
 			if (columnIndex==0){
 				return desc.getName();
