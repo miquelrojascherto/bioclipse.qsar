@@ -35,6 +35,7 @@ import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
+import net.bioclipse.qsar.descriptor.model.DescriptorInstance;
 import net.bioclipse.qsar.descriptor.model.DescriptorModel;
 import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
@@ -567,33 +568,16 @@ public class QsarManager implements IQsarManager{
 	 * ====================================================
 	 */
 
-	public List<IDescriptorResult> calculate(IMolecule molecule, String descriptorID) {
 
-		DescriptorImpl desc=getDescriptorImplByID(descriptorID);
-		DescriptorProvider provider=desc.getProvider();
 
-		IDescriptorCalculator calculator=provider.getCalculator();
-		
-		List<IMolecule> mollist=new ArrayList<IMolecule>();
-		mollist.add(molecule);
-
-		List<String> descIDlist=new ArrayList<String>();
-		descIDlist.add(descriptorID);
-
-		Map<IMolecule, List<IDescriptorResult>> retMap = calculator.calculateDescriptor(mollist, descIDlist);
-		if (retMap==null || retMap.size()<1){
-			throw new NoSuchElementException("Calculation did not return a result");
-		}
-		List<IDescriptorResult> res=retMap.get(molecule);
-		if (res==null || res.size()<=0)
-			throw new NoSuchElementException("Calculation returned empty result");
-
-		return res;
-		
-	}
-
-	public Map<IMolecule, List<IDescriptorResult>> calculate(List<IMolecule> molecules,
-			List<String> descriptors) {
+	/**
+	 * Calculate descriptors for N molecules with D descriptors with P params.
+	 * @param molecules List<IMolecule> containing the molecules
+	 * @param descriptorMap Map from descriptorImplID to List<DescriptorParameter>
+	 * @return
+	 */
+	public Map<IMolecule, List<IDescriptorResult>> calculate(List<IMolecule> molecules, 
+			List<DescriptorInstance> descriptorInstances) {
 
 		Map<IMolecule, List<IDescriptorResult>> allResults=
 			 						new HashMap<IMolecule, List<IDescriptorResult>>();
@@ -602,22 +586,23 @@ public class QsarManager implements IQsarManager{
 		//Loop over all providers
 		for (DescriptorProvider provider : getFullProviders()){
 			
-			List<String> descriptorsToCalculate=new ArrayList<String>();
-
+			//Store descriptors and params for this provider
+			List<DescriptorInstance> descriptorInstancesForProvider = new ArrayList<DescriptorInstance>();
+			
 			//Check if this descriptor is here, add if so
-			for (String descriptorID : descriptors){
-				DescriptorImpl desc=getDescriptorImplByID(descriptorID);
+			for (DescriptorInstance inst: descriptorInstances){
+				DescriptorImpl desc=inst.getDescriptorImpl();
 				if (desc.getProvider()==provider){
-					descriptorsToCalculate.add(descriptorID);
+					descriptorInstancesForProvider.add(inst);
 				}
 			}
 			
 			//If we have descs to calculate, do so
-			if (descriptorsToCalculate.size()>0){
+			if (descriptorInstancesForProvider.size()>0){
 				IDescriptorCalculator calculator=provider.getCalculator();
 				Map<IMolecule, List<IDescriptorResult>> results = 
 						calculator.calculateDescriptor(molecules, 
-													   descriptorsToCalculate);
+													   descriptorInstancesForProvider);
 				
 				//Add these results to the molecule
 				for (IMolecule mol : results.keySet()){
@@ -635,6 +620,64 @@ public class QsarManager implements IQsarManager{
 		return allResults;
 	}
 
+
+
+	/**
+	 * Convenience method to calculate descriptors without inputting parameters
+	 */
+	public Map<IMolecule, List<IDescriptorResult>> calculateNoParams(
+			List<IMolecule> molecules, List<String> descriptorImplIDs) {
+
+		List<DescriptorInstance> insts=new ArrayList<DescriptorInstance>();
+		
+		for (String descID : descriptorImplIDs){
+			DescriptorImpl impl=getDescriptorImplByID(descID);
+			DescriptorInstance inst=new DescriptorInstance(impl,null);
+			insts.add(inst);
+		}
+		
+		return calculate(molecules, insts);
+	}
+
+	/**
+	 * Convenience method to calculate descriptors for a single 
+	 * mol with parameters
+	 */
+	public List<IDescriptorResult> calculate( IMolecule molecule, 
+			List<DescriptorInstance> descriptorInstances) {
+
+		List<IMolecule> mollist=new ArrayList<IMolecule>();
+		mollist.add(molecule);
+
+		Map<IMolecule, List<IDescriptorResult>> ret = calculate(mollist, descriptorInstances);
+		
+		return ret.get(molecule);
+	}
+
+
+	/**
+	 * Convenience method to calculate a descriptor for a single mol and 
+	 * a single descriptorImplID.
+	 */
+	public IDescriptorResult calculate(IMolecule molecule, String descriptorImplID) {
+
+		List<IMolecule> mollist=new ArrayList<IMolecule>();
+		mollist.add(molecule);
+
+		List<String> descIDs=new ArrayList<String>();
+		descIDs.add(descriptorImplID);
+		
+		Map<IMolecule, List<IDescriptorResult>> retMap = calculateNoParams(mollist, descIDs);
+		if (retMap==null || retMap.size()<1){
+			throw new NoSuchElementException("Calculation did not return a result");
+		}
+		List<IDescriptorResult> res=retMap.get(molecule);
+		if (res==null || res.size()<=0)
+			throw new NoSuchElementException("Calculation returned empty result");
+
+		return res.get(0);
+		
+	}
 
 
 

@@ -5,7 +5,22 @@ public class DescriptorParameter {
 	String key;
 	String defaultvalue;
 	String description;
+	String value;
 	
+	
+	/**
+	 * If null, return default value.
+	 * @return
+	 */
+	public String getValue() {
+		if (value==null) return defaultvalue;
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
 	public DescriptorParameter(String key, String defaultValue) {
 		this.key=key;
 		this.defaultvalue=defaultValue;
@@ -33,6 +48,12 @@ public class DescriptorParameter {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public DescriptorParameter clone(){
+		DescriptorParameter newParam=new DescriptorParameter(this.key, this.defaultvalue);
+		newParam.setDescription(this.description);
+		return newParam;
 	}
 	
 	

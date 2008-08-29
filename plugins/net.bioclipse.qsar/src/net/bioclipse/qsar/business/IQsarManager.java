@@ -23,20 +23,28 @@ import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
+import net.bioclipse.qsar.descriptor.model.DescriptorInstance;
 import net.bioclipse.qsar.descriptor.model.DescriptorModel;
+import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 
 public interface IQsarManager extends IBioclipseManager{
 
     @Recorded
     @PublishedMethod( methodSummary = "Calculates a descriptor for a molecule" )
-    public List<IDescriptorResult> calculate(IMolecule molecule, String descriptorID);
+    public IDescriptorResult calculate(IMolecule molecule, String descriptorImplID);
+
+	public List<IDescriptorResult> calculate(IMolecule molecule,
+			List<DescriptorInstance> descriptorInstances);
+    
+    public Map<IMolecule, List<IDescriptorResult>> calculate(List<IMolecule> molecules, 
+    													List<DescriptorInstance> descriptorInstances);
 
     @Recorded
     @PublishedMethod( methodSummary = "Calculates a list of descriptors for a " +
     		"list of molecules" )
-    public Map<IMolecule, List<IDescriptorResult>> calculate(List<IMolecule> molecules, 
-    													List<String> descriptors);
+	public Map<IMolecule, List<IDescriptorResult>> calculateNoParams(
+			List<IMolecule> molecules, List<String> descriptorImplIDs);
 
  
     @PublishedMethod( methodSummary = "Returns the available descriptor providers" )
@@ -85,6 +93,7 @@ public interface IQsarManager extends IBioclipseManager{
 	List<String> getDescriptorImpls(String descriptorID);
 
 	List<DescriptorImpl> getDescriptorImplsForDescriptor(String descriptorID);
+
 
 
 }
