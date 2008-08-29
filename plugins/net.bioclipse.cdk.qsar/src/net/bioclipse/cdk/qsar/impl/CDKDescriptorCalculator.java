@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorEngine;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -26,10 +27,15 @@ import net.bioclipse.cdk.domain.ICDKMolecule;
 import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.domain.IMolecule;
 import net.bioclipse.core.util.LogUtils;
+import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.business.QsarManager;
 import net.bioclipse.qsar.descriptor.DescriptorResult;
 import net.bioclipse.qsar.descriptor.IDescriptorCalculator;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
+import net.bioclipse.qsar.descriptor.model.Descriptor;
+import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
+import net.bioclipse.qsar.descriptor.model.DescriptorInstance;
+import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 
 public class CDKDescriptorCalculator implements IDescriptorCalculator {
 
@@ -38,9 +44,11 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
     ICDKManager cdk;
 	private DescriptorEngine engine = null;
 	private Map<String, IMolecularDescriptor> descriptorInstances;
-    
+	IQsarManager qsar;
+   
     public CDKDescriptorCalculator() {
 		cdk=Activator.getDefault().getCDKManager();
+		qsar=net.bioclipse.qsar.init.Activator.getDefault().getQsarManager();
 	}
     
 	public Map<String, IMolecularDescriptor> getDescriptorMap() {
@@ -120,7 +128,7 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
     
     
 	public Map<IMolecule, List<IDescriptorResult>> calculateDescriptor(
-			List<IMolecule> molecules, List<String> descriptorIDs) {
+			List<IMolecule> molecules, List<DescriptorInstance> descriptorInstances) {
 		
 		Map<IMolecule, List<IDescriptorResult>> allResults=
 						new HashMap<IMolecule, List<IDescriptorResult>>();
@@ -129,7 +137,7 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
 			try {
 				ICDKMolecule cdkmol=cdk.create(mol);
 				
-				List<IDescriptorResult> retlist = doCalculate(cdkmol, descriptorIDs);
+				List<IDescriptorResult> retlist = doCalculate(cdkmol, descriptorInstances);
 				
 				allResults.put(mol, retlist);
 				
@@ -148,11 +156,11 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
 	/**
 	 * Calculate descriptors for a single molecule
 	 * @param mol Input molecule
-	 * @param descriptorIDs List<String> of descriptor IDs
+	 * @param descriptorInstances2 List<String> of descriptor IDs
 	 * @return IDescriptorResult with results of the calculation
 	 * @throws BioclipseException 
 	 */
-	private List<IDescriptorResult> doCalculate(ICDKMolecule cdkmol, List<String> descriptorIDs){
+	private List<IDescriptorResult> doCalculate(ICDKMolecule cdkmol, List<DescriptorInstance> descriptorInstances){
 
 		//Get atomcontainer from IMolecule
 		IAtomContainer container=cdkmol.getAtomContainer();
@@ -164,54 +172,113 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
 		List<IDescriptorResult> results = new ArrayList<IDescriptorResult>();
 
 		//Loop over all descriptors
-		for (String descriptorID : descriptorIDs){
-			logger.debug("Calculating descriptor: " + descriptorID + "for mol: " + cdkmol.getName());
+		for (DescriptorInstance inst : descriptorInstances){
+			String descriptorImplID=inst.getDescriptorImpl().getId();			
+			logger.debug("Calculating descriptor: " + descriptorImplID + "for mol: " + cdkmol.getName());
 
 			//This is where we store the result
 			DescriptorResult res=new DescriptorResult();
-			res.setDescriptorId(descriptorID);
+			res.setDescriptorId(descriptorImplID);
 
 			//Get descriptor by id
-			IMolecularDescriptor descriptor = getDescriptorMap().get(descriptorID);
-			if (descriptor==null){
-				res.setErrorMessage("Descriptor not supported in cdk: " + descriptorID);
+			IMolecularDescriptor cdkDescriptor = getDescriptorMap().get(descriptorImplID);
+			if (cdkDescriptor==null){
+				res.setErrorMessage("Descriptor not supported in cdk: " + descriptorImplID);
 			}
 			
 			//We have a valid descriptorID
 			else{
+				
+				//Do we have parameters available for this descriptorID in Map?
+				if (inst.getParameters()!=null && inst.getParameters().size()>0){
+					logger.debug("We have: " + inst.getParameters().size() 
+							+ " params available.");
+					
+					//OK, get it and set it to descriptor
+					List<DescriptorParameter> bcParams = inst.getParameters();
+					
+					//Check that the CDK descriptor accepts parameters
+					if (cdkDescriptor.getParameterNames()==null && cdkDescriptor
+												.getParameterNames().length<=0){
+						
+						logger.error("Trying to set params for descrImpl: " + 
+								descriptorImplID + " but corresponding " +
+							       "CDKDescriptor does not accept any params.");
+						
+					}
+					else{
+						//These are the ones we should fill
+						Object[] cdkParams=cdkDescriptor.getParameters();
+						
+						for (int i=0; i< cdkParams.length; i++){
+							String cdkName=cdkDescriptor.getParameterNames()[i];
+							logger.debug("CDK descr accepts params.");
+							
+							for (DescriptorParameter param : bcParams){
+								if (param.getKey().equals(cdkName)){
+									//Match
+									Object obj=cdkDescriptor.getParameterType(cdkName);
+									if (obj instanceof String) {
+										cdkParams[i]=param.getValue();
+										logger.debug("   - Set param: " + 
+												cdkName + " to " + param.getValue());
+									}
+								}
+							}
+						}
+						try {
+							cdkDescriptor.setParameters(cdkParams);
+						} catch (CDKException e) {
+							e.printStackTrace();
+						}
+						
+					}
+
+				}
+				
+				
 				//Number of return values
-				Float[] resultVals = new Float[descriptor.getDescriptorResultType().length() > 0 ? descriptor.getDescriptorResultType().length() : 1];
+				Float[] resultVals = new Float[cdkDescriptor.getDescriptorResultType().
+				         length() > 0 ? cdkDescriptor.getDescriptorResultType().
+				        		 length() : 1];
 				String[] resultLabels = null;
 				logger.debug("# result values: " + resultVals.length);
 
 				//Calculate descriptor
 				try {
-					DescriptorValue value = ((IMolecularDescriptor) descriptor).calculate(container);
+					DescriptorValue value = ((IMolecularDescriptor) cdkDescriptor).calculate(container);
 					resultLabels = value.getNames();
 					org.openscience.cdk.qsar.result.IDescriptorResult result = value.getValue();
 					if (result instanceof BooleanResult) {
 						if (((BooleanResult)result).booleanValue()) {
 							resultVals[0] = 1f;
+							logger.debug("Calculated value: " + resultVals[0]);
 						} else {
 							resultVals[0] = 0f;
+							logger.debug("Calculated value: " + resultVals[0]);
 						}
 					} else if (result instanceof DoubleResult) {
 						resultVals[0] = (float)((DoubleResult)result).doubleValue();
+						logger.debug("Calculated value: " + resultVals[0]);
 					} else if (result instanceof IntegerResult) {
 						resultVals[0] = (float)((IntegerResult)result).intValue();
+						logger.debug("Calculated value: " + resultVals[0]);
 					} else if (result instanceof IntegerArrayResult) {
 						resultVals = new Float[((IntegerArrayResult)result).length()];
 						for (int i=0; i<resultVals.length; i++) {
 							resultVals[i] = (float)((IntegerArrayResult)result).get(i);
+							logger.debug("Calculated value " + i +": " + resultVals[i]);
 						}
 					} else if (result instanceof DoubleArrayResult) {
 						resultVals = new Float[((DoubleArrayResult)result).length()];
 						for (int i=0; i<resultVals.length; i++) {
 							resultVals[i] = (float)((DoubleArrayResult)result).get(i);
+							logger.debug("Calculated value " + i +": " + resultVals[i]);
 						}
 					} else {
 						logger.error("Uknown descriptor result type: " + result.getClass().getName());
 					}
+					
 				} catch (Throwable e) {
 					logger.error("Could not generate descriptor for molecule: " + 
 							cdkmol.getName() + ". Reason: " + e.getMessage());
@@ -223,7 +290,7 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
 
 				//Check that we got back correct number of values
 				if (resultLabels.length != resultVals.length) {
-					System.out.println("WARN: #labels != #vals for " + descriptorID);
+					System.out.println("WARN: #labels != #vals for " + descriptorImplID);
 				}
 
 				res.setLabels(resultLabels);
