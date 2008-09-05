@@ -38,10 +38,11 @@
 
     <complexType name="moleculeResourceType">
     	<attribute name="id" type="string" use="required"></attribute>
-    	<attribute name="name" type="string"></attribute>
-    	<attribute name="namespace" type="string"></attribute>
-    	<attribute name="url" type="string"></attribute>
-    	<attribute name="file" type="string"></attribute>
+    	<attribute name="name" type="string" use="required"></attribute>
+    	<attribute name="namespace" type="string" use="optional"></attribute>
+    	<attribute name="url" type="string" use="optional"></attribute>
+    	<attribute name="file" type="string" use="optional"></attribute>
+    	<attribute name="excluded" type="boolean" use="optional"></attribute>
     </complexType>
 
     <complexType name="descriptorType">

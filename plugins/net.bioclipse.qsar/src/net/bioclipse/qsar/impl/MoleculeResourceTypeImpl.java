@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link net.bioclipse.qsar.impl.MoleculeResourceTypeImpl#isExcluded <em>Excluded</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.MoleculeResourceTypeImpl#getFile <em>File</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.MoleculeResourceTypeImpl#getId <em>Id</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.MoleculeResourceTypeImpl#getName <em>Name</em>}</li>
@@ -47,6 +48,35 @@ public class MoleculeResourceTypeImpl extends EObjectImpl implements MoleculeRes
 	 * @generated
 	 */
 	public static final String copyright = "Copyright (c) 2007-2008 The Bioclipse Project and others.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nwww.eclipse.org\u00ef\u00bf\u03a9epl-v10.html <http://www.eclipse.org/legal/epl-v10.html>\n\nContributors:\n    Ola Spjuth - initial API and implementation\n";
+
+	/**
+	 * The default value of the '{@link #isExcluded() <em>Excluded</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isExcluded()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean EXCLUDED_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isExcluded() <em>Excluded</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isExcluded()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean excluded = EXCLUDED_EDEFAULT;
+
+	/**
+	 * This is true if the Excluded attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean excludedESet;
 
 	/**
 	 * The default value of the '{@link #getFile() <em>File</em>}' attribute.
@@ -172,6 +202,52 @@ public class MoleculeResourceTypeImpl extends EObjectImpl implements MoleculeRes
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isExcluded() {
+		return excluded;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setExcluded(boolean newExcluded) {
+		boolean oldExcluded = excluded;
+		excluded = newExcluded;
+		boolean oldExcludedESet = excludedESet;
+		excludedESet = true;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.MOLECULE_RESOURCE_TYPE__EXCLUDED, oldExcluded, excluded, !oldExcludedESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetExcluded() {
+		boolean oldExcluded = excluded;
+		boolean oldExcludedESet = excludedESet;
+		excluded = EXCLUDED_EDEFAULT;
+		excludedESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, QsarPackage.MOLECULE_RESOURCE_TYPE__EXCLUDED, oldExcluded, EXCLUDED_EDEFAULT, oldExcludedESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetExcluded() {
+		return excludedESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getFile() {
 		return file;
 	}
@@ -280,6 +356,8 @@ public class MoleculeResourceTypeImpl extends EObjectImpl implements MoleculeRes
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case QsarPackage.MOLECULE_RESOURCE_TYPE__EXCLUDED:
+				return isExcluded() ? Boolean.TRUE : Boolean.FALSE;
 			case QsarPackage.MOLECULE_RESOURCE_TYPE__FILE:
 				return getFile();
 			case QsarPackage.MOLECULE_RESOURCE_TYPE__ID:
@@ -302,6 +380,9 @@ public class MoleculeResourceTypeImpl extends EObjectImpl implements MoleculeRes
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case QsarPackage.MOLECULE_RESOURCE_TYPE__EXCLUDED:
+				setExcluded(((Boolean)newValue).booleanValue());
+				return;
 			case QsarPackage.MOLECULE_RESOURCE_TYPE__FILE:
 				setFile((String)newValue);
 				return;
@@ -329,6 +410,9 @@ public class MoleculeResourceTypeImpl extends EObjectImpl implements MoleculeRes
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case QsarPackage.MOLECULE_RESOURCE_TYPE__EXCLUDED:
+				unsetExcluded();
+				return;
 			case QsarPackage.MOLECULE_RESOURCE_TYPE__FILE:
 				setFile(FILE_EDEFAULT);
 				return;
@@ -356,6 +440,8 @@ public class MoleculeResourceTypeImpl extends EObjectImpl implements MoleculeRes
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case QsarPackage.MOLECULE_RESOURCE_TYPE__EXCLUDED:
+				return isSetExcluded();
 			case QsarPackage.MOLECULE_RESOURCE_TYPE__FILE:
 				return FILE_EDEFAULT == null ? file != null : !FILE_EDEFAULT.equals(file);
 			case QsarPackage.MOLECULE_RESOURCE_TYPE__ID:
@@ -380,7 +466,9 @@ public class MoleculeResourceTypeImpl extends EObjectImpl implements MoleculeRes
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (file: ");
+		result.append(" (excluded: ");
+		if (excludedESet) result.append(excluded); else result.append("<unset>");
+		result.append(", file: ");
 		result.append(file);
 		result.append(", id: ");
 		result.append(id);

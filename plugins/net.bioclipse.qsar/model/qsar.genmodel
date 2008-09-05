@@ -36,6 +36,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//MoleculelistType/moleculeResource"/>
     </genClasses>
     <genClasses ecoreClass="qsar.ecore#//MoleculeResourceType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MoleculeResourceType/excluded"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MoleculeResourceType/file"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MoleculeResourceType/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MoleculeResourceType/name"/>
