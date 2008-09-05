@@ -15,6 +15,7 @@
                calculator="net.bioclipse.qsar.test.DummyCalculator"
                id="net.bioclipse.qsar.test.descriptorProvider1"
                shortName="provider1"
+               namespace="net.bioclipse.qsar.test.provider1.namespace"
                name="descriptorProvider1">
            <descriptorImpl
                      id="net.bioclipse.qsar.test.descriptor1"

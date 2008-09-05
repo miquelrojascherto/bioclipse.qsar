@@ -26,6 +26,9 @@ import org.junit.Test;
 
 public class TestQsarManager {
 
+	private static final String BO_NAMESPACE = "http://www.blueobelisk.org/" +
+	"ontologies/chemoinformatics-algorithms";
+
 	IQsarManager qsar;
 	
 	public TestQsarManager() {
@@ -130,14 +133,29 @@ public class TestQsarManager {
 	public void testGetProvidersByID(){
 
 		String providerID="net.bioclipse.qsar.test.descriptorProvider1";
+		String expectedNamespace="net.bioclipse.qsar.test.provider1.namespace";
 		
 		DescriptorProvider prov = qsar.getProviderByID(providerID);
 		assertNotNull(prov);
 		assertEquals(prov.getId(), providerID);
 		assertNotNull(prov.getShortName());
 		assertEquals("provider1", prov.getShortName());
+		assertEquals(expectedNamespace, prov.getNamesapce());
 	}
 	
+	@Test
+	public void testGetProvidersByDescriptorAndProvider(){
+
+		String providerID="net.bioclipse.qsar.test.descriptorProvider1";
+		String descriptorID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#BCUT";
+        String expectedImplID="net.bioclipse.qsar.test.descriptor1";
+
+		DescriptorImpl impl = qsar.getDescriptorImpl(descriptorID, providerID);
+		assertEquals(expectedImplID, impl.getId());
+		
+	}
+	
+
 	
 	
 	@Test
@@ -165,6 +183,8 @@ public class TestQsarManager {
 		
 		Descriptor desc=qsar.getDescriptorByID(descriptorID);
 		assertNotNull(desc);
+		assertEquals(BO_NAMESPACE, desc.getNamesapce());
+
 		
 		DescriptorCategory cat1 = qsar.getCategoryByID(cat1id);
 		DescriptorCategory cat2 = qsar.getCategoryByID(cat2id);
