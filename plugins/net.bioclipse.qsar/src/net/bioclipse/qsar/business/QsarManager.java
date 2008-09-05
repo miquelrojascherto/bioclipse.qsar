@@ -192,8 +192,8 @@ public class QsarManager implements IQsarManager{
                     provider.setVersion(pvers);
 
                     String pns=element.getAttribute("namespace");
-                    provider.setNamespace(pns);
-
+                    provider.setNamesapce(pns);
+                    
                     IDescriptorCalculator calculator;
 						calculator = (IDescriptorCalculator) 
 									element.createExecutableExtension("calculator");
@@ -240,24 +240,28 @@ public class QsarManager implements IQsarManager{
                         String did=providerChild.getAttribute("id");
                         String dname=providerChild.getAttribute("name");
 
-                        DescriptorImpl desc=new DescriptorImpl(did, dname);
+                        DescriptorImpl descImpl=new DescriptorImpl(did, dname);
                         String dicon=providerChild.getAttribute("icon");
-                        desc.setIcon_path(dicon);
+                        descImpl.setIcon_path(dicon);
 
                         String ddef=providerChild.getAttribute("definition");
-                        desc.setDefinition(ddef);
+                        descImpl.setDefinition(ddef);
 
                         String ddesc=providerChild.getAttribute("description");
-                        desc.setDescription(ddesc);
+                        descImpl.setDescription(ddesc);
+                        
+                        String dns=element.getAttribute("namespace");
+                        descImpl.setNamesapce(dns);
+
 
                         String req3d=providerChild.getAttribute("requires3D");
                         if (req3d!=null){
                         	if (req3d.equalsIgnoreCase("true")){
-                        		desc.setRequires3D(true);
+                        		descImpl.setRequires3D(true);
                         	}
                         	else{
                         		//If not explicitly true, then false
-                        		desc.setRequires3D(false);
+                        		descImpl.setRequires3D(false);
                         	}
                         }
 
@@ -290,14 +294,14 @@ public class QsarManager implements IQsarManager{
                         	pparams.add(dparam);
                         }
                         if (pparams.size()>0)
-                    	desc.setParameters(pparams);
+                    	descImpl.setParameters(pparams);
                         
                         
                         
                         //Add parent provider to descriptor
-                        desc.setProvider(provider);
+                        descImpl.setProvider(provider);
                         
-                        provider.getDescriptorImpls().add(desc);
+                        provider.getDescriptorImpls().add(descImpl);
                         logger.debug("  Added descriptor: " + dname);
 
                     }
@@ -642,9 +646,10 @@ public class QsarManager implements IQsarManager{
 
 		List<DescriptorInstance> insts=new ArrayList<DescriptorInstance>();
 		
-		for (String descID : descriptorImplIDs){
-			DescriptorImpl impl=getDescriptorImplByID(descID);
-			DescriptorInstance inst=new DescriptorInstance(impl,null);
+		for (String descImplID : descriptorImplIDs){
+			DescriptorImpl impl=getDescriptorImplByID(descImplID);
+			Descriptor desc=getDescriptorByID(impl.getDefinition());
+			DescriptorInstance inst=new DescriptorInstance(desc, impl,null);
 			insts.add(inst);
 		}
 		
@@ -719,6 +724,22 @@ public class QsarManager implements IQsarManager{
 			}
 		}
 		//No impl found for this descrID
+		return null;
+	}
+
+
+	/**
+	 * Get descriptor implementation be descriptorID and providerID or null if
+	 * none matching.
+	 */
+	public DescriptorImpl getDescriptorImpl(String descriptorID, String providerID) {
+		
+		for (String descriptorImplID : getDescriptorImplsByProvider(providerID)){
+			DescriptorImpl impl = getDescriptorImplByID(descriptorImplID);
+			if (impl.getDefinition().equals(descriptorID))
+				return impl;
+		}
+
 		return null;
 	}
 	

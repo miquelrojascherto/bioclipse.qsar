@@ -14,6 +14,14 @@ public class BaseEPObject extends BioObject{
 	String name;
 	String icon_path;
 	Image icon;
+	String namesapce;
+	
+	public String getNamesapce() {
+		return namesapce;
+	}
+	public void setNamesapce(String namesapce) {
+		this.namesapce = namesapce;
+	}
 	public String getId() {
 		return id;
 	}

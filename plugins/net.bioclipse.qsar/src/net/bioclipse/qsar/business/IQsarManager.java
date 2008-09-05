@@ -96,6 +96,8 @@ public interface IQsarManager extends IBioclipseManager{
 
 	public DescriptorImpl getPreferredImpl(String descriptorID);
 
+	DescriptorImpl getDescriptorImpl(String descriptorID, String providerID);
+
 
 
 }

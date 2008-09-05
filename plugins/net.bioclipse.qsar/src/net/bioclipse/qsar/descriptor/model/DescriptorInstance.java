@@ -9,14 +9,34 @@ public class DescriptorInstance extends BaseEPObject{
 
 	DescriptorImpl descriptorImpl;
 	List<DescriptorParameter> parameters;
-	
 
-	
-	public DescriptorInstance(DescriptorImpl impl,
+
+	public DescriptorInstance(Descriptor descriptor, DescriptorImpl impl,
 			List<DescriptorParameter> params) {
-		super (impl.getId(),impl.getName());
+		
+		super (descriptor.getId(),impl.getName());
+		setNamesapce(descriptor.getNamesapce());
 		descriptorImpl=impl;
-		parameters=params;
+		
+		//If impl has params, loop over these
+		if (impl.getParameters()!=null){
+			parameters=new ArrayList<DescriptorParameter>();
+			for (DescriptorParameter p : impl.getParameters()){
+				DescriptorParameter newParam=null;
+				if (params!=null && params.size()>0){
+					//If input params given, take these.
+					for (DescriptorParameter inp : params){
+						if (p.getKey().equals(inp.getKey())){
+							newParam=inp;
+						}
+					}
+				}
+				// If no matching input param, clone from impl params
+				if (newParam==null) newParam=p.clone();
+				
+				parameters.add(newParam);
+			}
+		}
 	}
 
 
@@ -25,17 +45,8 @@ public class DescriptorInstance extends BaseEPObject{
 	 * instance.
 	 * @param impl DescriptorImpl to be used
 	 */
-	public DescriptorInstance(DescriptorImpl impl) {
-		super (impl.getId(),impl.getName());
-		
-		//If impl has params, add them as clones
-		if (impl.getParameters()!=null){
-			parameters=new ArrayList<DescriptorParameter>();
-			for (DescriptorParameter p : impl.getParameters()){
-				parameters.add(p.clone());
-			}
-		}
-		descriptorImpl=impl;
+	public DescriptorInstance(Descriptor descriptor, DescriptorImpl impl) {
+		this(descriptor,impl,null);
 	}
 
 

@@ -31,6 +31,9 @@ import com.hp.hpl.jena.vocabulary.RDFS;
 
 public class JenaReader {
 
+	private static final String BO_NAMESPACE = "http://www.blueobelisk.org/" +
+	"ontologies/chemoinformatics-algorithms";
+
 	public static DescriptorModel populateHierarchy() throws IOException, 
 															URISyntaxException{
 
@@ -66,6 +69,8 @@ public class JenaReader {
 		InfModel infmodel = ModelFactory.createInfModel(reasoner, data);
 
 		//Resources from BO ontology OWL
+		
+		
 		Resource catRes= infmodel.getResource("http://www.blueobelisk.org/" +
 		"ontologies/chemoinformatics-algorithms/#descriptorCategories");
 
@@ -193,6 +198,9 @@ public class JenaReader {
 //				System.out.println("##**## Added date: " + date + 
 //						" to descriptor: " + descid);
 			}
+
+			//All these descriptors have the BO namespace
+			desc.setNamesapce(BO_NAMESPACE);
 
 //			System.out.println("## Found descriptor: " + descname + 
 //					" with id: " + descid);
