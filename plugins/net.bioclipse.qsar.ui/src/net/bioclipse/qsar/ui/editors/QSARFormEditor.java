@@ -172,12 +172,12 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
 		qsarModel=root.getQsar();
 
         // Print the contents of the resource to System.out.
-        try
-        {
-        	resource.save(System.out, Collections.EMPTY_MAP);
-        }
-        catch (IOException e) {
-        }
+//        try
+//        {
+//        	resource.save(System.out, Collections.EMPTY_MAP);
+//        }
+//        catch (IOException e) {
+//        }
 
 	}
 
@@ -285,7 +285,7 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
     	if (newPageIndex==textEditorIndex){
 
     		//Only serialize if dirty on mols page
-    		if (molPage.isDirty()){
+    		if (molPage.isDirty() || descPage.isDirty()){
 
     			try {
     	    		//Serialize to XML, update editor
@@ -326,6 +326,7 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
 
 	public void markPagesSaved() {
 		molPage.setDirty(false);
+		descPage.setDirty(false);
 	}
 
 }

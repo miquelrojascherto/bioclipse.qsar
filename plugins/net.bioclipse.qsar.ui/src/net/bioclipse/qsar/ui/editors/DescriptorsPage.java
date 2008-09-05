@@ -17,9 +17,11 @@ import java.util.List;
 import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.qsar.DescriptorType;
+import net.bioclipse.qsar.DescriptorimplType;
 import net.bioclipse.qsar.DescriptorlistType;
 import net.bioclipse.qsar.MoleculeResourceType;
 import net.bioclipse.qsar.MoleculelistType;
+import net.bioclipse.qsar.ParameterType;
 import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
@@ -28,6 +30,8 @@ import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorInstance;
 import net.bioclipse.qsar.descriptor.model.DescriptorModel;
+import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
+import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 import net.bioclipse.ui.dialogs.WSFileDialog;
 
 import org.apache.log4j.Logger;
@@ -38,11 +42,16 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnPixelData;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -113,6 +122,8 @@ public class DescriptorsPage extends FormPage {
 
 	//This is the model for the rightViewer
 	private List<DescriptorInstance> selectedDescriptors;
+	private EList<DescriptorimplType> providerList;
+	private QsarType qsarModel;
 
     
 	public DescriptorsPage(FormEditor editor, QsarType qsarModel, 
@@ -124,21 +135,22 @@ public class DescriptorsPage extends FormPage {
 		//Get Managers via OSGI
         qsar=net.bioclipse.qsar.init.Activator.getDefault().getQsarManager();
 		cdk=Activator.getDefault().getCDKManager();
+		this.qsarModel = qsarModel;
 
 		formatter = new DecimalFormat("0.00");
         this.selectionProvider=selectionProvider;
-        selectedDescriptors=new ArrayList<DescriptorInstance>();
 
-	    
-		//Get mollist from qsar model, init if empty (should not be)
-		descriptorList=qsarModel.getDescriptorlist();
+        selectedDescriptors=new ArrayList<DescriptorInstance>();
+		
+		//Get descriptorList from qsar model, init if empty (should not be)
+        descriptorList=qsarModel.getDescriptorlist();
 		if (descriptorList==null){
 			descriptorList=QsarFactory.eINSTANCE.createDescriptorlistType();
 			qsarModel.setDescriptorlist(descriptorList);
 		}
 
 		dirty=false;
-
+		
 	}
 
 
@@ -352,6 +364,9 @@ public class DescriptorsPage extends FormPage {
 					//Add this instance to rightViewer's model
 					selectedDescriptors.add(inst);
 					
+					addDescriptorToModel(inst);
+					
+					
 				}else{
 					errorList.add("No implementation available for descriptor: " + desc);
 				}
@@ -364,7 +379,79 @@ public class DescriptorsPage extends FormPage {
 
 
 
-    /**
+    private void addDescriptorToModel(DescriptorInstance inst) {
+    	
+    	//Collect all in a compound command, for ability 
+    	//to undo everything at the same time
+		CompoundCommand cCmd = new CompoundCommand();
+		Command cmd;
+
+    	DescriptorType modelDescriptor=QsarFactory.eINSTANCE.createDescriptorType();
+		modelDescriptor.setId(inst.getId());
+		//TODO: namespace
+		cmd=AddCommand.create(editingDomain, descriptorList, QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTOR, modelDescriptor);
+		cCmd.append(cmd);
+
+		//Check if provider already added to qsarModel
+		DescriptorimplType dimpl=null;
+		for (DescriptorimplType pdimpl : qsarModel.getDescriptorimpl()){
+			if (pdimpl.getId().equals(inst.getDescriptorImpl().getProvider().getId())){
+				dimpl=QsarFactory.eINSTANCE.createDescriptorimplType();
+				dimpl.setId(pdimpl.getId());
+			}
+		}
+		
+		if (dimpl==null){
+			//Add provider to qsarModel
+			DescriptorProvider prov = inst.getDescriptorImpl().getProvider();
+			
+			String pid=prov.getId();
+			String pname=prov.getName();
+			String pvend=prov.getVendor();
+			String pvers=prov.getVersion();
+			String pns=prov.getNamespace();
+
+			//Create a provider (=descrImplType) in qsar model root
+			DescriptorimplType newdimpl=QsarFactory.eINSTANCE.createDescriptorimplType();
+			newdimpl.setId(pid);
+			newdimpl.setNamespace(pns);
+			newdimpl.setVendor(pvend);
+			newdimpl.setName(pname);
+			newdimpl.setVersion(pvers);
+			cmd=AddCommand.create(editingDomain, qsarModel, QsarPackage.Literals.QSAR_TYPE__DESCRIPTORIMPL, newdimpl);
+			cCmd.append(cmd);
+
+			//Reference the created impl by ID
+			dimpl=QsarFactory.eINSTANCE.createDescriptorimplType();
+			dimpl.setId(newdimpl.getId());
+			
+		}
+
+		//Add found impl to descriptor
+		cmd=SetCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__DESCRIPTORIMPL, dimpl);
+		cCmd.append(cmd);
+
+		//Parameters
+		if (inst.getParameters()!=null){
+			for (DescriptorParameter param : inst.getParameters()){
+
+				ParameterType modelParam=QsarFactory.eINSTANCE.createParameterType();
+				modelParam.setKey(param.getKey());
+				modelParam.setValue(param.getValue());
+				cmd=AddCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__PARAMETER, modelParam);
+				cCmd.append(cmd);
+
+			}
+		}
+		//Execute the compiund command
+		editingDomain.getCommandStack().execute(cCmd);
+
+		setDirty(true);
+
+	}
+
+
+	/**
      * Handle the case when users press the Remove button next to moleculeviewer
      * or presses the delete button on something
      */

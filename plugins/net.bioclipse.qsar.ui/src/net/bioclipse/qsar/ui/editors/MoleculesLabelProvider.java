@@ -10,6 +10,8 @@
  *******************************************************************************/
 package net.bioclipse.qsar.ui.editors;
 
+import net.bioclipse.qsar.ui.Activator;
+
 import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;
@@ -23,6 +25,8 @@ import org.eclipse.ui.PlatformUI;
  *
  */
 public class MoleculesLabelProvider implements ITableLabelProvider{
+
+	Image molImg;
 
     public void addListener(ILabelProviderListener listener) {
     }
@@ -39,8 +43,10 @@ public class MoleculesLabelProvider implements ITableLabelProvider{
 
 	public Image getColumnImage(Object element, int columnIndex) {
 		if (columnIndex==0){
-	        String imageKey = ISharedImages.IMG_OBJ_ELEMENT;
-	        return PlatformUI.getWorkbench().getSharedImages().getImage(imageKey);
+			if (molImg==null) molImg= Activator.getImageDescriptor(
+			"icons/descriptor.png").createImage();
+			return molImg;
+
 		}
 		return null;
 	}
