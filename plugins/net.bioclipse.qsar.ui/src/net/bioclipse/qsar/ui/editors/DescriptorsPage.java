@@ -140,8 +140,6 @@ public class DescriptorsPage extends FormPage {
 		formatter = new DecimalFormat("0.00");
         this.selectionProvider=selectionProvider;
 
-        selectedDescriptors=new ArrayList<DescriptorInstance>();
-		
 		//Get descriptorList from qsar model, init if empty (should not be)
         descriptorList=qsarModel.getDescriptorlist();
 		if (descriptorList==null){
@@ -173,16 +171,20 @@ public class DescriptorsPage extends FormPage {
 		descViewer.setInput(new PendingObject());
 		descViewer.refresh();
 
+		//Populate descriptorViewer from qsar model
 		descViewer.getTree().getDisplay().asyncExec(new Runnable() {
 
 			public void run() {
 				DescriptorModel descModel=qsar.getModel();
+
+				//Set descriptor model as input object to viewer
 				descViewer.setInput(descModel);
 			}
 		});
 
+		//Populate selected descriptors from the read qsar model 
+        populateSelectedDescriptorsViewFromModel();
         
-        //Set descriptor model as input object
 
         //Post selections to Eclipse via our intermediate selectionprovider
         selectionProvider.setSelectionProviderDelegate( descViewer );
@@ -192,7 +194,46 @@ public class DescriptorsPage extends FormPage {
 
 
 
-    /**
+    private void populateSelectedDescriptorsViewFromModel() {
+
+    	//Store selected descriptors here
+        selectedDescriptors=new ArrayList<DescriptorInstance>();
+
+        //Populate by reading qsar model
+		for (DescriptorType desc: descriptorList.getDescriptor()){
+			
+			Descriptor descriptor=qsar.getDescriptorByID(desc.getId());
+
+			DescriptorImpl impl = qsar.getDescriptorImpl(desc.getId(),desc.getDescriptorimpl().getId());
+			if (impl!=null){
+				List<DescriptorParameter> params=new ArrayList<DescriptorParameter>();
+
+				//Loop over parameters in qsar model
+				for (ParameterType ptype : desc.getParameter()){
+					//Loop over expected parameters (to confirm validity)
+					for (DescriptorParameter bcParam : impl.getParameters()){
+						if (ptype.getKey().equals(bcParam.getKey())){
+							DescriptorParameter param=new DescriptorParameter(bcParam.getKey(), bcParam.getDefaultvalue());
+							param.setValue(ptype.getValue());
+							params.add(param);
+						}
+					}
+				}
+				DescriptorInstance descInst=new DescriptorInstance(descriptor, impl, params);
+				selectedDescriptors.add(descInst);
+			}
+			else{
+				logger.error("Could not find impl for: " + desc.getId() + 
+						", " + desc.getDescriptorimpl().getId());
+			}
+		}
+
+		rightViewer.setInput( selectedDescriptors );
+		
+	}
+
+
+	/**
      * Create the left part of the page for displaying molecules
      * @param form
      * @param toolkit
@@ -270,6 +311,7 @@ public class DescriptorsPage extends FormPage {
           descViewer.getTree().addFocusListener(new FocusListener(){
 
 			public void focusGained(FocusEvent e) {
+		        rightViewer.setSelection(null);
 		        selectionProvider.setSelectionProviderDelegate( descViewer );
 			}
 
@@ -359,7 +401,7 @@ public class DescriptorsPage extends FormPage {
 //				DescriptorImpl impl2 = qsar.getDescriptorByID(desc.getId());
 				DescriptorImpl impl = qsar.getPreferredImpl(desc.getId());
 				if (impl!=null){
-					DescriptorInstance inst = new DescriptorInstance(impl);
+					DescriptorInstance inst = new DescriptorInstance(desc,impl);
 
 					//Add this instance to rightViewer's model
 					selectedDescriptors.add(inst);
@@ -371,6 +413,13 @@ public class DescriptorsPage extends FormPage {
 					errorList.add("No implementation available for descriptor: " + desc);
 				}
 			}
+    	}
+    	
+    	if (errorList.size()>0){
+    		String errormsgs="The following errors occured:\n\n";
+    		for (String str : errorList){
+    			errormsgs=errormsgs+str+"\n";
+    		}
     	}
 
     	rightViewer.setInput(selectedDescriptors);
@@ -388,7 +437,7 @@ public class DescriptorsPage extends FormPage {
 
     	DescriptorType modelDescriptor=QsarFactory.eINSTANCE.createDescriptorType();
 		modelDescriptor.setId(inst.getId());
-		//TODO: namespace
+		modelDescriptor.setNamespace(inst.getNamesapce());
 		cmd=AddCommand.create(editingDomain, descriptorList, QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTOR, modelDescriptor);
 		cCmd.append(cmd);
 
@@ -401,15 +450,15 @@ public class DescriptorsPage extends FormPage {
 			}
 		}
 		
+		//If this is a new provider, add it to Qsar model
 		if (dimpl==null){
-			//Add provider to qsarModel
 			DescriptorProvider prov = inst.getDescriptorImpl().getProvider();
 			
 			String pid=prov.getId();
 			String pname=prov.getName();
 			String pvend=prov.getVendor();
 			String pvers=prov.getVersion();
-			String pns=prov.getNamespace();
+			String pns=prov.getNamesapce();
 
 			//Create a provider (=descrImplType) in qsar model root
 			DescriptorimplType newdimpl=QsarFactory.eINSTANCE.createDescriptorimplType();
@@ -427,7 +476,7 @@ public class DescriptorsPage extends FormPage {
 			
 		}
 
-		//Add found impl to descriptor
+		//Add found impl to descriptor element
 		cmd=SetCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__DESCRIPTORIMPL, dimpl);
 		cCmd.append(cmd);
 
@@ -504,6 +553,7 @@ public class DescriptorsPage extends FormPage {
         rightTable.addFocusListener(new FocusListener(){
 
 			public void focusGained(FocusEvent e) {
+		        descViewer.setSelection(null);
 		        selectionProvider.setSelectionProviderDelegate( rightViewer );
 			}
 

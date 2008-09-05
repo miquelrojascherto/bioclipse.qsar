@@ -137,9 +137,12 @@ public class MoleculesPage extends FormPage{
         GridLayout layout = new GridLayout();
         layout.numColumns = 2;
         form.getBody().setLayout(layout);
+
         createMoleculesSection(form, toolkit);
         populateMolsViewerFromModel();
+
         createPreprocessingSection(form, toolkit);
+//        populatePreViewerFromModel();  //TODO!
         
         //Post selections to Eclipse via our intermediate selectionprovider
         selectionProvider.setSelectionProviderDelegate( molViewer );
