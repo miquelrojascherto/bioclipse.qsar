@@ -323,13 +323,22 @@ public interface QsarPackage extends EPackage {
 	int MOLECULE_RESOURCE_TYPE = 5;
 
 	/**
+	 * The feature id for the '<em><b>Excluded</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MOLECULE_RESOURCE_TYPE__EXCLUDED = 0;
+
+	/**
 	 * The feature id for the '<em><b>File</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MOLECULE_RESOURCE_TYPE__FILE = 0;
+	int MOLECULE_RESOURCE_TYPE__FILE = 1;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -338,7 +347,7 @@ public interface QsarPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MOLECULE_RESOURCE_TYPE__ID = 1;
+	int MOLECULE_RESOURCE_TYPE__ID = 2;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -347,7 +356,7 @@ public interface QsarPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MOLECULE_RESOURCE_TYPE__NAME = 2;
+	int MOLECULE_RESOURCE_TYPE__NAME = 3;
 
 	/**
 	 * The feature id for the '<em><b>Namespace</b></em>' attribute.
@@ -356,7 +365,7 @@ public interface QsarPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MOLECULE_RESOURCE_TYPE__NAMESPACE = 3;
+	int MOLECULE_RESOURCE_TYPE__NAMESPACE = 4;
 
 	/**
 	 * The feature id for the '<em><b>Url</b></em>' attribute.
@@ -365,7 +374,7 @@ public interface QsarPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MOLECULE_RESOURCE_TYPE__URL = 4;
+	int MOLECULE_RESOURCE_TYPE__URL = 5;
 
 	/**
 	 * The number of structural features of the '<em>Molecule Resource Type</em>' class.
@@ -374,7 +383,7 @@ public interface QsarPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MOLECULE_RESOURCE_TYPE_FEATURE_COUNT = 5;
+	int MOLECULE_RESOURCE_TYPE_FEATURE_COUNT = 6;
 
 	/**
 	 * The meta object id for the '{@link net.bioclipse.qsar.impl.ParameterTypeImpl <em>Parameter Type</em>}' class.
@@ -796,6 +805,17 @@ public interface QsarPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getMoleculeResourceType();
+
+	/**
+	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.MoleculeResourceType#isExcluded <em>Excluded</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Excluded</em>'.
+	 * @see net.bioclipse.qsar.MoleculeResourceType#isExcluded()
+	 * @see #getMoleculeResourceType()
+	 * @generated
+	 */
+	EAttribute getMoleculeResourceType_Excluded();
 
 	/**
 	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.MoleculeResourceType#getFile <em>File</em>}'.
@@ -1233,6 +1253,14 @@ public interface QsarPackage extends EPackage {
 		 * @generated
 		 */
 		EClass MOLECULE_RESOURCE_TYPE = eINSTANCE.getMoleculeResourceType();
+
+		/**
+		 * The meta object literal for the '<em><b>Excluded</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MOLECULE_RESOURCE_TYPE__EXCLUDED = eINSTANCE.getMoleculeResourceType_Excluded();
 
 		/**
 		 * The meta object literal for the '<em><b>File</b></em>' attribute feature.

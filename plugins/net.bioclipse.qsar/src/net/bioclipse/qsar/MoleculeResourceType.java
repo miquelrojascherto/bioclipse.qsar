@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
+ *   <li>{@link net.bioclipse.qsar.MoleculeResourceType#isExcluded <em>Excluded</em>}</li>
  *   <li>{@link net.bioclipse.qsar.MoleculeResourceType#getFile <em>File</em>}</li>
  *   <li>{@link net.bioclipse.qsar.MoleculeResourceType#getId <em>Id</em>}</li>
  *   <li>{@link net.bioclipse.qsar.MoleculeResourceType#getName <em>Name</em>}</li>
@@ -42,6 +43,60 @@ public interface MoleculeResourceType extends EObject {
 	 * @generated
 	 */
 	String copyright = "Copyright (c) 2007-2008 The Bioclipse Project and others.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nwww.eclipse.org\u00ef\u00bf\u03a9epl-v10.html <http://www.eclipse.org/legal/epl-v10.html>\n\nContributors:\n    Ola Spjuth - initial API and implementation\n";
+
+	/**
+	 * Returns the value of the '<em><b>Excluded</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Excluded</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Excluded</em>' attribute.
+	 * @see #isSetExcluded()
+	 * @see #unsetExcluded()
+	 * @see #setExcluded(boolean)
+	 * @see net.bioclipse.qsar.QsarPackage#getMoleculeResourceType_Excluded()
+	 * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+	 *        extendedMetaData="kind='attribute' name='excluded'"
+	 * @generated
+	 */
+	boolean isExcluded();
+
+	/**
+	 * Sets the value of the '{@link net.bioclipse.qsar.MoleculeResourceType#isExcluded <em>Excluded</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Excluded</em>' attribute.
+	 * @see #isSetExcluded()
+	 * @see #unsetExcluded()
+	 * @see #isExcluded()
+	 * @generated
+	 */
+	void setExcluded(boolean value);
+
+	/**
+	 * Unsets the value of the '{@link net.bioclipse.qsar.MoleculeResourceType#isExcluded <em>Excluded</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetExcluded()
+	 * @see #isExcluded()
+	 * @see #setExcluded(boolean)
+	 * @generated
+	 */
+	void unsetExcluded();
+
+	/**
+	 * Returns whether the value of the '{@link net.bioclipse.qsar.MoleculeResourceType#isExcluded <em>Excluded</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Excluded</em>' attribute is set.
+	 * @see #unsetExcluded()
+	 * @see #isExcluded()
+	 * @see #setExcluded(boolean)
+	 * @generated
+	 */
+	boolean isSetExcluded();
 
 	/**
 	 * Returns the value of the '<em><b>File</b></em>' attribute.
@@ -108,7 +163,7 @@ public interface MoleculeResourceType extends EObject {
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
 	 * @see net.bioclipse.qsar.QsarPackage#getMoleculeResourceType_Name()
-	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String" required="true"
 	 *        extendedMetaData="kind='attribute' name='name'"
 	 * @generated
 	 */

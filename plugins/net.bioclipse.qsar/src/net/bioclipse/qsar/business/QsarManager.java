@@ -184,7 +184,16 @@ public class QsarManager implements IQsarManager{
                     
                     String pshortname=element.getAttribute("shortName");
                     provider.setShortName(pshortname);
-                    
+
+                    String pvendor=element.getAttribute("vendor");
+                    provider.setVendor(pvendor);
+
+                    String pvers=element.getAttribute("version");
+                    provider.setVersion(pvers);
+
+                    String pns=element.getAttribute("namespace");
+                    provider.setNamespace(pns);
+
                     IDescriptorCalculator calculator;
 						calculator = (IDescriptorCalculator) 
 									element.createExecutableExtension("calculator");

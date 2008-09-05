@@ -21,7 +21,29 @@ public class DescriptorProvider extends BaseEPObject{
 	private boolean acceptsCml;
 	private boolean acceptsMolfile;
 	private String shortName;
+	
+	private String vendor;
+	private String version;
+	private String namespace;
 
+	public String getVendor() {
+		return vendor;
+	}
+	public void setVendor(String vendor) {
+		this.vendor = vendor;
+	}
+	public String getVersion() {
+		return version;
+	}
+	public void setVersion(String version) {
+		this.version = version;
+	}
+	public String getNamespace() {
+		return namespace;
+	}
+	public void setNamespace(String namespace) {
+		this.namespace = namespace;
+	}
 	public String getShortName() {
 		return shortName;
 	}
