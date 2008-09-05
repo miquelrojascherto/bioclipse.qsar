@@ -23,9 +23,9 @@
       point="net.bioclipse.qsar.descriptorProvider">
          <provider
             id="net.bioclipse.cdk.descriptorprovider"
-            name="Chemistry Development Kit (CDK)"
-            vendor="Chemistry Development Kit (CDK)"
-            namespace="http://cdk.sf.net"
+            name="Chemistry Development Kit"
+            vendor="Chemistry Development Kit"
+            namespace="http://cdk.sourceforge.net"
             version="1.1.0.v20080808"
             shortName="CDK"
             icon="icons/cdklogo.png"
