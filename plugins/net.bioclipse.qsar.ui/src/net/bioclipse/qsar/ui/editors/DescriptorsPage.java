@@ -28,7 +28,6 @@ import net.bioclipse.qsar.QsarType;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
-import net.bioclipse.qsar.descriptor.model.DescriptorInstance;
 import net.bioclipse.qsar.descriptor.model.DescriptorModel;
 import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
@@ -225,7 +224,7 @@ public class DescriptorsPage extends FormPage {
 						}
 					}
 				}
-				DescriptorInstance descInst=new DescriptorInstance(descriptor, impl, params);
+//				DescriptorInstance descInst=new DescriptorInstance(descriptor, impl, params);
 //				selectedDescriptors.add(descInst);
 			}
 			else{

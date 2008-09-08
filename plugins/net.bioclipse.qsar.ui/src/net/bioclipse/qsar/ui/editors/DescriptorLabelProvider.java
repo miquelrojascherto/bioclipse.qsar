@@ -6,7 +6,6 @@ import net.bioclipse.qsar.descriptor.model.BaseEPObject;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
 import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
-import net.bioclipse.qsar.descriptor.model.DescriptorInstance;
 import net.bioclipse.qsar.ui.Activator;
 
 import org.eclipse.jface.viewers.ILabelProviderListener;
