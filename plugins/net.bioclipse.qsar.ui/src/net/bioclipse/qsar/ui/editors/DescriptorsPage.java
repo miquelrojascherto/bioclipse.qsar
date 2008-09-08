@@ -117,8 +117,6 @@ public class DescriptorsPage extends FormPage {
 	 */
 	private DescriptorlistType descriptorList;
 	
-	private boolean dirty;
-	
 	IQsarManager qsar;
 	
 	private OnlyWithImplFilter onlyWithImplFilter = new OnlyWithImplFilter();
@@ -150,8 +148,6 @@ public class DescriptorsPage extends FormPage {
 			qsarModel.setDescriptorlist(descriptorList);
 		}
 
-		dirty=false;
-		
 	}
 
 
@@ -502,85 +498,8 @@ public class DescriptorsPage extends FormPage {
 		//Execute the compiund command
 		editingDomain.getCommandStack().execute(cCmd);
 
-		setDirty(true);
-
-		
 	}
 
-
-/*	private DescriptorType addDescriptorToModel(DescriptorInstance inst) {
-    	
-    	//Collect all in a compound command, for ability 
-    	//to undo everything at the same time
-		CompoundCommand cCmd = new CompoundCommand();
-		Command cmd;
-
-    	DescriptorType modelDescriptor=QsarFactory.eINSTANCE.createDescriptorType();
-		modelDescriptor.setId(inst.getId());
-		modelDescriptor.setNamespace(inst.getNamesapce());
-		cmd=AddCommand.create(editingDomain, descriptorList, QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTOR, modelDescriptor);
-		cCmd.append(cmd);
-
-		//Check if provider already added to qsarModel
-		DescriptorimplType dimpl=null;
-		for (DescriptorimplType pdimpl : qsarModel.getDescriptorimpl()){
-			if (pdimpl.getId().equals(inst.getDescriptorImpl().getProvider().getId())){
-				dimpl=QsarFactory.eINSTANCE.createDescriptorimplType();
-				dimpl.setId(pdimpl.getId());
-			}
-		}
-		
-		//If this is a new provider, add it to Qsar model
-		if (dimpl==null){
-			DescriptorProvider prov = inst.getDescriptorImpl().getProvider();
-			
-			String pid=prov.getId();
-			String pname=prov.getName();
-			String pvend=prov.getVendor();
-			String pvers=prov.getVersion();
-			String pns=prov.getNamesapce();
-
-			//Create a provider (=descrImplType) in qsar model root
-			DescriptorimplType newdimpl=QsarFactory.eINSTANCE.createDescriptorimplType();
-			newdimpl.setId(pid);
-			newdimpl.setNamespace(pns);
-			newdimpl.setVendor(pvend);
-			newdimpl.setName(pname);
-			newdimpl.setVersion(pvers);
-			cmd=AddCommand.create(editingDomain, qsarModel, QsarPackage.Literals.QSAR_TYPE__DESCRIPTORIMPL, newdimpl);
-			cCmd.append(cmd);
-
-			//Reference the created impl by ID
-			dimpl=QsarFactory.eINSTANCE.createDescriptorimplType();
-			dimpl.setId(newdimpl.getId());
-			
-		}
-
-		//Add found impl to descriptor element
-		cmd=SetCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__DESCRIPTORIMPL, dimpl);
-		cCmd.append(cmd);
-
-		//Parameters
-		if (inst.getParameters()!=null){
-			for (DescriptorParameter param : inst.getParameters()){
-
-				ParameterType modelParam=QsarFactory.eINSTANCE.createParameterType();
-				modelParam.setKey(param.getKey());
-				modelParam.setValue(param.getValue());
-				cmd=AddCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__PARAMETER, modelParam);
-				cCmd.append(cmd);
-
-			}
-		}
-		//Execute the compiund command
-		editingDomain.getCommandStack().execute(cCmd);
-
-		setDirty(true);
-		
-		return modelDescriptor;
-
-	}
-*/
 
 	/**
      * Handle the case when users press the Remove button next to moleculeviewer
@@ -707,14 +626,5 @@ public class DescriptorsPage extends FormPage {
         }
     }
 
-	public void setDirty(boolean dirty) {
-		this.dirty=dirty;
-		((QSARFormEditor)getEditor()).fireDirtyChanged();
-	}
-
-	@Override
-	public boolean isDirty() {
-		return dirty;
-	}
 
 }

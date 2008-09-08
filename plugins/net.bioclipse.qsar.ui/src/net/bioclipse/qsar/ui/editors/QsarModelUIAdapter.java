@@ -1,16 +1,18 @@
 package net.bioclipse.qsar.ui.editors;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.jface.viewers.Viewer;
 
 import net.bioclipse.qsar.QsarType;
 
 public class QsarModelUIAdapter  extends org.eclipse.emf.ecore.util.EContentAdapter {
 
-	QSARFormEditor formEditor;
 
-	public QsarModelUIAdapter(QSARFormEditor formEditor) {
+	private Viewer viewer;
+
+	public QsarModelUIAdapter(Viewer viewer) {
 		super();
-		this.formEditor=formEditor;
+		this.viewer=viewer;
 	}
 
 	// start observing a Library model
@@ -23,8 +25,7 @@ public class QsarModelUIAdapter  extends org.eclipse.emf.ecore.util.EContentAdap
 
 		super.notifyChanged(n); // the superclass handles adding/removing this Adapter to new Books
 
-		System.out.println("Something changed in QSARModel, should fire dirty!");
-//		formEditor.markPagesDirty();
+		viewer.refresh();
 	}
 
 }

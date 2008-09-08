@@ -12,44 +12,64 @@ package net.bioclipse.qsar.ui.editors;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.EventObject;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import net.bioclipse.core.util.LogUtils;
 import net.bioclipse.qsar.DocumentRoot;
-import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
-import net.bioclipse.qsar.util.QsarAdapterFactory;
+import net.bioclipse.qsar.provider.QsarItemProviderAdapterFactory;
+import net.bioclipse.ui.editors.XMLEditor;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.command.BasicCommandStack;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.common.command.CommandStackListener;
+import org.eclipse.emf.common.ui.URIEditorInput;
+import org.eclipse.emf.common.ui.editor.ProblemEditorPart;
+import org.eclipse.emf.common.util.BasicDiagnostic;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emf.edit.ui.util.EditUIUtil;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.forms.editor.FormEditor;
 
-public class QSARFormEditor extends FormEditor implements IResourceChangeListener, IAdaptable{
+public class QSARFormEditor extends FormEditor implements IResourceChangeListener, IAdaptable, IEditingDomainProvider{
 
     private static final Logger logger = Logger.getLogger(QSARFormEditor.class);
-    
-    private QsarXMLEditor xmlEditor;
+
+    private XMLEditor xmlEditor;
     private MoleculesPage molPage;
     
     private IProject activeProject;
@@ -72,6 +92,28 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
 
 	private DescriptorsPage descPage;
 
+	private ComposedAdapterFactory adapterFactory;
+
+	private AdapterFactoryItemDelegator itemDelegator;
+
+	private AdapterFactoryLabelProvider labelProvider;
+
+	/**
+	 * Resources that have been saved.
+	 */
+	protected Collection<Resource> savedResources = new ArrayList<Resource>();
+
+	/**
+	 * Map to store the diagnostic associated with a resource.
+	 */
+	protected Map<Resource, Diagnostic> resourceToDiagnosticMap = new LinkedHashMap<Resource, Diagnostic>();
+
+	/**
+	 * Controls whether the problem indication should be updated.
+	 */
+	protected boolean updateProblemIndication = true;
+
+	
 
     
     public IProject getActiveProject() {
@@ -91,102 +133,86 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
     public void init(IEditorSite site, IEditorInput input)
     throws PartInitException {
         super.init(site, input);
-        ResourcesPlugin.getWorkspace().addResourceChangeListener(this);
-        initialize();
-        
-    }
+		setPartName(input.getName());
+		ResourcesPlugin.getWorkspace().addResourceChangeListener(this);
 
-    /**
-     * Do customizations based on project
-     */
-    private void initialize() {
+		//Set up editingDomain
+        initializeEditingDomain();
 
-		QsarAdapterFactory factory=new QsarAdapterFactory();
-		editingDomain=new AdapterFactoryEditingDomain(factory, new BasicCommandStack());
+		//Create model from input
+		createModel();
+		
+		if (input instanceof IFileEditorInput) {
+			IFileEditorInput finput = (IFileEditorInput) input;
+	        activeProject=finput.getFile().getProject();
+		}
+
         selectionProvider=new QsarEditorSelectionProvider();
 
-    	
-    	//Get project
-        if (!(getEditorInput() instanceof IFileEditorInput)) {
-            return;
-        }
-
-        
-        try {
-			parseInput();
-		} catch (CoreException e) {
-            logger.error("Could not parse input: " + e.getMessage());
-			e.printStackTrace();
-			
-			//Close editor?
-		}
-
-        //Get molecules folder if exists
-        IFolder molFolder=activeProject.getFolder("molecules");
-        if (!(molFolder.exists())){
-            logger.error("Folder 'molecules'  does not exist.");
-        }
-     
     }
+    
+    protected void initializeEditingDomain() {
 
-    //Read and parse with EMF
-    private void parseInput() throws CoreException {
+    	// Create an adapter factory that yields item providers.
+		this.adapterFactory = new ComposedAdapterFactory(
+				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 
-    	IFileEditorInput input = (IFileEditorInput) getEditorInput();
-        activeProject=input.getFile().getProject();
-        
-        IFile file=input.getFile();
+		this.adapterFactory
+				.addAdapterFactory(new ResourceItemProviderAdapterFactory());
+		this.adapterFactory
+				.addAdapterFactory(new QsarItemProviderAdapterFactory());
+		this.adapterFactory
+				.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 
+		// command stack that will notify this editor as commands are executed
+		BasicCommandStack commandStack = new BasicCommandStack();
 
-        // Create a resource set.
-        resourceSet = new ResourceSetImpl();
+		// Add a listener to set the editor dirty of commands have been executed
+		commandStack.addCommandStackListener(new CommandStackListener() {
+			public void commandStackChanged(final EventObject event) {
+				getContainer().getDisplay().asyncExec(new Runnable() {
+					public void run() {
+						editorDirtyStateChanged();
+					}
+				});
+			}
+		});
 
-        // Register the default resource factory -- only needed for stand-alone!
-        
-        //Use XMI
-//        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
-//        		Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
-
-        //Use EcoresXMI, = UTF-8 and 80 char cols.
-        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
-        		Resource.Factory.Registry.DEFAULT_EXTENSION, new EcoreResourceFactoryImpl());
-
-
-        // Register the package -- only needed for stand-alone!
-        QsarPackage qsarPackage=QsarPackage.eINSTANCE;
-
-        // Get the URI of the model file.
-        URI fileURI = URI.createPlatformResourceURI(file.getFullPath().toString(), false);
-
-        // Demand load the resource for this file.
-        resource = resourceSet.getResource(fileURI, true);
-        
-        if (resource.getContents()==null){
-        	throw new PartInitException("No contents in parsed resource");
-        }
-
-        //Should be only one docroot
-        if (!(resource.getContents().get(0) instanceof DocumentRoot)) {
-        	throw new PartInitException("Documentroot is not of QSAR type");
-		}
-		DocumentRoot root = (DocumentRoot) resource.getContents().get(0);
-
-		//Store the model
-		qsarModel=root.getQsar();
-
-        // Print the contents of the resource to System.out.
-//        try
-//        {
-//        	resource.save(System.out, Collections.EMPTY_MAP);
-//        }
-//        catch (IOException e) {
-//        }
+		// Create the editing domain with our adapterFactory and command stack.
+		this.editingDomain = new AdapterFactoryEditingDomain(adapterFactory,
+				commandStack, new HashMap<Resource, Boolean>());
 		
-		QsarModelUIAdapter a=new QsarModelUIAdapter(this);
-		a.observeQsarModel(qsarModel);
-
+		// These provide access to the model items, their property source and label
+		this.itemDelegator = new AdapterFactoryItemDelegator(adapterFactory);
+		this.labelProvider = new AdapterFactoryLabelProvider(adapterFactory);
 	}
 
+
+    /**
+     * Create the model from editorInput
+     */
+    public void createModel() {
+    	
+		URI resourceURI = EditUIUtil.getURI(getEditorInput());
+//		Resource resource = null;
+		try {
+			// Load the resource through the editing domain.
+			//
+			resource = editingDomain.getResourceSet().getResource(resourceURI,
+					true);
+		} catch (Exception e) {
+			resource = editingDomain.getResourceSet().getResource(resourceURI,
+					false);
+		}
+
+		if (resource != null) {
+			DocumentRoot root = (DocumentRoot) resource.getContents().get(0);
+
+			//Store the model in editor
+			qsarModel=root.getQsar();
+			
+		}
+	}
 
 
 	@Override
@@ -205,8 +231,7 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
             descPageIndex=addPage(descPage);
 //            setPageText(descPageIndex, "Descriptors");
 
-            //Texteditor, should be XMLEditor: TODO
-            xmlEditor = new QsarXMLEditor(this);
+            xmlEditor = new XMLEditor();
             textEditorIndex = addPage(xmlEditor, getEditorInput());
             setPageText(textEditorIndex, "Source");
 
@@ -218,62 +243,222 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
 
     }
 
+	/**
+	 * This is for implementing {@link IEditorPart} and simply tests the command stack.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean isDirty() {
+		return ((BasicCommandStack)editingDomain.getCommandStack()).isSaveNeeded();
+	}
 
+	/**
+	 * This is for implementing {@link IEditorPart} and simply saves the model file.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void doSave(IProgressMonitor progressMonitor) {
+		// Save only resources that have actually changed.
+		//
+		final Map<Object, Object> saveOptions = new HashMap<Object, Object>();
+		saveOptions.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED, Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
 
-    @Override
-    public void doSave(IProgressMonitor monitor) {
-    	
-    	//Take QSAR model and save it
+		// Do the work within an operation because this is a long running activity that modifies the workbench.
+		//
+		IRunnableWithProgress operation =
+			new IRunnableWithProgress() {
+				// This is the method that gets invoked when the operation runs.
+				//
+				public void run(IProgressMonitor monitor) {
+					// Save the resources to the file system.
+					//
+					boolean first = true;
+					for (Resource resource : editingDomain.getResourceSet().getResources()) {
+						if ((first || !resource.getContents().isEmpty() || isPersisted(resource)) && !editingDomain.isReadOnly(resource)) {
+							try {
+								long timeStamp = resource.getTimeStamp();
+								resource.save(saveOptions);
+								if (resource.getTimeStamp() != timeStamp) {
+									savedResources.add(resource);
+								}
+							}
+							catch (Exception exception) {
+								resourceToDiagnosticMap.put(resource, analyzeResourceProblems(resource, exception));
+							}
+							first = false;
+						}
+					}
+				}
+			};
+
+		updateProblemIndication = false;
 		try {
-			
+			// This runs the options, and shows progress.
+			//
+			new ProgressMonitorDialog(getSite().getShell()).run(true, false, operation);
+
+			// Refresh the necessary state.
+			//
+			((BasicCommandStack)editingDomain.getCommandStack()).saveIsDone();
 			updateTextEditorFromModel();
-			xmlEditor.doSave(monitor);
-			
-/*
-			//Clear resource and add current model
-			resource.getContents().clear();
-			DocumentRoot root=QsarFactory.eINSTANCE.createDocumentRoot();
-			root.setQsar(qsarModel);
-			
-			resource.getContents().add(root);
-			resource.save(Collections.EMPTY_MAP);
-*/
-			//Clean all dirty flags
-			setDirty(false);
-
-			//Serialize to byte[] and print to sysout
-//			ByteArrayOutputStream os=new ByteArrayOutputStream();
-//			resource.save(os, Collections.EMPTY_MAP);
-//
-//			System.out.println(new String(os.toByteArray()));
-
-		} catch (IOException e) {
-			e.printStackTrace();
+			firePropertyChange(IEditorPart.PROP_DIRTY);
 		}
-    	
-    }
+		catch (Exception exception) {
+			// Something went wrong that shouldn't.
+			//
+			logger.debug(exception);
+		}
+		updateProblemIndication = true;
+		updateProblemIndication();
+	}
 
-	private void setDirty(boolean b) {
+	/**
+	 * Updates the problems indication with the information described in the specified diagnostic.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void updateProblemIndication() {
+		if (updateProblemIndication) {
+			BasicDiagnostic diagnostic =
+				new BasicDiagnostic
+					(Diagnostic.OK,
+					 "net.bioclipse.qsar.editor",
+					 0,
+					 null,
+					 new Object [] { editingDomain.getResourceSet() });
+			for (Diagnostic childDiagnostic : resourceToDiagnosticMap.values()) {
+				if (childDiagnostic.getSeverity() != Diagnostic.OK) {
+					diagnostic.add(childDiagnostic);
+				}
+			}
 
-		if (pages != null) {
-			for (int i = 0; i < pages.size(); i++) {
-				if (pages.get(i) instanceof MoleculesPage) {
-					MoleculesPage mpage = (MoleculesPage) pages.get(i);
-					mpage.setDirty(false);
+			int lastEditorPage = getPageCount() - 1;
+			if (lastEditorPage >= 0 && getEditor(lastEditorPage) instanceof ProblemEditorPart) {
+				((ProblemEditorPart)getEditor(lastEditorPage)).setDiagnostic(diagnostic);
+				if (diagnostic.getSeverity() != Diagnostic.OK) {
+					setActivePage(lastEditorPage);
+				}
+			}
+			else if (diagnostic.getSeverity() != Diagnostic.OK) {
+				ProblemEditorPart problemEditorPart = new ProblemEditorPart();
+				problemEditorPart.setDiagnostic(diagnostic);
+				try {
+					addPage(++lastEditorPage, problemEditorPart, getEditorInput());
+					setPageText(lastEditorPage, problemEditorPart.getPartName());
+					setActivePage(lastEditorPage);
+//					showTabs();
+				}
+				catch (PartInitException exception) {
+					logger.debug(exception);
 				}
 			}
 		}
 	}
-
-
-	@Override
-	public void doSaveAs() {
+	/**
+	 * Returns a diagnostic describing the errors and warnings listed in the resource
+	 * and the specified exception (if any).
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Diagnostic analyzeResourceProblems(Resource resource, Exception exception) {
+		if (!resource.getErrors().isEmpty() || !resource.getWarnings().isEmpty()) {
+			BasicDiagnostic basicDiagnostic =
+				new BasicDiagnostic
+					(Diagnostic.ERROR,
+					 "net.bioclipse.qsar.editor",
+					 0,
+					 "error creating model",
+					 new Object [] { exception == null ? (Object)resource : exception });
+			basicDiagnostic.merge(EcoreUtil.computeDiagnostic(resource, true));
+			return basicDiagnostic;
+		}
+		else if (exception != null) {
+			return
+				new BasicDiagnostic
+					(Diagnostic.ERROR,
+					 "net.bioclipse.qsar.editor",
+					 0,
+					 "error creating model",
+					 new Object[] { exception });
+		}
+		else {
+			return Diagnostic.OK_INSTANCE;
+		}
+	}
+	
+	/**
+	 * This returns whether something has been persisted to the URI of the specified resource.
+	 * The implementation uses the URI converter from the editor's resource set to try to open an input stream. 
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected boolean isPersisted(Resource resource) {
+		boolean result = false;
+		try {
+			InputStream stream = editingDomain.getResourceSet().getURIConverter().createInputStream(resource.getURI());
+			if (stream != null) {
+				result = true;
+				stream.close();
+			}
+		}
+		catch (IOException e) {
+			// Ignore
+		}
+		return result;
 	}
 
-    @Override
-    public boolean isSaveAsAllowed() {
-        return false;
-    }
+	/**
+	 * This always returns true because it is not currently supported.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean isSaveAsAllowed() {
+		return true;
+	}
+
+	/**
+	 * This also changes the editor's input.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void doSaveAs() {
+		String[] filters = QsarEditorAdvisor.FILE_EXTENSION_FILTERS.toArray(
+				new String[QsarEditorAdvisor.FILE_EXTENSION_FILTERS.size()]);
+		String[] files = QsarEditorAdvisor.openFilePathDialog(getSite().
+				getShell(), SWT.SAVE, filters);
+		if (files.length > 0) {
+			URI uri = URI.createFileURI(files[0]);
+			doSaveAs(uri, new URIEditorInput(uri));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void doSaveAs(URI uri, IEditorInput editorInput) {
+		(editingDomain.getResourceSet().getResources().get(0)).setURI(uri);
+		setInputWithNotify(editorInput);
+		setPartName(editorInput.getName());
+		IProgressMonitor progressMonitor = new NullProgressMonitor();
+//			getActionBars().getStatusLineManager() != null ?
+//				getActionBars().getStatusLineManager().getProgressMonitor() :
+//				new NullProgressMonitor();
+		doSave(progressMonitor);
+	}
+	
     
     @Override
     public void dispose() {
@@ -289,17 +474,16 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
     protected void pageChange(int newPageIndex) {
     	
     	if (newPageIndex==textEditorIndex){
+    		
+    		if (isDirty()){
+	    		//Serialize to XML, update editor
+				try {
+					updateTextEditorFromModel();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+    		}
 
-    		//Only serialize if dirty on mols page
-    		if (molPage.isDirty() || descPage.isDirty()){
-
-    			try {
-    	    		//Serialize to XML, update editor
-    				updateTextEditorFromModel();
-    			} catch (IOException e) {
-    				e.printStackTrace();
-    			}
-    		}    		
     	}
     	
     	super.pageChange(newPageIndex);
@@ -318,26 +502,31 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
 	}
 
 
-	protected void fireDirtyChanged() {
-        Runnable r= new Runnable() {
-            public void run() {
-                firePropertyChange(PROP_DIRTY);
-            }
-        };
-        Display fDisplay = getSite().getShell().getDisplay();
-        fDisplay.asyncExec(r);
-        
+	public EditingDomain getEditingDomain() {
+		return editingDomain;
 	}
 
-	public void markPagesDirty() {
-		molPage.setDirty(true);
-		descPage.setDirty(true);
-		fireDirtyChanged();
-	}
 
-	public void markPagesSaved() {
-		molPage.setDirty(false);
-		descPage.setDirty(false);
-	}
+//	protected void fireDirtyChanged() {
+//        Runnable r= new Runnable() {
+//            public void run() {
+//                firePropertyChange(PROP_DIRTY);
+//            }
+//        };
+//        Display fDisplay = getSite().getShell().getDisplay();
+//        fDisplay.asyncExec(r);
+//        
+//	}
+//
+//	public void markPagesDirty() {
+//		molPage.setDirty(true);
+//		descPage.setDirty(true);
+//		fireDirtyChanged();
+//	}
+//
+//	public void markPagesSaved() {
+//		molPage.setDirty(false);
+//		descPage.setDirty(false);
+//	}
 
 }

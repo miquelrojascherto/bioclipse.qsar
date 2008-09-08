@@ -25,6 +25,9 @@ import net.bioclipse.qsar.QsarType;
 import net.bioclipse.ui.dialogs.WSFileDialog;
 
 import org.apache.log4j.Logger;
+import org.eclipse.core.databinding.observable.Realm;
+import org.eclipse.core.databinding.observable.map.IObservableMap;
+import org.eclipse.core.databinding.observable.set.IObservableSet;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -32,9 +35,13 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.databinding.EMFObservables;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
+import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
@@ -92,15 +99,16 @@ public class MoleculesPage extends FormPage{
     
     private QsarEditorSelectionProvider selectionProvider;
 	private EditingDomain editingDomain;
-	private List<MoleculeResource> molecules;
+	
 	private MoleculelistType moleculeList;
-	private boolean dirty;
+	private QsarType qsarModel;
 
     
 	public MoleculesPage(FormEditor editor, QsarType qsarModel, 
 			EditingDomain editingDomain, QsarEditorSelectionProvider selectionProvider) {
 
 		super(editor, "qsar.molecules", "Molecules");
+		this.qsarModel=qsarModel;
 		this.editingDomain=editingDomain;
 	    
 		cdk=Activator.getDefault().getCDKManager();
@@ -108,17 +116,12 @@ public class MoleculesPage extends FormPage{
         formatter = new DecimalFormat("0.00");
         this.selectionProvider=selectionProvider;
 	    
-		//Currently displayed in table, duplicates the model in moleculeList
-		molecules=new ArrayList<MoleculeResource>();
-
 		//Get mollist from qsar model, init if empty (should not be)
 		moleculeList=qsarModel.getMoleculelist();
 		if (moleculeList==null){
 			moleculeList=QsarFactory.eINSTANCE.createMoleculelistType();
 			qsarModel.setMoleculelist(moleculeList);
 		}
-
-		dirty=false;
 
 	}
 
@@ -140,6 +143,11 @@ public class MoleculesPage extends FormPage{
 
         createMoleculesSection(form, toolkit);
         populateMolsViewerFromModel();
+        
+		QsarModelUIAdapter a=new QsarModelUIAdapter(molViewer);
+		a.observeQsarModel(qsarModel);
+
+
 
         createPreprocessingSection(form, toolkit);
 //        populatePreViewerFromModel();  //TODO!
@@ -151,24 +159,139 @@ public class MoleculesPage extends FormPage{
     }
     
 	private void populateMolsViewerFromModel() {
+		
+		// The content provider is responsible to handle add and
+		// remove notification for the Person#address EList
+		ObservableListContentProvider provider = new ObservableListContentProvider();
+		molViewer.setContentProvider(provider);
 
-		for (MoleculeResourceType mol: moleculeList.getMoleculeResource()){
-			if (mol.getFile()!=null){
-				IPath pth=new Path(mol.getFile());
-				if (pth!=null){
-					IFile file=ResourcesPlugin.getWorkspace().getRoot().getFile(pth);
-					MoleculeResource mr=new MoleculeResource(file);
-					molecules.add(mr);
-					System.out.println("Added mol: " + file.getName());
-				}else{
-					logger.error("could not parse path of mol: " + mol.getFile());
-				}
-			}else{
-				logger.error("could not parse mol: " + mol.getName() + ". path=null");
-			}
-		}
+		// The label provider in turn handles the addresses
+		// The EStructuralFeature[] defines which fields get shown
+		// in the TableViewer columns
+		IObservableSet knownElements = provider.getKnownElements();
+		IObservableMap[] observeMaps = EMFObservables.
+			observeMaps(knownElements, new EStructuralFeature[]{
+					QsarPackage.Literals.DESCRIPTOR_TYPE__ID});
+		ObservableMapLabelProvider labelProvider =
+			new ObservableMapLabelProvider(observeMaps);
+		molViewer.setLabelProvider(labelProvider);
 
-		molViewer.setInput( molecules );
+		// Person#addresses is the Viewer's input
+		molViewer.setInput(EMFObservables.observeList(Realm.getDefault(), moleculeList,
+			QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTOR));
+
+	}
+
+
+	private void createMoleculesSection(final ScrolledForm form, FormToolkit toolkit) {
+
+
+        Section molSection =
+            toolkit.createSection(
+              form.getBody(),
+              Section.TWISTIE | Section.DESCRIPTION);
+          molSection.setActiveToggleColor(
+            toolkit.getHyperlinkGroup().getActiveForeground());
+          molSection.setToggleColor(
+            toolkit.getColors().getColor(IFormColors.SEPARATOR));
+          toolkit.createCompositeSeparator(molSection);
+          Composite client = toolkit.createComposite(molSection, SWT.WRAP);
+          GridLayout layout = new GridLayout();
+          layout.numColumns = 2;
+          client.setLayout(layout);
+
+          molViewer = new TableViewer(client, SWT.BORDER | SWT.MULTI);
+          molTable=molViewer.getTable();
+          toolkit.adapt(molTable, true, true);
+          GridData gd=new GridData(GridData.FILL_VERTICAL);
+          gd.widthHint=350;
+          gd.verticalSpan=2;
+          molTable.setLayoutData( gd );
+          
+          molTable.setHeaderVisible(true);
+//          molTable.setLinesVisible(true);
+          toolkit.adapt(molTable, true, true);
+          
+          //Add name columns
+          TableLayout tableLayout = new TableLayout();
+          molTable.setLayout(tableLayout);
+          TableViewerColumn ixcol=new TableViewerColumn(molViewer,SWT.BORDER);
+          ixcol.getColumn().setText("Name");
+          tableLayout.addColumnData(new ColumnPixelData(175));
+          
+          //Add # column
+          TableViewerColumn col=new TableViewerColumn(molViewer,SWT.BORDER);
+          col.getColumn().setText("# Molecules");
+          tableLayout.addColumnData(new ColumnPixelData(75));
+          
+          //Add 2D column
+          TableViewerColumn col2d=new TableViewerColumn(molViewer,SWT.BORDER);
+          col2d.getColumn().setText("2D");
+          tableLayout.addColumnData(new ColumnPixelData(30));
+          
+          //Add 2D column
+          TableViewerColumn col3d=new TableViewerColumn(molViewer,SWT.BORDER);
+          col3d.getColumn().setText("3D");
+          tableLayout.addColumnData(new ColumnPixelData(30));
+          
+          
+          molTable.addKeyListener( new KeyListener(){
+              public void keyPressed( KeyEvent e ) {
+                  //Delete key
+                  if (e.keyCode==SWT.DEL){
+                      deleteSelectedMolecules();
+                  }
+                  
+                  //Space key, toggle selection
+                  if (e.keyCode==32){
+
+                	  IStructuredSelection msel=(IStructuredSelection) molViewer.getSelection();
+                      //TODO: implement
+                      
+                  }
+              }
+              public void keyReleased( KeyEvent e ) {
+              }
+          });
+
+          Button btnAdd=toolkit.createButton(client, "Add...", SWT.PUSH);
+          btnAdd.addListener(SWT.Selection, new Listener() {
+              public void handleEvent(Event e) {
+                  addMoleculeFile();
+              }
+            });
+          GridData gd2=new GridData();
+          gd2.verticalAlignment=SWT.BEGINNING;
+          gd2.widthHint=60;
+          btnAdd.setLayoutData( gd2 );
+
+          Button btnDel=toolkit.createButton(client, "Remove", SWT.PUSH);
+          btnDel.addListener(SWT.Selection, new Listener() {
+              public void handleEvent(Event e) {
+                  deleteSelectedMolecules();
+              }
+            });
+          gd2=new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
+          gd2.widthHint=60;
+          btnDel.setLayoutData( gd2 );
+          
+          
+          //Wrap up section
+          toolkit.paintBordersFor(client);
+          molSection.setText("Molecules");
+          molSection.setDescription("Molecules for descriptor calculations");
+          molSection.setClient(client);
+          molSection.setExpanded(true);
+          molSection.addExpansionListener(new ExpansionAdapter() {
+            public void expansionStateChanged(ExpansionEvent e) {
+              form.reflow(false);
+            }
+          });
+
+          gd = new GridData(GridData.FILL_BOTH);
+          molSection.setLayoutData(gd);        		
+		
+		
 
 	}
 
@@ -321,123 +444,6 @@ public class MoleculesPage extends FormPage{
     }
 
 
-    /**
-     * Create the left part of the page for displaying molecules
-     * @param form
-     * @param toolkit
-     */
-    private void createMoleculesSection( final ScrolledForm form,
-                                         FormToolkit toolkit) {
-
-        Section molSection =
-            toolkit.createSection(
-              form.getBody(),
-              Section.TWISTIE | Section.DESCRIPTION);
-          molSection.setActiveToggleColor(
-            toolkit.getHyperlinkGroup().getActiveForeground());
-          molSection.setToggleColor(
-            toolkit.getColors().getColor(IFormColors.SEPARATOR));
-          toolkit.createCompositeSeparator(molSection);
-          Composite client = toolkit.createComposite(molSection, SWT.WRAP);
-          GridLayout layout = new GridLayout();
-          layout.numColumns = 2;
-          client.setLayout(layout);
-
-          molViewer = new TableViewer(client, SWT.CHECK | SWT.BORDER | SWT.MULTI);
-          molTable=molViewer.getTable();
-          toolkit.adapt(molTable, true, true);
-          GridData gd=new GridData(GridData.FILL_VERTICAL);
-          gd.widthHint=350;
-          gd.verticalSpan=2;
-          molTable.setLayoutData( gd );
-          
-          molTable.setHeaderVisible(true);
-//          molTable.setLinesVisible(true);
-          toolkit.adapt(molTable, true, true);
-          
-          //Add name columns
-          TableLayout tableLayout = new TableLayout();
-          molTable.setLayout(tableLayout);
-          TableViewerColumn ixcol=new TableViewerColumn(molViewer,SWT.BORDER);
-          ixcol.getColumn().setText("Name");
-          tableLayout.addColumnData(new ColumnPixelData(175));
-          
-          //Add # column
-          TableViewerColumn col=new TableViewerColumn(molViewer,SWT.BORDER);
-          col.getColumn().setText("# Molecules");
-          tableLayout.addColumnData(new ColumnPixelData(75));
-          
-          //Add 2D column
-          TableViewerColumn col2d=new TableViewerColumn(molViewer,SWT.BORDER);
-          col2d.getColumn().setText("2D");
-          tableLayout.addColumnData(new ColumnPixelData(30));
-          
-          //Add 2D column
-          TableViewerColumn col3d=new TableViewerColumn(molViewer,SWT.BORDER);
-          col3d.getColumn().setText("3D");
-          tableLayout.addColumnData(new ColumnPixelData(30));
-          
-          molViewer.setContentProvider( molContentProv );
-          molViewer.setLabelProvider( new MoleculesLabelProvider() );
-          molViewer.setUseHashlookup(true);
-          
-          molTable.addKeyListener( new KeyListener(){
-              public void keyPressed( KeyEvent e ) {
-                  //Delete key
-                  if (e.keyCode==SWT.DEL){
-                      deleteSelectedMolecules();
-                  }
-                  
-                  //Space key, toggle selection
-                  if (e.keyCode==32){
-
-                	  IStructuredSelection msel=(IStructuredSelection) molViewer.getSelection();
-                      //TODO: implement
-                      
-                  }
-              }
-              public void keyReleased( KeyEvent e ) {
-              }
-          });
-
-          Button btnAdd=toolkit.createButton(client, "Add...", SWT.PUSH);
-          btnAdd.addListener(SWT.Selection, new Listener() {
-              public void handleEvent(Event e) {
-                  addMoleculeFile();
-              }
-            });
-          GridData gd2=new GridData();
-          gd2.verticalAlignment=SWT.BEGINNING;
-          gd2.widthHint=60;
-          btnAdd.setLayoutData( gd2 );
-
-          Button btnDel=toolkit.createButton(client, "Remove", SWT.PUSH);
-          btnDel.addListener(SWT.Selection, new Listener() {
-              public void handleEvent(Event e) {
-                  deleteSelectedMolecules();
-              }
-            });
-          gd2=new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
-          gd2.widthHint=60;
-          btnDel.setLayoutData( gd2 );
-          
-          
-          //Wrap up section
-          toolkit.paintBordersFor(client);
-          molSection.setText("Molecules");
-          molSection.setDescription("Molecules for descriptor calculations");
-          molSection.setClient(client);
-          molSection.setExpanded(true);
-          molSection.addExpansionListener(new ExpansionAdapter() {
-            public void expansionStateChanged(ExpansionEvent e) {
-              form.reflow(false);
-            }
-          });
-
-          gd = new GridData(GridData.FILL_BOTH);
-          molSection.setLayoutData(gd);        
-          
-    }
     
     protected void changeMolViewerState( Object obj, boolean newState ) {
 
@@ -481,15 +487,16 @@ public class MoleculesPage extends FormPage{
 
 		//Collect a list of resources currently in viewer 
 		//to hide them in dialog
+		//TODO
 
 
-		if (molecules!=null && molecules.size()>0){
-			List<IResource> res=new ArrayList<IResource>();
-			for (MoleculeResource r : molecules){
-				res.add(r.getResource());
-			}
-			dlg.setBlacklistFilter( res );
-		}
+//		if (molecules!=null && molecules.size()>0){
+//			List<IResource> res=new ArrayList<IResource>();
+//			for (MoleculeResource r : molecules){
+//				res.add(r.getResource());
+//			}
+//			dlg.setBlacklistFilter( res );
+//		}
 
 		int r=dlg.open();
 		if (r==Window.CANCEL){
@@ -503,32 +510,21 @@ public class MoleculesPage extends FormPage{
 
 		System.out.println("Selected mols to add: ");
 		for (IResource resource : dlg.getMultiResult()){
-			if (!(molecules.contains( resource ))){
 
-				MoleculeResource mr=new MoleculeResource(resource);
-				
-				//Add to List of resources
-				molecules.add( mr );
+			//Also add to QSAR model
+			MoleculeResourceType mol1=QsarFactory.eINSTANCE.createMoleculeResourceType();
+			mol1.setId(resource.getName());
+			mol1.setName(resource.getName());
+			mol1.setFile(resource.getFullPath().toString());
+			Command cmd=AddCommand.create(editingDomain, moleculeList, 
+					QsarPackage.Literals.MOLECULELIST_TYPE__MOLECULE_RESOURCE, mol1);
 
-				//Also add to QSAR model
-				MoleculeResourceType mol1=QsarFactory.eINSTANCE.createMoleculeResourceType();
-				mol1.setId(resource.getName());
-				mol1.setName(resource.getName());
-				mol1.setFile(resource.getFullPath().toString());
-				Command cmd=AddCommand.create(editingDomain, moleculeList, 
-   			   QsarPackage.Literals.MOLECULELIST_TYPE__MOLECULE_RESOURCE, mol1);
-
-				//Execute the CompoundCommand
-				editingDomain.getCommandStack().execute(cmd); 		
-			}
+			//Execute the CompoundCommand
+			editingDomain.getCommandStack().execute(cmd); 		
 		}
-
-		molViewer.setInput( molecules );
 		
-		setDirty(true);
-
-
-
+		molViewer.refresh();
+		
     }
 
 
@@ -547,45 +543,24 @@ public class MoleculesPage extends FormPage{
 		}
 		
 		for (Object obj : ssel.toList()){
-			if (!(obj instanceof MoleculeResource)) {
+			if (!(obj instanceof MoleculeResourceType)) {
 				//Should not happen
 				logger.error("A non-MoleculeResource selected in MolViewer: " + obj);
 				return;
 			}
 
-			MoleculeResource molres=(MoleculeResource)obj;
+			MoleculeResourceType molres=(MoleculeResourceType)obj;
 
-			if (!(molecules.contains(molres))){
-				logger.error("Error: sel mol must be contained in list!");
-				return;
-			}
 
-			//Remove the moltype, look up by id=resource name
-			MoleculeResourceType molToRemove=null;
-			for (MoleculeResourceType mol: moleculeList.getMoleculeResource()){
-				if (mol.getId().equals(molres.getResource().getName())){
-					molToRemove=mol;
-				}
-			}
-
-			//Remove molType from Viewers List
-			molecules.remove(molres);
-
-			//Remove entry (should be found)
-			if (molToRemove==null){
-				System.out.println("found no matching mol in emf model. " +
-						"Should not happen.");
-				return;
-			}
 			Command cmd=RemoveCommand.create(editingDomain, 
 					moleculeList, QsarPackage.Literals.
-					MOLECULELIST_TYPE__MOLECULE_RESOURCE, molToRemove);
+					MOLECULELIST_TYPE__MOLECULE_RESOURCE, molres);
 			editingDomain.getCommandStack().execute(cmd);
 
-			molViewer.setInput(molecules);
-			
-			setDirty(true);
 		}
+
+		molViewer.refresh();
+
     }
 
     private void showMessage(String message) {
@@ -623,14 +598,5 @@ public class MoleculesPage extends FormPage{
         }
     }
 
-	public void setDirty(boolean dirty) {
-		this.dirty=dirty;
-		((QSARFormEditor)getEditor()).fireDirtyChanged();
-	}
-
-	@Override
-	public boolean isDirty() {
-		return dirty;
-	}
 
 }

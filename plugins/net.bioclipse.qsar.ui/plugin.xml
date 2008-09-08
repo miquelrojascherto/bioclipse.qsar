@@ -8,7 +8,7 @@
             name="QSAR Editor"
             filenames="qsar.xml"
             icon="icons/descriptor.png"
-            contributorClass="net.bioclipse.qsar.ui.editors.QSAREditorContributor"
+            contributorClass="org.eclipse.emf.edit.ui.action.EditingDomainActionBarContributor"
             class="net.bioclipse.qsar.ui.editors.QSARFormEditor"
             id="net.bioclipse.qsar.editors.QSARFormEditor">
       </editor>
