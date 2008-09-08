@@ -15,16 +15,20 @@ package net.bioclipse.qsar.business;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.edit.domain.EditingDomain;
+
 import net.bioclipse.core.PublishedMethod;
 import net.bioclipse.core.Recorded;
 import net.bioclipse.core.business.IBioclipseManager;
 import net.bioclipse.core.domain.IMolecule;
 import net.bioclipse.qsar.DescriptorType;
+import net.bioclipse.qsar.QsarType;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
 import net.bioclipse.qsar.descriptor.model.DescriptorModel;
+import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 
 public interface IQsarManager extends IBioclipseManager{
@@ -96,6 +100,10 @@ public interface IQsarManager extends IBioclipseManager{
 	public DescriptorImpl getPreferredImpl(String descriptorID);
 
 	DescriptorImpl getDescriptorImpl(String descriptorID, String providerID);
+
+	DescriptorType createDescriptorType(QsarType qsarModel,
+			EditingDomain editingDomain, Descriptor desc, DescriptorImpl impl,
+			List<DescriptorParameter> params);
 
 
 

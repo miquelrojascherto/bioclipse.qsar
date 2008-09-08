@@ -803,7 +803,7 @@ public class QsarManager implements IQsarManager{
 	 * @param params
 	 * @return
 	 */
-	private DescriptorType createDescriptorType(QsarType qsarModel, EditingDomain editingDomain, Descriptor desc,
+	public DescriptorType createDescriptorType(QsarType qsarModel, EditingDomain editingDomain, Descriptor desc,
 			DescriptorImpl impl, List<DescriptorParameter> params) {
 		
 		//If qsarModel is null, create a new one
@@ -882,18 +882,19 @@ public class QsarManager implements IQsarManager{
 
 				ParameterType modelParam=QsarFactory.eINSTANCE.createParameterType();
 				modelParam.setKey(param.getKey());
-				
-				//Check if provided parameters have values or use default from impl
-				for (DescriptorParameter inparam : params){
-					if (inparam.getKey().equals(param.getKey())){
-						//We have input params, use value
-						modelParam.setValue(inparam.getValue());
-					}else{
-						//We have no input params, use def value from impl
-						modelParam.setValue(param.getValue());
-					}
+
+				//Set value from imple (=default)
+				modelParam.setValue(param.getValue());
+
+				//Check if provided parameters have values
+				//If so, use it
+				if (params!=null){
+					for (DescriptorParameter inparam : params){
+						if (inparam.getKey().equals(param.getKey())){
+							//We have input params, use value
+							modelParam.setValue(inparam.getValue());
+						}					}
 				}
-				
 				cmd=AddCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__PARAMETER, modelParam);
 				cCmd.append(cmd);
 
