@@ -12,6 +12,7 @@ package net.bioclipse.qsar.ui.editors;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import net.bioclipse.cdk.business.Activator;
@@ -19,8 +20,6 @@ import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.DescriptorimplType;
 import net.bioclipse.qsar.DescriptorlistType;
-import net.bioclipse.qsar.MoleculeResourceType;
-import net.bioclipse.qsar.MoleculelistType;
 import net.bioclipse.qsar.ParameterType;
 import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
@@ -31,38 +30,26 @@ import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorModel;
 import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
-import net.bioclipse.ui.dialogs.WSFileDialog;
 
 import org.apache.log4j.Logger;
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.command.SetCommand;
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.util.IPropertyChangeListener;
-import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnPixelData;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
-import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
@@ -70,7 +57,6 @@ import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -79,23 +65,17 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Tree;
-import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.FormPage;
 import org.eclipse.ui.forms.events.ExpansionAdapter;
 import org.eclipse.ui.forms.events.ExpansionEvent;
-import org.eclipse.ui.forms.events.HyperlinkAdapter;
-import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.widgets.FormToolkit;
-import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
-import org.eclipse.ui.forms.widgets.TableWrapData;
-import org.eclipse.ui.forms.widgets.TableWrapLayout;
 
-public class DescriptorsPage extends FormPage {
+public class DescriptorsPage extends FormPage implements IEditingDomainProvider, IViewerProvider{
 
     private TreeViewer descViewer;
     private Tree descTree;
@@ -189,50 +169,6 @@ public class DescriptorsPage extends FormPage {
         selectionProvider.setSelectionProviderDelegate( descViewer );
         descViewer.getTree().setFocus();
     }
-
-
-    /**
-     * Use EMF model for right viewer
-     */
-    @Deprecated
-    private void populateSelectedDescriptorsViewFromModel() {
-
-    	//Store selected descriptors here
-//        selectedDescriptors=new ArrayList<DescriptorInstance>();
-
-        //Populate by reading qsar model
-		for (DescriptorType desc: descriptorList.getDescriptor()){
-			
-			Descriptor descriptor=qsar.getDescriptorByID(desc.getId());
-
-			DescriptorImpl impl = qsar.getDescriptorImpl(desc.getId(),desc.getDescriptorimpl().getId());
-			if (impl!=null){
-				List<DescriptorParameter> params=new ArrayList<DescriptorParameter>();
-
-				//Loop over parameters in qsar model
-				for (ParameterType ptype : desc.getParameter()){
-					//Loop over expected parameters (to confirm validity)
-					for (DescriptorParameter bcParam : impl.getParameters()){
-						if (ptype.getKey().equals(bcParam.getKey())){
-							DescriptorParameter param=new DescriptorParameter(bcParam.getKey(), bcParam.getDefaultvalue());
-							param.setValue(ptype.getValue());
-							params.add(param);
-						}
-					}
-				}
-//				DescriptorInstance descInst=new DescriptorInstance(descriptor, impl, params);
-//				selectedDescriptors.add(descInst);
-			}
-			else{
-				logger.error("Could not find impl for: " + desc.getId() + 
-						", " + desc.getDescriptorimpl().getId());
-			}
-		}
-
-//		rightViewer.setInput( selectedDescriptors );
-		
-	}
-
 
 	/**
      * Create the left part of the page for displaying molecules
@@ -507,8 +443,25 @@ public class DescriptorsPage extends FormPage {
      */
     protected void deleteSelectedDescriptors() {
     	
-    	//TODO implement
-    	showMessage("Not implemented");
+    	IStructuredSelection ssel=(IStructuredSelection) rightViewer.getSelection();
+		
+    	CompoundCommand ccmd=new CompoundCommand();
+
+    	//Collect commands from selection
+    	for (Iterator<?> it=ssel.iterator(); it.hasNext();){
+
+    		Object obj = it.next();
+    		
+    		if (obj instanceof DescriptorType) {
+				DescriptorType descType = (DescriptorType) obj;
+				Command cmd=RemoveCommand.create(editingDomain, descriptorList, QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTOR, descType);
+				ccmd.append(cmd);
+			}
+    		
+    	}
+
+		//Execute the commands
+		editingDomain.getCommandStack().execute(ccmd);
 
     }
 
@@ -517,9 +470,6 @@ public class DescriptorsPage extends FormPage {
                                        "Information",
                                        message );
     }
-
-    
-    
     
     
     private void createRightSection( final ScrolledForm form,
@@ -541,7 +491,7 @@ public class DescriptorsPage extends FormPage {
 
 
     	//Query TreeViewer
-    	rightViewer = new TableViewer (client, SWT.BORDER | SWT.SINGLE);
+    	rightViewer = new TableViewer (client, SWT.BORDER | SWT.MULTI);
     	rightViewer.setContentProvider( new ArrayContentProvider() );
     	rightViewer.setLabelProvider( new DescriptorLabelProvider() );
     	rightTable=rightViewer.getTable();
@@ -625,6 +575,15 @@ public class DescriptorsPage extends FormPage {
             return "" + Long.toString(elapsedTimeMillis()/1000); // print execution time
         }
     }
+
+	public EditingDomain getEditingDomain() {
+		return editingDomain;
+	}
+
+
+	public Viewer getViewer() {
+		return rightViewer;
+	}
 
 
 }

@@ -35,11 +35,13 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.databinding.EMFObservables;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -53,6 +55,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
@@ -81,16 +84,13 @@ import org.eclipse.ui.forms.widgets.Section;
  * @author ola
  *
  */
-public class MoleculesPage extends FormPage{
+public class MoleculesPage extends FormPage implements IEditingDomainProvider, IViewerProvider{
 
     private TableViewer molViewer;
     private Table molTable;
 
     private TableViewer preTableViewer;
     private Table preTable;
-
-    
-    private MoleculesContentProvider molContentProv;
 
     private static final Logger logger = Logger.getLogger(MoleculesPage.class);
     
@@ -112,7 +112,6 @@ public class MoleculesPage extends FormPage{
 		this.editingDomain=editingDomain;
 	    
 		cdk=Activator.getDefault().getCDKManager();
-        molContentProv=new MoleculesContentProvider();
         formatter = new DecimalFormat("0.00");
         this.selectionProvider=selectionProvider;
 	    
@@ -597,6 +596,15 @@ public class MoleculesPage extends FormPage{
             return "" + Long.toString(elapsedTimeMillis()/1000); // print execution time
         }
     }
+
+	public EditingDomain getEditingDomain() {
+		return editingDomain;
+	}
+
+
+	public Viewer getViewer() {
+		return molViewer;
+	}
 
 
 }
