@@ -6,11 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import net.bioclipse.core.domain.IMolecule;
+import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.descriptor.DescriptorResult;
 import net.bioclipse.qsar.descriptor.IDescriptorCalculator;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
-import net.bioclipse.qsar.descriptor.model.DescriptorInstance;
-import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 
 public class DummyCalculator implements IDescriptorCalculator {
 
@@ -21,7 +20,7 @@ public class DummyCalculator implements IDescriptorCalculator {
 	 */
 	public Map<IMolecule, List<IDescriptorResult>> calculateDescriptor(
 			List<IMolecule> molecules, 
-			List<DescriptorInstance> descriptorInstances){
+			List<DescriptorType> descriptorTypes){
 
 		Map<IMolecule, List<IDescriptorResult>> allResults = 
 			                  new HashMap<IMolecule, List<IDescriptorResult>>();
@@ -32,31 +31,24 @@ public class DummyCalculator implements IDescriptorCalculator {
 			List<IDescriptorResult> molresults=new ArrayList<IDescriptorResult>();
 			
 			//Loop over all descriptors
-			for (DescriptorInstance inst : descriptorInstances){
-				String descriptorImplID=inst.getDescriptorImpl().getId();
+			for (DescriptorType descType : descriptorTypes){
+				String descriptorID=descType.getId();
 				
 				//Dummy result
 				DescriptorResult res=new DescriptorResult();
 
 				//If descriptor is supported, add content
-				if (getSupportedDescriptorIDs().contains(descriptorImplID)){
+				if (getSupportedDescriptorIDs().contains(descriptorID)){
 
-					if (descriptorImplID.equals("net.bioclipse.qsar.test.descriptor3D")){
+					if (descriptorID.equals("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticBondsCount")){
 						//Return error result, fake a calculation has gone wrong
 						res.setErrorMessage("Failed to calculate descriptor " +
-								"'" + descriptorImplID + 
-						"'. Molecule has no 3D coordinates.");
-					}
-
-					else if (descriptorImplID.equals("net.bioclipse.qsar.test.descriptorERROR")){
-						//Return error result, fake a calculation has gone wrong
-						res.setErrorMessage("Failed to calculate descriptor " +
-								"'" + descriptorImplID + 
+								"'" + descriptorID + 
 						"'. Reason: Unknown");
 					}
 					else{
 						//Return correct result
-						res.setDescriptorId(descriptorImplID);
+						res.setDescriptorId(descriptorID);
 						Float[] returnvalue=new Float[]{new Float(15.2456), new Float(47.01), new Float(-6.44)};
 						res.setValues(returnvalue);
 						String[] labels=new String[]{"label1","label2","label3"};
@@ -68,7 +60,7 @@ public class DummyCalculator implements IDescriptorCalculator {
 				//If this descriptor is not supported, add error msg
 				//This should not happen
 				else{
-					res.setErrorMessage("DescriptorID '" + descriptorImplID + 
+					res.setErrorMessage("DescriptorID '" + descriptorID + 
 							"' is not supported by DummyProvider.");
 				}
 
@@ -89,11 +81,17 @@ public class DummyCalculator implements IDescriptorCalculator {
 
 		if (supported==null){
 			supported=new ArrayList<String>();
-			supported.add("net.bioclipse.qsar.test.descriptor1");
-			supported.add("net.bioclipse.qsar.test.descriptor2");
-			supported.add("net.bioclipse.qsar.test.descriptor3");
-			supported.add("net.bioclipse.qsar.test.descriptorERROR");
-			supported.add("net.bioclipse.qsar.test.descriptor3D");
+//			supported.add("net.bioclipse.qsar.test.descriptor1");
+//			supported.add("net.bioclipse.qsar.test.descriptor2");
+//			supported.add("net.bioclipse.qsar.test.descriptor3");
+//			supported.add("net.bioclipse.qsar.test.descriptorERROR");
+//			supported.add("net.bioclipse.qsar.test.descriptor3D");
+			
+			supported.add("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain");
+			supported.add("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#BCUT");
+			supported.add("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticBondsCount");
+			
+			
 		}
 		return supported;
 	}

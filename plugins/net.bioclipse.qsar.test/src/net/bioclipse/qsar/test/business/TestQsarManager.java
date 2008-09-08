@@ -395,11 +395,11 @@ public class TestQsarManager {
 	public void testCalculateSingleMolSingleDescriptor(){
 
 		IMolecule mol=new SmilesMolecule("C1CCCCC1CC(CC)CC");
-		String descriptorID="net.bioclipse.qsar.test.descriptor3";
+		String descriptorID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain";
 		
 		IDescriptorResult res=qsar.calculate(mol, descriptorID);
 		assertNotNull(res);
-		assertNull(res.getErrorMessage());
+		assertNull("Error message was not null but: " + res.getErrorMessage(), res.getErrorMessage());
 		assertEquals(descriptorID, res.getDescriptorId());
 		assertEquals(3, res.getLabels().length);
 		assertEquals(3, res.getValues().length);
@@ -413,11 +413,11 @@ public class TestQsarManager {
 	public void testCalculateDescriptorWithError(){
 
 		IMolecule mol=new SmilesMolecule("C1CCCCC1CC(CC)CC");
-		String descriptorID="net.bioclipse.qsar.test.descriptorERROR";
-		
+		String descriptorID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticBondsCount";
+
 		IDescriptorResult res=qsar.calculate(mol, descriptorID);
+
 		assertNotNull(res);
-		assertNotNull(res.getErrorMessage());
 		
 		System.out.println("Error message: " + res.getErrorMessage());
 		assertEquals("Failed to calculate descriptor '" +
@@ -426,31 +426,17 @@ public class TestQsarManager {
 
 	}
 
-	@Test
-	public void testCalculateDescriptorWithMissing3D(){
-
-		IMolecule mol=new SmilesMolecule("C1CCCCC1CC(CC)CC");
-		String descriptorID="net.bioclipse.qsar.test.descriptor3D";
-		
-		IDescriptorResult res=qsar.calculate(mol, descriptorID);
-		assertNotNull(res);
-		assertNotNull(res.getErrorMessage());
-		
-		System.out.println("Error message: " + res.getErrorMessage());
-		assertEquals("Failed to calculate descriptor '" +
-				descriptorID + "'. Molecule has no 3D coordinates.", 
-				res.getErrorMessage());
-
-	}
 
 	@Test
 	public void testCalculateMultipleMolMultipleDescriptor() throws BioclipseException{
 		
 		IMolecule mol1=new SmilesMolecule("C1CCCCC1CC(CC)CC");
 		IMolecule mol2=new SmilesMolecule("C1CCCCC1CC(CC)CCCCCO");
-		String descriptorID="net.bioclipse.qsar.test.descriptor3";
-		String descriptorID2="net.bioclipse.qsar.test.descriptor2";
-		
+//		String descriptorID="net.bioclipse.qsar.test.descriptor3";
+//		String descriptorID2="net.bioclipse.qsar.test.descriptor2";
+		String descriptorID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain";
+		String descriptorID2="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#BCUT";
+	
 		List<IMolecule> mols=new ArrayList<IMolecule>();
 		List<String> descs=new ArrayList<String>();
 		

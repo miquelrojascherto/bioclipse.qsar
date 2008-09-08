@@ -43,7 +43,7 @@
             </descriptorImpl>
            <descriptorImpl
                      id="net.bioclipse.qsar.test.descriptorERROR"
-                  definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain"
+                  definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticBondsCount"
                      description="net.bioclipse.qsar.test.descriptionERROR"
                      name="ErrorDescriptor">
             </descriptorImpl>
