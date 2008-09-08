@@ -30,21 +30,35 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.emf.common.command.BasicCommandStack;
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 
 import net.bioclipse.core.domain.IMolecule;
+import net.bioclipse.qsar.DescriptorType;
+import net.bioclipse.qsar.DescriptorimplType;
+import net.bioclipse.qsar.DescriptorlistType;
+import net.bioclipse.qsar.ParameterType;
 import net.bioclipse.qsar.QSARConstants;
+import net.bioclipse.qsar.QsarFactory;
+import net.bioclipse.qsar.QsarPackage;
+import net.bioclipse.qsar.QsarType;
 import net.bioclipse.qsar.descriptor.IDescriptorCalculator;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
-import net.bioclipse.qsar.descriptor.model.DescriptorInstance;
 import net.bioclipse.qsar.descriptor.model.DescriptorModel;
 import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 import net.bioclipse.qsar.init.Activator;
 import net.bioclipse.qsar.prefs.QSARPreferenceInitializer;
 import net.bioclipse.qsar.prefs.QsarPreferenceHelper;
+import net.bioclipse.qsar.util.QsarAdapterFactory;
 
 public class QsarManager implements IQsarManager{
 
@@ -593,7 +607,7 @@ public class QsarManager implements IQsarManager{
 	 * @return
 	 */
 	public Map<IMolecule, List<IDescriptorResult>> calculate(List<IMolecule> molecules, 
-			List<DescriptorInstance> descriptorInstances) {
+			List<DescriptorType> descriptorTypes) {
 
 		Map<IMolecule, List<IDescriptorResult>> allResults=
 			 						new HashMap<IMolecule, List<IDescriptorResult>>();
@@ -602,23 +616,27 @@ public class QsarManager implements IQsarManager{
 		//Loop over all providers
 		for (DescriptorProvider provider : getFullProviders()){
 			
-			//Store descriptors and params for this provider
-			List<DescriptorInstance> descriptorInstancesForProvider = new ArrayList<DescriptorInstance>();
+			//Store descriptors and params to calculate for this provider in list
+			List<DescriptorType> descriptorTypesForProvider = new ArrayList<DescriptorType>();
 			
+			
+
 			//Check if this descriptor is here, add if so
-			for (DescriptorInstance inst: descriptorInstances){
-				DescriptorImpl desc=inst.getDescriptorImpl();
-				if (desc.getProvider()==provider){
-					descriptorInstancesForProvider.add(inst);
+			for (DescriptorType descType: descriptorTypes){
+				DescriptorimplType descImpl = descType.getDescriptorimpl();
+
+				if (provider.getId().equals(descImpl.getId())){
+					descriptorTypesForProvider.add(descType);
 				}
 			}
+
 			
 			//If we have descs to calculate, do so
-			if (descriptorInstancesForProvider.size()>0){
+			if (descriptorTypesForProvider.size()>0){
 				IDescriptorCalculator calculator=provider.getCalculator();
 				Map<IMolecule, List<IDescriptorResult>> results = 
 						calculator.calculateDescriptor(molecules, 
-													   descriptorInstancesForProvider);
+													   descriptorTypesForProvider);
 				
 				//Add these results to the molecule
 				for (IMolecule mol : results.keySet()){
@@ -638,51 +656,39 @@ public class QsarManager implements IQsarManager{
 
 
 
-	/**
-	 * Convenience method to calculate descriptors without inputting parameters
-	 */
-	public Map<IMolecule, List<IDescriptorResult>> calculateNoParams(
-			List<IMolecule> molecules, List<String> descriptorImplIDs) {
+//	/**
+//	 * Convenience method to calculate descriptors without inputting parameters
+//	 */
+//	public Map<IMolecule, List<IDescriptorResult>> calculateNoParams(
+//			List<IMolecule> molecules, List<String> descriptorImplIDs) {
+//
+//		List<DescriptorType> insts=new ArrayList<DescriptorType>();
+//		
+//		for (String descImplID : descriptorImplIDs){
+//			DescriptorImpl impl=getDescriptorImplByID(descImplID);
+//			Descriptor desc=getDescriptorByID(impl.getDefinition());
+//			DescriptorType descType=createDescriptorType(desc, impl,null);
+//			
+//			DescriptorInstance inst=new DescriptorInstance(desc, impl,null);
+//			insts.add(inst);
+//		}
+//		
+//		return calculate(molecules, insts);
+//	}
 
-		List<DescriptorInstance> insts=new ArrayList<DescriptorInstance>();
-		
-		for (String descImplID : descriptorImplIDs){
-			DescriptorImpl impl=getDescriptorImplByID(descImplID);
-			Descriptor desc=getDescriptorByID(impl.getDefinition());
-			DescriptorInstance inst=new DescriptorInstance(desc, impl,null);
-			insts.add(inst);
-		}
-		
-		return calculate(molecules, insts);
-	}
-
-	/**
-	 * Convenience method to calculate descriptors for a single 
-	 * mol with parameters
-	 */
-	public List<IDescriptorResult> calculate( IMolecule molecule, 
-			List<DescriptorInstance> descriptorInstances) {
-
-		List<IMolecule> mollist=new ArrayList<IMolecule>();
-		mollist.add(molecule);
-
-		Map<IMolecule, List<IDescriptorResult>> ret = calculate(mollist, descriptorInstances);
-		
-		return ret.get(molecule);
-	}
 
 
 	/**
 	 * Convenience method to calculate a descriptor for a single mol and 
-	 * a single descriptorImplID.
+	 * a single descriptorID.
 	 */
-	public IDescriptorResult calculate(IMolecule molecule, String descriptorImplID) {
+	public IDescriptorResult calculate(IMolecule molecule, String descriptorID) {
 
 		List<IMolecule> mollist=new ArrayList<IMolecule>();
 		mollist.add(molecule);
 
 		List<String> descIDs=new ArrayList<String>();
-		descIDs.add(descriptorImplID);
+		descIDs.add(descriptorID);
 		
 		Map<IMolecule, List<IDescriptorResult>> retMap = calculateNoParams(mollist, descIDs);
 		if (retMap==null || retMap.size()<1){
@@ -742,6 +748,162 @@ public class QsarManager implements IQsarManager{
 
 		return null;
 	}
+
+
+
 	
 	
+	public List<IDescriptorResult> calculate(IMolecule molecule,
+			List<DescriptorType> descriptorTypes) {
+		
+		List<IMolecule> mollist=new ArrayList<IMolecule>();
+		mollist.add(molecule);
+
+		Map<IMolecule, List<IDescriptorResult>> ret = calculate(mollist, descriptorTypes);
+		
+		return ret.get(molecule);
+	}
+
+
+
+	public Map<IMolecule, List<IDescriptorResult>> calculateNoParams(
+			List<IMolecule> molecules, List<String> descriptorIDs) {
+		List<DescriptorType> descTypes=new ArrayList<DescriptorType>();
+		
+		for (String descriptorID : descriptorIDs){
+			//Look up descriptor by ID
+			Descriptor desc=getDescriptorByID(descriptorID);
+			if (desc==null){
+				throw new IllegalArgumentException("Could not find descriptor: " + descriptorID);
+			}
+
+			//Loop up preferred implementation
+			DescriptorImpl impl=getPreferredImpl(descriptorID);
+			if (impl==null){
+				throw new IllegalArgumentException("Could not find an implementation for descriptor: " + descriptorID);
+			}
+			
+			
+			DescriptorType descType=createDescriptorType(null, null, desc, impl,null);
+			descTypes.add(descType);
+		}
+		
+		return calculate(molecules, descTypes);
+	}
+
+
+
+	/**
+	 * Add a descriptor with impl and optionally parameters to a QsarModel via 
+	 * an editingDomain
+	 * @param qsarModel
+	 * @param editingDomain
+	 * @param desc
+	 * @param impl
+	 * @param params
+	 * @return
+	 */
+	private DescriptorType createDescriptorType(QsarType qsarModel, EditingDomain editingDomain, Descriptor desc,
+			DescriptorImpl impl, List<DescriptorParameter> params) {
+		
+		//If qsarModel is null, create a new one
+		//Used in tests
+		qsarModel=QsarFactory.eINSTANCE.createQsarType();
+
+
+		//Get and optionally create list of descriptors if null
+		DescriptorlistType descriptorList = qsarModel.getDescriptorlist();
+		if (descriptorList==null){
+			descriptorList=QsarFactory.eINSTANCE.createDescriptorlistType();
+			qsarModel.setDescriptorlist(descriptorList);
+		}
+
+		//If we have no editingDomain, create a basic one
+		//Used in tests
+		if (editingDomain==null){
+			QsarAdapterFactory factory=new QsarAdapterFactory();
+			editingDomain=new AdapterFactoryEditingDomain(factory, new BasicCommandStack());
+		}
+
+
+		//Collect all in a compound command, for ability 
+		//to undo everything at the same time
+		CompoundCommand cCmd = new CompoundCommand();
+		Command cmd;
+
+		DescriptorType modelDescriptor=QsarFactory.eINSTANCE.createDescriptorType();
+		modelDescriptor.setId(desc.getId());
+		modelDescriptor.setNamespace(desc.getNamesapce());
+		cmd=AddCommand.create(editingDomain, descriptorList, QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTOR, modelDescriptor);
+		cCmd.append(cmd);
+
+		//Check if provider already added to qsarModel
+		DescriptorimplType dimpl=null;
+		for (DescriptorimplType pdimpl : qsarModel.getDescriptorimpl()){
+			if (pdimpl.getId().equals(impl.getProvider().getId())){
+				dimpl=QsarFactory.eINSTANCE.createDescriptorimplType();
+				dimpl.setId(pdimpl.getId());
+			}
+		}
+
+		//If this is a new provider, add it to Qsar model
+		if (dimpl==null){
+			DescriptorProvider prov = impl.getProvider();
+
+			String pid=prov.getId();
+			String pname=prov.getName();
+			String pvend=prov.getVendor();
+			String pvers=prov.getVersion();
+			String pns=prov.getNamesapce();
+
+			//Create a provider (=descrImplType) in qsar model root
+			DescriptorimplType newdimpl=QsarFactory.eINSTANCE.createDescriptorimplType();
+			newdimpl.setId(pid);
+			newdimpl.setNamespace(pns);
+			newdimpl.setVendor(pvend);
+			newdimpl.setName(pname);
+			newdimpl.setVersion(pvers);
+			cmd=AddCommand.create(editingDomain, qsarModel, QsarPackage.Literals.QSAR_TYPE__DESCRIPTORIMPL, newdimpl);
+			cCmd.append(cmd);
+
+			//Reference the created impl by ID
+			dimpl=QsarFactory.eINSTANCE.createDescriptorimplType();
+			dimpl.setId(newdimpl.getId());
+
+		}
+
+		//Add found impl to descriptor element
+		cmd=SetCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__DESCRIPTORIMPL, dimpl);
+		cCmd.append(cmd);
+
+		//Parameters
+		if (impl.getParameters()!=null){
+			for (DescriptorParameter param : impl.getParameters()){
+
+				ParameterType modelParam=QsarFactory.eINSTANCE.createParameterType();
+				modelParam.setKey(param.getKey());
+				
+				//Check if provided parameters have values or use default from impl
+				for (DescriptorParameter inparam : params){
+					if (inparam.getKey().equals(param.getKey())){
+						//We have input params, use value
+						modelParam.setValue(inparam.getValue());
+					}else{
+						//We have no input params, use def value from impl
+						modelParam.setValue(param.getValue());
+					}
+				}
+				
+				cmd=AddCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__PARAMETER, modelParam);
+				cCmd.append(cmd);
+
+			}
+		}
+		//Execute the compound command
+		editingDomain.getCommandStack().execute(cCmd);
+
+		return modelDescriptor;
+	}
+
+
 }

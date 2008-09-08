@@ -1,5 +1,7 @@
 package net.bioclipse.qsar.descriptor.model;
 
+import net.bioclipse.qsar.ParameterType;
+
 import org.eclipse.jface.preference.BooleanPropertyAction;
 import org.eclipse.ui.views.properties.ComboBoxPropertyDescriptor;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
@@ -18,9 +20,11 @@ public class DescriptorInstancePropertySource extends BaseEPObjectPropertySource
     protected static final Integer FALSe_INT=1;
 
     DescriptorInstance instance;
+	private ParameterType type;
     
-	public DescriptorInstancePropertySource(BaseEPObject item) {
+	public DescriptorInstancePropertySource(BaseEPObject item, ParameterType paramType) {
 		super(item);
+		this.type=paramType;
 	}
 	
 	@Override

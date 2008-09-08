@@ -19,13 +19,12 @@ import net.bioclipse.core.PublishedMethod;
 import net.bioclipse.core.Recorded;
 import net.bioclipse.core.business.IBioclipseManager;
 import net.bioclipse.core.domain.IMolecule;
+import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
-import net.bioclipse.qsar.descriptor.model.DescriptorInstance;
 import net.bioclipse.qsar.descriptor.model.DescriptorModel;
-import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 
 public interface IQsarManager extends IBioclipseManager{
@@ -35,10 +34,10 @@ public interface IQsarManager extends IBioclipseManager{
     public IDescriptorResult calculate(IMolecule molecule, String descriptorImplID);
 
 	public List<IDescriptorResult> calculate(IMolecule molecule,
-			List<DescriptorInstance> descriptorInstances);
+			List<DescriptorType> descriptorTypes);
     
     public Map<IMolecule, List<IDescriptorResult>> calculate(List<IMolecule> molecules, 
-    													List<DescriptorInstance> descriptorInstances);
+    													List<DescriptorType> descriptorTypes);
 
     @Recorded
     @PublishedMethod( methodSummary = "Calculates a list of descriptors for a " +
