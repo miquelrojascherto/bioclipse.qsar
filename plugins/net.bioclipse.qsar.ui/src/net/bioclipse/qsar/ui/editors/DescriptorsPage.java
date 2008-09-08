@@ -112,6 +112,10 @@ public class DescriptorsPage extends FormPage {
     private QsarEditorSelectionProvider selectionProvider;
 	private EditingDomain editingDomain;
 
+	/**
+	 * This list of Descriptors in the qsar model. Also used as input to 
+	 * rightViewer, containing the selected descrriptors
+	 */
 	private DescriptorlistType descriptorList;
 	
 	private boolean dirty;
@@ -120,10 +124,10 @@ public class DescriptorsPage extends FormPage {
 	
 	private OnlyWithImplFilter onlyWithImplFilter = new OnlyWithImplFilter();
 
-	//This is the model for the rightViewer
-	private List<DescriptorInstance> selectedDescriptors;
-	private EList<DescriptorimplType> providerList;
+//	private EList<DescriptorimplType> providerList;
 	private QsarType qsarModel;
+
+//	private List<DescriptorInstance> selectedDescriptors;
 
     
 	public DescriptorsPage(FormEditor editor, QsarType qsarModel, 
@@ -183,21 +187,23 @@ public class DescriptorsPage extends FormPage {
 		});
 
 		//Populate selected descriptors from the read qsar model 
-        populateSelectedDescriptorsViewFromModel();
-        
+//        populateSelectedDescriptorsViewFromModel();
+		rightViewer.setInput(descriptorList.eContents().toArray());
 
         //Post selections to Eclipse via our intermediate selectionprovider
         selectionProvider.setSelectionProviderDelegate( descViewer );
+        descViewer.getTree().setFocus();
     }
-    
 
 
-
-
+    /**
+     * Use EMF model for right viewer
+     */
+    @Deprecated
     private void populateSelectedDescriptorsViewFromModel() {
 
     	//Store selected descriptors here
-        selectedDescriptors=new ArrayList<DescriptorInstance>();
+//        selectedDescriptors=new ArrayList<DescriptorInstance>();
 
         //Populate by reading qsar model
 		for (DescriptorType desc: descriptorList.getDescriptor()){
@@ -220,7 +226,7 @@ public class DescriptorsPage extends FormPage {
 					}
 				}
 				DescriptorInstance descInst=new DescriptorInstance(descriptor, impl, params);
-				selectedDescriptors.add(descInst);
+//				selectedDescriptors.add(descInst);
 			}
 			else{
 				logger.error("Could not find impl for: " + desc.getId() + 
@@ -228,7 +234,7 @@ public class DescriptorsPage extends FormPage {
 			}
 		}
 
-		rightViewer.setInput( selectedDescriptors );
+//		rightViewer.setInput( selectedDescriptors );
 		
 	}
 
@@ -401,12 +407,15 @@ public class DescriptorsPage extends FormPage {
 //				DescriptorImpl impl2 = qsar.getDescriptorByID(desc.getId());
 				DescriptorImpl impl = qsar.getPreferredImpl(desc.getId());
 				if (impl!=null){
-					DescriptorInstance inst = new DescriptorInstance(desc,impl);
-
-					//Add this instance to rightViewer's model
-					selectedDescriptors.add(inst);
 					
-					addDescriptorToModel(inst);
+					
+//					
+//					DescriptorInstance inst = new DescriptorInstance(desc,impl);
+//
+//					//Add this instance to rightViewer's model
+//					selectedDescriptors.add(inst);
+					
+					addDescriptorToModel(desc, impl);
 					
 					
 				}else{
@@ -422,13 +431,85 @@ public class DescriptorsPage extends FormPage {
     		}
     	}
 
-    	rightViewer.setInput(selectedDescriptors);
+    	rightViewer.setInput(descriptorList.eContents().toArray());
 
     }
 
 
+    private void addDescriptorToModel(Descriptor desc, DescriptorImpl impl) {
+    	
+    	//Collect all in a compound command, for ability 
+    	//to undo everything at the same time
+		CompoundCommand cCmd = new CompoundCommand();
+		Command cmd;
 
-    private void addDescriptorToModel(DescriptorInstance inst) {
+    	DescriptorType modelDescriptor=QsarFactory.eINSTANCE.createDescriptorType();
+		modelDescriptor.setId(desc.getId());
+		modelDescriptor.setNamespace(desc.getNamesapce());
+		cmd=AddCommand.create(editingDomain, descriptorList, QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTOR, modelDescriptor);
+		cCmd.append(cmd);
+
+		//Check if provider already added to qsarModel
+		DescriptorimplType dimpl=null;
+		for (DescriptorimplType pdimpl : qsarModel.getDescriptorimpl()){
+			if (pdimpl.getId().equals(impl.getProvider().getId())){
+				dimpl=QsarFactory.eINSTANCE.createDescriptorimplType();
+				dimpl.setId(pdimpl.getId());
+			}
+		}
+		
+		//If this is a new provider, add it to Qsar model
+		if (dimpl==null){
+			DescriptorProvider prov = impl.getProvider();
+			
+			String pid=prov.getId();
+			String pname=prov.getName();
+			String pvend=prov.getVendor();
+			String pvers=prov.getVersion();
+			String pns=prov.getNamesapce();
+
+			//Create a provider (=descrImplType) in qsar model root
+			DescriptorimplType newdimpl=QsarFactory.eINSTANCE.createDescriptorimplType();
+			newdimpl.setId(pid);
+			newdimpl.setNamespace(pns);
+			newdimpl.setVendor(pvend);
+			newdimpl.setName(pname);
+			newdimpl.setVersion(pvers);
+			cmd=AddCommand.create(editingDomain, qsarModel, QsarPackage.Literals.QSAR_TYPE__DESCRIPTORIMPL, newdimpl);
+			cCmd.append(cmd);
+
+			//Reference the created impl by ID
+			dimpl=QsarFactory.eINSTANCE.createDescriptorimplType();
+			dimpl.setId(newdimpl.getId());
+			
+		}
+
+		//Add found impl to descriptor element
+		cmd=SetCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__DESCRIPTORIMPL, dimpl);
+		cCmd.append(cmd);
+
+		//Parameters
+		if (impl.getParameters()!=null){
+			for (DescriptorParameter param : impl.getParameters()){
+
+				ParameterType modelParam=QsarFactory.eINSTANCE.createParameterType();
+				modelParam.setKey(param.getKey());
+				modelParam.setValue(param.getValue());
+				cmd=AddCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__PARAMETER, modelParam);
+				cCmd.append(cmd);
+
+			}
+		}
+		//Execute the compiund command
+		editingDomain.getCommandStack().execute(cCmd);
+
+		setDirty(true);
+
+		
+	}
+
+
+/*	private DescriptorType addDescriptorToModel(DescriptorInstance inst) {
     	
     	//Collect all in a compound command, for ability 
     	//to undo everything at the same time
@@ -496,9 +577,11 @@ public class DescriptorsPage extends FormPage {
 		editingDomain.getCommandStack().execute(cCmd);
 
 		setDirty(true);
+		
+		return modelDescriptor;
 
 	}
-
+*/
 
 	/**
      * Handle the case when users press the Remove button next to moleculeviewer

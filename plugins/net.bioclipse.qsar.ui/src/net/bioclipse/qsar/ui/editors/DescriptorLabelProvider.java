@@ -1,5 +1,6 @@
 package net.bioclipse.qsar.ui.editors;
 
+import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.descriptor.model.BaseEPObject;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
@@ -26,7 +27,12 @@ public class DescriptorLabelProvider implements ITableLabelProvider {
 		if (element instanceof PendingObject) {
 			return null;
 		}
-		else if (element instanceof DescriptorInstance) {
+//		else if (element instanceof DescriptorInstance) {
+//			if (desc==null) desc= Activator.getImageDescriptor(
+//					"icons/descriptor.png").createImage();
+//			return desc;
+//		}
+		else if (element instanceof DescriptorType) {
 			if (desc==null) desc= Activator.getImageDescriptor(
 					"icons/descriptor.png").createImage();
 			return desc;
@@ -60,9 +66,13 @@ public class DescriptorLabelProvider implements ITableLabelProvider {
 				return po.getPendingString();
 			return "";
 		}
-		else if (element instanceof DescriptorInstance) {
-			DescriptorInstance inst = (DescriptorInstance) element;
-			return inst.getName();
+//		else if (element instanceof DescriptorInstance) {
+//			DescriptorInstance inst = (DescriptorInstance) element;
+//			return inst.getName();
+//		}
+		else if (element instanceof DescriptorType) {
+			DescriptorType desc=(DescriptorType)element;
+			return qsar.getDescriptorByID(desc.getId()).getName();
 		}
 
 		else if (element instanceof Descriptor) {

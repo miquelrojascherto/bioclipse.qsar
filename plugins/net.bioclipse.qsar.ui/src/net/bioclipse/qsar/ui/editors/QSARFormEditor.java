@@ -31,6 +31,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.command.BasicCommandStack;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -61,6 +63,7 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
 	private int textEditorIndex;
 
 	private int molPageIndex;
+	private int descPageIndex;
 
 	private AdapterFactoryEditingDomain editingDomain;
 
@@ -69,7 +72,6 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
 
 	private DescriptorsPage descPage;
 
-	private int descPageIndex;
 
     
     public IProject getActiveProject() {
@@ -91,6 +93,7 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
         super.init(site, input);
         ResourcesPlugin.getWorkspace().addResourceChangeListener(this);
         initialize();
+        
     }
 
     /**
@@ -123,7 +126,7 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
         if (!(molFolder.exists())){
             logger.error("Folder 'molecules'  does not exist.");
         }
-
+     
     }
 
     //Read and parse with EMF
@@ -178,6 +181,9 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
 //        }
 //        catch (IOException e) {
 //        }
+		
+		QsarModelUIAdapter a=new QsarModelUIAdapter(this);
+		a.observeQsarModel(qsarModel);
 
 	}
 
@@ -323,6 +329,11 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
         
 	}
 
+	public void markPagesDirty() {
+		molPage.setDirty(true);
+		descPage.setDirty(true);
+		fireDirtyChanged();
+	}
 
 	public void markPagesSaved() {
 		molPage.setDirty(false);
