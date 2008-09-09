@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.EventObject;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -52,18 +53,33 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
+import org.eclipse.emf.edit.ui.action.EditingDomainActionBarContributor;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
+import org.eclipse.emf.edit.ui.view.ExtendedPropertySheetPage;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IStatusLineManager;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.forms.editor.FormEditor;
+import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
+import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
+import org.eclipse.ui.views.properties.IPropertySheetPage;
+import org.eclipse.ui.views.properties.PropertySheetPage;
 
 public class QSARFormEditor extends FormEditor implements IResourceChangeListener, IAdaptable, IEditingDomainProvider{
 
@@ -114,6 +130,50 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
 	protected boolean updateProblemIndication = true;
 
 	
+	/**
+	 * This is the content outline page.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected IContentOutlinePage contentOutlinePage;
+
+	/**
+	 * This is a kludge...
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected IStatusLineManager contentOutlineStatusLineManager;
+
+	/**
+	 * This is the content outline page's viewer.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected TreeViewer contentOutlineViewer;
+
+	private PropertySheetPage propertySheetPage;
+
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EditingDomainActionBarContributor getActionBarContributor() {
+		return (EditingDomainActionBarContributor)getEditorSite().getActionBarContributor();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public IActionBars getActionBars() {
+		return getActionBarContributor().getActionBars();
+	}
 
     
     public IProject getActiveProject() {
@@ -167,7 +227,7 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
 		// command stack that will notify this editor as commands are executed
 		BasicCommandStack commandStack = new BasicCommandStack();
 
-		// Add a listener to set the editor dirty of commands have been executed
+		// Add a listener to set the editor dirty if commands have been executed
 		commandStack.addCommandStackListener(new CommandStackListener() {
 			public void commandStackChanged(final EventObject event) {
 				getContainer().getDisplay().asyncExec(new Runnable() {
@@ -185,6 +245,8 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
 		// These provide access to the model items, their property source and label
 		this.itemDelegator = new AdapterFactoryItemDelegator(adapterFactory);
 		this.labelProvider = new AdapterFactoryLabelProvider(adapterFactory);
+		
+
 	}
 
 
@@ -528,5 +590,113 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
 //		molPage.setDirty(false);
 //		descPage.setDirty(false);
 //	}
+	
+	@Override
+	public Object getAdapter(Class key) {
+		if (key.equals(IContentOutlinePage.class)) {
+			return getContentOutlinePage();
+		}
+		else if (key.equals(IPropertySheetPage.class)) {
+			return getPropertySheetPage();
+		}
+		else {
+			return super.getAdapter(key);
+		}
+	}
+	
+	/**
+	 * This accesses a cached version of the property sheet.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public IPropertySheetPage getPropertySheetPage() {
+		if (propertySheetPage == null) {
+			propertySheetPage =
+				new ExtendedPropertySheetPage(editingDomain) {
+					@Override
+					public void setSelectionToViewer(List<?> selection) {
+//						QSARFormEditor.this.setSelectionToViewer(selection);
+						QSARFormEditor.this.setFocus();
+					}
 
+					@Override
+					public void setActionBars(IActionBars actionBars) {
+						super.setActionBars(actionBars);
+						getActionBarContributor().shareGlobalActions(this, actionBars);
+					}
+				};
+			propertySheetPage.setPropertySourceProvider(new AdapterFactoryContentProvider(adapterFactory));
+		}
+
+		return propertySheetPage;
+	}
+	
+
+	/**
+	 * This accesses a cached version of the content outliner.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public IContentOutlinePage getContentOutlinePage() {
+		if (contentOutlinePage == null) {
+			// The content outline is just a tree.
+			//
+			class MyContentOutlinePage extends ContentOutlinePage {
+				@Override
+				public void createControl(Composite parent) {
+					super.createControl(parent);
+					contentOutlineViewer = getTreeViewer();
+					contentOutlineViewer.addSelectionChangedListener(this);
+
+					// Set up the tree viewer.
+					//
+					contentOutlineViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
+					contentOutlineViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
+					contentOutlineViewer.setInput(editingDomain.getResourceSet());
+
+					// Make sure our popups work.
+					//
+//					createContextMenuFor(contentOutlineViewer);
+
+					if (!editingDomain.getResourceSet().getResources().isEmpty()) {
+					  // Select the root object in the view.
+					  //
+					  contentOutlineViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)), true);
+					}
+				}
+
+				@Override
+				public void makeContributions(IMenuManager menuManager, IToolBarManager toolBarManager, IStatusLineManager statusLineManager) {
+					super.makeContributions(menuManager, toolBarManager, statusLineManager);
+					contentOutlineStatusLineManager = statusLineManager;
+				}
+
+				@Override
+				public void setActionBars(IActionBars actionBars) {
+					super.setActionBars(actionBars);
+					getActionBarContributor().shareGlobalActions(this, actionBars);
+				}
+			}
+
+			contentOutlinePage = new MyContentOutlinePage();
+
+			// Listen to selection so that we can handle it is a special way.
+			//
+			contentOutlinePage.addSelectionChangedListener
+				(new ISelectionChangedListener() {
+					 // This ensures that we handle selections correctly.
+					 //
+					 public void selectionChanged(SelectionChangedEvent event) {
+//						 handleContentOutlineSelection(event.getSelection());
+						 System.out.println("Selections in outline not synced with model yet!");
+					 }
+				 });
+		}
+
+		return contentOutlinePage;
+	}	
+	
+	
 }

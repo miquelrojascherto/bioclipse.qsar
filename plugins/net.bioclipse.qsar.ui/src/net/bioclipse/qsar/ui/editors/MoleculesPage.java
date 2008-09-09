@@ -37,6 +37,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.databinding.EMFObservables;
+import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
@@ -168,15 +169,15 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 		// The EStructuralFeature[] defines which fields get shown
 		// in the TableViewer columns
 		IObservableSet knownElements = provider.getKnownElements();
-		IObservableMap[] observeMaps = EMFObservables.
-			observeMaps(knownElements, new EStructuralFeature[]{
+		IObservableMap[] observeMaps = EMFEditObservables.
+			observeMaps(editingDomain, knownElements, new EStructuralFeature[]{
 					QsarPackage.Literals.DESCRIPTOR_TYPE__ID});
 		ObservableMapLabelProvider labelProvider =
 			new ObservableMapLabelProvider(observeMaps);
 		molViewer.setLabelProvider(labelProvider);
 
 		// Person#addresses is the Viewer's input
-		molViewer.setInput(EMFObservables.observeList(Realm.getDefault(), moleculeList,
+		molViewer.setInput(EMFEditObservables.observeList(Realm.getDefault(), editingDomain, moleculeList,
 			QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTOR));
 
 	}
