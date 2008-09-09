@@ -497,7 +497,7 @@ public class DescriptorsPage extends FormPage implements IEditingDomainProvider,
     	rightTable=rightViewer.getTable();
     	toolkit.adapt(rightTable, true, true);
     	GridData gd6=new GridData(GridData.FILL_VERTICAL);
-    	gd6.widthHint=200;
+    	gd6.widthHint=300;
     	rightTable.setLayoutData( gd6 );
 
     	//If focus gained, make this viewer provide selections

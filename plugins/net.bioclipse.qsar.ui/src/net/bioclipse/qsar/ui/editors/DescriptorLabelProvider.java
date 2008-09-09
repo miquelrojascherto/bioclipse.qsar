@@ -1,6 +1,7 @@
 package net.bioclipse.qsar.ui.editors;
 
 import net.bioclipse.qsar.DescriptorType;
+import net.bioclipse.qsar.ParameterType;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.descriptor.model.BaseEPObject;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
@@ -71,7 +72,23 @@ public class DescriptorLabelProvider implements ITableLabelProvider {
 //		}
 		else if (element instanceof DescriptorType) {
 			DescriptorType desc=(DescriptorType)element;
-			return qsar.getDescriptorByID(desc.getId()).getName();
+
+			String descString=qsar.getDescriptorByID(desc.getId()).getName();
+
+			String cpstr="";
+			if (desc.getParameter()!=null && desc.getParameter().size()>0){
+				for (ParameterType param : desc.getParameter()){
+					String pstr=param.getKey() + "=" + param.getValue()+", ";
+					cpstr=cpstr+pstr;
+				}
+				cpstr=cpstr.substring(0,cpstr.length()-2);
+			}
+			
+			if (cpstr.length()>1){
+				descString=descString+" [" + cpstr + "]";
+			}
+			
+			return descString;
 		}
 
 		else if (element instanceof Descriptor) {
