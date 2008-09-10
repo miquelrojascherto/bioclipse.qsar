@@ -33,6 +33,9 @@ import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 
 import org.apache.log4j.Logger;
+import org.eclipse.core.databinding.observable.Realm;
+import org.eclipse.core.databinding.observable.map.IObservableMap;
+import org.eclipse.core.databinding.observable.set.IObservableSet;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -45,6 +48,8 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
+import org.eclipse.emf.databinding.edit.EMFEditObservables;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.command.SetCommand;
@@ -52,6 +57,8 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
+import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnPixelData;
@@ -183,12 +190,38 @@ public class DescriptorsPage extends FormPage implements IEditingDomainProvider,
 
 		//Populate selected descriptors from the read qsar model 
 //        populateSelectedDescriptorsViewFromModel();
-		rightViewer.setInput(descriptorList.eContents().toArray());
+//		rightViewer.setInput(descriptorList.eContents().toArray());
+		populateRightViewerFromModel();
 
         //Post selections to Eclipse via our intermediate selectionprovider
         selectionProvider.setSelectionProviderDelegate( descViewer );
         descViewer.getTree().setFocus();
     }
+
+    
+	private void populateRightViewerFromModel() {
+		
+		// The content provider is responsible to handle add and
+		// remove notification for the Person#address EList
+		ObservableListContentProvider provider = new ObservableListContentProvider();
+		rightViewer.setContentProvider(provider);
+
+		// The label provider in turn handles the addresses
+		// The EStructuralFeature[] defines which fields get shown
+		// in the TableViewer columns
+		IObservableSet knownElements = provider.getKnownElements();
+		IObservableMap[] observeMaps = EMFEditObservables.
+			observeMaps(editingDomain, knownElements, new EStructuralFeature[]{
+					QsarPackage.Literals.DESCRIPTOR_TYPE__ID});
+		ObservableMapLabelProvider labelProvider =
+			new ObservableQSARLabelProvider(observeMaps);
+		rightViewer.setLabelProvider(labelProvider);
+
+		// Person#addresses is the Viewer's input
+		rightViewer.setInput(EMFEditObservables.observeList(Realm.getDefault(), editingDomain, descriptorList,
+			QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTOR));
+
+	}
 
 
 	/**
@@ -383,7 +416,7 @@ public class DescriptorsPage extends FormPage implements IEditingDomainProvider,
     		}
     	}
 
-    	rightViewer.setInput(descriptorList.eContents().toArray());
+//    	rightViewer.setInput(descriptorList.eContents().toArray());
 
     }
 
@@ -513,8 +546,9 @@ public class DescriptorsPage extends FormPage implements IEditingDomainProvider,
 
     	//Query TreeViewer
     	rightViewer = new TableViewer (client, SWT.BORDER | SWT.MULTI);
-    	rightViewer.setContentProvider( new ArrayContentProvider() );
-    	rightViewer.setLabelProvider( new DescriptorLabelProvider() );
+//    	rightViewer.setContentProvider( new ArrayContentProvider() );
+//    	rightViewer.setLabelProvider( new DescriptorLabelProvider() );
+
     	rightTable=rightViewer.getTable();
     	toolkit.adapt(rightTable, true, true);
     	GridData gd6=new GridData(GridData.FILL_VERTICAL);

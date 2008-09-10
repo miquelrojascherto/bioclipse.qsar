@@ -176,14 +176,14 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 		IObservableSet knownElements = provider.getKnownElements();
 		IObservableMap[] observeMaps = EMFEditObservables.
 			observeMaps(editingDomain, knownElements, new EStructuralFeature[]{
-					QsarPackage.Literals.DESCRIPTOR_TYPE__ID});
+					QsarPackage.Literals.MOLECULE_RESOURCE_TYPE__ID});
 		ObservableMapLabelProvider labelProvider =
-			new ObservableMapLabelProvider(observeMaps);
+			new ObservableQSARLabelProvider(observeMaps);
 		molViewer.setLabelProvider(labelProvider);
 
 		// Person#addresses is the Viewer's input
 		molViewer.setInput(EMFEditObservables.observeList(Realm.getDefault(), editingDomain, moleculeList,
-			QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTOR));
+			QsarPackage.Literals.MOLECULELIST_TYPE__MOLECULE_RESOURCE));
 
 	}
 
