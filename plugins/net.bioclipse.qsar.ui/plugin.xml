@@ -6,6 +6,7 @@
          point="org.eclipse.ui.editors">
       <editor
             name="QSAR Editor"
+            default="true"
             filenames="qsar.xml"
             icon="icons/descriptor.png"
             contributorClass="org.eclipse.emf.edit.ui.action.EditingDomainActionBarContributor"

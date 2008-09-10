@@ -136,6 +136,11 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
         ScrolledForm form = managedForm.getForm();
         FormToolkit toolkit = managedForm.getToolkit();
         form.setText("Molecules for QSAR analysis");
+        toolkit.decorateFormHeading(form.getForm());
+        
+		IProject project=((QSARFormEditor)getEditor()).getActiveProject();
+        ToolbarHelper.setupToolbar(form, project);
+
 //        form.setBackgroundImage(FormArticlePlugin.getDefault().getImage(FormArticlePlugin.IMG_FORM_BG));
         GridLayout layout = new GridLayout();
         layout.numColumns = 2;

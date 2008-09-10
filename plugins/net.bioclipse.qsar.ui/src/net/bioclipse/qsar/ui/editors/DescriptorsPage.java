@@ -10,6 +10,7 @@
  *******************************************************************************/
 package net.bioclipse.qsar.ui.editors;
 
+import java.lang.reflect.InvocationTargetException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -32,6 +33,15 @@ import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 
 import org.apache.log4j.Logger;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IncrementalProjectBuilder;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.resources.WorkspaceJob;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
@@ -40,6 +50,8 @@ import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnPixelData;
@@ -65,6 +77,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
@@ -140,6 +153,13 @@ public class DescriptorsPage extends FormPage implements IEditingDomainProvider,
         ScrolledForm form = managedForm.getForm();
         FormToolkit toolkit = managedForm.getToolkit();
         form.setText("Descriptors for QSAR analysis");
+        toolkit.decorateFormHeading(form.getForm());
+        
+		IProject project=((QSARFormEditor)getEditor()).getActiveProject();
+        ToolbarHelper.setupToolbar(form, project);
+        
+//        setupToolbar(form);
+        
 //        form.setBackgroundImage(FormArticlePlugin.getDefault().getImage(FormArticlePlugin.IMG_FORM_BG));
         GridLayout layout = new GridLayout();
         layout.numColumns = 2;
@@ -169,6 +189,7 @@ public class DescriptorsPage extends FormPage implements IEditingDomainProvider,
         selectionProvider.setSelectionProviderDelegate( descViewer );
         descViewer.getTree().setFocus();
     }
+
 
 	/**
      * Create the left part of the page for displaying molecules
