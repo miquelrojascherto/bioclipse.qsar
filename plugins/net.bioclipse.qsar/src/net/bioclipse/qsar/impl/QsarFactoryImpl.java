@@ -84,6 +84,8 @@ public class QsarFactoryImpl extends EFactoryImpl implements QsarFactory {
 			case QsarPackage.PREPROCESSING_STEP_TYPE: return createPreprocessingStepType();
 			case QsarPackage.PREPROCESSING_TYPE: return createPreprocessingType();
 			case QsarPackage.QSAR_TYPE: return createQsarType();
+			case QsarPackage.RESPONSES_LIST_TYPE: return createResponsesListType();
+			case QsarPackage.RESPONSE_TYPE: return createResponseType();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -187,6 +189,26 @@ public class QsarFactoryImpl extends EFactoryImpl implements QsarFactory {
 	public QsarType createQsarType() {
 		QsarTypeImpl qsarType = new QsarTypeImpl();
 		return qsarType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ResponsesListType createResponsesListType() {
+		ResponsesListTypeImpl responsesListType = new ResponsesListTypeImpl();
+		return responsesListType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ResponseType createResponseType() {
+		ResponseTypeImpl responseType = new ResponseTypeImpl();
+		return responseType;
 	}
 
 	/**

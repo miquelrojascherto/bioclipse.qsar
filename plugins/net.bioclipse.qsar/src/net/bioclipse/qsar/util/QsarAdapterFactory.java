@@ -126,6 +126,14 @@ public class QsarAdapterFactory extends AdapterFactoryImpl {
 				return createQsarTypeAdapter();
 			}
 			@Override
+			public Adapter caseResponsesListType(ResponsesListType object) {
+				return createResponsesListTypeAdapter();
+			}
+			@Override
+			public Adapter caseResponseType(ResponseType object) {
+				return createResponseTypeAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -282,6 +290,34 @@ public class QsarAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createQsarTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link net.bioclipse.qsar.ResponsesListType <em>Responses List Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see net.bioclipse.qsar.ResponsesListType
+	 * @generated
+	 */
+	public Adapter createResponsesListTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link net.bioclipse.qsar.ResponseType <em>Response Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see net.bioclipse.qsar.ResponseType
+	 * @generated
+	 */
+	public Adapter createResponseTypeAdapter() {
 		return null;
 	}
 

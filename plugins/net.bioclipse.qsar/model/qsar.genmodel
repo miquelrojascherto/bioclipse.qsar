@@ -62,6 +62,16 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//QsarType/descriptorlist"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//QsarType/descriptorimpl"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//QsarType/preprocessing"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//QsarType/responselist"/>
+    </genClasses>
+    <genClasses ecoreClass="qsar.ecore#//ResponsesListType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//ResponsesListType/response"/>
+    </genClasses>
+    <genClasses ecoreClass="qsar.ecore#//ResponseType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResponseType/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResponseType/arrayValues"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResponseType/moleculeResource"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResponseType/resourceIndex"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

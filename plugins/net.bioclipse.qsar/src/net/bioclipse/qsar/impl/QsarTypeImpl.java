@@ -22,6 +22,7 @@ import net.bioclipse.qsar.PreprocessingType;
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
 
+import net.bioclipse.qsar.ResponsesListType;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -47,6 +48,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link net.bioclipse.qsar.impl.QsarTypeImpl#getDescriptorlist <em>Descriptorlist</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.QsarTypeImpl#getDescriptorimpl <em>Descriptorimpl</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.QsarTypeImpl#getPreprocessing <em>Preprocessing</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.impl.QsarTypeImpl#getResponselist <em>Responselist</em>}</li>
  * </ul>
  * </p>
  *
@@ -99,6 +101,16 @@ public class QsarTypeImpl extends EObjectImpl implements QsarType {
 	 * @ordered
 	 */
 	protected PreprocessingType preprocessing;
+
+	/**
+	 * The cached value of the '{@link #getResponselist() <em>Responselist</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getResponselist()
+	 * @generated
+	 * @ordered
+	 */
+	protected ResponsesListType responselist;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -265,6 +277,49 @@ public class QsarTypeImpl extends EObjectImpl implements QsarType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public ResponsesListType getResponselist() {
+		return responselist;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetResponselist(ResponsesListType newResponselist, NotificationChain msgs) {
+		ResponsesListType oldResponselist = responselist;
+		responselist = newResponselist;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QsarPackage.QSAR_TYPE__RESPONSELIST, oldResponselist, newResponselist);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setResponselist(ResponsesListType newResponselist) {
+		if (newResponselist != responselist) {
+			NotificationChain msgs = null;
+			if (responselist != null)
+				msgs = ((InternalEObject)responselist).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QsarPackage.QSAR_TYPE__RESPONSELIST, null, msgs);
+			if (newResponselist != null)
+				msgs = ((InternalEObject)newResponselist).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QsarPackage.QSAR_TYPE__RESPONSELIST, null, msgs);
+			msgs = basicSetResponselist(newResponselist, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.QSAR_TYPE__RESPONSELIST, newResponselist, newResponselist));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -276,6 +331,8 @@ public class QsarTypeImpl extends EObjectImpl implements QsarType {
 				return ((InternalEList<?>)getDescriptorimpl()).basicRemove(otherEnd, msgs);
 			case QsarPackage.QSAR_TYPE__PREPROCESSING:
 				return basicSetPreprocessing(null, msgs);
+			case QsarPackage.QSAR_TYPE__RESPONSELIST:
+				return basicSetResponselist(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -296,6 +353,8 @@ public class QsarTypeImpl extends EObjectImpl implements QsarType {
 				return getDescriptorimpl();
 			case QsarPackage.QSAR_TYPE__PREPROCESSING:
 				return getPreprocessing();
+			case QsarPackage.QSAR_TYPE__RESPONSELIST:
+				return getResponselist();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -322,6 +381,9 @@ public class QsarTypeImpl extends EObjectImpl implements QsarType {
 			case QsarPackage.QSAR_TYPE__PREPROCESSING:
 				setPreprocessing((PreprocessingType)newValue);
 				return;
+			case QsarPackage.QSAR_TYPE__RESPONSELIST:
+				setResponselist((ResponsesListType)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -346,6 +408,9 @@ public class QsarTypeImpl extends EObjectImpl implements QsarType {
 			case QsarPackage.QSAR_TYPE__PREPROCESSING:
 				setPreprocessing((PreprocessingType)null);
 				return;
+			case QsarPackage.QSAR_TYPE__RESPONSELIST:
+				setResponselist((ResponsesListType)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -366,6 +431,8 @@ public class QsarTypeImpl extends EObjectImpl implements QsarType {
 				return descriptorimpl != null && !descriptorimpl.isEmpty();
 			case QsarPackage.QSAR_TYPE__PREPROCESSING:
 				return preprocessing != null;
+			case QsarPackage.QSAR_TYPE__RESPONSELIST:
+				return responselist != null;
 		}
 		return super.eIsSet(featureID);
 	}

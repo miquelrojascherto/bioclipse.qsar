@@ -130,6 +130,24 @@ public interface QsarFactory extends EFactory {
 	QsarType createQsarType();
 
 	/**
+	 * Returns a new object of class '<em>Responses List Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Responses List Type</em>'.
+	 * @generated
+	 */
+	ResponsesListType createResponsesListType();
+
+	/**
+	 * Returns a new object of class '<em>Response Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Response Type</em>'.
+	 * @generated
+	 */
+	ResponseType createResponseType();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

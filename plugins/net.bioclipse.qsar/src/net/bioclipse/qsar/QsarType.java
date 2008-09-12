@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link net.bioclipse.qsar.QsarType#getDescriptorlist <em>Descriptorlist</em>}</li>
  *   <li>{@link net.bioclipse.qsar.QsarType#getDescriptorimpl <em>Descriptorimpl</em>}</li>
  *   <li>{@link net.bioclipse.qsar.QsarType#getPreprocessing <em>Preprocessing</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.QsarType#getResponselist <em>Responselist</em>}</li>
  * </ul>
  * </p>
  *
@@ -141,5 +142,32 @@ public interface QsarType extends EObject {
 	 * @generated
 	 */
 	void setPreprocessing(PreprocessingType value);
+
+	/**
+	 * Returns the value of the '<em><b>Responselist</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Responselist</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Responselist</em>' containment reference.
+	 * @see #setResponselist(ResponsesListType)
+	 * @see net.bioclipse.qsar.QsarPackage#getQsarType_Responselist()
+	 * @model containment="true"
+	 *        extendedMetaData="kind='element' name='responselist' namespace='##targetNamespace'"
+	 * @generated
+	 */
+	ResponsesListType getResponselist();
+
+	/**
+	 * Sets the value of the '{@link net.bioclipse.qsar.QsarType#getResponselist <em>Responselist</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Responselist</em>' containment reference.
+	 * @see #getResponselist()
+	 * @generated
+	 */
+	void setResponselist(ResponsesListType value);
 
 } // QsarType

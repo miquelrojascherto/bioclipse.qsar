@@ -14,9 +14,10 @@
     		<element name="descriptorimpl" type="tns:descriptorimplType"
     			maxOccurs="unbounded" minOccurs="0">
     		</element>
-    		<element name="preprocessing"
-    			type="tns:preprocessingType" maxOccurs="1" minOccurs="0">
+    		<element name="preprocessing" type="tns:preprocessingType"
+    			maxOccurs="1" minOccurs="0">
     		</element>
+    		<element name="responselist" type="tns:responsesListType" maxOccurs="1" minOccurs="0"></element>
     	</sequence>
     </complexType>
 
@@ -88,5 +89,20 @@
     	<attribute name="name" type="string"></attribute>
     	<attribute name="vendor" type="string"></attribute>
     	<attribute name="order" type="string"></attribute>
+    </complexType>
+
+    <complexType name="responsesListType">
+    	<sequence>
+    		<element name="response" type="tns:responseType" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="responseType">
+    	<choice>
+    		<element name="value" type="float"></element>
+    		<element name="arrayValues" type="string"></element>
+    	</choice>
+    	<attribute name="moleculeResource" type="string" use="required"></attribute>
+    	<attribute name="resourceIndex" type="int" use="optional"></attribute>
     </complexType>
 </schema>

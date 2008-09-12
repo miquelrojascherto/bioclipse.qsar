@@ -26,6 +26,8 @@ import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
 
+import net.bioclipse.qsar.ResponseType;
+import net.bioclipse.qsar.ResponsesListType;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -118,6 +120,20 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 	 * @generated
 	 */
 	private EClass qsarTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass responsesListTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass responseTypeEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -591,6 +607,78 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getQsarType_Responselist() {
+		return (EReference)qsarTypeEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getResponsesListType() {
+		return responsesListTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getResponsesListType_Response() {
+		return (EReference)responsesListTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getResponseType() {
+		return responseTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getResponseType_Value() {
+		return (EAttribute)responseTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getResponseType_ArrayValues() {
+		return (EAttribute)responseTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getResponseType_MoleculeResource() {
+		return (EAttribute)responseTypeEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getResponseType_ResourceIndex() {
+		return (EAttribute)responseTypeEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public QsarFactory getQsarFactory() {
 		return (QsarFactory)getEFactoryInstance();
 	}
@@ -667,6 +755,16 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 		createEReference(qsarTypeEClass, QSAR_TYPE__DESCRIPTORLIST);
 		createEReference(qsarTypeEClass, QSAR_TYPE__DESCRIPTORIMPL);
 		createEReference(qsarTypeEClass, QSAR_TYPE__PREPROCESSING);
+		createEReference(qsarTypeEClass, QSAR_TYPE__RESPONSELIST);
+
+		responsesListTypeEClass = createEClass(RESPONSES_LIST_TYPE);
+		createEReference(responsesListTypeEClass, RESPONSES_LIST_TYPE__RESPONSE);
+
+		responseTypeEClass = createEClass(RESPONSE_TYPE);
+		createEAttribute(responseTypeEClass, RESPONSE_TYPE__VALUE);
+		createEAttribute(responseTypeEClass, RESPONSE_TYPE__ARRAY_VALUES);
+		createEAttribute(responseTypeEClass, RESPONSE_TYPE__MOLECULE_RESOURCE);
+		createEAttribute(responseTypeEClass, RESPONSE_TYPE__RESOURCE_INDEX);
 	}
 
 	/**
@@ -755,6 +853,16 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 		initEReference(getQsarType_Descriptorlist(), this.getDescriptorlistType(), null, "descriptorlist", null, 0, 1, QsarType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getQsarType_Descriptorimpl(), this.getDescriptorimplType(), null, "descriptorimpl", null, 0, -1, QsarType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getQsarType_Preprocessing(), this.getPreprocessingType(), null, "preprocessing", null, 0, 1, QsarType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getQsarType_Responselist(), this.getResponsesListType(), null, "responselist", null, 0, 1, QsarType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(responsesListTypeEClass, ResponsesListType.class, "ResponsesListType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getResponsesListType_Response(), this.getResponseType(), null, "response", null, 0, -1, ResponsesListType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(responseTypeEClass, ResponseType.class, "ResponseType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getResponseType_Value(), theXMLTypePackage.getFloat(), "value", null, 0, 1, ResponseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getResponseType_ArrayValues(), theXMLTypePackage.getString(), "arrayValues", null, 0, 1, ResponseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getResponseType_MoleculeResource(), theXMLTypePackage.getString(), "moleculeResource", null, 1, 1, ResponseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getResponseType_ResourceIndex(), theXMLTypePackage.getInt(), "resourceIndex", null, 0, 1, ResponseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);
@@ -1089,6 +1197,66 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 			 "kind", "element",
 			 "name", "preprocessing",
 			 "namespace", "##targetNamespace"
+		   });		
+		addAnnotation
+		  (getQsarType_Responselist(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "responselist",
+			 "namespace", "##targetNamespace"
+		   });		
+		addAnnotation
+		  (responsesListTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "responsesListType",
+			 "kind", "elementOnly"
+		   });		
+		addAnnotation
+		  (getResponsesListType_Response(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "response",
+			 "namespace", "##targetNamespace"
+		   });		
+		addAnnotation
+		  (responseTypeEClass, 
+		   source, 
+		   new String[] {
+			 "name", "responseType",
+			 "kind", "elementOnly"
+		   });		
+		addAnnotation
+		  (getResponseType_Value(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "value",
+			 "namespace", "##targetNamespace"
+		   });		
+		addAnnotation
+		  (getResponseType_ArrayValues(), 
+		   source, 
+		   new String[] {
+			 "kind", "element",
+			 "name", "arrayValues",
+			 "namespace", "##targetNamespace"
+		   });		
+		addAnnotation
+		  (getResponseType_MoleculeResource(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "moleculeResource"
+		   });		
+		addAnnotation
+		  (getResponseType_ResourceIndex(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "resourceIndex"
 		   });
 	}
 

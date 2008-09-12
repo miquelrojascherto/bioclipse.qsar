@@ -561,13 +561,106 @@ public interface QsarPackage extends EPackage {
 	int QSAR_TYPE__PREPROCESSING = 3;
 
 	/**
+	 * The feature id for the '<em><b>Responselist</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int QSAR_TYPE__RESPONSELIST = 4;
+
+	/**
 	 * The number of structural features of the '<em>Type</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int QSAR_TYPE_FEATURE_COUNT = 4;
+	int QSAR_TYPE_FEATURE_COUNT = 5;
+
+
+	/**
+	 * The meta object id for the '{@link net.bioclipse.qsar.impl.ResponsesListTypeImpl <em>Responses List Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see net.bioclipse.qsar.impl.ResponsesListTypeImpl
+	 * @see net.bioclipse.qsar.impl.QsarPackageImpl#getResponsesListType()
+	 * @generated
+	 */
+	int RESPONSES_LIST_TYPE = 10;
+
+	/**
+	 * The feature id for the '<em><b>Response</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESPONSES_LIST_TYPE__RESPONSE = 0;
+
+	/**
+	 * The number of structural features of the '<em>Responses List Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESPONSES_LIST_TYPE_FEATURE_COUNT = 1;
+
+	/**
+	 * The meta object id for the '{@link net.bioclipse.qsar.impl.ResponseTypeImpl <em>Response Type</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see net.bioclipse.qsar.impl.ResponseTypeImpl
+	 * @see net.bioclipse.qsar.impl.QsarPackageImpl#getResponseType()
+	 * @generated
+	 */
+	int RESPONSE_TYPE = 11;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESPONSE_TYPE__VALUE = 0;
+
+	/**
+	 * The feature id for the '<em><b>Array Values</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESPONSE_TYPE__ARRAY_VALUES = 1;
+
+	/**
+	 * The feature id for the '<em><b>Molecule Resource</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESPONSE_TYPE__MOLECULE_RESOURCE = 2;
+
+	/**
+	 * The feature id for the '<em><b>Resource Index</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESPONSE_TYPE__RESOURCE_INDEX = 3;
+
+	/**
+	 * The number of structural features of the '<em>Response Type</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESPONSE_TYPE_FEATURE_COUNT = 4;
 
 
 	/**
@@ -1045,6 +1138,92 @@ public interface QsarPackage extends EPackage {
 	EReference getQsarType_Preprocessing();
 
 	/**
+	 * Returns the meta object for the containment reference '{@link net.bioclipse.qsar.QsarType#getResponselist <em>Responselist</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Responselist</em>'.
+	 * @see net.bioclipse.qsar.QsarType#getResponselist()
+	 * @see #getQsarType()
+	 * @generated
+	 */
+	EReference getQsarType_Responselist();
+
+	/**
+	 * Returns the meta object for class '{@link net.bioclipse.qsar.ResponsesListType <em>Responses List Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Responses List Type</em>'.
+	 * @see net.bioclipse.qsar.ResponsesListType
+	 * @generated
+	 */
+	EClass getResponsesListType();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link net.bioclipse.qsar.ResponsesListType#getResponse <em>Response</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Response</em>'.
+	 * @see net.bioclipse.qsar.ResponsesListType#getResponse()
+	 * @see #getResponsesListType()
+	 * @generated
+	 */
+	EReference getResponsesListType_Response();
+
+	/**
+	 * Returns the meta object for class '{@link net.bioclipse.qsar.ResponseType <em>Response Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Response Type</em>'.
+	 * @see net.bioclipse.qsar.ResponseType
+	 * @generated
+	 */
+	EClass getResponseType();
+
+	/**
+	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.ResponseType#getValue <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value</em>'.
+	 * @see net.bioclipse.qsar.ResponseType#getValue()
+	 * @see #getResponseType()
+	 * @generated
+	 */
+	EAttribute getResponseType_Value();
+
+	/**
+	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.ResponseType#getArrayValues <em>Array Values</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Array Values</em>'.
+	 * @see net.bioclipse.qsar.ResponseType#getArrayValues()
+	 * @see #getResponseType()
+	 * @generated
+	 */
+	EAttribute getResponseType_ArrayValues();
+
+	/**
+	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.ResponseType#getMoleculeResource <em>Molecule Resource</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Molecule Resource</em>'.
+	 * @see net.bioclipse.qsar.ResponseType#getMoleculeResource()
+	 * @see #getResponseType()
+	 * @generated
+	 */
+	EAttribute getResponseType_MoleculeResource();
+
+	/**
+	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.ResponseType#getResourceIndex <em>Resource Index</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Resource Index</em>'.
+	 * @see net.bioclipse.qsar.ResponseType#getResourceIndex()
+	 * @see #getResponseType()
+	 * @generated
+	 */
+	EAttribute getResponseType_ResourceIndex();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1437,6 +1616,74 @@ public interface QsarPackage extends EPackage {
 		 * @generated
 		 */
 		EReference QSAR_TYPE__PREPROCESSING = eINSTANCE.getQsarType_Preprocessing();
+
+		/**
+		 * The meta object literal for the '<em><b>Responselist</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference QSAR_TYPE__RESPONSELIST = eINSTANCE.getQsarType_Responselist();
+
+		/**
+		 * The meta object literal for the '{@link net.bioclipse.qsar.impl.ResponsesListTypeImpl <em>Responses List Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see net.bioclipse.qsar.impl.ResponsesListTypeImpl
+		 * @see net.bioclipse.qsar.impl.QsarPackageImpl#getResponsesListType()
+		 * @generated
+		 */
+		EClass RESPONSES_LIST_TYPE = eINSTANCE.getResponsesListType();
+
+		/**
+		 * The meta object literal for the '<em><b>Response</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference RESPONSES_LIST_TYPE__RESPONSE = eINSTANCE.getResponsesListType_Response();
+
+		/**
+		 * The meta object literal for the '{@link net.bioclipse.qsar.impl.ResponseTypeImpl <em>Response Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see net.bioclipse.qsar.impl.ResponseTypeImpl
+		 * @see net.bioclipse.qsar.impl.QsarPackageImpl#getResponseType()
+		 * @generated
+		 */
+		EClass RESPONSE_TYPE = eINSTANCE.getResponseType();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RESPONSE_TYPE__VALUE = eINSTANCE.getResponseType_Value();
+
+		/**
+		 * The meta object literal for the '<em><b>Array Values</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RESPONSE_TYPE__ARRAY_VALUES = eINSTANCE.getResponseType_ArrayValues();
+
+		/**
+		 * The meta object literal for the '<em><b>Molecule Resource</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RESPONSE_TYPE__MOLECULE_RESOURCE = eINSTANCE.getResponseType_MoleculeResource();
+
+		/**
+		 * The meta object literal for the '<em><b>Resource Index</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RESPONSE_TYPE__RESOURCE_INDEX = eINSTANCE.getResponseType_ResourceIndex();
 
 	}
 

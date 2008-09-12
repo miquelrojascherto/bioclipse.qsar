@@ -161,6 +161,18 @@ public class QsarSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case QsarPackage.RESPONSES_LIST_TYPE: {
+				ResponsesListType responsesListType = (ResponsesListType)theEObject;
+				T result = caseResponsesListType(responsesListType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case QsarPackage.RESPONSE_TYPE: {
+				ResponseType responseType = (ResponseType)theEObject;
+				T result = caseResponseType(responseType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -312,6 +324,36 @@ public class QsarSwitch<T> {
 	 * @generated
 	 */
 	public T caseQsarType(QsarType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Responses List Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Responses List Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseResponsesListType(ResponsesListType object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Response Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Response Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseResponseType(ResponseType object) {
 		return null;
 	}
 
