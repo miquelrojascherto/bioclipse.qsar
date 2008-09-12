@@ -156,6 +156,10 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
 
 	private PropertySheetPage propertySheetPage;
 
+	private ResponsesPage responsesPage;
+
+	private int responsesPageIndex;
+
 	
 	/**
 	 * <!-- begin-user-doc -->
@@ -283,15 +287,17 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
 		//Create the MoleculesPage
 		molPage=new MoleculesPage(this, qsarModel, editingDomain, selectionProvider);
 		descPage=new DescriptorsPage(this, qsarModel, editingDomain, selectionProvider);
+		responsesPage=new ResponsesPage(this, qsarModel, editingDomain, selectionProvider);
 
         try {
             //Molecules page with interactions
             molPageIndex=addPage(molPage);
-//            setPageText(molPageIndex, "Molecules");
 
             //Descriptors page
             descPageIndex=addPage(descPage);
-//            setPageText(descPageIndex, "Descriptors");
+
+            //Descriptors page
+            responsesPageIndex=addPage(responsesPage);
 
             xmlEditor = new XMLEditor();
             textEditorIndex = addPage(xmlEditor, getEditorInput());
