@@ -2,6 +2,7 @@ package net.bioclipse.qsar.ui.editors;
 
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.ParameterType;
+import net.bioclipse.qsar.ResponseType;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.descriptor.model.BaseEPObject;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
@@ -9,11 +10,12 @@ import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
 import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.ui.Activator;
 
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
 
-public class DescriptorLabelProvider implements ITableLabelProvider {
+public class DescriptorLabelProvider implements ITableLabelProvider, ILabelProvider {
 
 	Image open, desc;
 	IQsarManager qsar;
@@ -58,6 +60,7 @@ public class DescriptorLabelProvider implements ITableLabelProvider {
 		return null;
 	}
 
+	
 	public String getColumnText(Object element, int columnIndex) {
 		
 		if (element instanceof PendingObject) {
@@ -89,6 +92,22 @@ public class DescriptorLabelProvider implements ITableLabelProvider {
 			}
 			
 			return descString;
+		}
+
+		else if (element instanceof ResponseType) {
+			ResponseType response=(ResponseType)element;
+			
+			if (columnIndex==0){
+				return response.getMoleculeResource() + "-" + response.getResourceIndex();
+			}
+			if (columnIndex==1){
+				if (response.getArrayValues()!=null)
+					return response.getArrayValues();
+				else
+					return ""+response.getValue();
+			}
+
+			return "????";
 		}
 
 		else if (element instanceof Descriptor) {
@@ -125,23 +144,25 @@ public class DescriptorLabelProvider implements ITableLabelProvider {
 	}
 
 	public void addListener(ILabelProviderListener listener) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void dispose() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public boolean isLabelProperty(Object element, String property) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public void removeListener(ILabelProviderListener listener) {
+	}
+
+	public Image getImage(Object element) {
 		// TODO Auto-generated method stub
-		
+		return null;
+	}
+
+	public String getText(Object element) {
+		return getColumnText(element, 0);
 	}
 	
 
