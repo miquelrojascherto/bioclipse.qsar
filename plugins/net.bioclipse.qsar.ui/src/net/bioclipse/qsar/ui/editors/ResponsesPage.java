@@ -10,6 +10,7 @@
  *******************************************************************************/
 package net.bioclipse.qsar.ui.editors;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -18,13 +19,19 @@ import java.util.List;
 
 import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
+import net.bioclipse.cdk.domain.ICDKMolecule;
+import net.bioclipse.core.business.BioclipseException;
+import net.bioclipse.core.domain.IMolecule;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.DescriptorimplType;
 import net.bioclipse.qsar.DescriptorlistType;
+import net.bioclipse.qsar.MoleculeResourceType;
 import net.bioclipse.qsar.ParameterType;
 import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
+import net.bioclipse.qsar.ResponseType;
+import net.bioclipse.qsar.ResponsesListType;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
@@ -110,6 +117,7 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
 	private EditingDomain editingDomain;
 
 	private QsarType qsarModel;
+	private ResponsesListType responsesList;
 
 
     
@@ -126,6 +134,12 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
 
 		formatter = new DecimalFormat("0.00");
         this.selectionProvider=selectionProvider;
+        
+        this.responsesList=qsarModel.getResponselist();
+        if (responsesList==null){
+        	responsesList=QsarFactory.eINSTANCE.createResponsesListType();
+        	qsarModel.setResponselist(responsesList);
+        }
 
 	}
 
@@ -153,7 +167,7 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
         GridData gd=new GridData(GridData.FILL_VERTICAL);
         gd.widthHint=400;
         responsesTable.setLayoutData( gd );
-
+        
         responsesTable.setHeaderVisible(true);
         toolkit.adapt(responsesTable, true, true);
         
@@ -168,7 +182,11 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
         TableViewerColumn responseCol=new TableViewerColumn(responsesViewer, SWT.NONE);
         responseCol.getColumn().setText("Response");
         tableLayout.addColumnData(new ColumnPixelData(100));
+
         
+        responsesViewer.setContentProvider(new ArrayContentProvider());
+        responsesViewer.setLabelProvider(new DescriptorLabelProvider());
+
         //Sort by name
         responsesViewer.setSorter(new ViewerSorter());
 
@@ -202,9 +220,14 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
         btnAdd.setLayoutData( gda2 );
         
         toolkit.paintBordersFor(form);
+        
+        synchronizeResponesWithModel();
 
 		//Populate selected descriptors from the read qsar model 
-		populateResponsesViewerFromModel();
+//		populateResponsesViewerFromModel();
+        if (responsesList.eContents()!=null){
+    		responsesViewer.setInput(responsesList.eContents().toArray());
+        }
 
         //Post selections to Eclipse via our intermediate selectionprovider
         selectionProvider.setSelectionProviderDelegate( responsesViewer );
@@ -212,9 +235,72 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
     }
 
     
-	private void populateResponsesViewerFromModel() {
+	private void synchronizeResponesWithModel() {
+
+		List<ICDKMolecule> allMolecules=new ArrayList<ICDKMolecule>();
 		
-		System.out.println("Not populating responses viewer yet");
+		//Go through all molecules in moleculeResources and make sure they have a response
+		for (MoleculeResourceType molres : qsarModel.getMoleculelist().getMoleculeResource()){
+
+			int molIndex=0;
+			
+			//Only work with files for now. TODO: include URL:s 
+			try {
+				List<ICDKMolecule> mols = cdk.loadMolecules(molres.getFile());
+				for (ICDKMolecule mol : mols){
+					
+					//Add to list of total mols
+					allMolecules.add(mol);
+
+					boolean hasResponse=false;
+					
+					//Does this one have a response already?
+					for (ResponseType response : responsesList.getResponse()){
+						if (response.getMoleculeResource().equals(molres.getId())){
+							if (response.getResourceIndex()==molIndex){
+								logger.debug("Found an existing response for mol: " + mol.getName());
+								hasResponse=true;
+							}
+						}
+					}
+					
+					if (!hasResponse){
+						//Create a new response
+						ResponseType newResponse=QsarFactory.eINSTANCE.createResponseType();
+						newResponse.setMoleculeResource(molres.getId());
+						newResponse.setResourceIndex(molIndex);
+						responsesList.getResponse().add(newResponse);
+						//Do not use command, this will fire dirty.
+						//Keep silent, if things do not change we will recreate
+						//these the next time.
+					}
+					
+					//TODO: remove any responses that refers to a non-existing
+					//molecularResource (on resource removal).
+					
+					//Get next mol
+					molIndex++;
+
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (BioclipseException e) {
+				e.printStackTrace();
+			} catch (CoreException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		
+	}
+
+
+	private void populateResponsesViewerFromModel() {
+
+		
+		
+		responsesViewer.setInput(responsesList.eContents().toArray());
 		
 /*		
 		// The content provider is responsible to handle add and
