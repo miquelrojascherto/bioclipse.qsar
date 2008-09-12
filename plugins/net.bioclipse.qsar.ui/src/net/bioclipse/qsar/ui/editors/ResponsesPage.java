@@ -269,6 +269,7 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
 						ResponseType newResponse=QsarFactory.eINSTANCE.createResponseType();
 						newResponse.setMoleculeResource(molres.getId());
 						newResponse.setResourceIndex(molIndex);
+						newResponse.setValue(Float.NaN);
 						responsesList.getResponse().add(newResponse);
 						//Do not use command, this will fire dirty.
 						//Keep silent, if things do not change we will recreate
