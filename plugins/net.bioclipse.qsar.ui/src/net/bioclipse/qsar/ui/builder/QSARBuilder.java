@@ -44,8 +44,10 @@ import net.bioclipse.qsar.DescriptorlistType;
 import net.bioclipse.qsar.DocumentRoot;
 import net.bioclipse.qsar.MoleculeResourceType;
 import net.bioclipse.qsar.MoleculelistType;
+import net.bioclipse.qsar.QSARConstants;
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
+import net.bioclipse.qsar.ResponseType;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
@@ -242,35 +244,35 @@ public class QSARBuilder extends IncrementalProjectBuilder
          return;
       
       //Scan plugin for molecules and descriptors to build
-      System.out.println("Building descriptors...");
+      logger.debug("Building descriptors...");
       scanQsarFile();
       
       if (checkCancel(monitor))
          return;
       
-      System.out.println("Building descriptors completed.");
+      logger.debug("Building descriptors completed.");
       
       monitor.done();
    }
 
    private void scanQsarFile() {
 
-	   
+	   //We need to read in qsar.xml and pasre it with EMF
+	   //=================================================
 
 	   // Create a resource set.
 	   ResourceSet resourceSet = new ResourceSetImpl();
 
-	  // Register the default resource factory -- only needed for stand-alone!
-	  resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
-	    Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
+	   // Register the default resource factory -- only needed for stand-alone!
+	   resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
+			   Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
 
-	  // Register the package -- only needed for stand-alone!
-	  @SuppressWarnings("unused")
-	QsarPackage qsarPackage=QsarPackage.eINSTANCE;
-	  
-	  IFile qsarfile = getProject().getFile("qsar.xml");
-	  
-	  System.out.println("QSAR file: " + qsarfile.getRawLocation().toOSString());
+	   // Register the package -- only needed for stand-alone!
+	   @SuppressWarnings("unused")
+	   QsarPackage qsarPackage=QsarPackage.eINSTANCE;
+
+	   IFile qsarfile = getProject().getFile("qsar.xml");
+	  logger.debug("QSAR file: " + qsarfile.getRawLocation().toOSString());
 
 	   // Get the URI of the model file.
 	   URI fileURI = URI.createFileURI(qsarfile.getRawLocation().toOSString());
@@ -282,89 +284,100 @@ public class QSARBuilder extends IncrementalProjectBuilder
 
 	   QsarType qsarType=root.getQsar();
 	   
-	   // Print the contents of the resource to System.out.
-//	   try
-//	   {
-//	     resource.save(System.out, Collections.EMPTY_MAP);
-//	   }
-//	   catch (IOException e) {}
 
 	   
-	   //Molecules
-	   //=========
+	   //Extract molecules from qsar model
+	   //=================================
 	   //Verify and load mols
 	   if (qsarType.getMoleculelist()==null){
-		   System.out.println("No moleculesList.");
+		   logger.debug("No moleculesList.");
 		   return;
 	   }
 	   
 	   MoleculelistType mollist = qsarType.getMoleculelist();
 	   
 	   if (mollist.getMoleculeResource()==null || mollist.getMoleculeResource().size()<=0){
-		   System.out.println("No molecules in MoleculesList.");
+		   logger.debug("No molecules in MoleculesList.");
 		   return;
 	   }
 	   
 	   ICDKManager cdk=Activator.getDefault().getCDKManager();
 	   
-	   //Get list of IMolecules
+	   //Get list of IMolecules from MoleculeResources
 	   List<IMolecule> mols=new ArrayList<IMolecule>();
+
+	   //Get list of responses from qsar.xml matching resources
+	   List<String> responseStrings=new ArrayList<String>();
+
+	   //For all IMolecules, add to list with responses as properties in AC
 	   for (MoleculeResourceType mol : mollist.getMoleculeResource()){
-		   System.out.println(" ++ Mol: " + mol.getId() + " [" + mol.getFile()+"]");
+		   logger.debug(" ++ Mol: " + mol.getId() + " [" + mol.getFile()+"]");
 		   try {
 			List<ICDKMolecule> newMols=cdk.loadMolecules(mol.getFile());
-			System.out.println("    - contained " + newMols.size() + " imols");
+			logger.debug("    - contained " + newMols.size() + " imols");
+			
+			//We need to add responses to the molecules from the qsarType
+			//Add response values as property
+			for (ResponseType response : qsarType.getResponselist().getResponse()){
+				if (response.getMoleculeResource().equals(mol.getId())){
+					for (int i=0;i<newMols.size();i++){
+						if (response.getResourceIndex()==i){
+
+							//If we have array value, us it
+							if (response.getArrayValues()!=null){
+								newMols.get(i).getAtomContainer().setProperty(
+										QSARConstants.QSAR_RESPONSE_PROPERTY, 
+										response.getArrayValues());
+								responseStrings.add(response.getArrayValues());
+								logger.debug("Added value: " + 
+										response.getArrayValues() + 
+										"to mol: " + mol + " ix " + i);
+							}else{
+
+								//If we have no array value, us float value
+								newMols.get(i).getAtomContainer().setProperty(
+										QSARConstants.QSAR_RESPONSE_PROPERTY, 
+										response.getValue());
+								logger.debug("Added value: " + 
+										response.getValue() + 
+										" to mol: " + mol.getId() + " ix " + i);
+								responseStrings.add(""+response.getValue());
+							}
+						}
+					}
+				}
+
+			}
+
 			mols.addAll(newMols);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (BioclipseException e) {
-			e.printStackTrace();
-		} catch (CoreException e) {
-			e.printStackTrace();
-		}
+		   } catch (IOException e) {
+			   e.printStackTrace();
+		   } catch (BioclipseException e) {
+			   e.printStackTrace();
+		   } catch (CoreException e) {
+			   e.printStackTrace();
+		   }
 	   }
 	   
-	   System.out.println("==== Total loaded mols: " + mols.size());
+	   logger.debug("==== Total loaded mols: " + mols.size());
 
-	   /*
-	   StringWriter writer = new StringWriter();
-	   org.openscience.cdk.interfaces.IMolecule cdkmol2 = MoleculeFactory.makeBenzene();
-	   IMolecularDescriptor descriptor = new CarbonTypesDescriptor();
-
-	   CMLWriter cmlWriter2 = new CMLWriter(writer);
-	   cmlWriter2.registerCustomizer(new QSARCustomizer());
-	   DescriptorValue value = descriptor.calculate(cdkmol2);
-	   cdkmol2.setProperty(value.getSpecification(), value);
-
-	   try {
-		   cmlWriter2.write(cdkmol2);
-	   } catch (CDKException e) {
-		   // TODO Auto-generated catch block
-		   e.printStackTrace();
-	   }
-       String cmlContent = writer.toString();
-       logger.debug("****************************** testQSARCustomization()");
-       logger.debug(cmlContent);
-       logger.debug("******************************");
-*/
 	   
-	   
-	   //Store dataset in this structure
+	   //Set up straucture for dataset
 	   List<String> columnLabels=new ArrayList<String>();
 	   List<String> rowLabels=new ArrayList<String>();
 	   double[][] dataset;
 	   
-	   //Descriptors
-	   //===========
+	   //Get Descriptors from qsar model
+	   //===============================
 	   if (qsarType.getDescriptorlist()==null){
-		   System.out.println("No descriptorList.");
+		   logger.debug("No descriptorList.");
 		   return;
 	   }
 	   
 	   DescriptorlistType desclist = qsarType.getDescriptorlist();
 	   
 	   if (desclist.getDescriptor()==null || desclist.getDescriptor().size()<=0){
-		   System.out.println("No descriptors in descriptorList.");
+		   logger.debug("No descriptors in descriptorList.");
 		   return;
 	   }
 
@@ -373,7 +386,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
 		   descriptorIDs.add(desc.getId());
 		   DescriptorimplType impl = desc.getDescriptorimpl();
 		   
-		   System.out.println(" ** desc: " + desc.getId() + " [" + impl.getId() + "]");
+		   logger.debug(" ** desc: " + desc.getId() + " [" + impl.getId() + "]");
 	   }
 	   
 
@@ -391,7 +404,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
 		   descSize=descSize+res.getLabels().length;
 	   }
 	   
-	   System.out.println("************* We have " + molSize + " mols and " + descSize +" descriptor results");
+	   logger.debug("************* We have " + molSize + " mols and " + descSize +" descriptor results");
 
 	   //Make room in dataset
 	   dataset=new double[molSize][descSize];
@@ -409,7 +422,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
 			   if (cdkmol.getName()==null){
 				   cdkmol.setName("molecule"+cnt);
 			   }
-			   System.out.println("Molecule: " + cdkmol.getName());
+			   logger.debug("Molecule: " + cdkmol.getName());
 			   rowLabels.add(cdkmol.getName());
 			   cdkcasted=(org.openscience.cdk.interfaces.IMolecule) cdkmol.getAtomContainer();
 		   } catch (BioclipseException e) {
@@ -419,12 +432,12 @@ public class QSARBuilder extends IncrementalProjectBuilder
 		   int datasetrowindex=0;
 		   List<IDescriptorResult> molres=resultMap.get(mol);
 		   for (IDescriptorResult dres : molres){
-			   System.out.println("  Descriptor: " + dres.getDescriptorId());
+			   logger.debug("  Descriptor: " + dres.getDescriptorId());
 
 			   //Hold cdk results here for persistence
 			   DoubleArrayResult result=new DoubleArrayResult(dres.getLabels().length);
 			   for (int i=0; i<dres.getLabels().length;i++){
-				   System.out.println("    Result " + i + ": " + dres.getLabels()[i] + 
+				   logger.debug("    Result " + i + ": " + dres.getLabels()[i] + 
 						   " - " + dres.getValues()[i]);
 
 				   result.add(dres.getValues()[i]);
@@ -445,12 +458,12 @@ public class QSARBuilder extends IncrementalProjectBuilder
 			   DescriptorValue value=new DescriptorValue(spec,null,null,result,dres.getLabels());
 			   
 			   cdkcasted.setProperty(spec, value);
-			   
 
 		   }
 		   
 
-		   //Serialize to CML file
+		   //Serialize to CML files
+		   //======================
 		   try {
 
 			   //First serialize to string
@@ -495,14 +508,17 @@ public class QSARBuilder extends IncrementalProjectBuilder
 	   
 	   //Serialize dataset to file
 	   //=========================
-	   System.out.println("============================================");
-	   System.out.println("============================================");
+	   logger.debug("============================================");
+	   logger.debug("============================================");
 	   String SEPARATOR=",";
 	   String NEWLINE="\n";
 	   DecimalFormat formatter = new DecimalFormat("0.00");
 	    
 	   StringBuffer buffer=new StringBuffer();	   
-	   
+
+	   //We start with response values, hence RESPONSE label is first
+	   buffer.append(SEPARATOR + "RESPONSE");
+
 	   //Serialize one row at a time
 	   //Start with colheaders
 	   for (String colheader : columnLabels){
@@ -510,17 +526,29 @@ public class QSARBuilder extends IncrementalProjectBuilder
 	   }
 	   buffer.append(NEWLINE);
 	   for (int i=0;i< dataset.length; i++){
+		   
+		   //Add label first in line
 		   buffer.append(rowLabels.get(i));
+		   
+		   //Then add response string
+		   if (responseStrings.size()>i){
+			   buffer.append(SEPARATOR + responseStrings.get(i));
+		   }else{
+			   buffer.append(SEPARATOR + Float.NaN);
+		   }
+			   
+		   
+		   //Add descriptor values
 		   for (int j=0;j< dataset[i].length; j++){
 			   buffer.append(SEPARATOR + formatter.format(dataset[i][j]));
 		   }
 		   buffer.append(NEWLINE);
 	   }
 	   
-	   System.out.println(buffer.toString());
+	   logger.debug(buffer.toString());
 
-	   System.out.println("============================================");
-	   System.out.println("============================================");
+	   logger.debug("============================================");
+	   logger.debug("============================================");
 
 	   //Write this String to file
 	   InputStream is=new ByteArrayInputStream(buffer.toString().getBytes());
@@ -539,7 +567,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
 		   logger.error("Writing of file dataset.csv FAILED");
 		   e.printStackTrace();
 	   }
-	   System.out.println("============================================");
+	   logger.debug("============================================");
 
 }
 
