@@ -124,8 +124,8 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
     
     
     
-	public Map<IMolecule, List<IDescriptorResult>> calculateDescriptor(
-			List<IMolecule> molecules, List<DescriptorType> descriptorTypes) {
+	public Map<? extends IMolecule, List<IDescriptorResult>> calculateDescriptor(
+			List<? extends IMolecule> molecules, List<DescriptorType> descriptorTypes) {
 		
 		Map<IMolecule, List<IDescriptorResult>> allResults=
 						new HashMap<IMolecule, List<IDescriptorResult>>();
