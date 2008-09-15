@@ -19,7 +19,7 @@ public class DummyCalculator implements IDescriptorCalculator {
 	 * For each molecule and descriptor, return an array of values
 	 */
 	public Map<IMolecule, List<IDescriptorResult>> calculateDescriptor(
-			List<IMolecule> molecules, 
+			List<? extends IMolecule> molecules, 
 			List<DescriptorType> descriptorTypes){
 
 		Map<IMolecule, List<IDescriptorResult>> allResults = 

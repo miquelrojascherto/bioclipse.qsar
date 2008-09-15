@@ -445,7 +445,7 @@ public class TestQsarManager {
 		descs.add(descriptorID);
 		descs.add(descriptorID2);
 		
-		Map<IMolecule, List<IDescriptorResult>> res = qsar.calculateNoParams(mols, descs);
+		Map<? extends IMolecule, List<IDescriptorResult>> res = qsar.calculateNoParams(mols, descs);
 		assertNotNull(res);
 		
 		List<IDescriptorResult> res1=res.get(mol1);
