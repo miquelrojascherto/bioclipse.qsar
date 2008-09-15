@@ -11,97 +11,57 @@
 package net.bioclipse.qsar.ui.editors;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.cdk.domain.ICDKMolecule;
 import net.bioclipse.core.business.BioclipseException;
-import net.bioclipse.core.domain.IMolecule;
-import net.bioclipse.qsar.DescriptorType;
-import net.bioclipse.qsar.DescriptorimplType;
-import net.bioclipse.qsar.DescriptorlistType;
 import net.bioclipse.qsar.MoleculeResourceType;
-import net.bioclipse.qsar.ParameterType;
 import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
 import net.bioclipse.qsar.ResponseType;
 import net.bioclipse.qsar.ResponsesListType;
-import net.bioclipse.qsar.business.IQsarManager;
-import net.bioclipse.qsar.descriptor.model.Descriptor;
-import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
-import net.bioclipse.qsar.descriptor.model.DescriptorModel;
-import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
-import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 
 import org.apache.log4j.Logger;
-import org.eclipse.core.databinding.observable.Realm;
-import org.eclipse.core.databinding.observable.map.IObservableMap;
-import org.eclipse.core.databinding.observable.set.IObservableSet;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IncrementalProjectBuilder;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
-import org.eclipse.emf.databinding.edit.EMFEditObservables;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.edit.command.AddCommand;
-import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
-import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.CellEditor;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnPixelData;
+import org.eclipse.jface.viewers.ColumnViewer;
+import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.TreeViewerColumn;
+import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.Tree;
-import org.eclipse.ui.actions.WorkspaceModifyOperation;
-import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.FormPage;
-import org.eclipse.ui.forms.events.ExpansionAdapter;
-import org.eclipse.ui.forms.events.ExpansionEvent;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
-import org.eclipse.ui.forms.widgets.Section;
+
 
 public class ResponsesPage extends FormPage implements IEditingDomainProvider, IViewerProvider{
 
@@ -162,7 +122,8 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
         layout.numColumns=2;
         form.getBody().setLayout(layout);
 
-        responsesViewer = new TableViewer(form.getBody(), SWT.BORDER | SWT.MULTI );
+        responsesViewer = new TableViewer(form.getBody(), SWT.BORDER
+        		| SWT.FULL_SELECTION );
         responsesTable=responsesViewer.getTable();
         GridData gd=new GridData(GridData.FILL_VERTICAL);
         gd.widthHint=400;
@@ -178,17 +139,76 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
         TableViewerColumn molCol=new TableViewerColumn(responsesViewer, SWT.NONE);
         molCol.getColumn().setText("ID");
         tableLayout.addColumnData(new ColumnPixelData(250));
-        
+        molCol.setLabelProvider(new ColumnLabelProvider(){
+        	@Override
+        	public String getText(Object element) {
+        		ResponseType response = (ResponseType)element;
+        		return response.getMoleculeResource() + "-" + 
+        			response.getResourceIndex();
+        	}
+        });
+
         TableViewerColumn responseCol=new TableViewerColumn(responsesViewer, SWT.NONE);
         responseCol.getColumn().setText("Response");
         tableLayout.addColumnData(new ColumnPixelData(100));
+        
+    	responseCol.setLabelProvider(new ColumnLabelProvider(){
+    		@Override
+    		public String getText(Object element) {
+    			ResponseType response = (ResponseType)element;
+				if (response.getArrayValues()!=null)
+					return response.getArrayValues();
+				else
+					return ""+response.getValue();
+    		}
+    	});
+        
+        responseCol.setEditingSupport(new EditingSupport(responsesViewer){
+    		private TextCellEditor cellEditor;
+    		
+			@Override
+			protected boolean canEdit(Object element) {
+				return true;
+			}
 
+			@Override
+			protected CellEditor getCellEditor(Object element) {
+				if (cellEditor==null) cellEditor=new TextCellEditor(responsesTable);
+				return cellEditor;
+			}
+
+			@Override
+			protected Object getValue(Object element) {
+    			ResponseType response = (ResponseType)element;
+				if (response.getArrayValues()!=null)
+					return response.getArrayValues();
+				else
+					return ""+response.getValue();
+			}
+
+			@Override
+			protected void setValue(Object element, Object value) {
+				ResponseType response = (ResponseType)element;
+				try{
+					float f=Float.parseFloat(String.valueOf(value));
+					SetCommand cmd=new SetCommand(editingDomain,response,QsarPackage.Literals.RESPONSE_TYPE__VALUE,f);
+					editingDomain.getCommandStack().execute(cmd);
+				}catch (NumberFormatException e){
+					String str=String.valueOf(value);
+					SetCommand cmd=new SetCommand(editingDomain,response,QsarPackage.Literals.RESPONSE_TYPE__ARRAY_VALUES,str);
+					editingDomain.getCommandStack().execute(cmd);
+				}
+				responsesViewer.refresh();
+			}
+        	
+        });
+        
         
         responsesViewer.setContentProvider(new ArrayContentProvider());
-        responsesViewer.setLabelProvider(new DescriptorLabelProvider());
+//        responsesViewer.setLabelProvider(new DescriptorLabelProvider());
 
         //Sort by name
-        responsesViewer.setSorter(new ViewerSorter());
+        responsesViewer.setSorter(new ResponseSorter());
 
         responsesTable.addKeyListener( new KeyListener(){
             public void keyPressed( KeyEvent e ) {
