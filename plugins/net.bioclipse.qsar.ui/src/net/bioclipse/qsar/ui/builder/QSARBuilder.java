@@ -11,27 +11,22 @@
 package net.bioclipse.qsar.ui.builder;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.lang.reflect.InvocationTargetException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
@@ -50,18 +45,15 @@ import net.bioclipse.qsar.QsarType;
 import net.bioclipse.qsar.ResponseType;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
-import net.bioclipse.qsar.descriptor.model.Descriptor;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
-import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -74,18 +66,12 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.libio.cml.QSARCustomizer;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.IMolecularDescriptor;
-import org.openscience.cdk.qsar.descriptors.molecular.CarbonTypesDescriptor;
-import org.openscience.cdk.qsar.descriptors.molecular.WeightDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
-import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
  * A Builder for QSAR projects that synchronizes the project file 
@@ -255,7 +241,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
       monitor.done();
    }
 
-   private void scanQsarFile() {
+private void scanQsarFile() {
 
 	   //We need to read in qsar.xml and pasre it with EMF
 	   //=================================================
@@ -304,10 +290,10 @@ public class QSARBuilder extends IncrementalProjectBuilder
 	   ICDKManager cdk=Activator.getDefault().getCDKManager();
 	   
 	   //Get list of IMolecules from MoleculeResources
-	   List<IMolecule> mols=new ArrayList<IMolecule>();
+	   Map<ICDKMolecule, String> molMap=new HashMap<ICDKMolecule, String>();
 
 	   //Get list of responses from qsar.xml matching resources
-	   List<String> responseStrings=new ArrayList<String>();
+//	   List<String> responseStrings=new ArrayList<String>();
 
 	   //For all IMolecules, add to list with responses as properties in AC
 	   for (MoleculeResourceType mol : mollist.getMoleculeResource()){
@@ -328,7 +314,8 @@ public class QSARBuilder extends IncrementalProjectBuilder
 								newMols.get(i).getAtomContainer().setProperty(
 										QSARConstants.QSAR_RESPONSE_PROPERTY, 
 										response.getArrayValues());
-								responseStrings.add(response.getArrayValues());
+								molMap.put(newMols.get(i), response.getArrayValues());
+//								responseStrings.add(response.getArrayValues());
 								logger.debug("Added value: " + 
 										response.getArrayValues() + 
 										"to mol: " + mol + " ix " + i);
@@ -341,15 +328,19 @@ public class QSARBuilder extends IncrementalProjectBuilder
 								logger.debug("Added value: " + 
 										response.getValue() + 
 										" to mol: " + mol.getId() + " ix " + i);
-								responseStrings.add(""+response.getValue());
+								molMap.put(newMols.get(i), ""+response.getValue());
+//								responseStrings.add(""+response.getValue());
 							}
+						}
+						if (!(molMap.containsKey(newMols.get(i)))){
+							molMap.put(newMols.get(i), ""+Float.NaN);
 						}
 					}
 				}
 
 			}
 
-			mols.addAll(newMols);
+//			mols.addAll(newMols);
 		   } catch (IOException e) {
 			   e.printStackTrace();
 		   } catch (BioclipseException e) {
@@ -359,8 +350,18 @@ public class QSARBuilder extends IncrementalProjectBuilder
 		   }
 	   }
 	   
-	   logger.debug("==== Total loaded mols: " + mols.size());
-
+	   logger.debug("==== Total loaded mols: " + molMap.size());
+	   
+	   //Get lists from molsMap
+	   List<ICDKMolecule> sortedMols=new ArrayList<ICDKMolecule>();
+	   sortedMols.addAll((Collection<? extends ICDKMolecule>) molMap.keySet());
+	   
+	   //Sort the mol based on name
+	   Collections.sort(sortedMols,new Comparator<ICDKMolecule>(){
+		   public int compare(ICDKMolecule o1, ICDKMolecule o2) {
+			   return o1.getName().compareTo(o2.getName());
+		   }
+	   });
 	   
 	   //Set up straucture for dataset
 	   List<String> columnLabels=new ArrayList<String>();
@@ -393,7 +394,10 @@ public class QSARBuilder extends IncrementalProjectBuilder
 	   //Calculate descriptor for mols
 	   //=============================
 	   IQsarManager qsar = net.bioclipse.qsar.init.Activator.getDefault().getQsarManager();
-	   Map<IMolecule, List<IDescriptorResult>> resultMap = qsar.calculateNoParams(mols, descriptorIDs);
+	   Map<? extends IMolecule, List<IDescriptorResult>> resultMap = qsar.calculateNoParams(sortedMols, descriptorIDs);
+
+
+	   
 	   
 	   //Calculate dimension for dataset
 	   //================================
@@ -412,7 +416,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
 	   //Store descriptor results
 	   //================================
 	   int cnt=0;
-	   for (IMolecule mol : resultMap.keySet()){
+	   for (IMolecule mol : sortedMols){
 		   double[] datasetRow=dataset[cnt];
 		   cnt++;
 		   org.openscience.cdk.interfaces.IMolecule cdkcasted=null;
@@ -530,12 +534,18 @@ public class QSARBuilder extends IncrementalProjectBuilder
 		   //Add label first in line
 		   buffer.append(rowLabels.get(i));
 		   
-		   //Then add response string
-		   if (responseStrings.size()>i){
-			   buffer.append(SEPARATOR + responseStrings.get(i));
+		   //Then add response string from map containing it
+		   if (molMap.get(sortedMols.get(i))!=null){
+			   buffer.append(SEPARATOR + molMap.get(sortedMols.get(i)));
 		   }else{
+			   //Backup: NaN
 			   buffer.append(SEPARATOR + Float.NaN);
 		   }
+//		   if (responseStrings.size()>i){
+//			   buffer.append(SEPARATOR + responseStrings.get(i));
+//		   }else{
+//			   buffer.append(SEPARATOR + Float.NaN);
+//		   }
 			   
 		   
 		   //Add descriptor values
