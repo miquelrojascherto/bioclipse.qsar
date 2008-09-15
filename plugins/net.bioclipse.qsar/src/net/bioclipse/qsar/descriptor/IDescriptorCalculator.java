@@ -14,7 +14,6 @@ public interface IDescriptorCalculator {
 	 * @param descriptorsForProvider descriptors with parameters and impl
 	 * @return Map<IMolecule, IDescriptorResult> results for each molecule
 	 */
-	public Map<IMolecule, List<IDescriptorResult>> calculateDescriptor(
-			             List<IMolecule> molecules, List<DescriptorType> descriptorsForProvider);
-
+	public Map<? extends IMolecule, List<IDescriptorResult>> calculateDescriptor(
+			             List<? extends IMolecule> molecules, List<DescriptorType> descriptorsForProvider);
 }

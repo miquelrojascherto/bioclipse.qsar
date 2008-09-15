@@ -606,7 +606,7 @@ public class QsarManager implements IQsarManager{
 	 * @param descriptorMap Map from descriptorImplID to List<DescriptorParameter>
 	 * @return
 	 */
-	public Map<IMolecule, List<IDescriptorResult>> calculate(List<IMolecule> molecules, 
+	public Map<? extends IMolecule, List<IDescriptorResult>> calculate(List<? extends IMolecule> molecules, 
 			List<DescriptorType> descriptorTypes) {
 
 		Map<IMolecule, List<IDescriptorResult>> allResults=
@@ -634,7 +634,7 @@ public class QsarManager implements IQsarManager{
 			//If we have descs to calculate, do so
 			if (descriptorTypesForProvider.size()>0){
 				IDescriptorCalculator calculator=provider.getCalculator();
-				Map<IMolecule, List<IDescriptorResult>> results = 
+				Map<? extends IMolecule, List<IDescriptorResult>> results = 
 						calculator.calculateDescriptor(molecules, 
 													   descriptorTypesForProvider);
 				
@@ -690,7 +690,7 @@ public class QsarManager implements IQsarManager{
 		List<String> descIDs=new ArrayList<String>();
 		descIDs.add(descriptorID);
 		
-		Map<IMolecule, List<IDescriptorResult>> retMap = calculateNoParams(mollist, descIDs);
+		Map<? extends IMolecule, List<IDescriptorResult>> retMap = calculateNoParams(mollist, descIDs);
 		if (retMap==null || retMap.size()<1){
 			throw new NoSuchElementException("Calculation did not return a result");
 		}
@@ -759,15 +759,15 @@ public class QsarManager implements IQsarManager{
 		List<IMolecule> mollist=new ArrayList<IMolecule>();
 		mollist.add(molecule);
 
-		Map<IMolecule, List<IDescriptorResult>> ret = calculate(mollist, descriptorTypes);
+		Map<? extends IMolecule, List<IDescriptorResult>> ret = calculate(mollist, descriptorTypes);
 		
 		return ret.get(molecule);
 	}
 
 
 
-	public Map<IMolecule, List<IDescriptorResult>> calculateNoParams(
-			List<IMolecule> molecules, List<String> descriptorIDs) {
+	public Map<? extends IMolecule, List<IDescriptorResult>> calculateNoParams(
+			List<? extends IMolecule> molecules, List<String> descriptorIDs) {
 		List<DescriptorType> descTypes=new ArrayList<DescriptorType>();
 		
 		for (String descriptorID : descriptorIDs){

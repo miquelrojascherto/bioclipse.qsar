@@ -40,16 +40,19 @@ public interface IQsarManager extends IBioclipseManager{
 	public List<IDescriptorResult> calculate(IMolecule molecule,
 			List<DescriptorType> descriptorTypes);
     
-    public Map<IMolecule, List<IDescriptorResult>> calculate(List<IMolecule> molecules, 
+    public Map<? extends IMolecule, List<IDescriptorResult>> calculate(List<? extends IMolecule> molecules, 
     													List<DescriptorType> descriptorTypes);
 
     @Recorded
     @PublishedMethod( methodSummary = "Calculates a list of descriptors for a " +
     		"list of molecules" )
-	public Map<IMolecule, List<IDescriptorResult>> calculateNoParams(
-			List<IMolecule> molecules, List<String> descriptorIDs);
+	public Map<? extends IMolecule, List<IDescriptorResult>> calculateNoParams(
+			List<? extends IMolecule> molecules, List<String> descriptorIDs);
 
- 
+
+    
+    
+    
     @PublishedMethod( methodSummary = "Returns the available descriptor providers" )
     public List<String> getProviders();
     public List<DescriptorProvider> getFullProviders();
