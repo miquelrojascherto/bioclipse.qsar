@@ -5,6 +5,9 @@ public interface QSARConstants {
 	//Preferences
 	public static final String QSAR_PROVIDERS_ORDER_PREFERENCE = "QSARProvderOrder";
 	public static final String PREFS_SEPERATOR = ";";
+	
+	//Properties
+	public static final String QSAR_RESPONSE_PROPERTY="qsar.response";
 
 	//Matches extension point
 	public static final String DESCRIPTOR_EXTENSION_POINT = 
