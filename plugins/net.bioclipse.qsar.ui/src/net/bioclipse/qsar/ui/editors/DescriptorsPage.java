@@ -443,8 +443,6 @@ private Table paramsTable;
     	DescriptorType modelDescriptor=QsarFactory.eINSTANCE.createDescriptorType();
 		modelDescriptor.setId(desc.getId());
 		modelDescriptor.setNamespace(desc.getNamesapce());
-		cmd=AddCommand.create(editingDomain, descriptorList, QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTOR, modelDescriptor);
-		cCmd.append(cmd);
 
 		//Check if provider already added to qsarModel
 		DescriptorimplType dimpl=null;
@@ -497,6 +495,11 @@ private Table paramsTable;
 
 			}
 		}
+		
+		//Add the descriptor to descriptorList last, for notification issues
+		cmd=AddCommand.create(editingDomain, descriptorList, QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTOR, modelDescriptor);
+		cCmd.append(cmd);
+
 		//Execute the compiund command
 		editingDomain.getCommandStack().execute(cCmd);
 
@@ -594,8 +597,12 @@ private Table paramsTable;
     	rightViewer.addSelectionChangedListener(new ISelectionChangedListener(){
 			public void selectionChanged(SelectionChangedEvent event) {
 				DescriptorType desc=(DescriptorType)((IStructuredSelection)event.getSelection()).getFirstElement();
-				if (desc==null) return;
-				paramsViewer.setInput(desc.getParameter().toArray());
+				if (desc!=null){
+					paramsViewer.setInput(desc.getParameter().toArray());
+				}else{
+					paramsViewer.setInput(new Object[0]);
+				}
+					
 			}
     	});
 
@@ -707,6 +714,7 @@ private Table paramsTable;
                 		editingDomain.getCommandStack().execute(cmd);
 
                 		paramsViewer.refresh();
+                		rightViewer.refresh();
             		}
 				}
 			}
