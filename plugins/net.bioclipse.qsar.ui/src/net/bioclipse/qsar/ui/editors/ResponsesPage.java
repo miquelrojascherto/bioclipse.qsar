@@ -33,7 +33,9 @@ import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+import org.eclipse.jface.dialogs.IPageChangedListener;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.dialogs.PageChangedEvent;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
@@ -63,7 +65,7 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 
 
-public class ResponsesPage extends FormPage implements IEditingDomainProvider, IViewerProvider{
+public class ResponsesPage extends FormPage implements IEditingDomainProvider, IViewerProvider, IPageChangedListener{
 
     private TableViewer responsesViewer;
     private Table responsesTable;
@@ -101,6 +103,8 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
         	qsarModel.setResponselist(responsesList);
         }
 
+        editor.addPageChangedListener(this);
+        
 	}
 
 
@@ -428,6 +432,14 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
 
 	public Viewer getViewer() {
 		return responsesViewer;
+	}
+
+	public void pageChanged(PageChangedEvent event) {
+
+		if (event.getSelectedPage()!=this) return;
+		
+		activatePage();
+		
 	}
 
 

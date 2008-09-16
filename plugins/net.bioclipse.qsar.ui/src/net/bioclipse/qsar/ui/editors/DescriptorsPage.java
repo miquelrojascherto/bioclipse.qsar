@@ -60,7 +60,9 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
+import org.eclipse.jface.dialogs.IPageChangedListener;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.dialogs.PageChangedEvent;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
@@ -105,7 +107,7 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 
-public class DescriptorsPage extends FormPage implements IEditingDomainProvider, IViewerProvider{
+public class DescriptorsPage extends FormPage implements IEditingDomainProvider, IViewerProvider, IPageChangedListener{
 
     private TreeViewer descViewer;
     private Tree descTree;
@@ -159,6 +161,8 @@ private Table paramsTable;
 			descriptorList=QsarFactory.eINSTANCE.createDescriptorlistType();
 			qsarModel.setDescriptorlist(descriptorList);
 		}
+		
+		editor.addPageChangedListener(this);
 
 	}
 
@@ -201,13 +205,12 @@ private Table paramsTable;
 		});
 
 		//Populate selected descriptors from the read qsar model 
-//        populateSelectedDescriptorsViewFromModel();
-//		rightViewer.setInput(descriptorList.eContents().toArray());
 		populateRightViewerFromModel();
 
         //Post selections to Eclipse via our intermediate selectionprovider
         selectionProvider.setSelectionProviderDelegate( descViewer );
         descViewer.getTree().setFocus();
+        
     }
 
     
@@ -785,6 +788,15 @@ private Table paramsTable;
 
 	public Viewer getViewer() {
 		return rightViewer;
+	}
+
+
+	public void pageChanged(PageChangedEvent event) {
+
+		if (event.getSelectedPage()!=this) return;
+		
+		activatePage();
+		
 	}
 
 

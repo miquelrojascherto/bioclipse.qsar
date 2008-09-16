@@ -45,7 +45,9 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
+import org.eclipse.jface.dialogs.IPageChangedListener;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.dialogs.PageChangedEvent;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
@@ -59,6 +61,8 @@ import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.layout.GridData;
@@ -85,7 +89,7 @@ import org.eclipse.ui.forms.widgets.Section;
  * @author ola
  *
  */
-public class MoleculesPage extends FormPage implements IEditingDomainProvider, IViewerProvider{
+public class MoleculesPage extends FormPage implements IEditingDomainProvider, IViewerProvider, IPageChangedListener{
 
     private TableViewer molViewer;
     private Table molTable;
@@ -122,6 +126,8 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 			moleculeList=QsarFactory.eINSTANCE.createMoleculelistType();
 			qsarModel.setMoleculelist(moleculeList);
 		}
+		
+		editor.addPageChangedListener(this);
 
 	}
 
@@ -156,6 +162,8 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 
         createPreprocessingSection(form, toolkit);
 //        populatePreViewerFromModel();  //TODO!
+        
+        preTableViewer.getTable().setEnabled(false); //TODO: change!
         
         //Post selections to Eclipse via our intermediate selectionprovider
         selectionProvider.setSelectionProviderDelegate( molViewer );
@@ -258,6 +266,19 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
               public void keyReleased( KeyEvent e ) {
               }
           });
+          
+        	//If focus gained, make this viewer provide selections
+          molViewer.getTable().addFocusListener(new FocusListener(){
+
+			public void focusGained(FocusEvent e) {
+		        molViewer.setSelection(null);
+		        selectionProvider.setSelectionProviderDelegate( molViewer );
+			}
+
+			public void focusLost(FocusEvent e) {
+			}
+          });
+
 
           Button btnAdd=toolkit.createButton(client, "Add...", SWT.PUSH);
           btnAdd.addListener(SWT.Selection, new Listener() {
@@ -612,5 +633,12 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 		return molViewer;
 	}
 
+	public void pageChanged(PageChangedEvent event) {
+
+		if (event.getSelectedPage()!=this) return;
+		
+		activatePage();
+		
+	}
 
 }
