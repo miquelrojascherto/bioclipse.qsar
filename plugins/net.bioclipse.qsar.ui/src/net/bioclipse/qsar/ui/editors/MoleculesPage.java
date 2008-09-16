@@ -11,12 +11,15 @@
  ******************************************************************************/
 package net.bioclipse.qsar.ui.editors;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
+import net.bioclipse.cdk.domain.ICDKMolecule;
+import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.qsar.MoleculeResourceType;
 import net.bioclipse.qsar.MoleculelistType;
 import net.bioclipse.qsar.QsarFactory;
@@ -28,13 +31,23 @@ import org.apache.log4j.Logger;
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.core.databinding.observable.set.IObservableSet;
+import org.eclipse.core.internal.resources.File;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.resources.WorkspaceJob;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.databinding.EMFObservables;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
@@ -48,6 +61,7 @@ import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
 import org.eclipse.jface.dialogs.IPageChangedListener;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.PageChangedEvent;
+import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
@@ -59,8 +73,12 @@ import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.dnd.TransferData;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.KeyEvent;
@@ -73,6 +91,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
@@ -107,6 +126,7 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 	
 	private MoleculelistType moleculeList;
 	private QsarType qsarModel;
+	private IProject activeProject;
 
     
 	public MoleculesPage(FormEditor editor, QsarType qsarModel, 
@@ -128,6 +148,10 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 		}
 		
 		editor.addPageChangedListener(this);
+		if (editor.getEditorInput() instanceof IFileEditorInput) {
+			IFileEditorInput fin = (IFileEditorInput) editor.getEditorInput();
+			activeProject=fin.getFile().getProject();
+		}
 
 	}
 
@@ -160,12 +184,112 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
         
         preTableViewer.getTable().setEnabled(false); //TODO: change!
         
+        addDragAndDrop();
+        
         //Post selections to Eclipse via our intermediate selectionprovider
         selectionProvider.setSelectionProviderDelegate( molViewer );
 
         
     }
     
+    private void addDragAndDrop() {
+    	int ops = DND.DROP_COPY | DND.DROP_MOVE;
+    	Transfer[] transfers = new Transfer[] { LocalSelectionTransfer.getTransfer()};
+    	molViewer.addDropSupport(ops, transfers, new ViewerDropAdapter(molViewer){
+
+			@Override
+			public boolean performDrop(Object data) {
+				List<IResource> resources=new ArrayList<IResource>();
+				if (!(data instanceof IStructuredSelection)) return false;
+
+				IStructuredSelection ssel = (IStructuredSelection) data;
+				for (Object obj : ssel.toList()){
+					if (obj instanceof IResource) {
+						IResource res = (IResource) obj;
+						resources.add(res);
+					}
+				}
+				if (resources.size()<=0) return false;
+
+				return addResources(resources.toArray(new IResource[0]));
+			}
+
+			@Override
+			public boolean validateDrop(Object target, int operation,
+					TransferData transferType) {
+				return true;
+			}});
+    }
+
+
+	protected boolean addResources(final IResource[] resources) {
+
+		
+		WorkspaceJob job=new WorkspaceJob("Adding resources to QSAR project"){
+
+			@Override
+			public IStatus runInWorkspace(IProgressMonitor monitor)
+			throws CoreException {
+
+				CompoundCommand ccmd=new CompoundCommand();
+
+				for (IResource resource : resources){
+
+					if (resource instanceof IFile) {
+						IFile file = (IFile) resource;
+
+						try {
+							//Verify this is a file with at least one molecule
+							List<ICDKMolecule> lst = cdk.loadMolecules(file);
+							if (lst!=null && lst.size()>0){
+
+								//If resource is in another project,
+								//copy it to molecules folder as use that copy
+								if (file.getProject()!=activeProject){
+									IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+									IPath projectPath = activeProject.getFullPath(),
+									molFolderPath = projectPath.append("molecules"),
+									destinationPath=molFolderPath.append(file.getName());
+									
+									file.copy(destinationPath, true, monitor);
+									
+									file=root.getFile(destinationPath);
+								}
+
+
+								//Also add to QSAR model
+								MoleculeResourceType mol1=QsarFactory.eINSTANCE.createMoleculeResourceType();
+								mol1.setId(file.getName());
+								mol1.setName(file.getName());
+								mol1.setFile(file.getFullPath().toString());
+								Command cmd=AddCommand.create(editingDomain, moleculeList, 
+										QsarPackage.Literals.MOLECULELIST_TYPE__MOLECULE_RESOURCE, mol1);
+
+								ccmd.append(cmd);
+
+							}
+						} catch (IOException e) {
+						} catch (BioclipseException e) {
+						} catch (CoreException e) {
+						}
+					}
+				}
+
+				//Execute the CompoundCommand
+				editingDomain.getCommandStack().execute(ccmd); 		
+
+				return Status.OK_STATUS;
+			}
+
+		};
+
+		job.setUser(true);
+		job.schedule();
+
+		return true;
+	}
+
+
 	private void populateMolsViewerFromModel() {
 		
 		// The content provider is responsible to handle add and
@@ -528,21 +652,22 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 			showMessage("Please select at least one molecule to add");
 			return;
 		}
+		
+		addResources(dlg.getMultiResult());
 
-		System.out.println("Selected mols to add: ");
-		for (IResource resource : dlg.getMultiResult()){
-
-			//Also add to QSAR model
-			MoleculeResourceType mol1=QsarFactory.eINSTANCE.createMoleculeResourceType();
-			mol1.setId(resource.getName());
-			mol1.setName(resource.getName());
-			mol1.setFile(resource.getFullPath().toString());
-			Command cmd=AddCommand.create(editingDomain, moleculeList, 
-					QsarPackage.Literals.MOLECULELIST_TYPE__MOLECULE_RESOURCE, mol1);
-
-			//Execute the CompoundCommand
-			editingDomain.getCommandStack().execute(cmd); 		
-		}
+//		for (IResource resource : dlg.getMultiResult()){
+//
+//			//Also add to QSAR model
+//			MoleculeResourceType mol1=QsarFactory.eINSTANCE.createMoleculeResourceType();
+//			mol1.setId(resource.getName());
+//			mol1.setName(resource.getName());
+//			mol1.setFile(resource.getFullPath().toString());
+//			Command cmd=AddCommand.create(editingDomain, moleculeList, 
+//					QsarPackage.Literals.MOLECULELIST_TYPE__MOLECULE_RESOURCE, mol1);
+//
+//			//Execute the CompoundCommand
+//			editingDomain.getCommandStack().execute(cmd); 		
+//		}
 		
 		molViewer.refresh();
 		
