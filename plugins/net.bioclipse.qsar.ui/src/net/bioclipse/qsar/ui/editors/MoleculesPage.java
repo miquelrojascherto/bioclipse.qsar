@@ -154,11 +154,6 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 
         createMoleculesSection(form, toolkit);
         populateMolsViewerFromModel();
-        
-		QsarModelUIAdapter a=new QsarModelUIAdapter(molViewer);
-		a.observeQsarModel(qsarModel);
-
-
 
         createPreprocessingSection(form, toolkit);
 //        populatePreViewerFromModel();  //TODO!
