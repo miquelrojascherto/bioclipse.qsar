@@ -280,8 +280,8 @@ private Table paramsTable;
           descViewer = new TreeViewer(client, SWT.BORDER | SWT.MULTI );
           descTree=descViewer.getTree();
           toolkit.adapt(descTree, true, true);
-          GridData gd=new GridData(GridData.FILL_VERTICAL);
-          gd.widthHint=350;
+          GridData gd=new GridData(GridData.FILL_BOTH);
+          gd.widthHint=250;
           descTree.setLayoutData( gd );
           
           descTree.setHeaderVisible(true);
@@ -294,7 +294,7 @@ private Table paramsTable;
           
           TreeViewerColumn firstCol=new TreeViewerColumn(descViewer, SWT.NONE);
           firstCol.getColumn().setText("");
-          tableLayout.addColumnData(new ColumnPixelData(250));
+          tableLayout.addColumnData(new ColumnPixelData(200));
           
           TreeViewerColumn providersCol=new TreeViewerColumn(descViewer, SWT.NONE);
           providersCol.getColumn().setText("Provider(s)");
@@ -560,12 +560,12 @@ private Table paramsTable;
     	
     	//Right viewer
     	//=================
-    	rightViewer = new TableViewer (client, SWT.BORDER | SWT.SINGLE);
+    	rightViewer = new TableViewer (client, SWT.BORDER | SWT.MULTI);
 
     	rightTable=rightViewer.getTable();
     	toolkit.adapt(rightTable, true, true);
     	GridData gd6=new GridData(GridData.FILL_BOTH);
-    	gd6.widthHint=300;
+    	gd6.widthHint=100;
     	rightTable.setLayoutData( gd6 );
 
     	//If focus gained, make this viewer provide selections
@@ -596,6 +596,7 @@ private Table paramsTable;
     	//Post changes to parameters viewer
     	rightViewer.addSelectionChangedListener(new ISelectionChangedListener(){
 			public void selectionChanged(SelectionChangedEvent event) {
+				//For now, don't care about multiple selections 
 				DescriptorType desc=(DescriptorType)((IStructuredSelection)event.getSelection()).getFirstElement();
 				if (desc!=null){
 					paramsViewer.setInput(desc.getParameter().toArray());
@@ -616,7 +617,8 @@ private Table paramsTable;
     	paramsTable=paramsViewer.getTable();
     	toolkit.adapt(paramsTable, true, true);
     	GridData gd7=new GridData(GridData.FILL_BOTH);
-    	gd6.heightHint=200;
+    	gd7.heightHint=40;
+    	gd7.minimumHeight=50;
     	paramsTable.setLayoutData( gd7 );
 
     	paramsTable.setHeaderVisible(true);
@@ -627,7 +629,7 @@ private Table paramsTable;
         TableLayout tableLayout = new TableLayout();
         paramsTable.setLayout(tableLayout);
         
-        TableViewerColumn keyCol=new TableViewerColumn(paramsViewer, SWT.NONE);
+        TableViewerColumn keyCol=new TableViewerColumn(paramsViewer, SWT.H_SCROLL | SWT.V_SCROLL);
         keyCol.getColumn().setText("Key");
         tableLayout.addColumnData(new ColumnPixelData(150));
         keyCol.setLabelProvider(new ColumnLabelProvider(){
