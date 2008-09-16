@@ -7,10 +7,17 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.AromaticityCalculator;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.NoSuchAtomException;
+import org.openscience.cdk.graph.SpanningTree;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.qsar.DescriptorEngine;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IDescriptor;
@@ -22,6 +29,7 @@ import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
@@ -172,36 +180,9 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
 		//Store results here
 		List<IDescriptorResult> results = new ArrayList<IDescriptorResult>();
 		
-		//Preprocess atomcontainer
+		//Preprocess atomcontainer. Return null if all is well, else String with error
 		//========================
-		String atomcontainerError=null;
-
-		try {
-			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);            
-			CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
-			hAdder.addImplicitHydrogens(container);
-			AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
-		} catch (Exception e1) {
-			atomcontainerError="Error addding hydrogens : " + e1.getMessage();
-		}
-
-		//Do atom typing as this is required by aromaticity detection and soem descriptors
-		if (atomcontainerError==null){
-			try {
-				AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
-			} catch (CDKException e1) {
-				atomcontainerError="Error in atom typing : " + e1.getMessage();
-			}
-
-			//Do aromaticity detection as this is required by most descriptors
-			if (atomcontainerError==null){
-				try {
-					CDKHueckelAromaticityDetector.detectAromaticity(container);
-				} catch (CDKException e1) {
-					atomcontainerError="Error in aromaticity detection: " + e1.getMessage();
-				}
-			}
-		}
+		String atomcontainerError=doCDKPreprocessing(container);
 
 		//Loop over all descriptors
 		//=========================
@@ -219,8 +200,10 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
 			//If we had errors in atomcontainer, add error here
 			if (atomcontainerError!=null){
 				res.setErrorMessage(atomcontainerError);
+				logger.debug("Error message set to: " + res.getErrorMessage());
 			}else if (cdkDescriptor==null){
 				res.setErrorMessage("Descriptor not supported in cdk: " + descriptorID);
+				logger.debug("Error message set to: " + res.getErrorMessage());
 			}
 			
 			//We have a valid descriptorID and a good atomcontainer, do calculation
@@ -388,6 +371,65 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
 
 		return results;
 
+	}
+
+	/**
+	 * Preprocess molecules to set ISINRING, percieve atom types, and 
+	 * detect aromaticity
+	 * @param container the IAtomcontainer to work on
+	 * @return String with error message or null if OK
+	 */
+	private String doCDKPreprocessing(IAtomContainer container) {
+
+		
+		//Add hydrogens
+		try {
+
+			CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
+	        for (IAtom atom : container.atoms()) {
+	            IAtomType matched = matcher.findMatchingAtomType(container, atom);
+	            if (matched != null){
+	            	AtomTypeManipulator.configure(atom, matched);
+	            }else{
+	            	logger.error("Could not find matching atom type for atom: " + atom);
+	            }
+	        }
+	        
+			CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
+			hAdder.addImplicitHydrogens(container);
+			AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
+		} catch (Exception e1) {
+			String emsg="Error addding hydrogens : " + e1.getMessage();
+        	logger.error(emsg);
+			return emsg;
+		}
+	
+		//Mark rings as ISINRING
+		IRingSet rs;
+		try {
+			rs = new SpanningTree(container).getBasicRings();
+		} catch (NoSuchAtomException e) {
+			String emsg="Could not detect rings: " + e.getMessage();
+        	logger.error(emsg);
+			return emsg;
+		}
+		for (int i = 0; i < container.getAtomCount(); i++) {
+			if (rs.contains(container.getAtom(i))) {
+				container.getAtom(i).setFlag(CDKConstants.ISINRING, true);
+			}
+		}
+
+		//Percieve atom types and aromaticity
+		try {
+			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+			CDKHueckelAromaticityDetector.detectAromaticity(container);
+		} catch (CDKException e) {
+			String emsg="Could not percieve atom types or aromaticity: " + e.getMessage();
+        	logger.error(emsg);
+			return emsg;
+		}
+
+		return null;
 	}
 
 
