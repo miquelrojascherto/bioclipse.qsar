@@ -7,6 +7,8 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
+import org.openscience.cdk.aromaticity.AromaticityCalculator;
+import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorEngine;
@@ -18,6 +20,8 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
@@ -164,11 +168,43 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
 		
 		//Make sure e have a Molecule, otherwise create it
 		if (!(container instanceof IMolecule)) container = container.getBuilder().newMolecule(container);
-
+		
 		//Store results here
 		List<IDescriptorResult> results = new ArrayList<IDescriptorResult>();
+		
+		//Preprocess atomcontainer
+		//========================
+		String atomcontainerError=null;
+
+		try {
+			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);            
+			CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
+			hAdder.addImplicitHydrogens(container);
+			AtomContainerManipulator.convertImplicitToExplicitHydrogens(container);
+		} catch (Exception e1) {
+			atomcontainerError="Error addding hydrogens : " + e1.getMessage();
+		}
+
+		//Do atom typing as this is required by aromaticity detection and soem descriptors
+		if (atomcontainerError==null){
+			try {
+				AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+			} catch (CDKException e1) {
+				atomcontainerError="Error in atom typing : " + e1.getMessage();
+			}
+
+			//Do aromaticity detection as this is required by most descriptors
+			if (atomcontainerError==null){
+				try {
+					CDKHueckelAromaticityDetector.detectAromaticity(container);
+				} catch (CDKException e1) {
+					atomcontainerError="Error in aromaticity detection: " + e1.getMessage();
+				}
+			}
+		}
 
 		//Loop over all descriptors
+		//=========================
 		for (DescriptorType descType : descriptorTypes){
 			String descriptorID=descType.getId();			
 			logger.debug("Calculating descriptor: " + descriptorID + "for mol: " + cdkmol.getName());
@@ -179,11 +215,15 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
 
 			//Get descriptor by id
 			IMolecularDescriptor cdkDescriptor = getDescriptorMap().get(descriptorID);
-			if (cdkDescriptor==null){
+
+			//If we had errors in atomcontainer, add error here
+			if (atomcontainerError!=null){
+				res.setErrorMessage(atomcontainerError);
+			}else if (cdkDescriptor==null){
 				res.setErrorMessage("Descriptor not supported in cdk: " + descriptorID);
 			}
 			
-			//We have a valid descriptorID
+			//We have a valid descriptorID and a good atomcontainer, do calculation
 			else{
 				
 				//Do we have parameters available for this descriptorID in Map?
@@ -213,9 +253,48 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
 							
 							for (ParameterType param : bcParams){
 								if (param.getKey().equals(cdkName)){
-									//Match
+
+									//Match, convert from String to data type
 									Object obj=cdkDescriptor.getParameterType(cdkName);
-									if (obj instanceof String) {
+
+									//Integer
+									if (obj instanceof Integer) {
+										try{
+										Integer ival=Integer.parseInt(param.getValue());
+										cdkParams[i]=ival;
+										logger.debug("   - Set param: " + 
+												cdkName + " to " + param.getValue());
+										}catch (NumberFormatException e){
+											logger.debug("   - expected an Integer " +
+													"param for " + cdkName + 
+													" but found: "  + 
+													param.getValue());
+										}
+									}
+
+									//Boolean
+									else if (obj instanceof Boolean) {
+										//Do conversion from String to Boolean
+										if (param.getValue().equalsIgnoreCase("true")){
+											cdkParams[i]=true;
+											logger.debug("   - Set param: " + 
+													cdkName + " to " + param.getValue());
+										}
+										if (param.getValue().equalsIgnoreCase("false")){
+											cdkParams[i]=false;
+											logger.debug("   - Set param: " + 
+													cdkName + " to " + param.getValue());
+										}
+										else{
+											logger.debug("   - expected a boolean " +
+													"param for " + cdkName + 
+													" but found: "  + 
+													param.getValue());
+										}
+									}
+									
+									//String
+									else if (obj instanceof String) {
 										cdkParams[i]=param.getValue();
 										logger.debug("   - Set param: " + 
 												cdkName + " to " + param.getValue());

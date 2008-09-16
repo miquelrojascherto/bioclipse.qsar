@@ -99,12 +99,12 @@
                   description="Eigenvalue based descriptor noted for its utility in chemical diversity."
                   name="BCUT">
                   <parameter
-                        defaultvalue="0"
+                        defaultvalue="1"
                         description="Number of highest eigenvalues. 0 (default) means all."
                         key="nhigh">
                   </parameter>
                   <parameter
-                        defaultvalue="0"
+                        defaultvalue="1"
                         description="Number of lowest eigenvalues. 0 (default) means all."
                         key="nlow">
                   </parameter>
