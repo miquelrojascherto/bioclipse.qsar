@@ -25,6 +25,7 @@ import net.bioclipse.qsar.ParameterType;
 import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
+import net.bioclipse.qsar.ResponseType;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
@@ -61,10 +62,18 @@ import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.CellEditor;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnPixelData;
+import org.eclipse.jface.viewers.ComboBoxCellEditor;
+import org.eclipse.jface.viewers.EditingSupport;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
@@ -81,6 +90,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Tree;
@@ -123,6 +133,8 @@ public class DescriptorsPage extends FormPage implements IEditingDomainProvider,
 
 //	private EList<DescriptorimplType> providerList;
 	private QsarType qsarModel;
+private TableViewer paramsViewer;
+private Table paramsTable;
 
 //	private List<DescriptorInstance> selectedDescriptors;
 
@@ -540,18 +552,16 @@ public class DescriptorsPage extends FormPage implements IEditingDomainProvider,
     	toolkit.createCompositeSeparator(preSection);
     	Composite client = toolkit.createComposite(preSection, SWT.WRAP);
     	GridLayout layout = new GridLayout();
-    	layout.numColumns = 2;
+    	layout.numColumns = 1;
     	client.setLayout(layout);
-
-
-    	//Query TreeViewer
-    	rightViewer = new TableViewer (client, SWT.BORDER | SWT.MULTI);
-//    	rightViewer.setContentProvider( new ArrayContentProvider() );
-//    	rightViewer.setLabelProvider( new DescriptorLabelProvider() );
+    	
+    	//Right viewer
+    	//=================
+    	rightViewer = new TableViewer (client, SWT.BORDER | SWT.SINGLE);
 
     	rightTable=rightViewer.getTable();
     	toolkit.adapt(rightTable, true, true);
-    	GridData gd6=new GridData(GridData.FILL_VERTICAL);
+    	GridData gd6=new GridData(GridData.FILL_BOTH);
     	gd6.widthHint=300;
     	rightTable.setLayoutData( gd6 );
 
@@ -579,6 +589,133 @@ public class DescriptorsPage extends FormPage implements IEditingDomainProvider,
     		public void keyReleased( KeyEvent e ) {
     		}
     	});
+
+    	//Post changes to parameters viewer
+    	rightViewer.addSelectionChangedListener(new ISelectionChangedListener(){
+			public void selectionChanged(SelectionChangedEvent event) {
+				DescriptorType desc=(DescriptorType)((IStructuredSelection)event.getSelection()).getFirstElement();
+				if (desc==null) return;
+				paramsViewer.setInput(desc.getParameter().toArray());
+			}
+    	});
+
+    	
+    	Label lblParams=toolkit.createLabel(client, "Descriptor parameters");
+    	lblParams.setEnabled(true);
+
+    	//Parameters viewer
+    	//=================
+    	paramsViewer = new TableViewer (client, SWT.BORDER | SWT.MULTI);
+    	paramsTable=paramsViewer.getTable();
+    	toolkit.adapt(paramsTable, true, true);
+    	GridData gd7=new GridData(GridData.FILL_BOTH);
+    	gd6.heightHint=200;
+    	paramsTable.setLayoutData( gd7 );
+
+    	paramsTable.setHeaderVisible(true);
+    	paramsTable.setLinesVisible(true);
+    	
+    	
+        //Add providers columns
+        TableLayout tableLayout = new TableLayout();
+        paramsTable.setLayout(tableLayout);
+        
+        TableViewerColumn keyCol=new TableViewerColumn(paramsViewer, SWT.NONE);
+        keyCol.getColumn().setText("Key");
+        tableLayout.addColumnData(new ColumnPixelData(150));
+        keyCol.setLabelProvider(new ColumnLabelProvider(){
+        	@Override
+        	public String getText(Object element) {
+        		ParameterType param = (ParameterType)element;
+        		return param.getKey();
+        	}
+        });
+
+        TableViewerColumn valueCol=new TableViewerColumn(paramsViewer, SWT.NONE);
+        valueCol.getColumn().setText("Value");
+        tableLayout.addColumnData(new ColumnPixelData(150));
+        
+    	valueCol.setLabelProvider(new ColumnLabelProvider(){
+    		@Override
+    		public String getText(Object element) {
+        		ParameterType param = (ParameterType)element;
+        		return param.getValue();
+    		}
+    	});
+        
+        valueCol.setEditingSupport(new EditingSupport(paramsViewer){
+//    		private TextCellEditor cellEditor;
+    		
+			@Override
+			protected boolean canEdit(Object element) {
+				return true;
+			}
+
+			@Override
+			protected CellEditor getCellEditor(Object element) {
+        		ParameterType param = (ParameterType)element;
+        		if ((param.getValue().equals("true")) || 
+        				(param.getValue().equals("false"))){
+        			String[] values=new String[]{"true","false"}; 
+        			ComboBoxCellEditor cbo=new ComboBoxCellEditor(paramsTable,values);
+        			return cbo;
+        		}
+        		return new TextCellEditor(paramsTable);
+			}
+
+			@Override
+			protected Object getValue(Object element) {
+        		ParameterType param = (ParameterType)element;
+        		//For combo boolean
+        		if (param.getValue().equals("true")){
+        			return new Integer(0);
+        		}
+        		else if (param.getValue().equals("false")){
+        			return new Integer(1);
+        		}
+        		else
+        			return param.getValue();
+			}
+
+			@Override
+			protected void setValue(Object element, Object value) {
+        		ParameterType param = (ParameterType)element;
+        		//Integers
+        		if (value instanceof Integer) {
+					Integer i = (Integer) value;
+					if (i==0){
+						if (param.getValue().equals("false")){
+	                		SetCommand cmd=new SetCommand(editingDomain,param,QsarPackage.Literals.PARAMETER_TYPE__VALUE,"true");
+	                		editingDomain.getCommandStack().execute(cmd);
+	                		paramsViewer.refresh();
+						}
+					}
+					if (i==1){
+						if (param.getValue().equals("true")){
+							SetCommand cmd=new SetCommand(editingDomain,param,QsarPackage.Literals.PARAMETER_TYPE__VALUE,"false");
+							editingDomain.getCommandStack().execute(cmd);
+							paramsViewer.refresh();
+						}
+					}
+				}
+        		
+        		//String values
+        		if (value instanceof String) {
+            		String strval=(String)value;
+            		if (!(strval.equals(param.getValue()))){
+                		SetCommand cmd=new SetCommand(editingDomain,param,QsarPackage.Literals.PARAMETER_TYPE__VALUE,strval);
+                		editingDomain.getCommandStack().execute(cmd);
+
+                		paramsViewer.refresh();
+            		}
+				}
+			}
+        	
+        });
+    	
+    	
+    	paramsViewer.setContentProvider(new ArrayContentProvider());
+
 
 
     	//Wrap up section
