@@ -92,5 +92,32 @@
 	   	</page>
    </extension>
 
+   <extension
+         point="org.eclipse.ui.exportWizards">
+      <wizard
+            class="net.bioclipse.qsar.ui.wizards.ExportQsarWizard"
+            id="net.bioclipse.qsar.ui.export"
+		    icon="icons/descriptor.png"
+  		    category="net.bioclipse.chemoinformatics.exportwizards.category"
+			name="Qsar project">
+			<description>
+      			Export QSAR project
+			</description>
+         <selection
+               class="org.eclipse.core.resources.IResource">
+         </selection>
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.importWizards">
+      <wizard
+            class="net.bioclipse.qsar.ui.wizards.ImportQsarWizard"
+            id="net.bioclipse.qsar.ui.import"
+		    icon="icons/descriptor.png"
+  		    category="net.bioclipse.chemoinformatics.importwizards.category"
+			name="Qsar project">
+      </wizard>
+   </extension>
+
 
 </plugin>
