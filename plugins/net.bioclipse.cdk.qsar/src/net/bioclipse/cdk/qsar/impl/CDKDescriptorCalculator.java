@@ -287,7 +287,7 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
 												logger.debug("   - Set param: " + 
 														cdkName + " to " + param.getValue());
 											}
-											if (param.getValue().equalsIgnoreCase("false")){
+											else if (param.getValue().equalsIgnoreCase("false")){
 												cdkParams[i]=false;
 												logger.debug("   - Set param: " + 
 														cdkName + " to " + param.getValue());
