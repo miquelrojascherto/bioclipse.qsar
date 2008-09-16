@@ -394,7 +394,8 @@ private void scanQsarFile() {
 	   //Calculate descriptor for mols
 	   //=============================
 	   IQsarManager qsar = net.bioclipse.qsar.init.Activator.getDefault().getQsarManager();
-	   Map<? extends IMolecule, List<IDescriptorResult>> resultMap = qsar.calculateNoParams(sortedMols, descriptorIDs);
+//	   Map<? extends IMolecule, List<IDescriptorResult>> resultMap = qsar.calculateNoParams(sortedMols, descriptorIDs);
+	   Map<? extends IMolecule, List<IDescriptorResult>> resultMap = qsar.calculate(sortedMols, desclist.getDescriptor());
 
 
 	   
