@@ -249,55 +249,63 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
 						
 						for (int i=0; i< cdkParams.length; i++){
 							String cdkName=cdkDescriptor.getParameterNames()[i];
-							logger.debug("CDK descr accepts params.");
+							logger.debug("CDK descr accepts param: " + cdkName);
 							
-							for (ParameterType param : bcParams){
-								if (param.getKey().equals(cdkName)){
+							if (cdkName.equalsIgnoreCase("checkAromaticity")){
+								logger.debug("Aromaticity detection set as false, " +
+										"as this is already done");
+								cdkParams[i]=false;
+							}
+							
+							else{
+								for (ParameterType param : bcParams){
+									if (param.getKey().equals(cdkName)){
 
-									//Match, convert from String to data type
-									Object obj=cdkDescriptor.getParameterType(cdkName);
+										//Match, convert from String to data type
+										Object obj=cdkDescriptor.getParameterType(cdkName);
 
-									//Integer
-									if (obj instanceof Integer) {
-										try{
-										Integer ival=Integer.parseInt(param.getValue());
-										cdkParams[i]=ival;
-										logger.debug("   - Set param: " + 
-												cdkName + " to " + param.getValue());
-										}catch (NumberFormatException e){
-											logger.debug("   - expected an Integer " +
-													"param for " + cdkName + 
-													" but found: "  + 
-													param.getValue());
+										//Integer
+										if (obj instanceof Integer) {
+											try{
+												Integer ival=Integer.parseInt(param.getValue());
+												cdkParams[i]=ival;
+												logger.debug("   - Set param: " + 
+														cdkName + " to " + param.getValue());
+											}catch (NumberFormatException e){
+												logger.debug("   - expected an Integer " +
+														"param for " + cdkName + 
+														" but found: "  + 
+														param.getValue());
+											}
 										}
-									}
 
-									//Boolean
-									else if (obj instanceof Boolean) {
-										//Do conversion from String to Boolean
-										if (param.getValue().equalsIgnoreCase("true")){
-											cdkParams[i]=true;
+										//Boolean
+										else if (obj instanceof Boolean) {
+											//Do conversion from String to Boolean
+											if (param.getValue().equalsIgnoreCase("true")){
+												cdkParams[i]=true;
+												logger.debug("   - Set param: " + 
+														cdkName + " to " + param.getValue());
+											}
+											if (param.getValue().equalsIgnoreCase("false")){
+												cdkParams[i]=false;
+												logger.debug("   - Set param: " + 
+														cdkName + " to " + param.getValue());
+											}
+											else{
+												logger.debug("   - expected a boolean " +
+														"param for " + cdkName + 
+														" but found: "  + 
+														param.getValue());
+											}
+										}
+
+										//String
+										else if (obj instanceof String) {
+											cdkParams[i]=param.getValue();
 											logger.debug("   - Set param: " + 
 													cdkName + " to " + param.getValue());
 										}
-										if (param.getValue().equalsIgnoreCase("false")){
-											cdkParams[i]=false;
-											logger.debug("   - Set param: " + 
-													cdkName + " to " + param.getValue());
-										}
-										else{
-											logger.debug("   - expected a boolean " +
-													"param for " + cdkName + 
-													" but found: "  + 
-													param.getValue());
-										}
-									}
-									
-									//String
-									else if (obj instanceof String) {
-										cdkParams[i]=param.getValue();
-										logger.debug("   - Set param: " + 
-												cdkName + " to " + param.getValue());
 									}
 								}
 							}

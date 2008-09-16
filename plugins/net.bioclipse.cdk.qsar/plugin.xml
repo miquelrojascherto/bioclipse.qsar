@@ -48,21 +48,11 @@
                   id="org.openscience.cdk.qsar.descriptors.molecular.AromaticAtomsCountDescriptor"
                   definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticAtomsCount"
                   name="AromaticAtomsCount">
-                  <parameter
-                        defaultvalue="false"
-                        description="true = the method checks the aromaticity, false = aromaticity has already been checked."
-                        key="checkAromaticity">
-                  </parameter>
              </descriptorImpl>
              <descriptorImpl
                   id="org.openscience.cdk.qsar.descriptors.molecular.AromaticBondsCountDescriptor"
                   definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticBondsCount"
                   name="AromaticBondsCount">
-                  <parameter
-                        defaultvalue="false"
-                        description="true = the method checks the aromaticity, false = aromaticity has already been checked."
-                        key="checkAromaticity">
-                  </parameter>
              </descriptorImpl>
              <descriptorImpl
                   id="org.openscience.cdk.qsar.descriptors.molecular.AtomCountDescriptor"
@@ -107,11 +97,6 @@
                         defaultvalue="1"
                         description="Number of lowest eigenvalues. 0 (default) means all."
                         key="nlow">
-                  </parameter>
-                  <parameter
-                        defaultvalue="false"
-                        description="true = the method checks the aromaticity, false = aromaticity has already been checked."
-                        key="checkAromaticity">
                   </parameter>
              </descriptorImpl>
             <descriptorImpl
@@ -190,11 +175,6 @@
                   definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hBondacceptors"
                   description="Calculates the number of hydrogen bond acceptors using a slightly simplified version of the PHACIR atom types."
                   name="HBondAcceptorCount">
-                  <parameter
-                        defaultvalue="false"
-                        description="true = the method checks the aromaticity, false = aromaticity has already been checked."
-                        key="checkAromaticity">
-                  </parameter>
             </descriptorImpl>
              <descriptorImpl
                   id="org.openscience.cdk.qsar.descriptors.molecular.HBondDonorCountDescriptor"
@@ -232,11 +212,6 @@
                   name="LargestChain">
                   <parameter
                         defaultvalue="false"
-                        description="true = the method checks the aromaticity, false = aromaticity has already been checked."
-                        key="checkAromaticity">
-                  </parameter>
-                  <parameter
-                        defaultvalue="false"
                         description="True is the CDKConstant.ISINRING has to be set"
                         key="checkRingSystem">
                   </parameter>
@@ -246,11 +221,6 @@
                   definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#largestPiSystem"
                   description="Number of atoms in the largest pi system."
                   name="LargestPiSystemDescriptor">
-                  <parameter
-                        defaultvalue="false"
-                        description="true = the method checks the aromaticity, false = aromaticity has already been checked."
-                        key="checkAromaticity">
-                  </parameter>
             </descriptorImpl>
              <descriptorImpl
                   id="org.openscience.cdk.qsar.descriptors.molecular.LengthOverBreadthDescriptor"
@@ -308,22 +278,12 @@
                   definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#lipinskifailures"
                   description="Returns the number failures of the Lipinski's Rule Of 5."
                   name="RuleOfFive">
-                  <parameter
-                        defaultvalue="false"
-                        description="true = the method checks the aromaticity, false = aromaticity has already been checked."
-                        key="checkAromaticity">
-                  </parameter>
             </descriptorImpl>
              <descriptorImpl
                   id="org.openscience.cdk.qsar.descriptors.molecular.TPSADescriptor"
                   definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#tpsa"
                   description="Calculation of topological polar surface area based on fragment contributions (TPSA)."
                   name="TPSA">
-                  <parameter
-                        defaultvalue="false"
-                        description="true = the method checks the aromaticity, false = aromaticity has already been checked."
-                        key="checkAromaticity">
-                  </parameter>
             </descriptorImpl>
              <descriptorImpl
                   id="org.openscience.cdk.qsar.descriptors.molecular.VAdjMaDescriptor"
@@ -370,11 +330,6 @@
                   description="Prediction of logP based on the atom-type method called XLogP."
                   definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#xlogP"
                   name="XLogP">
-                  <parameter
-                        defaultvalue="false"
-                        description="true = the method checks the aromaticity, false = aromaticity has already been checked."
-                        key="checkAromaticity">
-                  </parameter>
                   <parameter
                         defaultvalue="true"
                         description="True is to use the salicyl acid correction factor"
