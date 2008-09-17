@@ -332,12 +332,21 @@ private void scanQsarFile() {
 //								responseStrings.add(""+response.getValue());
 							}
 						}
-						if (!(molMap.containsKey(newMols.get(i)))){
-							molMap.put(newMols.get(i), ""+Float.NaN);
-						}
+//						if (!(molMap.containsKey(newMols.get(i)))){
+//							molMap.put(newMols.get(i), ""+Float.NaN);
+//						}
 					}
 				}
 
+			}
+			
+			//We've gone through all existing responses. Add missing responses now!
+			for (ICDKMolecule nmol : newMols){
+				if (!(molMap.containsKey(nmol))){
+					molMap.put(nmol, ""+Float.NaN);
+					logger.debug("Molecule: " + nmol.getName() +" had no response, " +
+							"so added NaN");
+				}
 			}
 
 //			mols.addAll(newMols);
@@ -402,17 +411,36 @@ private void scanQsarFile() {
 	   
 	   //Calculate dimension for dataset
 	   //================================
-	   int molSize=resultMap.keySet().size();
-	   int descSize=0;
+	   int numMolecules=resultMap.keySet().size();
+
+	   //Hope that first is representative TODO: create better approach here, first could contain errors!
 	   List<IDescriptorResult> molres2=(List<IDescriptorResult>) resultMap.values().toArray()[0];
+
+	   //Total amount of values =value columns in matrix
+	   int numTotalDescrValues=0;
+
+	   //Total number of descriptors
+	   int numDescriptors=molres2.size();
+
+	   //One int per descriptor to show how many values are there (for array results of a descriptor)
+	   int[] descColumns=new int[numDescriptors];
+
+	   //Calculate total number of descriptor values and number of values per descriptor
+	   int descIndex=0;
 	   for (IDescriptorResult res : molres2){
-		   descSize=descSize+res.getLabels().length;
+		   numTotalDescrValues=numTotalDescrValues+res.getLabels().length;
+		   descColumns[descIndex]=res.getLabels().length;
+		   descIndex++;
 	   }
 	   
-	   logger.debug("************* We have " + molSize + " mols and " + descSize +" descriptor results");
+	   logger.debug("************* We have " + numMolecules + " mols, " + numDescriptors 
+			   + " descriptors,  and " + numTotalDescrValues +" descriptor values");
 
 	   //Make room in dataset
-	   dataset=new double[molSize][descSize];
+	   dataset=new double[numMolecules][numTotalDescrValues];
+
+	   //Allocate list of error messages to output at the end
+	   List<String> listOfErrorMessages=new ArrayList<String>();
 
 	   //Store descriptor results
 	   //================================
@@ -435,22 +463,40 @@ private void scanQsarFile() {
 		   }
 
 		   int datasetrowindex=0;
+		   int descriptorIndex=0;
 		   List<IDescriptorResult> molres=resultMap.get(mol);
 		   for (IDescriptorResult dres : molres){
 			   logger.debug("  Descriptor: " + dres.getDescriptorId());
-
+			   
 			   //Hold cdk results here for persistence
-			   DoubleArrayResult result=new DoubleArrayResult(dres.getLabels().length);
-			   for (int i=0; i<dres.getLabels().length;i++){
-				   logger.debug("    Result " + i + ": " + dres.getLabels()[i] + 
-						   " - " + dres.getValues()[i]);
-
-				   result.add(dres.getValues()[i]);
-				   datasetRow[datasetrowindex]=dres.getValues()[i];
+			   DoubleArrayResult result=new DoubleArrayResult(descColumns[descriptorIndex]);
+			   for (int i=0; i<descColumns[descriptorIndex];i++){
 				   
-				   //Assume same for all molecules as we calculate the same descriptors!
-				   if (cnt==1)
-					   columnLabels.add(dres.getLabels()[i]);
+				   if (dres.getErrorMessage()!=null){
+					   logger.error("    Result " + i + ": ERROR. Message: " + 
+							   dres.getErrorMessage() );
+
+					   listOfErrorMessages.add(dres.getErrorMessage());
+
+					   //NaN has to symbolize error for now as well
+					   result.add(Double.NaN);
+					   datasetRow[datasetrowindex]=Double.NaN;
+					   
+				   }
+				   else{
+					   logger.debug("    Result " + i + ": " + dres.getLabels()[i] + 
+							   " - " + dres.getValues()[i]);
+
+					   result.add(dres.getValues()[i]);
+					   datasetRow[datasetrowindex]=dres.getValues()[i];
+
+					   //Assume same for all molecules as we calculate the same descriptors!
+					   //TODO: what if first molecule has errors? UPDATE!
+					   if (cnt==1)
+						   columnLabels.add(dres.getLabels()[i]);
+
+				   }
+
 
 				   //Increase index in datasetrow
 				   datasetrowindex++;
@@ -463,6 +509,8 @@ private void scanQsarFile() {
 			   DescriptorValue value=new DescriptorValue(spec,null,null,result,dres.getLabels());
 			   
 			   cdkcasted.setProperty(spec, value);
+			   
+			   descriptorIndex++;
 
 		   }
 		   

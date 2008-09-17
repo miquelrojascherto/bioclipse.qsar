@@ -11,6 +11,8 @@
  ******************************************************************************/
 package net.bioclipse.qsar.ui.editors;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -25,13 +27,13 @@ import net.bioclipse.qsar.MoleculelistType;
 import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
+import net.bioclipse.qsar.ResponseType;
 import net.bioclipse.ui.dialogs.WSFileDialog;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.core.databinding.observable.set.IObservableSet;
-import org.eclipse.core.internal.resources.File;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -44,12 +46,10 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
-import org.eclipse.emf.databinding.EMFObservables;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.command.AddCommand;
@@ -62,12 +62,7 @@ import org.eclipse.jface.dialogs.IPageChangedListener;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.PageChangedEvent;
 import org.eclipse.jface.util.LocalSelectionTransfer;
-import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.CheckStateChangedEvent;
-import org.eclipse.jface.viewers.CheckboxTableViewer;
-import org.eclipse.jface.viewers.CheckboxTreeViewer;
 import org.eclipse.jface.viewers.ColumnPixelData;
-import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
@@ -77,6 +72,7 @@ import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.dnd.TransferData;
 import org.eclipse.swt.events.FocusEvent;
@@ -87,10 +83,10 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.IManagedForm;
@@ -194,24 +190,70 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
     
     private void addDragAndDrop() {
     	int ops = DND.DROP_COPY | DND.DROP_MOVE;
-    	Transfer[] transfers = new Transfer[] { LocalSelectionTransfer.getTransfer()};
+    	Transfer[] transfers = new Transfer[] { LocalSelectionTransfer.getTransfer(), FileTransfer.getInstance()};
     	molViewer.addDropSupport(ops, transfers, new ViewerDropAdapter(molViewer){
 
 			@Override
 			public boolean performDrop(Object data) {
-				List<IResource> resources=new ArrayList<IResource>();
-				if (!(data instanceof IStructuredSelection)) return false;
 
-				IStructuredSelection ssel = (IStructuredSelection) data;
-				for (Object obj : ssel.toList()){
-					if (obj instanceof IResource) {
-						IResource res = (IResource) obj;
-						resources.add(res);
-					}
+				if (!((data instanceof String[]) || (data instanceof IStructuredSelection))) {
+					return false;
 				}
-				if (resources.size()<=0) return false;
+				
+				final Object indata=data;
+				
+				WorkspaceJob job=new WorkspaceJob("Adding resources to QSAR project"){
 
-				return addResources(resources.toArray(new IResource[0]));
+					@Override
+					public IStatus runInWorkspace(IProgressMonitor monitor)
+							throws CoreException {
+						
+						List<IResource> resources=new ArrayList<IResource>();
+
+						//Handle selections within Bioclipse
+						if (indata instanceof String[]){
+							
+							List<IResource> newRes=handleDropOfFiles((String[])indata, monitor);
+							if (newRes!=null && newRes.size()>0)
+								resources.addAll(newRes);
+						}
+
+						//Handle selections within Bioclipse
+						else if (indata instanceof IStructuredSelection){
+
+							IStructuredSelection ssel = (IStructuredSelection) indata;
+							for (Object obj : ssel.toList()){
+								if (obj instanceof IResource) {
+									IResource res = (IResource) obj;
+									resources.add(res);
+								}
+							}
+						}
+
+						//If none, return error
+						if (resources.size()<=0) return Status.CANCEL_STATUS;
+
+						//Add resources to model and molecules folder is necessary
+						addResources(resources.toArray(new IResource[0]), monitor);
+
+						Display.getDefault().syncExec(new Runnable(){
+
+							public void run() {
+								molViewer.getTable().setFocus();
+							}
+							
+						});
+						return Status.OK_STATUS;
+						
+					}
+					
+				};
+
+				job.setUser(true);
+				job.schedule();
+				
+				return true;
+
 			}
 
 			@Override
@@ -222,69 +264,178 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
     }
 
 
-	protected boolean addResources(final IResource[] resources) {
+    /**
+     * Handle the dropping of files on molviewer.
+     * Test if contains molecules and copy to molecules folder in that case.
+     * @param data
+     * @param monitor
+     * @return
+     */
+    protected List<IResource> handleDropOfFiles(final String[] data, IProgressMonitor monitor) {
 
-		
-		WorkspaceJob job=new WorkspaceJob("Adding resources to QSAR project"){
+    	final List<IResource> retlist=new ArrayList<IResource>();
 
-			@Override
-			public IStatus runInWorkspace(IProgressMonitor monitor)
-			throws CoreException {
+    	for (String path : (String[])data){
 
-				CompoundCommand ccmd=new CompoundCommand();
+    		try {
+    			List<ICDKMolecule> lst = cdk.loadMolecules(path);
+    			if (lst!=null && lst.size()>0){
 
-				for (IResource resource : resources){
+    				//Copy to molecules folder
+    				IResource res=copyFileToMoleculesFolder(path, monitor);
+    				if (res!=null)
+    					retlist.add(res);
+    			}
+    		} catch (FileNotFoundException e) {
+    			e.printStackTrace();
+    		} catch (IOException e) {
+    			e.printStackTrace();
+    		} catch (BioclipseException e) {
+    			e.printStackTrace();
+    		} catch (CoreException e) {
+    			e.printStackTrace();
+    		}
+    	}
 
-					if (resource instanceof IFile) {
-						IFile file = (IFile) resource;
+    	return retlist;
+    }
 
-						try {
-							//Verify this is a file with at least one molecule
-							List<ICDKMolecule> lst = cdk.loadMolecules(file);
-							if (lst!=null && lst.size()>0){
 
-								//If resource is in another project,
-								//copy it to molecules folder as use that copy
-								if (file.getProject()!=activeProject){
-									IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-									IPath projectPath = activeProject.getFullPath(),
-									molFolderPath = projectPath.append("molecules"),
-									destinationPath=molFolderPath.append(file.getName());
-									
-									file.copy(destinationPath, true, monitor);
-									
-									file=root.getFile(destinationPath);
+	/**
+	 * Copy the file into the molecules folder
+	 * @param path absolut path to the file
+	 * @param monitor
+	 * @return IFile in molecules folder
+	 */
+	protected IResource copyFileToMoleculesFolder(String path, IProgressMonitor monitor) {
+
+		java.io.File file=new java.io.File(path);
+		String filename=file.getName();
+
+		FileInputStream instream;
+		IFile newfile=null;
+		try {
+			instream = new FileInputStream(file);
+
+			IFolder molfolder=activeProject.getFolder("molecules");
+			IPath newpath=molfolder.getProjectRelativePath().append(filename);
+
+			newfile=activeProject.getFile(newpath);
+
+			if (newfile.exists()){
+				boolean answer=MessageDialog.openQuestion(getSite().getShell(), 
+						"Overwrite file?", "File " + filename + "exists in project " +
+						"folder 'molecules'. " +
+				"Would you like to replace it?");
+				if (!answer) return null;
+
+				newfile.setContents(instream, true,false, monitor);
+
+			}else{
+				newfile.create(instream, true, monitor);
+
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		} catch (CoreException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return newfile;
+
+	}
+
+
+	/**
+	 * Add resources to QSAR model. First check if contains molecules. 
+	 * Next copy the resource into the project/molecules folder if not already
+	 * there.
+	 * @param resources
+	 * @param monitor
+	 * @return
+	 */
+	protected boolean addResources(final IResource[] resources, final IProgressMonitor monitor) {
+
+		CompoundCommand ccmd=new CompoundCommand();
+
+		for (IResource resource : resources){
+
+			if (resource instanceof IFile) {
+				IFile file = (IFile) resource;
+				boolean skipFile=false;
+
+				try {
+					//Verify this is a file with at least one molecule
+					List<ICDKMolecule> lst = cdk.loadMolecules(file);
+					if (lst!=null && lst.size()>0){
+
+						//If resource is in another project,
+						//copy it to molecules folder as use that copy
+						if (file.getProject()!=activeProject){
+							IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+							IPath projectPath = activeProject.getFullPath(),
+							molFolderPath = projectPath.append("molecules"),
+							destinationPath=molFolderPath.append(file.getName());
+
+							final IFile newfile=root.getFile(destinationPath);
+							if (newfile.exists()){
+								final String filename=file.getName();
+								
+								ConfirmRunnable cr=new ConfirmRunnable(getSite().getShell(),
+										"Overwrite file?", 
+										"File " + filename + "exists in QSAR project, " +
+										"folder 'molecules'. " +
+										"Would you like to replace it?");
+								
+								Display.getDefault().syncExec(cr);
+								
+								if (!cr.getAnswer()) skipFile=true;
+
+								else{
+									try {
+										newfile.setContents(file.getContents(), true, true, monitor);
+									} catch (CoreException e) {
+										e.printStackTrace();
+									}
 								}
 
-
-								//Also add to QSAR model
-								MoleculeResourceType mol1=QsarFactory.eINSTANCE.createMoleculeResourceType();
-								mol1.setId(file.getName());
-								mol1.setName(file.getName());
-								mol1.setFile(file.getFullPath().toString());
-								Command cmd=AddCommand.create(editingDomain, moleculeList, 
-										QsarPackage.Literals.MOLECULELIST_TYPE__MOLECULE_RESOURCE, mol1);
-
-								ccmd.append(cmd);
-
+								
+								
+							}else{
+								//Copy it
+								file.copy(destinationPath, true, monitor);
 							}
-						} catch (IOException e) {
-						} catch (BioclipseException e) {
-						} catch (CoreException e) {
+
+							file=root.getFile(destinationPath);
+						}
+
+
+						if (!skipFile){
+							//Also add to QSAR model
+							MoleculeResourceType mol1=QsarFactory.eINSTANCE.createMoleculeResourceType();
+							mol1.setId(file.getName());
+							mol1.setName(file.getName());
+							mol1.setFile(file.getFullPath().toString());
+							Command cmd=AddCommand.create(editingDomain, moleculeList, 
+									QsarPackage.Literals.MOLECULELIST_TYPE__MOLECULE_RESOURCE, mol1);
+
+							ccmd.append(cmd);
 						}
 					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (BioclipseException e) {
+					e.printStackTrace();
+				} catch (CoreException e) {
+					e.printStackTrace();
 				}
-
-				//Execute the CompoundCommand
-				editingDomain.getCommandStack().execute(ccmd); 		
-
-				return Status.OK_STATUS;
 			}
+		}
 
-		};
-
-		job.setUser(true);
-		job.schedule();
+		//Execute the CompoundCommand
+		editingDomain.getCommandStack().execute(ccmd); 		
 
 		return true;
 	}
@@ -303,7 +454,8 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 		IObservableSet knownElements = provider.getKnownElements();
 		IObservableMap[] observeMaps = EMFEditObservables.
 			observeMaps(editingDomain, knownElements, new EStructuralFeature[]{
-					QsarPackage.Literals.MOLECULE_RESOURCE_TYPE__ID});
+					QsarPackage.Literals.MOLECULE_RESOURCE_TYPE__ID/*,
+					QsarPackage.Literals.MOLECULE_RESOURCE_TYPE__NAME*/});
 		ObservableMapLabelProvider labelProvider =
 			new ObservableQSARLabelProvider(observeMaps);
 		molViewer.setLabelProvider(labelProvider);
@@ -653,7 +805,7 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 			return;
 		}
 		
-		addResources(dlg.getMultiResult());
+		addResources(dlg.getMultiResult(), new NullProgressMonitor());
 
 //		for (IResource resource : dlg.getMultiResult()){
 //
@@ -696,12 +848,30 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 			}
 
 			MoleculeResourceType molres=(MoleculeResourceType)obj;
+			
+			CompoundCommand ccmd=new CompoundCommand();
+
+			//First, remove any responses for this moleculeresource
+			if (qsarModel.getResponselist()!=null && qsarModel.getResponselist().getResponse().size()>0)
+			for (ResponseType response : qsarModel.getResponselist().getResponse()){
+				if (response.getMoleculeResource().equalsIgnoreCase(molres.getId())){
+
+					//Schedule this response for removal
+					Command cmd=RemoveCommand.create(editingDomain, 
+							qsarModel.getResponselist(), QsarPackage.Literals.
+							RESPONSES_LIST_TYPE__RESPONSE, response);
+					ccmd.append(cmd);
+				}
+			}
 
 
 			Command cmd=RemoveCommand.create(editingDomain, 
 					moleculeList, QsarPackage.Literals.
 					MOLECULELIST_TYPE__MOLECULE_RESOURCE, molres);
-			editingDomain.getCommandStack().execute(cmd);
+			ccmd.append(cmd);
+			
+			//Execute all commands
+			editingDomain.getCommandStack().execute(ccmd);
 
 		}
 
