@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema targetNamespace="http://www.bioclipse.net/qsar" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.bioclipse.net/qsar">
+<schema targetNamespace="http://www.bioclipse.net/qsar" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.bioclipse.net/qsar" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore">
 
     <element name="qsar" type="tns:qsarType"></element>
     
@@ -44,6 +44,7 @@
     	<attribute name="url" type="string" use="optional"></attribute>
     	<attribute name="file" type="string" use="optional"></attribute>
     	<attribute name="excluded" type="boolean" use="optional"></attribute>
+    	<attribute ecore:transient="true" name="noMols" type="int" default="-1"></attribute>
     </complexType>
 
     <complexType name="descriptorType">
@@ -100,9 +101,12 @@
     <complexType name="responseType">
     	<choice>
     		<element name="value" type="float"></element>
-    		<element name="arrayValues" type="string"></element>
-    	</choice>
-    	<attribute name="moleculeResource" type="string" use="required"></attribute>
+            <element name="arrayValues" type="string"></element>
+        </choice>
+    	<attribute name="moleculeResource" type="string"
+    		use="required">
+    	</attribute>
     	<attribute name="resourceIndex" type="int" use="optional"></attribute>
+    	<attribute ecore:transient="true" name="structureID" type="string" use="optional"></attribute>
     </complexType>
 </schema>

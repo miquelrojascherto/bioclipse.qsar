@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link net.bioclipse.qsar.MoleculeResourceType#getId <em>Id</em>}</li>
  *   <li>{@link net.bioclipse.qsar.MoleculeResourceType#getName <em>Name</em>}</li>
  *   <li>{@link net.bioclipse.qsar.MoleculeResourceType#getNamespace <em>Namespace</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.MoleculeResourceType#getNoMols <em>No Mols</em>}</li>
  *   <li>{@link net.bioclipse.qsar.MoleculeResourceType#getUrl <em>Url</em>}</li>
  * </ul>
  * </p>
@@ -205,6 +206,61 @@ public interface MoleculeResourceType extends EObject {
 	 * @generated
 	 */
 	void setNamespace(String value);
+
+	/**
+	 * Returns the value of the '<em><b>No Mols</b></em>' attribute.
+	 * The default value is <code>"-1"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>No Mols</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>No Mols</em>' attribute.
+	 * @see #isSetNoMols()
+	 * @see #unsetNoMols()
+	 * @see #setNoMols(int)
+	 * @see net.bioclipse.qsar.QsarPackage#getMoleculeResourceType_NoMols()
+	 * @model default="-1" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Int" transient="true"
+	 *        extendedMetaData="kind='attribute' name='noMols'"
+	 * @generated
+	 */
+	int getNoMols();
+
+	/**
+	 * Sets the value of the '{@link net.bioclipse.qsar.MoleculeResourceType#getNoMols <em>No Mols</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>No Mols</em>' attribute.
+	 * @see #isSetNoMols()
+	 * @see #unsetNoMols()
+	 * @see #getNoMols()
+	 * @generated
+	 */
+	void setNoMols(int value);
+
+	/**
+	 * Unsets the value of the '{@link net.bioclipse.qsar.MoleculeResourceType#getNoMols <em>No Mols</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetNoMols()
+	 * @see #getNoMols()
+	 * @see #setNoMols(int)
+	 * @generated
+	 */
+	void unsetNoMols();
+
+	/**
+	 * Returns whether the value of the '{@link net.bioclipse.qsar.MoleculeResourceType#getNoMols <em>No Mols</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>No Mols</em>' attribute is set.
+	 * @see #unsetNoMols()
+	 * @see #getNoMols()
+	 * @see #setNoMols(int)
+	 * @generated
+	 */
+	boolean isSetNoMols();
 
 	/**
 	 * Returns the value of the '<em><b>Url</b></em>' attribute.

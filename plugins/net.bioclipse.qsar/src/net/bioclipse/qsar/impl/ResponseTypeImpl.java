@@ -34,6 +34,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *   <li>{@link net.bioclipse.qsar.impl.ResponseTypeImpl#getArrayValues <em>Array Values</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.ResponseTypeImpl#getMoleculeResource <em>Molecule Resource</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.ResponseTypeImpl#getResourceIndex <em>Resource Index</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.impl.ResponseTypeImpl#getStructureID <em>Structure ID</em>}</li>
  * </ul>
  * </p>
  *
@@ -144,6 +145,26 @@ public class ResponseTypeImpl extends EObjectImpl implements ResponseType {
 	 * @ordered
 	 */
 	protected boolean resourceIndexESet;
+
+	/**
+	 * The default value of the '{@link #getStructureID() <em>Structure ID</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getStructureID()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String STRUCTURE_ID_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getStructureID() <em>Structure ID</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getStructureID()
+	 * @generated
+	 * @ordered
+	 */
+	protected String structureID = STRUCTURE_ID_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -303,6 +324,27 @@ public class ResponseTypeImpl extends EObjectImpl implements ResponseType {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getStructureID() {
+		return structureID;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setStructureID(String newStructureID) {
+		String oldStructureID = structureID;
+		structureID = newStructureID;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.RESPONSE_TYPE__STRUCTURE_ID, oldStructureID, structureID));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -314,6 +356,8 @@ public class ResponseTypeImpl extends EObjectImpl implements ResponseType {
 				return getMoleculeResource();
 			case QsarPackage.RESPONSE_TYPE__RESOURCE_INDEX:
 				return new Integer(getResourceIndex());
+			case QsarPackage.RESPONSE_TYPE__STRUCTURE_ID:
+				return getStructureID();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -337,6 +381,9 @@ public class ResponseTypeImpl extends EObjectImpl implements ResponseType {
 				return;
 			case QsarPackage.RESPONSE_TYPE__RESOURCE_INDEX:
 				setResourceIndex(((Integer)newValue).intValue());
+				return;
+			case QsarPackage.RESPONSE_TYPE__STRUCTURE_ID:
+				setStructureID((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -362,6 +409,9 @@ public class ResponseTypeImpl extends EObjectImpl implements ResponseType {
 			case QsarPackage.RESPONSE_TYPE__RESOURCE_INDEX:
 				unsetResourceIndex();
 				return;
+			case QsarPackage.RESPONSE_TYPE__STRUCTURE_ID:
+				setStructureID(STRUCTURE_ID_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -382,6 +432,8 @@ public class ResponseTypeImpl extends EObjectImpl implements ResponseType {
 				return MOLECULE_RESOURCE_EDEFAULT == null ? moleculeResource != null : !MOLECULE_RESOURCE_EDEFAULT.equals(moleculeResource);
 			case QsarPackage.RESPONSE_TYPE__RESOURCE_INDEX:
 				return isSetResourceIndex();
+			case QsarPackage.RESPONSE_TYPE__STRUCTURE_ID:
+				return STRUCTURE_ID_EDEFAULT == null ? structureID != null : !STRUCTURE_ID_EDEFAULT.equals(structureID);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -404,6 +456,8 @@ public class ResponseTypeImpl extends EObjectImpl implements ResponseType {
 		result.append(moleculeResource);
 		result.append(", resourceIndex: ");
 		if (resourceIndexESet) result.append(resourceIndex); else result.append("<unset>");
+		result.append(", structureID: ");
+		result.append(structureID);
 		result.append(')');
 		return result.toString();
 	}

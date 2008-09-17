@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link net.bioclipse.qsar.ResponseType#getArrayValues <em>Array Values</em>}</li>
  *   <li>{@link net.bioclipse.qsar.ResponseType#getMoleculeResource <em>Molecule Resource</em>}</li>
  *   <li>{@link net.bioclipse.qsar.ResponseType#getResourceIndex <em>Resource Index</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.ResponseType#getStructureID <em>Structure ID</em>}</li>
  * </ul>
  * </p>
  *
@@ -203,5 +204,32 @@ public interface ResponseType extends EObject {
 	 * @generated
 	 */
 	boolean isSetResourceIndex();
+
+	/**
+	 * Returns the value of the '<em><b>Structure ID</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Structure ID</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Structure ID</em>' attribute.
+	 * @see #setStructureID(String)
+	 * @see net.bioclipse.qsar.QsarPackage#getResponseType_StructureID()
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.String" transient="true"
+	 *        extendedMetaData="kind='attribute' name='structureID'"
+	 * @generated
+	 */
+	String getStructureID();
+
+	/**
+	 * Sets the value of the '{@link net.bioclipse.qsar.ResponseType#getStructureID <em>Structure ID</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Structure ID</em>' attribute.
+	 * @see #getStructureID()
+	 * @generated
+	 */
+	void setStructureID(String value);
 
 } // ResponseType

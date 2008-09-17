@@ -13,9 +13,14 @@
  */
 package net.bioclipse.qsar.impl;
 
+import net.bioclipse.cdk.business.Activator;
+import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.qsar.MoleculeResourceType;
 import net.bioclipse.qsar.QsarPackage;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
@@ -35,6 +40,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *   <li>{@link net.bioclipse.qsar.impl.MoleculeResourceTypeImpl#getId <em>Id</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.MoleculeResourceTypeImpl#getName <em>Name</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.MoleculeResourceTypeImpl#getNamespace <em>Namespace</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.impl.MoleculeResourceTypeImpl#getNoMols <em>No Mols</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.MoleculeResourceTypeImpl#getUrl <em>Url</em>}</li>
  * </ul>
  * </p>
@@ -157,6 +163,35 @@ public class MoleculeResourceTypeImpl extends EObjectImpl implements MoleculeRes
 	 * @ordered
 	 */
 	protected String namespace = NAMESPACE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getNoMols() <em>No Mols</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getNoMols()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int NO_MOLS_EDEFAULT = -1;
+
+	/**
+	 * The cached value of the '{@link #getNoMols() <em>No Mols</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getNoMols()
+	 * @generated
+	 * @ordered
+	 */
+	protected int noMols = NO_MOLS_EDEFAULT;
+
+	/**
+	 * This is true if the No Mols attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean noMolsESet;
 
 	/**
 	 * The default value of the '{@link #getUrl() <em>Url</em>}' attribute.
@@ -330,6 +365,64 @@ public class MoleculeResourceTypeImpl extends EObjectImpl implements MoleculeRes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 */
+	public int getNoMols() {
+		if (noMols==-1){
+			noMols=calculateNoMols();
+		}
+		return noMols;
+	}
+
+	/**
+	 * Added by Ola to produce a computed property.
+	 * @return number of mols in file
+	 */
+	private int calculateNoMols() {
+		ICDKManager cdk=Activator.getDefault().getCDKManager();
+		int r=cdk.getNoMolecules(getFile());
+		return r;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setNoMols(int newNoMols) {
+		int oldNoMols = noMols;
+		noMols = newNoMols;
+		boolean oldNoMolsESet = noMolsESet;
+		noMolsESet = true;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.MOLECULE_RESOURCE_TYPE__NO_MOLS, oldNoMols, noMols, !oldNoMolsESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetNoMols() {
+		int oldNoMols = noMols;
+		boolean oldNoMolsESet = noMolsESet;
+		noMols = NO_MOLS_EDEFAULT;
+		noMolsESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, QsarPackage.MOLECULE_RESOURCE_TYPE__NO_MOLS, oldNoMols, NO_MOLS_EDEFAULT, oldNoMolsESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetNoMols() {
+		return noMolsESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getUrl() {
@@ -366,6 +459,8 @@ public class MoleculeResourceTypeImpl extends EObjectImpl implements MoleculeRes
 				return getName();
 			case QsarPackage.MOLECULE_RESOURCE_TYPE__NAMESPACE:
 				return getNamespace();
+			case QsarPackage.MOLECULE_RESOURCE_TYPE__NO_MOLS:
+				return new Integer(getNoMols());
 			case QsarPackage.MOLECULE_RESOURCE_TYPE__URL:
 				return getUrl();
 		}
@@ -394,6 +489,9 @@ public class MoleculeResourceTypeImpl extends EObjectImpl implements MoleculeRes
 				return;
 			case QsarPackage.MOLECULE_RESOURCE_TYPE__NAMESPACE:
 				setNamespace((String)newValue);
+				return;
+			case QsarPackage.MOLECULE_RESOURCE_TYPE__NO_MOLS:
+				setNoMols(((Integer)newValue).intValue());
 				return;
 			case QsarPackage.MOLECULE_RESOURCE_TYPE__URL:
 				setUrl((String)newValue);
@@ -425,6 +523,9 @@ public class MoleculeResourceTypeImpl extends EObjectImpl implements MoleculeRes
 			case QsarPackage.MOLECULE_RESOURCE_TYPE__NAMESPACE:
 				setNamespace(NAMESPACE_EDEFAULT);
 				return;
+			case QsarPackage.MOLECULE_RESOURCE_TYPE__NO_MOLS:
+				unsetNoMols();
+				return;
 			case QsarPackage.MOLECULE_RESOURCE_TYPE__URL:
 				setUrl(URL_EDEFAULT);
 				return;
@@ -450,6 +551,8 @@ public class MoleculeResourceTypeImpl extends EObjectImpl implements MoleculeRes
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case QsarPackage.MOLECULE_RESOURCE_TYPE__NAMESPACE:
 				return NAMESPACE_EDEFAULT == null ? namespace != null : !NAMESPACE_EDEFAULT.equals(namespace);
+			case QsarPackage.MOLECULE_RESOURCE_TYPE__NO_MOLS:
+				return isSetNoMols();
 			case QsarPackage.MOLECULE_RESOURCE_TYPE__URL:
 				return URL_EDEFAULT == null ? url != null : !URL_EDEFAULT.equals(url);
 		}
@@ -476,6 +579,8 @@ public class MoleculeResourceTypeImpl extends EObjectImpl implements MoleculeRes
 		result.append(name);
 		result.append(", namespace: ");
 		result.append(namespace);
+		result.append(", noMols: ");
+		if (noMolsESet) result.append(noMols); else result.append("<unset>");
 		result.append(", url: ");
 		result.append(url);
 		result.append(')');

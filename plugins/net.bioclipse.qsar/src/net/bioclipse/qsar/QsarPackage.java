@@ -368,13 +368,22 @@ public interface QsarPackage extends EPackage {
 	int MOLECULE_RESOURCE_TYPE__NAMESPACE = 4;
 
 	/**
+	 * The feature id for the '<em><b>No Mols</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MOLECULE_RESOURCE_TYPE__NO_MOLS = 5;
+
+	/**
 	 * The feature id for the '<em><b>Url</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MOLECULE_RESOURCE_TYPE__URL = 5;
+	int MOLECULE_RESOURCE_TYPE__URL = 6;
 
 	/**
 	 * The number of structural features of the '<em>Molecule Resource Type</em>' class.
@@ -383,7 +392,7 @@ public interface QsarPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MOLECULE_RESOURCE_TYPE_FEATURE_COUNT = 6;
+	int MOLECULE_RESOURCE_TYPE_FEATURE_COUNT = 7;
 
 	/**
 	 * The meta object id for the '{@link net.bioclipse.qsar.impl.ParameterTypeImpl <em>Parameter Type</em>}' class.
@@ -654,13 +663,22 @@ public interface QsarPackage extends EPackage {
 	int RESPONSE_TYPE__RESOURCE_INDEX = 3;
 
 	/**
+	 * The feature id for the '<em><b>Structure ID</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESPONSE_TYPE__STRUCTURE_ID = 4;
+
+	/**
 	 * The number of structural features of the '<em>Response Type</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int RESPONSE_TYPE_FEATURE_COUNT = 4;
+	int RESPONSE_TYPE_FEATURE_COUNT = 5;
 
 
 	/**
@@ -955,6 +973,17 @@ public interface QsarPackage extends EPackage {
 	EAttribute getMoleculeResourceType_Namespace();
 
 	/**
+	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.MoleculeResourceType#getNoMols <em>No Mols</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>No Mols</em>'.
+	 * @see net.bioclipse.qsar.MoleculeResourceType#getNoMols()
+	 * @see #getMoleculeResourceType()
+	 * @generated
+	 */
+	EAttribute getMoleculeResourceType_NoMols();
+
+	/**
 	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.MoleculeResourceType#getUrl <em>Url</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1224,6 +1253,17 @@ public interface QsarPackage extends EPackage {
 	EAttribute getResponseType_ResourceIndex();
 
 	/**
+	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.ResponseType#getStructureID <em>Structure ID</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Structure ID</em>'.
+	 * @see net.bioclipse.qsar.ResponseType#getStructureID()
+	 * @see #getResponseType()
+	 * @generated
+	 */
+	EAttribute getResponseType_StructureID();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1474,6 +1514,14 @@ public interface QsarPackage extends EPackage {
 		EAttribute MOLECULE_RESOURCE_TYPE__NAMESPACE = eINSTANCE.getMoleculeResourceType_Namespace();
 
 		/**
+		 * The meta object literal for the '<em><b>No Mols</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MOLECULE_RESOURCE_TYPE__NO_MOLS = eINSTANCE.getMoleculeResourceType_NoMols();
+
+		/**
 		 * The meta object literal for the '<em><b>Url</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1684,6 +1732,14 @@ public interface QsarPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute RESPONSE_TYPE__RESOURCE_INDEX = eINSTANCE.getResponseType_ResourceIndex();
+
+		/**
+		 * The meta object literal for the '<em><b>Structure ID</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RESPONSE_TYPE__STRUCTURE_ID = eINSTANCE.getResponseType_StructureID();
 
 	}
 

@@ -41,6 +41,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MoleculeResourceType/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MoleculeResourceType/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MoleculeResourceType/namespace"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MoleculeResourceType/noMols"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MoleculeResourceType/url"/>
     </genClasses>
     <genClasses ecoreClass="qsar.ecore#//ParameterType">
@@ -72,6 +73,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResponseType/arrayValues"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResponseType/moleculeResource"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResponseType/resourceIndex"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResponseType/structureID"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>
