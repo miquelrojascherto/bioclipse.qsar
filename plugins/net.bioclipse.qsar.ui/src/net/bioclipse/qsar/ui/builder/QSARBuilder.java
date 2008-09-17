@@ -221,7 +221,6 @@ public class QSARBuilder extends IncrementalProjectBuilder
     * @param monitor the progress monitor
     */
    private void buildQSARfile(IProgressMonitor monitor) {
-      monitor.beginTask("Building QSAR project", 4);
 
       if (!deleteAuditMarkers(getProject()))
          return; 
@@ -231,7 +230,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
       
       //Scan plugin for molecules and descriptors to build
       logger.debug("Building descriptors...");
-      scanQsarFile();
+      scanQsarFile(monitor);
       
       if (checkCancel(monitor))
          return;
@@ -241,67 +240,68 @@ public class QSARBuilder extends IncrementalProjectBuilder
       monitor.done();
    }
 
-private void scanQsarFile() {
+private void scanQsarFile(IProgressMonitor monitor) {
 
-	   //We need to read in qsar.xml and pasre it with EMF
-	   //=================================================
+	//We need to read in qsar.xml and pasre it with EMF
+	//=================================================
 
-	   // Create a resource set.
-	   ResourceSet resourceSet = new ResourceSetImpl();
+	monitor.beginTask("Building QSAR project", 5);
+	monitor.subTask("Reading qsar file");
 
-	   // Register the default resource factory -- only needed for stand-alone!
-	   resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
-			   Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
+	// Create a resource set.
+	ResourceSet resourceSet = new ResourceSetImpl();
 
-	   // Register the package -- only needed for stand-alone!
-	   @SuppressWarnings("unused")
-	   QsarPackage qsarPackage=QsarPackage.eINSTANCE;
+	// Register the default resource factory -- only needed for stand-alone!
+	resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
+			Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
 
-	   IFile qsarfile = getProject().getFile("qsar.xml");
-	  logger.debug("QSAR file: " + qsarfile.getRawLocation().toOSString());
+	// Register the package -- only needed for stand-alone!
+	@SuppressWarnings("unused")
+	QsarPackage qsarPackage=QsarPackage.eINSTANCE;
 
-	   // Get the URI of the model file.
-	   URI fileURI = URI.createFileURI(qsarfile.getRawLocation().toOSString());
+	IFile qsarfile = getProject().getFile("qsar.xml");
+	logger.debug("QSAR file: " + qsarfile.getRawLocation().toOSString());
 
-	   // Demand load the resource for this file.
-	   Resource resource = resourceSet.getResource(fileURI, true);
+	// Get the URI of the model file.
+	URI fileURI = URI.createFileURI(qsarfile.getRawLocation().toOSString());
 
-	   DocumentRoot root=(DocumentRoot) resource.getContents().get(0);
+	// Demand load the resource for this file.
+	Resource resource = resourceSet.getResource(fileURI, true);
 
-	   QsarType qsarType=root.getQsar();
+	DocumentRoot root=(DocumentRoot) resource.getContents().get(0);
+
+	QsarType qsarType=root.getQsar();
 	   
+	//Extract molecules from qsar model
+	//=================================
+	//Verify and load mols
+	if (qsarType.getMoleculelist()==null){
+		logger.debug("No moleculesList.");
+		return;
+	}
 
-	   
-	   //Extract molecules from qsar model
-	   //=================================
-	   //Verify and load mols
-	   if (qsarType.getMoleculelist()==null){
-		   logger.debug("No moleculesList.");
-		   return;
-	   }
-	   
-	   MoleculelistType mollist = qsarType.getMoleculelist();
-	   
-	   if (mollist.getMoleculeResource()==null || mollist.getMoleculeResource().size()<=0){
-		   logger.debug("No molecules in MoleculesList.");
-		   return;
-	   }
-	   
-	   ICDKManager cdk=Activator.getDefault().getCDKManager();
-	   
-	   //Get list of IMolecules from MoleculeResources
-	   Map<ICDKMolecule, String> molMap=new HashMap<ICDKMolecule, String>();
+	MoleculelistType mollist = qsarType.getMoleculelist();
 
-	   //Get list of responses from qsar.xml matching resources
-//	   List<String> responseStrings=new ArrayList<String>();
+	if (mollist.getMoleculeResource()==null || mollist.getMoleculeResource().size()<=0){
+		logger.debug("No molecules in MoleculesList.");
+		return;
+	}
 
-	   //For all IMolecules, add to list with responses as properties in AC
-	   for (MoleculeResourceType mol : mollist.getMoleculeResource()){
-		   logger.debug(" ++ Mol: " + mol.getId() + " [" + mol.getFile()+"]");
-		   try {
+	ICDKManager cdk=Activator.getDefault().getCDKManager();
+
+	//Get list of IMolecules from MoleculeResources
+	Map<ICDKMolecule, String> molMap=new HashMap<ICDKMolecule, String>();
+
+	//Get list of responses from qsar.xml matching resources
+	//	   List<String> responseStrings=new ArrayList<String>();
+
+	//For all IMolecules, add to list with responses as properties in AC
+	for (MoleculeResourceType mol : mollist.getMoleculeResource()){
+		logger.debug(" ++ Mol: " + mol.getId() + " [" + mol.getFile()+"]");
+		try {
 			List<ICDKMolecule> newMols=cdk.loadMolecules(mol.getFile());
 			logger.debug("    - contained " + newMols.size() + " imols");
-			
+
 			//We need to add responses to the molecules from the qsarType
 			//Add response values as property
 			for (ResponseType response : qsarType.getResponselist().getResponse()){
@@ -315,7 +315,7 @@ private void scanQsarFile() {
 										QSARConstants.QSAR_RESPONSE_PROPERTY, 
 										response.getArrayValues());
 								molMap.put(newMols.get(i), response.getArrayValues());
-//								responseStrings.add(response.getArrayValues());
+								//								responseStrings.add(response.getArrayValues());
 								logger.debug("Added value: " + 
 										response.getArrayValues() + 
 										"to mol: " + mol + " ix " + i);
@@ -329,38 +329,41 @@ private void scanQsarFile() {
 										response.getValue() + 
 										" to mol: " + mol.getId() + " ix " + i);
 								molMap.put(newMols.get(i), ""+response.getValue());
-//								responseStrings.add(""+response.getValue());
+								//								responseStrings.add(""+response.getValue());
 							}
 						}
-//						if (!(molMap.containsKey(newMols.get(i)))){
-//							molMap.put(newMols.get(i), ""+Float.NaN);
-//						}
+						//						if (!(molMap.containsKey(newMols.get(i)))){
+						//							molMap.put(newMols.get(i), ""+Float.NaN);
+						//						}
 					}
 				}
 
 			}
-			
+
 			//We've gone through all existing responses. Add missing responses now!
 			for (ICDKMolecule nmol : newMols){
 				if (!(molMap.containsKey(nmol))){
+					nmol.getAtomContainer().setProperty(
+							QSARConstants.QSAR_RESPONSE_PROPERTY, 
+							Float.NaN);
 					molMap.put(nmol, ""+Float.NaN);
 					logger.debug("Molecule: " + nmol.getName() +" had no response, " +
-							"so added NaN");
+					"so added NaN");
 				}
 			}
 
-//			mols.addAll(newMols);
-		   } catch (IOException e) {
-			   e.printStackTrace();
-		   } catch (BioclipseException e) {
-			   e.printStackTrace();
-		   } catch (CoreException e) {
-			   e.printStackTrace();
-		   }
-	   }
-	   
-	   logger.debug("==== Total loaded mols: " + molMap.size());
-	   
+			//			mols.addAll(newMols);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (BioclipseException e) {
+			e.printStackTrace();
+		} catch (CoreException e) {
+			e.printStackTrace();
+		}
+	}
+
+	logger.debug("==== Total loaded mols: " + molMap.size());
+
 	   //Get lists from molsMap
 	   List<ICDKMolecule> sortedMols=new ArrayList<ICDKMolecule>();
 	   sortedMols.addAll((Collection<? extends ICDKMolecule>) molMap.keySet());
@@ -399,15 +402,21 @@ private void scanQsarFile() {
 		   logger.debug(" ** desc: " + desc.getId() + " [" + impl.getId() + "]");
 	   }
 	   
+	   
+		monitor.worked(1);
+		monitor.subTask("Calculating descriptors");
 
 	   //Calculate descriptor for mols
 	   //=============================
-	   IQsarManager qsar = net.bioclipse.qsar.init.Activator.getDefault().getQsarManager();
+
+		IQsarManager qsar = net.bioclipse.qsar.init.Activator.getDefault().getQsarManager();
 //	   Map<? extends IMolecule, List<IDescriptorResult>> resultMap = qsar.calculateNoParams(sortedMols, descriptorIDs);
 	   Map<? extends IMolecule, List<IDescriptorResult>> resultMap = qsar.calculate(sortedMols, desclist.getDescriptor());
 
 
-	   
+		monitor.worked(1);
+		monitor.subTask("Processing descriptor results");
+
 	   
 	   //Calculate dimension for dataset
 	   //================================
@@ -458,6 +467,7 @@ private void scanQsarFile() {
 	   //Allocate list of error messages to output at the end
 	   List<String> listOfErrorMessages=new ArrayList<String>();
 
+	   
 	   //Store descriptor results
 	   //================================
 	   int cnt=0;
@@ -532,6 +542,10 @@ private void scanQsarFile() {
 		   }
 		   
 
+			monitor.worked(1);
+			monitor.subTask("Saving molecules with values");
+
+
 		   //Serialize to CML files
 		   //======================
 		   try {
@@ -575,7 +589,10 @@ private void scanQsarFile() {
 
 	   }
 
-	   
+	
+		monitor.worked(1);
+		monitor.subTask("Creating dataset");
+
 	   //Serialize dataset to file
 	   //=========================
 	   logger.debug("============================================");
@@ -658,6 +675,8 @@ private void scanQsarFile() {
 		   logger.debug("No errors to report");
 	   }
 	   logger.debug("============================================");
+
+		monitor.done();
 
 }
 
