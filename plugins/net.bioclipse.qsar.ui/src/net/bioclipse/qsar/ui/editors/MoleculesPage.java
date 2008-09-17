@@ -455,7 +455,9 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 		IObservableMap[] observeMaps = EMFEditObservables.
 			observeMaps(editingDomain, knownElements, new EStructuralFeature[]{
 					QsarPackage.Literals.MOLECULE_RESOURCE_TYPE__ID,
-					QsarPackage.Literals.MOLECULE_RESOURCE_TYPE__NO_MOLS});
+					QsarPackage.Literals.MOLECULE_RESOURCE_TYPE__NO_MOLS,
+					QsarPackage.Literals.MOLECULE_RESOURCE_TYPE__NO2D,
+					QsarPackage.Literals.MOLECULE_RESOURCE_TYPE__NO3D});
 		ObservableMapLabelProvider labelProvider =
 			new ObservableQSARLabelProvider(observeMaps);
 		molViewer.setLabelProvider(labelProvider);
