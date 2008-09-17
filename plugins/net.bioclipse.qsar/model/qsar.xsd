@@ -45,6 +45,8 @@
     	<attribute name="file" type="string" use="optional"></attribute>
     	<attribute name="excluded" type="boolean" use="optional"></attribute>
     	<attribute ecore:transient="true" name="noMols" type="int" default="-1"></attribute>
+    	<attribute ecore:transient="true" name="no2d" type="int" default="-1"></attribute>
+    	<attribute ecore:transient="true" name="no3d" type="int" default="-1"></attribute>
     </complexType>
 
     <complexType name="descriptorType">

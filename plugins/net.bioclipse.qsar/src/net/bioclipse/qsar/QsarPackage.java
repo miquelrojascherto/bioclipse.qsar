@@ -368,13 +368,31 @@ public interface QsarPackage extends EPackage {
 	int MOLECULE_RESOURCE_TYPE__NAMESPACE = 4;
 
 	/**
+	 * The feature id for the '<em><b>No2d</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MOLECULE_RESOURCE_TYPE__NO2D = 5;
+
+	/**
+	 * The feature id for the '<em><b>No3d</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MOLECULE_RESOURCE_TYPE__NO3D = 6;
+
+	/**
 	 * The feature id for the '<em><b>No Mols</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MOLECULE_RESOURCE_TYPE__NO_MOLS = 5;
+	int MOLECULE_RESOURCE_TYPE__NO_MOLS = 7;
 
 	/**
 	 * The feature id for the '<em><b>Url</b></em>' attribute.
@@ -383,7 +401,7 @@ public interface QsarPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MOLECULE_RESOURCE_TYPE__URL = 6;
+	int MOLECULE_RESOURCE_TYPE__URL = 8;
 
 	/**
 	 * The number of structural features of the '<em>Molecule Resource Type</em>' class.
@@ -392,7 +410,7 @@ public interface QsarPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MOLECULE_RESOURCE_TYPE_FEATURE_COUNT = 7;
+	int MOLECULE_RESOURCE_TYPE_FEATURE_COUNT = 9;
 
 	/**
 	 * The meta object id for the '{@link net.bioclipse.qsar.impl.ParameterTypeImpl <em>Parameter Type</em>}' class.
@@ -973,6 +991,28 @@ public interface QsarPackage extends EPackage {
 	EAttribute getMoleculeResourceType_Namespace();
 
 	/**
+	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.MoleculeResourceType#getNo2d <em>No2d</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>No2d</em>'.
+	 * @see net.bioclipse.qsar.MoleculeResourceType#getNo2d()
+	 * @see #getMoleculeResourceType()
+	 * @generated
+	 */
+	EAttribute getMoleculeResourceType_No2d();
+
+	/**
+	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.MoleculeResourceType#getNo3d <em>No3d</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>No3d</em>'.
+	 * @see net.bioclipse.qsar.MoleculeResourceType#getNo3d()
+	 * @see #getMoleculeResourceType()
+	 * @generated
+	 */
+	EAttribute getMoleculeResourceType_No3d();
+
+	/**
 	 * Returns the meta object for the attribute '{@link net.bioclipse.qsar.MoleculeResourceType#getNoMols <em>No Mols</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1512,6 +1552,22 @@ public interface QsarPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute MOLECULE_RESOURCE_TYPE__NAMESPACE = eINSTANCE.getMoleculeResourceType_Namespace();
+
+		/**
+		 * The meta object literal for the '<em><b>No2d</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MOLECULE_RESOURCE_TYPE__NO2D = eINSTANCE.getMoleculeResourceType_No2d();
+
+		/**
+		 * The meta object literal for the '<em><b>No3d</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MOLECULE_RESOURCE_TYPE__NO3D = eINSTANCE.getMoleculeResourceType_No3d();
 
 		/**
 		 * The meta object literal for the '<em><b>No Mols</b></em>' attribute feature.

@@ -28,6 +28,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link net.bioclipse.qsar.MoleculeResourceType#getId <em>Id</em>}</li>
  *   <li>{@link net.bioclipse.qsar.MoleculeResourceType#getName <em>Name</em>}</li>
  *   <li>{@link net.bioclipse.qsar.MoleculeResourceType#getNamespace <em>Namespace</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.MoleculeResourceType#getNo2d <em>No2d</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.MoleculeResourceType#getNo3d <em>No3d</em>}</li>
  *   <li>{@link net.bioclipse.qsar.MoleculeResourceType#getNoMols <em>No Mols</em>}</li>
  *   <li>{@link net.bioclipse.qsar.MoleculeResourceType#getUrl <em>Url</em>}</li>
  * </ul>
@@ -206,6 +208,116 @@ public interface MoleculeResourceType extends EObject {
 	 * @generated
 	 */
 	void setNamespace(String value);
+
+	/**
+	 * Returns the value of the '<em><b>No2d</b></em>' attribute.
+	 * The default value is <code>"-1"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>No2d</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>No2d</em>' attribute.
+	 * @see #isSetNo2d()
+	 * @see #unsetNo2d()
+	 * @see #setNo2d(int)
+	 * @see net.bioclipse.qsar.QsarPackage#getMoleculeResourceType_No2d()
+	 * @model default="-1" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Int" transient="true"
+	 *        extendedMetaData="kind='attribute' name='no2d'"
+	 * @generated
+	 */
+	int getNo2d();
+
+	/**
+	 * Sets the value of the '{@link net.bioclipse.qsar.MoleculeResourceType#getNo2d <em>No2d</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>No2d</em>' attribute.
+	 * @see #isSetNo2d()
+	 * @see #unsetNo2d()
+	 * @see #getNo2d()
+	 * @generated
+	 */
+	void setNo2d(int value);
+
+	/**
+	 * Unsets the value of the '{@link net.bioclipse.qsar.MoleculeResourceType#getNo2d <em>No2d</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetNo2d()
+	 * @see #getNo2d()
+	 * @see #setNo2d(int)
+	 * @generated
+	 */
+	void unsetNo2d();
+
+	/**
+	 * Returns whether the value of the '{@link net.bioclipse.qsar.MoleculeResourceType#getNo2d <em>No2d</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>No2d</em>' attribute is set.
+	 * @see #unsetNo2d()
+	 * @see #getNo2d()
+	 * @see #setNo2d(int)
+	 * @generated
+	 */
+	boolean isSetNo2d();
+
+	/**
+	 * Returns the value of the '<em><b>No3d</b></em>' attribute.
+	 * The default value is <code>"-1"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>No3d</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>No3d</em>' attribute.
+	 * @see #isSetNo3d()
+	 * @see #unsetNo3d()
+	 * @see #setNo3d(int)
+	 * @see net.bioclipse.qsar.QsarPackage#getMoleculeResourceType_No3d()
+	 * @model default="-1" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Int" transient="true"
+	 *        extendedMetaData="kind='attribute' name='no3d'"
+	 * @generated
+	 */
+	int getNo3d();
+
+	/**
+	 * Sets the value of the '{@link net.bioclipse.qsar.MoleculeResourceType#getNo3d <em>No3d</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>No3d</em>' attribute.
+	 * @see #isSetNo3d()
+	 * @see #unsetNo3d()
+	 * @see #getNo3d()
+	 * @generated
+	 */
+	void setNo3d(int value);
+
+	/**
+	 * Unsets the value of the '{@link net.bioclipse.qsar.MoleculeResourceType#getNo3d <em>No3d</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetNo3d()
+	 * @see #getNo3d()
+	 * @see #setNo3d(int)
+	 * @generated
+	 */
+	void unsetNo3d();
+
+	/**
+	 * Returns whether the value of the '{@link net.bioclipse.qsar.MoleculeResourceType#getNo3d <em>No3d</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>No3d</em>' attribute is set.
+	 * @see #unsetNo3d()
+	 * @see #getNo3d()
+	 * @see #setNo3d(int)
+	 * @generated
+	 */
+	boolean isSetNo3d();
 
 	/**
 	 * Returns the value of the '<em><b>No Mols</b></em>' attribute.

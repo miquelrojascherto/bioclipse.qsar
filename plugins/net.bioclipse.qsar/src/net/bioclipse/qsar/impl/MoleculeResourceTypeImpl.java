@@ -15,6 +15,7 @@ package net.bioclipse.qsar.impl;
 
 import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
+import net.bioclipse.cdk.domain.MoleculesInfo;
 import net.bioclipse.qsar.MoleculeResourceType;
 import net.bioclipse.qsar.QsarPackage;
 
@@ -40,6 +41,8 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *   <li>{@link net.bioclipse.qsar.impl.MoleculeResourceTypeImpl#getId <em>Id</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.MoleculeResourceTypeImpl#getName <em>Name</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.MoleculeResourceTypeImpl#getNamespace <em>Namespace</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.impl.MoleculeResourceTypeImpl#getNo2d <em>No2d</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.impl.MoleculeResourceTypeImpl#getNo3d <em>No3d</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.MoleculeResourceTypeImpl#getNoMols <em>No Mols</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.MoleculeResourceTypeImpl#getUrl <em>Url</em>}</li>
  * </ul>
@@ -163,6 +166,64 @@ public class MoleculeResourceTypeImpl extends EObjectImpl implements MoleculeRes
 	 * @ordered
 	 */
 	protected String namespace = NAMESPACE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getNo2d() <em>No2d</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getNo2d()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int NO2D_EDEFAULT = -1;
+
+	/**
+	 * The cached value of the '{@link #getNo2d() <em>No2d</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getNo2d()
+	 * @generated
+	 * @ordered
+	 */
+	protected int no2d = NO2D_EDEFAULT;
+
+	/**
+	 * This is true if the No2d attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean no2dESet;
+
+	/**
+	 * The default value of the '{@link #getNo3d() <em>No3d</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getNo3d()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int NO3D_EDEFAULT = -1;
+
+	/**
+	 * The cached value of the '{@link #getNo3d() <em>No3d</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getNo3d()
+	 * @generated
+	 * @ordered
+	 */
+	protected int no3d = NO3D_EDEFAULT;
+
+	/**
+	 * This is true if the No3d attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean no3dESet;
 
 	/**
 	 * The default value of the '{@link #getNoMols() <em>No Mols</em>}' attribute.
@@ -365,23 +426,131 @@ public class MoleculeResourceTypeImpl extends EObjectImpl implements MoleculeRes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public int getNo2d() {
+		if (no2d==-1)
+			calculateInfo();
+
+		return no2d;
+	}
+
+	private void calculateInfo() {
+		ICDKManager cdk=Activator.getDefault().getCDKManager();
+		MoleculesInfo r=cdk.getInfo(getFile());
+		setNoMols(r.getNoMols());
+		setNo2d(r.getNoMols2d());
+		setNo3d(r.getNoMols3d());
+		
+	}
+
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setNo2d(int newNo2d) {
+		int oldNo2d = no2d;
+		no2d = newNo2d;
+		boolean oldNo2dESet = no2dESet;
+		no2dESet = true;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.MOLECULE_RESOURCE_TYPE__NO2D, oldNo2d, no2d, !oldNo2dESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetNo2d() {
+		int oldNo2d = no2d;
+		boolean oldNo2dESet = no2dESet;
+		no2d = NO2D_EDEFAULT;
+		no2dESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, QsarPackage.MOLECULE_RESOURCE_TYPE__NO2D, oldNo2d, NO2D_EDEFAULT, oldNo2dESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetNo2d() {
+		return no2dESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public int getNo3d() {
+		if (no3d==-1)
+			calculateInfo();
+
+		return no3d;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setNo3d(int newNo3d) {
+		int oldNo3d = no3d;
+		no3d = newNo3d;
+		boolean oldNo3dESet = no3dESet;
+		no3dESet = true;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.MOLECULE_RESOURCE_TYPE__NO3D, oldNo3d, no3d, !oldNo3dESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetNo3d() {
+		int oldNo3d = no3d;
+		boolean oldNo3dESet = no3dESet;
+		no3d = NO3D_EDEFAULT;
+		no3dESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, QsarPackage.MOLECULE_RESOURCE_TYPE__NO3D, oldNo3d, NO3D_EDEFAULT, oldNo3dESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetNo3d() {
+		return no3dESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 */
 	public int getNoMols() {
 		if (noMols==-1){
-			noMols=calculateNoMols();
+			calculateInfo();
 		}
 		return noMols;
 	}
 
-	/**
-	 * Added by Ola to produce a computed property.
-	 * @return number of mols in file
-	 */
-	private int calculateNoMols() {
-		ICDKManager cdk=Activator.getDefault().getCDKManager();
-		int r=cdk.getNoMolecules(getFile());
-		return r;
-	}
+//	/**
+//	 * Added by Ola to produce a computed property.
+//	 * @return number of mols in file
+//	 */
+//	private int calculateNoMols() {
+//		ICDKManager cdk=Activator.getDefault().getCDKManager();
+//		int r=cdk.getNoMolecules(getFile());
+//		return r;
+//	}
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -459,6 +628,10 @@ public class MoleculeResourceTypeImpl extends EObjectImpl implements MoleculeRes
 				return getName();
 			case QsarPackage.MOLECULE_RESOURCE_TYPE__NAMESPACE:
 				return getNamespace();
+			case QsarPackage.MOLECULE_RESOURCE_TYPE__NO2D:
+				return new Integer(getNo2d());
+			case QsarPackage.MOLECULE_RESOURCE_TYPE__NO3D:
+				return new Integer(getNo3d());
 			case QsarPackage.MOLECULE_RESOURCE_TYPE__NO_MOLS:
 				return new Integer(getNoMols());
 			case QsarPackage.MOLECULE_RESOURCE_TYPE__URL:
@@ -489,6 +662,12 @@ public class MoleculeResourceTypeImpl extends EObjectImpl implements MoleculeRes
 				return;
 			case QsarPackage.MOLECULE_RESOURCE_TYPE__NAMESPACE:
 				setNamespace((String)newValue);
+				return;
+			case QsarPackage.MOLECULE_RESOURCE_TYPE__NO2D:
+				setNo2d(((Integer)newValue).intValue());
+				return;
+			case QsarPackage.MOLECULE_RESOURCE_TYPE__NO3D:
+				setNo3d(((Integer)newValue).intValue());
 				return;
 			case QsarPackage.MOLECULE_RESOURCE_TYPE__NO_MOLS:
 				setNoMols(((Integer)newValue).intValue());
@@ -523,6 +702,12 @@ public class MoleculeResourceTypeImpl extends EObjectImpl implements MoleculeRes
 			case QsarPackage.MOLECULE_RESOURCE_TYPE__NAMESPACE:
 				setNamespace(NAMESPACE_EDEFAULT);
 				return;
+			case QsarPackage.MOLECULE_RESOURCE_TYPE__NO2D:
+				unsetNo2d();
+				return;
+			case QsarPackage.MOLECULE_RESOURCE_TYPE__NO3D:
+				unsetNo3d();
+				return;
 			case QsarPackage.MOLECULE_RESOURCE_TYPE__NO_MOLS:
 				unsetNoMols();
 				return;
@@ -551,6 +736,10 @@ public class MoleculeResourceTypeImpl extends EObjectImpl implements MoleculeRes
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case QsarPackage.MOLECULE_RESOURCE_TYPE__NAMESPACE:
 				return NAMESPACE_EDEFAULT == null ? namespace != null : !NAMESPACE_EDEFAULT.equals(namespace);
+			case QsarPackage.MOLECULE_RESOURCE_TYPE__NO2D:
+				return isSetNo2d();
+			case QsarPackage.MOLECULE_RESOURCE_TYPE__NO3D:
+				return isSetNo3d();
 			case QsarPackage.MOLECULE_RESOURCE_TYPE__NO_MOLS:
 				return isSetNoMols();
 			case QsarPackage.MOLECULE_RESOURCE_TYPE__URL:
@@ -579,6 +768,10 @@ public class MoleculeResourceTypeImpl extends EObjectImpl implements MoleculeRes
 		result.append(name);
 		result.append(", namespace: ");
 		result.append(namespace);
+		result.append(", no2d: ");
+		if (no2dESet) result.append(no2d); else result.append("<unset>");
+		result.append(", no3d: ");
+		if (no3dESet) result.append(no3d); else result.append("<unset>");
 		result.append(", noMols: ");
 		if (noMolsESet) result.append(noMols); else result.append("<unset>");
 		result.append(", url: ");

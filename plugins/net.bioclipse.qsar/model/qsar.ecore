@@ -180,6 +180,20 @@
         <details key="name" value="namespace"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="no2d" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Int"
+        transient="true" defaultValueLiteral="-1" unsettable="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="attribute"/>
+        <details key="name" value="no2d"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="no3d" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Int"
+        transient="true" defaultValueLiteral="-1" unsettable="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="attribute"/>
+        <details key="name" value="no3d"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="noMols" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Int"
         transient="true" defaultValueLiteral="-1" unsettable="true">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">

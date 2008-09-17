@@ -454,7 +454,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getMoleculeResourceType_NoMols() {
+	public EAttribute getMoleculeResourceType_No2d() {
 		return (EAttribute)moleculeResourceTypeEClass.getEStructuralFeatures().get(5);
 	}
 
@@ -463,8 +463,26 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getMoleculeResourceType_Url() {
+	public EAttribute getMoleculeResourceType_No3d() {
 		return (EAttribute)moleculeResourceTypeEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getMoleculeResourceType_NoMols() {
+		return (EAttribute)moleculeResourceTypeEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getMoleculeResourceType_Url() {
+		return (EAttribute)moleculeResourceTypeEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -752,6 +770,8 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 		createEAttribute(moleculeResourceTypeEClass, MOLECULE_RESOURCE_TYPE__ID);
 		createEAttribute(moleculeResourceTypeEClass, MOLECULE_RESOURCE_TYPE__NAME);
 		createEAttribute(moleculeResourceTypeEClass, MOLECULE_RESOURCE_TYPE__NAMESPACE);
+		createEAttribute(moleculeResourceTypeEClass, MOLECULE_RESOURCE_TYPE__NO2D);
+		createEAttribute(moleculeResourceTypeEClass, MOLECULE_RESOURCE_TYPE__NO3D);
 		createEAttribute(moleculeResourceTypeEClass, MOLECULE_RESOURCE_TYPE__NO_MOLS);
 		createEAttribute(moleculeResourceTypeEClass, MOLECULE_RESOURCE_TYPE__URL);
 
@@ -852,6 +872,8 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 		initEAttribute(getMoleculeResourceType_Id(), theXMLTypePackage.getString(), "id", null, 1, 1, MoleculeResourceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getMoleculeResourceType_Name(), theXMLTypePackage.getString(), "name", null, 1, 1, MoleculeResourceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getMoleculeResourceType_Namespace(), theXMLTypePackage.getString(), "namespace", null, 0, 1, MoleculeResourceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getMoleculeResourceType_No2d(), theXMLTypePackage.getInt(), "no2d", "-1", 0, 1, MoleculeResourceType.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getMoleculeResourceType_No3d(), theXMLTypePackage.getInt(), "no3d", "-1", 0, 1, MoleculeResourceType.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getMoleculeResourceType_NoMols(), theXMLTypePackage.getInt(), "noMols", "-1", 0, 1, MoleculeResourceType.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getMoleculeResourceType_Url(), theXMLTypePackage.getString(), "url", null, 0, 1, MoleculeResourceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -1095,6 +1117,20 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "namespace"
+		   });		
+		addAnnotation
+		  (getMoleculeResourceType_No2d(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "no2d"
+		   });		
+		addAnnotation
+		  (getMoleculeResourceType_No3d(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "no3d"
 		   });		
 		addAnnotation
 		  (getMoleculeResourceType_NoMols(), 
