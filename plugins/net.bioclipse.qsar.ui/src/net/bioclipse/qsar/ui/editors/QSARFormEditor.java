@@ -96,10 +96,11 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
 
 	private ResourceSetImpl resourceSet;
 
-	private int textEditorIndex;
-
-	private int molPageIndex;
-	private int descPageIndex;
+	public int textEditorIndex;
+	public int molPageIndex;
+	public int descPageIndex;
+	public int responsesPageIndex;
+	public int overviewPageIndex;
 
 	private AdapterFactoryEditingDomain editingDomain;
 
@@ -158,7 +159,8 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
 
 	private ResponsesPage responsesPage;
 
-	private int responsesPageIndex;
+	private OverviewPage overviewPage;
+
 
 	
 	/**
@@ -288,8 +290,12 @@ public class QSARFormEditor extends FormEditor implements IResourceChangeListene
 		molPage=new MoleculesPage(this, qsarModel, editingDomain, selectionProvider);
 		descPage=new DescriptorsPage(this, qsarModel, editingDomain, selectionProvider);
 		responsesPage=new ResponsesPage(this, qsarModel, editingDomain, selectionProvider);
+		overviewPage=new OverviewPage(this, qsarModel, editingDomain, selectionProvider);
 
-        try {
+		try {
+            //Overview page comes first with summary
+            overviewPageIndex=addPage(overviewPage);
+
             //Molecules page with interactions
             molPageIndex=addPage(molPage);
 
