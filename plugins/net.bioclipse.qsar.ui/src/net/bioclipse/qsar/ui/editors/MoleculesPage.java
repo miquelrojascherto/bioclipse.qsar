@@ -424,12 +424,12 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 							ccmd.append(cmd);
 						}
 					}
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (BioclipseException e) {
-					e.printStackTrace();
-				} catch (CoreException e) {
-					e.printStackTrace();
+				} catch (final Exception e) {
+					Display.getDefault().syncExec(new Runnable(){
+						public void run() {
+							showError("Could not add molecule file. \n\nReason: " + e.getMessage());
+						}
+					});
 				}
 			}
 		}
@@ -885,6 +885,11 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
                                        message );
     }
 
+    private void showError(String message) {
+        MessageDialog.openError( getSite().getShell(),
+                                       "Information",
+                                       message );
+    }
 
 
     public void activatePage() {
