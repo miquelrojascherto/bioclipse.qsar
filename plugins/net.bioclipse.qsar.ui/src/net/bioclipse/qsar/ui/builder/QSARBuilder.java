@@ -492,7 +492,7 @@ private void scanQsarFile() {
 					   logger.error("    Result " + i + ": ERROR. Message: " + 
 							   dres.getErrorMessage() );
 
-					   listOfErrorMessages.add(dres.getErrorMessage());
+					   listOfErrorMessages.add("Molecule: " + cdkmol.getName() + " : " + dres.getErrorMessage());
 
 					   //NaN has to symbolize error for now as well
 					   result.add(Double.NaN);
@@ -646,6 +646,16 @@ private void scanQsarFile() {
 	   } catch (CoreException e) {
 		   logger.error("Writing of file dataset.csv FAILED");
 		   e.printStackTrace();
+	   }
+	   logger.debug("============================================");
+	   if (listOfErrorMessages.size()>0){
+		   logger.error("Finished with the following errors: ");
+		   for (String er: listOfErrorMessages){
+			   logger.error(er);
+		   }
+		   
+	   }else{
+		   logger.debug("No errors to report");
 	   }
 	   logger.debug("============================================");
 
