@@ -414,20 +414,36 @@ private void scanQsarFile() {
 	   int numMolecules=resultMap.keySet().size();
 
 	   //Hope that first is representative TODO: create better approach here, first could contain errors!
-	   List<IDescriptorResult> molres2=(List<IDescriptorResult>) resultMap.values().toArray()[0];
+	   List<IDescriptorResult> descrResWIthNoErrors=null;
+	   IMolecule firstMolWithoutDescriptorErrors=null;
+	   for (IMolecule mol : resultMap.keySet()){
+		   boolean hasErrors=false;
+		   List<IDescriptorResult> rlist=resultMap.get(mol);
+		   for (IDescriptorResult dr : rlist){
+			   if (dr.getErrorMessage()!=null){
+				   hasErrors=true;
+			   }
+		   }
+		   if (hasErrors==false){
+			   //We have found one without errors, use this for getting labels!
+			   descrResWIthNoErrors=rlist;
+			   firstMolWithoutDescriptorErrors=mol;
+		   }
+	   }
+//	   List<IDescriptorResult> firstDescrResWIthNoErrors=(List<IDescriptorResult>) resultMap.values().toArray()[0];
 
 	   //Total amount of values =value columns in matrix
 	   int numTotalDescrValues=0;
 
 	   //Total number of descriptors
-	   int numDescriptors=molres2.size();
+	   int numDescriptors=descrResWIthNoErrors.size();
 
 	   //One int per descriptor to show how many values are there (for array results of a descriptor)
 	   int[] descColumns=new int[numDescriptors];
 
 	   //Calculate total number of descriptor values and number of values per descriptor
 	   int descIndex=0;
-	   for (IDescriptorResult res : molres2){
+	   for (IDescriptorResult res : descrResWIthNoErrors){
 		   numTotalDescrValues=numTotalDescrValues+res.getLabels().length;
 		   descColumns[descIndex]=res.getLabels().length;
 		   descIndex++;
@@ -492,8 +508,9 @@ private void scanQsarFile() {
 
 					   //Assume same for all molecules as we calculate the same descriptors!
 					   //TODO: what if first molecule has errors? UPDATE!
-					   if (cnt==1)
+					   if (mol==firstMolWithoutDescriptorErrors){
 						   columnLabels.add(dres.getLabels()[i]);
+					   }
 
 				   }
 
@@ -599,7 +616,11 @@ private void scanQsarFile() {
 		   
 		   //Add descriptor values
 		   for (int j=0;j< dataset[i].length; j++){
-			   buffer.append(SEPARATOR + formatter.format(dataset[i][j]));
+			   String toAppend="";
+			   //Serialize NaN as String
+			   if (Double.isNaN(dataset[i][j])) toAppend="NaN";
+			   else toAppend=formatter.format(dataset[i][j]);
+			   buffer.append(SEPARATOR + toAppend);
 		   }
 		   buffer.append(NEWLINE);
 	   }
