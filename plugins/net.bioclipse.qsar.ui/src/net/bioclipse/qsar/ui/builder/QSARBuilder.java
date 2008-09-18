@@ -240,13 +240,10 @@ public class QSARBuilder extends IncrementalProjectBuilder
       monitor.done();
    }
 
-private void scanQsarFile(IProgressMonitor monitor) {
+private void scanQsarFile(IProgressMonitor monitor) throws OperationCanceledException {
 
 	//We need to read in qsar.xml and pasre it with EMF
 	//=================================================
-
-	monitor.beginTask("Building QSAR project", 5);
-	monitor.subTask("Reading qsar file");
 
 	// Create a resource set.
 	ResourceSet resourceSet = new ResourceSetImpl();
@@ -403,17 +400,25 @@ private void scanQsarFile(IProgressMonitor monitor) {
 	   }
 	   
 	   
-		monitor.worked(1);
-		monitor.subTask("Calculating descriptors");
 
 	   //Calculate descriptor for mols
 	   //=============================
+		//We have desclist.getDescriptor().size descriptors
+		//We have sortedMols.size molecules
+		
+	   int jobSize=desclist.getDescriptor().size() * sortedMols.size()+1;
+		monitor.beginTask("Building QSAR project", jobSize);
+
+		if (checkCancel(monitor))
+	        return;
 
 		IQsarManager qsar = net.bioclipse.qsar.init.Activator.getDefault().getQsarManager();
 //	   Map<? extends IMolecule, List<IDescriptorResult>> resultMap = qsar.calculateNoParams(sortedMols, descriptorIDs);
-	   Map<? extends IMolecule, List<IDescriptorResult>> resultMap = qsar.calculate(sortedMols, desclist.getDescriptor());
+	   Map<? extends IMolecule, List<IDescriptorResult>> resultMap = qsar.calculate(sortedMols, desclist.getDescriptor(), monitor);
 
 
+	    if (checkCancel(monitor))
+	        return;
 		monitor.worked(1);
 		monitor.subTask("Processing descriptor results");
 
