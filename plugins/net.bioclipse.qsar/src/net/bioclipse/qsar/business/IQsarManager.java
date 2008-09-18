@@ -15,6 +15,8 @@ package net.bioclipse.qsar.business;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
 import net.bioclipse.core.PublishedMethod;
@@ -40,8 +42,10 @@ public interface IQsarManager extends IBioclipseManager{
 	public List<IDescriptorResult> calculate(IMolecule molecule,
 			List<DescriptorType> descriptorTypes);
     
-    public Map<? extends IMolecule, List<IDescriptorResult>> calculate(List<? extends IMolecule> molecules, 
-    													List<DescriptorType> descriptorTypes);
+    public Map<? extends IMolecule, List<IDescriptorResult>> calculate(
+    		List<? extends IMolecule> molecules, 
+    		List<DescriptorType> descriptorTypes, IProgressMonitor monitor)
+    		throws OperationCanceledException;
 
     @Recorded
     @PublishedMethod( methodSummary = "Calculates a list of descriptors for a " +

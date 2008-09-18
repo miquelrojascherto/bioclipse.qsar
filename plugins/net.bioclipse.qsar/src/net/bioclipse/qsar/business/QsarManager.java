@@ -27,6 +27,9 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
@@ -607,7 +610,7 @@ public class QsarManager implements IQsarManager{
 	 * @return
 	 */
 	public Map<? extends IMolecule, List<IDescriptorResult>> calculate(List<? extends IMolecule> molecules, 
-			List<DescriptorType> descriptorTypes) {
+			List<DescriptorType> descriptorTypes, IProgressMonitor monitor)   throws OperationCanceledException{
 
 		Map<IMolecule, List<IDescriptorResult>> allResults=
 			 						new HashMap<IMolecule, List<IDescriptorResult>>();
@@ -636,7 +639,7 @@ public class QsarManager implements IQsarManager{
 				IDescriptorCalculator calculator=provider.getCalculator();
 				Map<? extends IMolecule, List<IDescriptorResult>> results = 
 						calculator.calculateDescriptor(molecules, 
-													   descriptorTypesForProvider);
+													   descriptorTypesForProvider, monitor);
 				
 				//Add these results to the molecule
 				for (IMolecule mol : results.keySet()){
@@ -759,7 +762,7 @@ public class QsarManager implements IQsarManager{
 		List<IMolecule> mollist=new ArrayList<IMolecule>();
 		mollist.add(molecule);
 
-		Map<? extends IMolecule, List<IDescriptorResult>> ret = calculate(mollist, descriptorTypes);
+		Map<? extends IMolecule, List<IDescriptorResult>> ret = calculate(mollist, descriptorTypes, new NullProgressMonitor());
 		
 		return ret.get(molecule);
 	}
@@ -788,7 +791,7 @@ public class QsarManager implements IQsarManager{
 			descTypes.add(descType);
 		}
 		
-		return calculate(molecules, descTypes);
+		return calculate(molecules, descTypes, new NullProgressMonitor());
 	}
 
 
