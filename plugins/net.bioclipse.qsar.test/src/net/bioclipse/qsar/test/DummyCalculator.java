@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+
 import net.bioclipse.core.domain.IMolecule;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.descriptor.DescriptorResult;
@@ -20,7 +22,7 @@ public class DummyCalculator implements IDescriptorCalculator {
 	 */
 	public Map<IMolecule, List<IDescriptorResult>> calculateDescriptor(
 			List<? extends IMolecule> molecules, 
-			List<DescriptorType> descriptorTypes){
+			List<DescriptorType> descriptorTypes, IProgressMonitor monitor){
 
 		Map<IMolecule, List<IDescriptorResult>> allResults = 
 			                  new HashMap<IMolecule, List<IDescriptorResult>>();
