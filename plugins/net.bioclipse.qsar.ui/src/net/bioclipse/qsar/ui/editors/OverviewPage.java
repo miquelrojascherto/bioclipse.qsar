@@ -61,6 +61,18 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider{
 
 	private QSARFormEditor editor;
 
+	private Label lblNumFiles;
+	private Label lblNumStructures;
+	private Label lblNumDescriptors;
+	private Label lblNumResponses;
+	private Label lblNumMissingResponses;
+	private Label lblDatasetRows;
+	private Label lblDatasetColumns;
+
+	private Label lblCalculationTime;
+
+	private Label lblCalculationStatus;
+
 
 	public OverviewPage(FormEditor editor, QsarType qsarModel, 
 			EditingDomain editingDomain, QsarEditorSelectionProvider selectionProvider) {
@@ -105,10 +117,49 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider{
 		createExportSection(form, toolkit);
 
 		toolkit.paintBordersFor(form);
+		
+		updateValues();
 
 	}
 
 
+
+	/**
+	 * Update the values based on the QSAR model
+	 */
+	private void updateValues() {
+
+		if (qsarModel.getDescriptorlist()!=null && 
+				qsarModel.getDescriptorlist().getDescriptor()!=null){
+			int ndesc=qsarModel.getDescriptorlist().getDescriptor().size();
+			lblNumDescriptors.setText(""+ndesc);
+		}
+
+		if (qsarModel.getMoleculelist()!=null && 
+				qsarModel.getMoleculelist().getMoleculeResource()!=null){
+			int ndesc=qsarModel.getMoleculelist().getMoleculeResource().size();
+			lblNumFiles.setText(""+ndesc);
+		}
+
+		if (qsarModel.getResponselist()!=null && 
+				qsarModel.getResponselist().getResponse()!=null){
+			int ndesc=qsarModel.getResponselist().getResponse().size();
+			lblNumResponses.setText(""+ndesc);
+		}
+
+		
+		
+		lblNumStructures.setText("N/A");
+		lblNumMissingResponses.setText("N/A");
+
+		//Should be either Calculating, finished, and finsished with <a>errors</a>
+		lblCalculationStatus.setText("N/A");
+
+		lblCalculationTime.setText("N/A");
+		lblDatasetRows.setText("N/A");
+		lblDatasetColumns.setText("N/A");
+		
+	}
 
 
 	private void createMoleculesSection(final ScrolledForm form,
@@ -140,29 +191,21 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider{
 		sectionClient.setLayout(new GridLayout(2,false));
 		molSection.setClient(sectionClient);
 		
-		Label lblMoltext=toolkit.createLabel(sectionClient, "# Molecule files in analysis:");
+		Label lblMoltext=toolkit.createLabel(sectionClient, "Files in analysis:");
 		GridData gdtxt=new GridData(GridData.FILL_BOTH);
 		lblMoltext.setLayoutData(gdtxt);
 
-		Label lblMolsValue=toolkit.createLabel(sectionClient, "5");
+		lblNumFiles=toolkit.createLabel(sectionClient, "N/A");
 		GridData gdtxt2=new GridData(GridData.FILL_BOTH);
-		lblMolsValue.setLayoutData(gdtxt2);
+		lblNumFiles.setLayoutData(gdtxt2);
 
-		Label lblMolRestext=toolkit.createLabel(sectionClient, "# Molecules in analysis:");
+		Label lblMolRestext=toolkit.createLabel(sectionClient, "Structures in analysis:");
 		GridData gdtxtres=new GridData(GridData.FILL_BOTH);
 		lblMolRestext.setLayoutData(gdtxtres);
 
-		Label lblMolsResValue=toolkit.createLabel(sectionClient, "97");
+		lblNumStructures=toolkit.createLabel(sectionClient, "N/A");
 		GridData gdtxt2res=new GridData(GridData.FILL_BOTH);
-		lblMolsResValue.setLayoutData(gdtxt2res);
-
-		Label lblMolErrorText=toolkit.createLabel(sectionClient, "Errors: ");
-		GridData gdtxt3=new GridData(GridData.FILL_BOTH);
-		lblMolErrorText.setLayoutData(gdtxt3);
-
-		Label lblMolsErrorValue=toolkit.createLabel(sectionClient, "None");
-		GridData gdtxt4=new GridData(GridData.FILL_BOTH);
-		lblMolsErrorValue.setLayoutData(gdtxt4);
+		lblNumStructures.setLayoutData(gdtxt2res);
 
 		//Hyperlink to build
 		Hyperlink link = toolkit.createHyperlink(sectionClient,"Edit molecules...", SWT.WRAP);
@@ -205,21 +248,13 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider{
 		sectionClient.setLayout(new GridLayout(2,false));
 		molSection.setClient(sectionClient);
 		
-		Label lblMoltext=toolkit.createLabel(sectionClient, "# Descriptors selected:");
+		Label lblMoltext=toolkit.createLabel(sectionClient, "Descriptors:");
 		GridData gdtxt=new GridData(GridData.FILL_BOTH);
 		lblMoltext.setLayoutData(gdtxt);
 
-		Label lblMolsValue=toolkit.createLabel(sectionClient, "12");
+		lblNumDescriptors=toolkit.createLabel(sectionClient, "N/A");
 		GridData gdtxt2=new GridData(GridData.FILL_BOTH);
-		lblMolsValue.setLayoutData(gdtxt2);
-
-		Label lblMolErrorText=toolkit.createLabel(sectionClient, "Errors: ");
-		GridData gdtxt3=new GridData(GridData.FILL_BOTH);
-		lblMolErrorText.setLayoutData(gdtxt3);
-
-		Label lblMolsErrorValue=toolkit.createLabel(sectionClient, "None");
-		GridData gdtxt4=new GridData(GridData.FILL_BOTH);
-		lblMolsErrorValue.setLayoutData(gdtxt4);
+		lblNumDescriptors.setLayoutData(gdtxt2);
 
 		//Hyperlink to build
 		Hyperlink link = toolkit.createHyperlink(sectionClient,"Edit descriptors...", SWT.WRAP);
@@ -263,21 +298,21 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider{
 		sectionClient.setLayout(new GridLayout(2,false));
 		molSection.setClient(sectionClient);
 		
-		Label lblMoltext=toolkit.createLabel(sectionClient, "# Responses:");
+		Label lblMoltext=toolkit.createLabel(sectionClient, "Responses:");
 		GridData gdtxt=new GridData(GridData.FILL_BOTH);
 		lblMoltext.setLayoutData(gdtxt);
 
-		Label lblMolsValue=toolkit.createLabel(sectionClient, "42");
+		lblNumResponses=toolkit.createLabel(sectionClient, "N/A");
 		GridData gdtxt2=new GridData(GridData.FILL_BOTH);
-		lblMolsValue.setLayoutData(gdtxt2);
+		lblNumResponses.setLayoutData(gdtxt2);
 
-		Label lblMolErrorText=toolkit.createLabel(sectionClient, "# Molecules without responses: ");
+		Label lblMolErrorText=toolkit.createLabel(sectionClient, "Missing responses: ");
 		GridData gdtxt3=new GridData(GridData.FILL_BOTH);
 		lblMolErrorText.setLayoutData(gdtxt3);
 
-		Label lblMolsErrorValue=toolkit.createLabel(sectionClient, "8");
+		lblNumMissingResponses=toolkit.createLabel(sectionClient, "N/A");
 		GridData gdtxt4=new GridData(GridData.FILL_BOTH);
-		lblMolsErrorValue.setLayoutData(gdtxt4);
+		lblNumMissingResponses.setLayoutData(gdtxt4);
 
 		//Hyperlink to build
 		Hyperlink link = toolkit.createHyperlink(sectionClient,"Edit responses...", SWT.WRAP);
@@ -320,21 +355,37 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider{
 			sectionClient.setLayout(new GridLayout(2,false));
 			molSection.setClient(sectionClient);
 			
+			Label lblMoltext51=toolkit.createLabel(sectionClient, "Status");
+			GridData gdtxt51=new GridData(GridData.FILL_BOTH);
+			lblMoltext51.setLayoutData(gdtxt51);
+
+			lblCalculationStatus=toolkit.createLabel(sectionClient, "N/A");
+			GridData gdtxt76=new GridData(GridData.FILL_BOTH);
+			lblCalculationStatus.setLayoutData(gdtxt76);
+
+			Label lblMoltext5=toolkit.createLabel(sectionClient, "Calculation time:");
+			GridData gdtxt5=new GridData(GridData.FILL_BOTH);
+			lblMoltext5.setLayoutData(gdtxt5);
+
+			lblCalculationTime=toolkit.createLabel(sectionClient, "N/A");
+			GridData gdtxt7=new GridData(GridData.FILL_BOTH);
+			lblCalculationTime.setLayoutData(gdtxt7);
+
 			Label lblMoltext=toolkit.createLabel(sectionClient, "Dataset # rows:");
 			GridData gdtxt=new GridData(GridData.FILL_BOTH);
 			lblMoltext.setLayoutData(gdtxt);
 
-			Label lblMolsValue=toolkit.createLabel(sectionClient, "13");
+			lblDatasetRows=toolkit.createLabel(sectionClient, "N/A");
 			GridData gdtxt2=new GridData(GridData.FILL_BOTH);
-			lblMolsValue.setLayoutData(gdtxt2);
+			lblDatasetRows.setLayoutData(gdtxt2);
 
 			Label lblMolErrorText=toolkit.createLabel(sectionClient, "Dataset # columns: ");
 			GridData gdtxt3=new GridData(GridData.FILL_BOTH);
 			lblMolErrorText.setLayoutData(gdtxt3);
 
-			Label lblMolsErrorValue=toolkit.createLabel(sectionClient, "45");
+			lblDatasetColumns=toolkit.createLabel(sectionClient, "N/A");
 			GridData gdtxt4=new GridData(GridData.FILL_BOTH);
-			lblMolsErrorValue.setLayoutData(gdtxt4);
+			lblDatasetColumns.setLayoutData(gdtxt4);
 
 			//Hyperlink to build
 			Hyperlink link = toolkit.createHyperlink(sectionClient,"Trigger full build...", SWT.WRAP);
