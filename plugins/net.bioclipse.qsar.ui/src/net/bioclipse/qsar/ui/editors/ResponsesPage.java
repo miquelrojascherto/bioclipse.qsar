@@ -163,7 +163,10 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
 				if (response.getArrayValues()!=null)
 					return response.getArrayValues();
 				else
-					return ""+response.getValue();
+					if (Float.isNaN(response.getValue()))
+						return "";
+					else
+						return ""+response.getValue();
     		}
     	});
         
@@ -183,11 +186,15 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
 
 			@Override
 			protected Object getValue(Object element) {
-    			ResponseType response = (ResponseType)element;
+				ResponseType response = (ResponseType)element;
 				if (response.getArrayValues()!=null)
 					return response.getArrayValues();
-				else
-					return ""+response.getValue();
+				else{
+					if (Float.isNaN(response.getValue()))
+						return "";
+					else
+						return ""+response.getValue();
+				}
 			}
 
 			@Override
