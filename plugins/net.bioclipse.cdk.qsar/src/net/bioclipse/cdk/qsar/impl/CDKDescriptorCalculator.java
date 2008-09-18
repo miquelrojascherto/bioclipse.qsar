@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.emf.common.util.EList;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.AromaticityCalculator;
@@ -100,6 +102,10 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
 			descriptors.add("org.openscience.cdk.qsar.descriptors.molecular.LargestChainDescriptor");
 			descriptors.add("org.openscience.cdk.qsar.descriptors.molecular.KierHallSmartsDescriptor");
 			descriptors.add("org.openscience.cdk.qsar.descriptors.molecular.KappaShapeIndicesDescriptor");
+			
+			//Why is this not added?
+//			descriptors.add("org.openscience.cdk.qsar.descriptors.molecular.IPMolecularLearningDescriptor");
+
 			descriptors.add("org.openscience.cdk.qsar.descriptors.molecular.HBondDonorCountDescriptor");
 			descriptors.add("org.openscience.cdk.qsar.descriptors.molecular.HBondAcceptorCountDescriptor");
 			descriptors.add("org.openscience.cdk.qsar.descriptors.molecular.GravitationalIndexDescriptor");
@@ -137,7 +143,9 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
     
     
 	public Map<? extends IMolecule, List<IDescriptorResult>> calculateDescriptor(
-			List<? extends IMolecule> molecules, List<DescriptorType> descriptorTypes) {
+			List<? extends IMolecule> molecules, 
+			List<DescriptorType> descriptorTypes, 
+			IProgressMonitor monitor) throws OperationCanceledException {
 		
 		Map<IMolecule, List<IDescriptorResult>> allResults=
 						new HashMap<IMolecule, List<IDescriptorResult>>();
@@ -146,8 +154,7 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
 			try {
 				ICDKMolecule cdkmol=cdk.create(mol);
 				
-				List<IDescriptorResult> retlist = doCalculate(cdkmol, descriptorTypes);
-				
+				List<IDescriptorResult> retlist = doCalculate(cdkmol, descriptorTypes, monitor);
 				allResults.put(mol, retlist);
 				
 			} catch (BioclipseException e) {
@@ -164,12 +171,15 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
 	
 	/**
 	 * Calculate descriptors for a single molecule
+	 * @param monitor 
 	 * @param mol Input molecule
 	 * @param descriptorInstances2 List<String> of descriptor IDs
 	 * @return IDescriptorResult with results of the calculation
 	 * @throws BioclipseException 
 	 */
-	private List<IDescriptorResult> doCalculate(ICDKMolecule cdkmol, List<DescriptorType> descriptorTypes){
+	private List<IDescriptorResult> doCalculate(ICDKMolecule cdkmol, 
+			List<DescriptorType> descriptorTypes, 
+			IProgressMonitor monitor)  throws OperationCanceledException{
 
 		//Get atomcontainer from IMolecule
 		IAtomContainer container=cdkmol.getAtomContainer();
@@ -187,9 +197,18 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
 		//Loop over all descriptors
 		//=========================
 		for (DescriptorType descType : descriptorTypes){
+
+			if (monitor.isCanceled()) {
+				throw new OperationCanceledException();
+			}
+
+
 			String descriptorID=descType.getId();			
 			logger.debug("Calculating descriptor: " + descriptorID + "for mol: " + cdkmol.getName());
-
+			monitor.subTask("Molecule: " + cdkmol.getName() + "\nDescriptor: " + descriptorID);
+			monitor.worked(1);
+			
+			
 			//This is where we store the result
 			DescriptorResult res=new DescriptorResult();
 			res.setDescriptorId(descriptorID);
@@ -431,6 +450,5 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
 
 		return null;
 	}
-
 
 }

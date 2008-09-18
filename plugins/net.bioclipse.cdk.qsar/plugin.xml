@@ -182,7 +182,7 @@
                   description="Calculates the number of hydrogen bond donors using a slightly simplified version of the PHACIR atom types."
                   name="HBondDonorCount">
             </descriptorImpl>
-             <descriptorImpl
+             <!--descriptorImpl
                   id="org.openscience.cdk.qsar.descriptors.molecular.IPMolecularLearningDescriptor"
                   definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ip"
                   description="returns the ionization potential of a molecule."
@@ -192,7 +192,7 @@
                         description="If true lone pairs are added to the molecule."
                         key="addlp">
                   </parameter>
-            </descriptorImpl>
+            </descriptorImpl-->
              <descriptorImpl
                   id="org.openscience.cdk.qsar.descriptors.molecular.KappaShapeIndicesDescriptor"
                   definition="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierValues"
