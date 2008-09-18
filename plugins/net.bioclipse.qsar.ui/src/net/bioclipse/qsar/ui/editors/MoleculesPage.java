@@ -14,6 +14,7 @@ package net.bioclipse.qsar.ui.editors;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -234,7 +235,15 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 						if (resources.size()<=0) return Status.CANCEL_STATUS;
 
 						//Add resources to model and molecules folder is necessary
-						addResources(resources.toArray(new IResource[0]), monitor);
+						try{
+							addResources(resources.toArray(new IResource[0]), monitor);
+						}catch (final UnsupportedOperationException e){
+							Display.getDefault().syncExec(new Runnable(){
+								public void run() {
+									showError("Error adding files: " + e.getMessage());
+								}
+							});
+						}
 
 						Display.getDefault().syncExec(new Runnable(){
 
@@ -365,6 +374,15 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 			if (resource instanceof IFile) {
 				IFile file = (IFile) resource;
 				boolean skipFile=false;
+				
+				//Check if this file is already in model
+				for (MoleculeResourceType existingRes : moleculeList.getMoleculeResource()){
+					if (existingRes.getName().equals(file.getName())){
+						throw new UnsupportedOperationException("File: " + 
+								file.getName() + 
+								" already exists in QSAR analysis.");
+					}
+				}
 
 				try {
 					//Verify this is a file with at least one molecule
