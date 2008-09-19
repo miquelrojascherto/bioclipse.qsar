@@ -319,7 +319,7 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 	protected IResource copyFileToMoleculesFolder(String path, IProgressMonitor monitor) {
 
 		java.io.File file=new java.io.File(path);
-		String filename=file.getName();
+		final String filename=file.getName();
 
 		FileInputStream instream;
 		IFile newfile=null;
@@ -332,11 +332,38 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 			newfile=activeProject.getFile(newpath);
 
 			if (newfile.exists()){
-				boolean answer=MessageDialog.openQuestion(getSite().getShell(), 
-						"Overwrite file?", "File " + filename + "exists in project " +
-						"folder 'molecules'. " +
-				"Would you like to replace it?");
-				if (!answer) return null;
+			    
+			    final boolean[] valueIsSet = {false};
+			    final boolean[] answer     = {false};
+			    
+			    Display.getDefault().asyncExec( new Runnable() {
+                    public void run() {
+                        synchronized ( valueIsSet ) {
+                            answer[0] = MessageDialog.openQuestion(
+                                            getSite().getShell(), 
+                                            "Overwrite file?", 
+                                            "File " + filename + "exists in " 
+                                              + "project folder 'molecules'. " 
+                                              + "Would you like to replace "
+                                              + "it?" );
+                            valueIsSet[0] = true;
+                            valueIsSet.notifyAll();
+                        }
+                    }
+                } );
+			    
+			    synchronized ( valueIsSet ) {
+			        while ( !valueIsSet[0] ) {
+			            try {
+                            valueIsSet.wait();
+                        } 
+			            catch ( InterruptedException e ) {
+                            continue;
+                        }
+			        }
+                }
+
+				if (!answer[0]) return null;
 
 				newfile.setContents(instream, true,false, monitor);
 
