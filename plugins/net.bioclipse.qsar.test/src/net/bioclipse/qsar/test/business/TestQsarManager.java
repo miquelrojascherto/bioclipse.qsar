@@ -8,7 +8,7 @@ import java.util.Map;
 
 import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.domain.IMolecule;
-import net.bioclipse.core.domain.SmilesMolecule;
+import net.bioclipse.core.domain.SMILESMolecule;
 import net.bioclipse.qsar.QSARConstants;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.business.QsarManager;
@@ -394,7 +394,7 @@ public class TestQsarManager {
 	@Test
 	public void testCalculateSingleMolSingleDescriptor(){
 
-		IMolecule mol=new SmilesMolecule("C1CCCCC1CC(CC)CC");
+		IMolecule mol=new SMILESMolecule("C1CCCCC1CC(CC)CC");
 		String descriptorID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain";
 		
 		IDescriptorResult res=qsar.calculate(mol, descriptorID);
@@ -412,7 +412,7 @@ public class TestQsarManager {
 	@Test
 	public void testCalculateDescriptorWithError(){
 
-		IMolecule mol=new SmilesMolecule("C1CCCCC1CC(CC)CC");
+		IMolecule mol=new SMILESMolecule("C1CCCCC1CC(CC)CC");
 		String descriptorID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticBondsCount";
 
 		IDescriptorResult res=qsar.calculate(mol, descriptorID);
@@ -430,8 +430,8 @@ public class TestQsarManager {
 	@Test
 	public void testCalculateMultipleMolMultipleDescriptor() throws BioclipseException{
 		
-		IMolecule mol1=new SmilesMolecule("C1CCCCC1CC(CC)CC");
-		IMolecule mol2=new SmilesMolecule("C1CCCCC1CC(CC)CCCCCO");
+		IMolecule mol1=new SMILESMolecule("C1CCCCC1CC(CC)CC");
+		IMolecule mol2=new SMILESMolecule("C1CCCCC1CC(CC)CCCCCO");
 //		String descriptorID="net.bioclipse.qsar.test.descriptor3";
 //		String descriptorID2="net.bioclipse.qsar.test.descriptor2";
 		String descriptorID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain";
@@ -464,25 +464,25 @@ public class TestQsarManager {
 		assertNull(dres2.getErrorMessage());
 		assertNull(dres22.getErrorMessage());
 
-		System.out.println("Mol: " + mol1.getSmiles());
+		System.out.println("Mol: " + mol1.getSMILES());
 		System.out.println("Desc " + dres1.getDescriptorId() +": " + 
 				dres1.getLabels()[0] + "=" + dres1.getValues()[0] +", " + 
 				dres1.getLabels()[1] + "=" + dres1.getValues()[1] +", " + 
 				dres1.getLabels()[2] + "=" + dres1.getValues()[2] +", ");
 
-		System.out.println("Mol: " + mol1.getSmiles());
+		System.out.println("Mol: " + mol1.getSMILES());
 		System.out.println("Desc " + dres11.getDescriptorId() +": " + 
 				dres11.getLabels()[0] + "=" + dres11.getValues()[0] +", " + 
 				dres11.getLabels()[1] + "=" + dres11.getValues()[1] +", " + 
 				dres11.getLabels()[2] + "=" + dres11.getValues()[2] +", ");
 
-		System.out.println("Mol: " + mol2.getSmiles());
+		System.out.println("Mol: " + mol2.getSMILES());
 		System.out.println("Desc " + dres2.getDescriptorId() +": " + 
 				dres2.getLabels()[0] + "=" + dres2.getValues()[0] +", " + 
 				dres2.getLabels()[1] + "=" + dres2.getValues()[1] +", " + 
 				dres2.getLabels()[2] + "=" + dres2.getValues()[2] +", ");
 
-		System.out.println("Mol: " + mol2.getSmiles());
+		System.out.println("Mol: " + mol2.getSMILES());
 		System.out.println("Desc " + dres22.getDescriptorId() +": " + 
 				dres22.getLabels()[0] + "=" + dres22.getValues()[0] +", " + 
 				dres22.getLabels()[1] + "=" + dres22.getValues()[1] +", " + 
