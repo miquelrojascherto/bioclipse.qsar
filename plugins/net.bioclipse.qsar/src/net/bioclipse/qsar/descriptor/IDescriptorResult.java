@@ -8,35 +8,23 @@
  * Contributors:
  *     Egon Willighagen - core API and implementation
  *******************************************************************************/
-
 package net.bioclipse.qsar.descriptor;
-
 /**
  * Interface for results of a descriptorcalculation
  * @author ola
  *
  */
 public interface IDescriptorResult {
-
-	String getDescriptorId();
-
-	void setDescriptorId(String descriptorId);
-
-	String[] getLabels();
-
-	void setLabels(String[] labels);
-
-	Float[] getValues();
-
-	void setValues(Float[] values);
-
-	/**
-	 * Should be null if no error
-	 * @return
-	 */
-	String getErrorMessage();
-
-	void setErrorMessage(String errorMessage);
-
-	
+        String getDescriptorId();
+        void setDescriptorId(String descriptorId);
+        String[] getLabels();
+        void setLabels(String[] labels);
+        Float[] getValues();
+        void setValues(Float[] values);
+        /**
+         * Should be null if no error
+         * @return
+         */
+        String getErrorMessage();
+        void setErrorMessage(String errorMessage);
 }

@@ -9,34 +9,26 @@
  *     Ola Spjuth
  *     
  ******************************************************************************/
-
 package net.bioclipse.qsar.business;
-
 import net.bioclipse.qsar.init.Activator;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExecutableExtension;
 import org.eclipse.core.runtime.IExecutableExtensionFactory;
-
 /**
  * 
  * @author ola
  */
 public class QsarManagerFactory implements IExecutableExtension, 
                                               IExecutableExtensionFactory {
-
     private Object qsarManager;
-    
     public void setInitializationData(IConfigurationElement config,
             String propertyName, Object data) throws CoreException {
-        
         qsarManager = Activator.getDefault().getQsarManager();
         if(qsarManager==null) {
             qsarManager = new Object();
         }
     }
-
     public Object create() throws CoreException {
         return qsarManager;
     }
