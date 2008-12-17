@@ -9,13 +9,11 @@
  *    Ola Spjuth - initial API and implementation
  *******************************************************************************/
 package net.bioclipse.qsar.ui.editors;
-
 import java.lang.reflect.InvocationTargetException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.qsar.DescriptorType;
@@ -32,7 +30,6 @@ import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorModel;
 import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
-
 import org.apache.log4j.Logger;
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.map.IObservableMap;
@@ -106,147 +103,106 @@ import org.eclipse.ui.forms.events.ExpansionEvent;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
-
 public class DescriptorsPage extends FormPage implements IEditingDomainProvider, IViewerProvider, IPageChangedListener{
-
     private TreeViewer descViewer;
     private Tree descTree;
-
     private TableViewer rightViewer;
     private Table rightTable;
-
     private static final Logger logger = Logger.getLogger(MoleculesPage.class);
-    
     ICDKManager cdk;
     DecimalFormat formatter;
-    
     private QsarEditorSelectionProvider selectionProvider;
-	private EditingDomain editingDomain;
-
-	/**
-	 * This list of Descriptors in the qsar model. Also used as input to 
-	 * rightViewer, containing the selected descrriptors
-	 */
-	private DescriptorlistType descriptorList;
-	
-	IQsarManager qsar;
-	
-	private OnlyWithImplFilter onlyWithImplFilter = new OnlyWithImplFilter();
-
+        private EditingDomain editingDomain;
+        /**
+         * This list of Descriptors in the qsar model. Also used as input to 
+         * rightViewer, containing the selected descrriptors
+         */
+        private DescriptorlistType descriptorList;
+        IQsarManager qsar;
+        private OnlyWithImplFilter onlyWithImplFilter = new OnlyWithImplFilter();
 //	private EList<DescriptorimplType> providerList;
-	private QsarType qsarModel;
+        private QsarType qsarModel;
 private TableViewer paramsViewer;
 private Table paramsTable;
-
 //	private List<DescriptorInstance> selectedDescriptors;
-
-    
-	public DescriptorsPage(FormEditor editor, QsarType qsarModel, 
-			EditingDomain editingDomain, QsarEditorSelectionProvider selectionProvider) {
-
-		super(editor, "qsar.descriptors", "Descriptors");
-		this.editingDomain=editingDomain;
-
-		//Get Managers via OSGI
+        public DescriptorsPage(FormEditor editor, QsarType qsarModel, 
+                        EditingDomain editingDomain, QsarEditorSelectionProvider selectionProvider) {
+                super(editor, "qsar.descriptors", "Descriptors");
+                this.editingDomain=editingDomain;
+                //Get Managers via OSGI
         qsar=net.bioclipse.qsar.init.Activator.getDefault().getQsarManager();
-		cdk=Activator.getDefault().getCDKManager();
-		this.qsarModel = qsarModel;
-
-		formatter = new DecimalFormat("0.00");
+                cdk=Activator.getDefault().getCDKManager();
+                this.qsarModel = qsarModel;
+                formatter = new DecimalFormat("0.00");
         this.selectionProvider=selectionProvider;
-
-		//Get descriptorList from qsar model, init if empty (should not be)
+                //Get descriptorList from qsar model, init if empty (should not be)
         descriptorList=qsarModel.getDescriptorlist();
-		if (descriptorList==null){
-			descriptorList=QsarFactory.eINSTANCE.createDescriptorlistType();
-			qsarModel.setDescriptorlist(descriptorList);
-		}
-		
-		editor.addPageChangedListener(this);
-
-	}
-
-
+                if (descriptorList==null){
+                        descriptorList=QsarFactory.eINSTANCE.createDescriptorlistType();
+                        qsarModel.setDescriptorlist(descriptorList);
+                }
+                editor.addPageChangedListener(this);
+        }
     /**
      * Add content to form
      */
     @Override
     protected void createFormContent(IManagedForm managedForm) {
-
         ScrolledForm form = managedForm.getForm();
         FormToolkit toolkit = managedForm.getToolkit();
         form.setText("Descriptors for QSAR analysis");
         toolkit.decorateFormHeading(form.getForm());
-        
-		IProject project=((QSARFormEditor)getEditor()).getActiveProject();
+                IProject project=((QSARFormEditor)getEditor()).getActiveProject();
         ToolbarHelper.setupToolbar(form, project);
-        
 //        setupToolbar(form);
-        
 //        form.setBackgroundImage(FormArticlePlugin.getDefault().getImage(FormArticlePlugin.IMG_FORM_BG));
         GridLayout layout = new GridLayout();
         layout.numColumns = 2;
         form.getBody().setLayout(layout);
         createDescriptorSection(form, toolkit);
         createRightSection(form, toolkit);
-
-		descViewer.setInput(new PendingObject());
-		descViewer.refresh();
-
-		//Populate descriptorViewer from qsar model
-		descViewer.getTree().getDisplay().asyncExec(new Runnable() {
-
-			public void run() {
-				DescriptorModel descModel=qsar.getModel();
-
-				//Set descriptor model as input object to viewer
-				descViewer.setInput(descModel);
-			}
-		});
-
-		//Populate selected descriptors from the read qsar model 
-		populateRightViewerFromModel();
-
+                descViewer.setInput(new PendingObject());
+                descViewer.refresh();
+                //Populate descriptorViewer from qsar model
+                descViewer.getTree().getDisplay().asyncExec(new Runnable() {
+                        public void run() {
+                                DescriptorModel descModel=qsar.getModel();
+                                //Set descriptor model as input object to viewer
+                                descViewer.setInput(descModel);
+                        }
+                });
+                //Populate selected descriptors from the read qsar model 
+                populateRightViewerFromModel();
         //Post selections to Eclipse via our intermediate selectionprovider
         selectionProvider.setSelectionProviderDelegate( descViewer );
         descViewer.getTree().setFocus();
-        
     }
-
-    
-	private void populateRightViewerFromModel() {
-		
-		// The content provider is responsible to handle add and
-		// remove notification for the Person#address EList
-		ObservableListContentProvider provider = new ObservableListContentProvider();
-		rightViewer.setContentProvider(provider);
-
-		// The label provider in turn handles the addresses
-		// The EStructuralFeature[] defines which fields get shown
-		// in the TableViewer columns
-		IObservableSet knownElements = provider.getKnownElements();
-		IObservableMap[] observeMaps = EMFEditObservables.
-			observeMaps(editingDomain, knownElements, new EStructuralFeature[]{
-					QsarPackage.Literals.DESCRIPTOR_TYPE__ID});
-		ObservableMapLabelProvider labelProvider =
-			new ObservableQSARLabelProvider(observeMaps);
-		rightViewer.setLabelProvider(labelProvider);
-
-		// Person#addresses is the Viewer's input
-		rightViewer.setInput(EMFEditObservables.observeList(Realm.getDefault(), editingDomain, descriptorList,
-			QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTOR));
-
-	}
-
-
-	/**
+        private void populateRightViewerFromModel() {
+                // The content provider is responsible to handle add and
+                // remove notification for the Person#address EList
+                ObservableListContentProvider provider = new ObservableListContentProvider();
+                rightViewer.setContentProvider(provider);
+                // The label provider in turn handles the addresses
+                // The EStructuralFeature[] defines which fields get shown
+                // in the TableViewer columns
+                IObservableSet knownElements = provider.getKnownElements();
+                IObservableMap[] observeMaps = EMFEditObservables.
+                        observeMaps(editingDomain, knownElements, new EStructuralFeature[]{
+                                        QsarPackage.Literals.DESCRIPTOR_TYPE__ID});
+                ObservableMapLabelProvider labelProvider =
+                        new ObservableQSARLabelProvider(observeMaps);
+                rightViewer.setLabelProvider(labelProvider);
+                // Person#addresses is the Viewer's input
+                rightViewer.setInput(EMFEditObservables.observeList(Realm.getDefault(), editingDomain, descriptorList,
+                        QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTOR));
+        }
+        /**
      * Create the left part of the page for displaying molecules
      * @param form
      * @param toolkit
      */
     private void createDescriptorSection( final ScrolledForm form,
                                          FormToolkit toolkit) {
-
         Section descSection =
             toolkit.createSection(
               form.getBody(),
@@ -260,7 +216,6 @@ private Table paramsTable;
           GridLayout layout = new GridLayout();
           layout.numColumns = 2;
           client.setLayout(layout);
-          
           final Button btnOnlyImpl=toolkit.createButton(client, "Display only with implementation", SWT.CHECK);
           btnOnlyImpl.setSelection(true);
           btnOnlyImpl.addSelectionListener(new SelectionAdapter(){
@@ -273,83 +228,64 @@ private Table paramsTable;
         			  descViewer.removeFilter(onlyWithImplFilter);
         		  }
         	}
-        	  
           });
           GridData gdBTN=new GridData(GridData.FILL_HORIZONTAL);
           gdBTN.horizontalSpan=2;
           btnOnlyImpl.setLayoutData( gdBTN );
-
-
           descViewer = new TreeViewer(client, SWT.BORDER | SWT.MULTI );
           descTree=descViewer.getTree();
           toolkit.adapt(descTree, true, true);
           GridData gd=new GridData(GridData.FILL_BOTH);
           gd.widthHint=250;
           descTree.setLayoutData( gd );
-          
           descTree.setHeaderVisible(true);
 //          molTable.setLinesVisible(true);
           toolkit.adapt(descTree, true, true);
-          
           //Add providers columns
           TableLayout tableLayout = new TableLayout();
           descTree.setLayout(tableLayout);
-          
           TreeViewerColumn firstCol=new TreeViewerColumn(descViewer, SWT.NONE);
           firstCol.getColumn().setText("");
           tableLayout.addColumnData(new ColumnPixelData(200));
-          
           TreeViewerColumn providersCol=new TreeViewerColumn(descViewer, SWT.NONE);
           providersCol.getColumn().setText("Provider(s)");
           tableLayout.addColumnData(new ColumnPixelData(100));
-          
           descViewer.setContentProvider( new DescriptorContentProvider());
           descViewer.setLabelProvider( new DescriptorLabelProvider() );
           descViewer.setUseHashlookup(true);
-          
           //Sort by name
           descViewer.setSorter(new ViewerSorter());
-
           //Default is to only show with impl (checkbox is selected!)
           descViewer.addFilter(onlyWithImplFilter);
-          
       	//If focus gained, make this viewer provide selections
           descViewer.getTree().addFocusListener(new FocusListener(){
-
-			public void focusGained(FocusEvent e) {
-		        rightViewer.setSelection(null);
-		        selectionProvider.setSelectionProviderDelegate( descViewer );
-			}
-
-			public void focusLost(FocusEvent e) {
-			}
+                        public void focusGained(FocusEvent e) {
+                        rightViewer.setSelection(null);
+                        selectionProvider.setSelectionProviderDelegate( descViewer );
+                        }
+                        public void focusLost(FocusEvent e) {
+                        }
           });
-          
           descTree.addKeyListener( new KeyListener(){
               public void keyPressed( KeyEvent e ) {
                   //Delete key
                   if (e.keyCode==SWT.DEL){
                       deleteSelectedDescriptors();
                   }
-                  
                   //Space key, toggle selection
                   if (e.keyCode==32){
-
                 	  IStructuredSelection msel=(IStructuredSelection) descViewer.getSelection();
                       //TODO: implement
-                      
                   }
               }
               public void keyReleased( KeyEvent e ) {
               }
           });
-
           //Create composite centered vertically and add buttons to it
           Composite comp = toolkit.createComposite(client, SWT.WRAP);
           comp.setLayout(new GridLayout());
           GridData gd2=new GridData(GridData.VERTICAL_ALIGN_CENTER);
           comp.setLayoutData( gd2 );
-
           Button btnAdd=toolkit.createButton(comp, " >> ", SWT.PUSH);
           btnAdd.addListener(SWT.Selection, new Listener() {
               public void handleEvent(Event e) {
@@ -359,7 +295,6 @@ private Table paramsTable;
           GridData gda2=new GridData(GridData.VERTICAL_ALIGN_CENTER);
           gda2.widthHint=60;
           btnAdd.setLayoutData( gda2 );
-
           Button btnDel=toolkit.createButton(comp, " << ", SWT.PUSH);
           btnDel.addListener(SWT.Selection, new Listener() {
               public void handleEvent(Event e) {
@@ -369,8 +304,6 @@ private Table paramsTable;
           GridData gd21=new GridData(GridData.VERTICAL_ALIGN_CENTER);
           gd21.widthHint=60;
           btnDel.setLayoutData( gd21 );
-
-          
           //Wrap up section
           toolkit.paintBordersFor(client);
           descSection.setText("Avaliable descriptors");
@@ -382,171 +315,123 @@ private Table paramsTable;
               form.reflow(false);
             }
           });
-
           GridData gd122 = new GridData(GridData.FILL_BOTH);
           descSection.setLayoutData(gd122);        
-          
     }
-    
-
-
     /**
      * Handle the case when users press the ADD button next to moleculeviewer
      */
     protected void addSelectedDescriptors() {
-
     	List<String> errorList=new ArrayList<String>();
-    	
     	IStructuredSelection ssel=(IStructuredSelection) descViewer.getSelection();
     	for (Object obj : ssel.toList()){
-    		
     		if (obj instanceof Descriptor) {
-				Descriptor desc = (Descriptor) obj;
-				
-				//Find out impl
+                                Descriptor desc = (Descriptor) obj;
+                                //Find out impl
 //				DescriptorImpl impl2 = qsar.getDescriptorByID(desc.getId());
-				DescriptorImpl impl = qsar.getPreferredImpl(desc.getId());
-				if (impl!=null){
-					
-					
+                                DescriptorImpl impl = qsar.getPreferredImpl(desc.getId());
+                                if (impl!=null){
 //					
 //					DescriptorInstance inst = new DescriptorInstance(desc,impl);
 //
 //					//Add this instance to rightViewer's model
 //					selectedDescriptors.add(inst);
-					
-					addDescriptorToModel(desc, impl);
-					
-					
-				}else{
-					errorList.add("No implementation available for descriptor: " + desc);
-				}
-			}
+                                        addDescriptorToModel(desc, impl);
+                                }else{
+                                        errorList.add("No implementation available for descriptor: " + desc);
+                                }
+                        }
     	}
-    	
     	if (errorList.size()>0){
     		String errormsgs="The following errors occured:\n\n";
     		for (String str : errorList){
     			errormsgs=errormsgs+str+"\n";
     		}
     	}
-
 //    	rightViewer.setInput(descriptorList.eContents().toArray());
-
     }
-
-
     private void addDescriptorToModel(Descriptor desc, DescriptorImpl impl) {
-    	
     	//Collect all in a compound command, for ability 
     	//to undo everything at the same time
-		CompoundCommand cCmd = new CompoundCommand();
-		Command cmd;
-
+                CompoundCommand cCmd = new CompoundCommand();
+                Command cmd;
     	DescriptorType modelDescriptor=QsarFactory.eINSTANCE.createDescriptorType();
-		modelDescriptor.setId(desc.getId());
-		modelDescriptor.setNamespace(desc.getNamesapce());
-
-		//Check if provider already added to qsarModel
-		DescriptorimplType dimpl=null;
-		for (DescriptorimplType pdimpl : qsarModel.getDescriptorimpl()){
-			if (pdimpl.getId().equals(impl.getProvider().getId())){
-				dimpl=QsarFactory.eINSTANCE.createDescriptorimplType();
-				dimpl.setId(pdimpl.getId());
-			}
-		}
-		
-		//If this is a new provider, add it to Qsar model
-		if (dimpl==null){
-			DescriptorProvider prov = impl.getProvider();
-			
-			String pid=prov.getId();
-			String pname=prov.getName();
-			String pvend=prov.getVendor();
-			String pvers=prov.getVersion();
-			String pns=prov.getNamesapce();
-
-			//Create a provider (=descrImplType) in qsar model root
-			DescriptorimplType newdimpl=QsarFactory.eINSTANCE.createDescriptorimplType();
-			newdimpl.setId(pid);
-			newdimpl.setNamespace(pns);
-			newdimpl.setVendor(pvend);
-			newdimpl.setName(pname);
-			newdimpl.setVersion(pvers);
-			cmd=AddCommand.create(editingDomain, qsarModel, QsarPackage.Literals.QSAR_TYPE__DESCRIPTORIMPL, newdimpl);
-			cCmd.append(cmd);
-
-			//Reference the created impl by ID
-			dimpl=QsarFactory.eINSTANCE.createDescriptorimplType();
-			dimpl.setId(newdimpl.getId());
-			
-		}
-
-		//Add found impl to descriptor element
-		cmd=SetCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__DESCRIPTORIMPL, dimpl);
-		cCmd.append(cmd);
-
-		//Parameters
-		if (impl.getParameters()!=null){
-			for (DescriptorParameter param : impl.getParameters()){
-
-				ParameterType modelParam=QsarFactory.eINSTANCE.createParameterType();
-				modelParam.setKey(param.getKey());
-				modelParam.setValue(param.getValue());
-				cmd=AddCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__PARAMETER, modelParam);
-				cCmd.append(cmd);
-
-			}
-		}
-		
-		//Add the descriptor to descriptorList last, for notification issues
-		cmd=AddCommand.create(editingDomain, descriptorList, QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTOR, modelDescriptor);
-		cCmd.append(cmd);
-
-		//Execute the compiund command
-		editingDomain.getCommandStack().execute(cCmd);
-
-	}
-
-
-	/**
+                modelDescriptor.setId(desc.getId());
+                modelDescriptor.setNamespace(desc.getNamesapce());
+                //Check if provider already added to qsarModel
+                DescriptorimplType dimpl=null;
+                for (DescriptorimplType pdimpl : qsarModel.getDescriptorimpl()){
+                        if (pdimpl.getId().equals(impl.getProvider().getId())){
+                                dimpl=QsarFactory.eINSTANCE.createDescriptorimplType();
+                                dimpl.setId(pdimpl.getId());
+                        }
+                }
+                //If this is a new provider, add it to Qsar model
+                if (dimpl==null){
+                        DescriptorProvider prov = impl.getProvider();
+                        String pid=prov.getId();
+                        String pname=prov.getName();
+                        String pvend=prov.getVendor();
+                        String pvers=prov.getVersion();
+                        String pns=prov.getNamesapce();
+                        //Create a provider (=descrImplType) in qsar model root
+                        DescriptorimplType newdimpl=QsarFactory.eINSTANCE.createDescriptorimplType();
+                        newdimpl.setId(pid);
+                        newdimpl.setNamespace(pns);
+                        newdimpl.setVendor(pvend);
+                        newdimpl.setName(pname);
+                        newdimpl.setVersion(pvers);
+                        cmd=AddCommand.create(editingDomain, qsarModel, QsarPackage.Literals.QSAR_TYPE__DESCRIPTORIMPL, newdimpl);
+                        cCmd.append(cmd);
+                        //Reference the created impl by ID
+                        dimpl=QsarFactory.eINSTANCE.createDescriptorimplType();
+                        dimpl.setId(newdimpl.getId());
+                }
+                //Add found impl to descriptor element
+                cmd=SetCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__DESCRIPTORIMPL, dimpl);
+                cCmd.append(cmd);
+                //Parameters
+                if (impl.getParameters()!=null){
+                        for (DescriptorParameter param : impl.getParameters()){
+                                ParameterType modelParam=QsarFactory.eINSTANCE.createParameterType();
+                                modelParam.setKey(param.getKey());
+                                modelParam.setValue(param.getValue());
+                                cmd=AddCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__PARAMETER, modelParam);
+                                cCmd.append(cmd);
+                        }
+                }
+                //Add the descriptor to descriptorList last, for notification issues
+                cmd=AddCommand.create(editingDomain, descriptorList, QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTOR, modelDescriptor);
+                cCmd.append(cmd);
+                //Execute the compiund command
+                editingDomain.getCommandStack().execute(cCmd);
+        }
+        /**
      * Handle the case when users press the Remove button next to moleculeviewer
      * or presses the delete button on something
      */
     protected void deleteSelectedDescriptors() {
-    	
     	IStructuredSelection ssel=(IStructuredSelection) rightViewer.getSelection();
-		
     	CompoundCommand ccmd=new CompoundCommand();
-
     	//Collect commands from selection
     	for (Iterator<?> it=ssel.iterator(); it.hasNext();){
-
     		Object obj = it.next();
-    		
     		if (obj instanceof DescriptorType) {
-				DescriptorType descType = (DescriptorType) obj;
-				Command cmd=RemoveCommand.create(editingDomain, descriptorList, QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTOR, descType);
-				ccmd.append(cmd);
-			}
-    		
+                                DescriptorType descType = (DescriptorType) obj;
+                                Command cmd=RemoveCommand.create(editingDomain, descriptorList, QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTOR, descType);
+                                ccmd.append(cmd);
+                        }
     	}
-
-		//Execute the commands
-		editingDomain.getCommandStack().execute(ccmd);
-
+                //Execute the commands
+                editingDomain.getCommandStack().execute(ccmd);
     }
-
     private void showMessage(String message) {
         MessageDialog.openInformation( getSite().getShell(),
                                        "Information",
                                        message );
     }
-    
-    
     private void createRightSection( final ScrolledForm form,
     		FormToolkit toolkit) {
-
     	Section preSection =
     		toolkit.createSection(
     				form.getBody(),
@@ -560,60 +445,47 @@ private Table paramsTable;
     	GridLayout layout = new GridLayout();
     	layout.numColumns = 1;
     	client.setLayout(layout);
-    	
     	//Right viewer
     	//=================
     	rightViewer = new TableViewer (client, SWT.BORDER | SWT.MULTI);
-
     	rightTable=rightViewer.getTable();
     	toolkit.adapt(rightTable, true, true);
     	GridData gd6=new GridData(GridData.FILL_BOTH);
     	gd6.widthHint=100;
     	rightTable.setLayoutData( gd6 );
-
     	//If focus gained, make this viewer provide selections
         rightTable.addFocusListener(new FocusListener(){
-
-			public void focusGained(FocusEvent e) {
-		        descViewer.setSelection(null);
-		        selectionProvider.setSelectionProviderDelegate( rightViewer );
-			}
-
-			public void focusLost(FocusEvent e) {
-			}
+                        public void focusGained(FocusEvent e) {
+                        descViewer.setSelection(null);
+                        selectionProvider.setSelectionProviderDelegate( rightViewer );
+                        }
+                        public void focusLost(FocusEvent e) {
+                        }
           });
-    	
     	rightTable.addKeyListener( new KeyListener(){
     		public void keyPressed( KeyEvent e ) {
-
     			//Delete key
     			if (e.keyCode==SWT.DEL){
     				deleteSelectedDescriptors();
     			}
-
     		}
     		public void keyReleased( KeyEvent e ) {
     		}
     	});
-
     	//Post changes to parameters viewer
     	rightViewer.addSelectionChangedListener(new ISelectionChangedListener(){
-			public void selectionChanged(SelectionChangedEvent event) {
-				//For now, don't care about multiple selections 
-				DescriptorType desc=(DescriptorType)((IStructuredSelection)event.getSelection()).getFirstElement();
-				if (desc!=null){
-					paramsViewer.setInput(desc.getParameter().toArray());
-				}else{
-					paramsViewer.setInput(new Object[0]);
-				}
-					
-			}
+                        public void selectionChanged(SelectionChangedEvent event) {
+                                //For now, don't care about multiple selections 
+                                DescriptorType desc=(DescriptorType)((IStructuredSelection)event.getSelection()).getFirstElement();
+                                if (desc!=null){
+                                        paramsViewer.setInput(desc.getParameter().toArray());
+                                }else{
+                                        paramsViewer.setInput(new Object[0]);
+                                }
+                        }
     	});
-
-    	
     	Label lblParams=toolkit.createLabel(client, "Descriptor parameters");
     	lblParams.setEnabled(true);
-
     	//Parameters viewer
     	//=================
     	paramsViewer = new TableViewer (client, SWT.BORDER | SWT.MULTI);
@@ -623,15 +495,11 @@ private Table paramsTable;
     	gd7.heightHint=40;
     	gd7.minimumHeight=50;
     	paramsTable.setLayoutData( gd7 );
-
     	paramsTable.setHeaderVisible(true);
     	paramsTable.setLinesVisible(true);
-    	
-    	
         //Add providers columns
         TableLayout tableLayout = new TableLayout();
         paramsTable.setLayout(tableLayout);
-        
         TableViewerColumn keyCol=new TableViewerColumn(paramsViewer, SWT.H_SCROLL | SWT.V_SCROLL);
         keyCol.getColumn().setText("Key");
         tableLayout.addColumnData(new ColumnPixelData(150));
@@ -642,11 +510,9 @@ private Table paramsTable;
         		return param.getKey();
         	}
         });
-
         TableViewerColumn valueCol=new TableViewerColumn(paramsViewer, SWT.NONE);
         valueCol.getColumn().setText("Value");
         tableLayout.addColumnData(new ColumnPixelData(150));
-        
     	valueCol.setLabelProvider(new ColumnLabelProvider(){
     		@Override
     		public String getText(Object element) {
@@ -654,17 +520,14 @@ private Table paramsTable;
         		return param.getValue();
     		}
     	});
-        
         valueCol.setEditingSupport(new EditingSupport(paramsViewer){
 //    		private TextCellEditor cellEditor;
-    		
-			@Override
-			protected boolean canEdit(Object element) {
-				return true;
-			}
-
-			@Override
-			protected CellEditor getCellEditor(Object element) {
+                        @Override
+                        protected boolean canEdit(Object element) {
+                                return true;
+                        }
+                        @Override
+                        protected CellEditor getCellEditor(Object element) {
         		ParameterType param = (ParameterType)element;
         		if ((param.getValue().equals("true")) || 
         				(param.getValue().equals("false"))){
@@ -673,10 +536,9 @@ private Table paramsTable;
         			return cbo;
         		}
         		return new TextCellEditor(paramsTable);
-			}
-
-			@Override
-			protected Object getValue(Object element) {
+                        }
+                        @Override
+                        protected Object getValue(Object element) {
         		ParameterType param = (ParameterType)element;
         		//For combo boolean
         		if (param.getValue().equals("true")){
@@ -687,50 +549,41 @@ private Table paramsTable;
         		}
         		else
         			return param.getValue();
-			}
-
-			@Override
-			protected void setValue(Object element, Object value) {
+                        }
+                        @Override
+                        protected void setValue(Object element, Object value) {
         		ParameterType param = (ParameterType)element;
         		//Integers
         		if (value instanceof Integer) {
-					Integer i = (Integer) value;
-					if (i==0){
-						if (param.getValue().equals("false")){
-	                		SetCommand cmd=new SetCommand(editingDomain,param,QsarPackage.Literals.PARAMETER_TYPE__VALUE,"true");
-	                		editingDomain.getCommandStack().execute(cmd);
-	                		paramsViewer.refresh();
-						}
-					}
-					if (i==1){
-						if (param.getValue().equals("true")){
-							SetCommand cmd=new SetCommand(editingDomain,param,QsarPackage.Literals.PARAMETER_TYPE__VALUE,"false");
-							editingDomain.getCommandStack().execute(cmd);
-							paramsViewer.refresh();
-						}
-					}
-				}
-        		
+                                        Integer i = (Integer) value;
+                                        if (i==0){
+                                                if (param.getValue().equals("false")){
+                                        SetCommand cmd=new SetCommand(editingDomain,param,QsarPackage.Literals.PARAMETER_TYPE__VALUE,"true");
+                                        editingDomain.getCommandStack().execute(cmd);
+                                        paramsViewer.refresh();
+                                                }
+                                        }
+                                        if (i==1){
+                                                if (param.getValue().equals("true")){
+                                                        SetCommand cmd=new SetCommand(editingDomain,param,QsarPackage.Literals.PARAMETER_TYPE__VALUE,"false");
+                                                        editingDomain.getCommandStack().execute(cmd);
+                                                        paramsViewer.refresh();
+                                                }
+                                        }
+                                }
         		//String values
         		if (value instanceof String) {
             		String strval=(String)value;
             		if (!(strval.equals(param.getValue()))){
                 		SetCommand cmd=new SetCommand(editingDomain,param,QsarPackage.Literals.PARAMETER_TYPE__VALUE,strval);
                 		editingDomain.getCommandStack().execute(cmd);
-
                 		paramsViewer.refresh();
                 		rightViewer.refresh();
             		}
-				}
-			}
-        	
+                                }
+                        }
         });
-    	
-    	
     	paramsViewer.setContentProvider(new ArrayContentProvider());
-
-
-
     	//Wrap up section
     	toolkit.paintBordersFor(client);
     	preSection.setText("Selected descriptors");
@@ -744,60 +597,37 @@ private Table paramsTable;
     	});
     	GridData gd = new GridData(GridData.FILL_BOTH);
     	preSection.setLayoutData(gd);        
-
     	//Post selections to Eclipse
     	//getSite().setSelectionProvider(queryViewer);
-
     }
-
-
-
-
-
-	public void activatePage() {
-
+        public void activatePage() {
         selectionProvider.setSelectionProviderDelegate( descViewer );
     }
-
     public class Stopwatch {
         private long start;
         private long stop;
-        
         public void start() {
             start = System.currentTimeMillis(); // start timing
         }
-        
         public void stop() {
             stop = System.currentTimeMillis(); // stop timing
         }
-        
         public long elapsedTimeMillis() {
             return stop - start;
         }
-
         //return number of seconds
         public String toString() {
             return "" + Long.toString(elapsedTimeMillis()/1000); // print execution time
         }
     }
-
-	public EditingDomain getEditingDomain() {
-		return editingDomain;
-	}
-
-
-	public Viewer getViewer() {
-		return rightViewer;
-	}
-
-
-	public void pageChanged(PageChangedEvent event) {
-
-		if (event.getSelectedPage()!=this) return;
-		
-		activatePage();
-		
-	}
-
-
+        public EditingDomain getEditingDomain() {
+                return editingDomain;
+        }
+        public Viewer getViewer() {
+                return rightViewer;
+        }
+        public void pageChanged(PageChangedEvent event) {
+                if (event.getSelectedPage()!=this) return;
+                activatePage();
+        }
 }

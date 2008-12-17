@@ -9,7 +9,6 @@
  *    Ola Spjuth - initial API and implementation
  *******************************************************************************/
 package net.bioclipse.qsar.ui.builder;
-
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectNature;
@@ -18,7 +17,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-
 /**
  * A QSARNature that registers the QSARBuilder for a QSARProject. 
  * Triggers build in background when run. 
@@ -28,30 +26,24 @@ import org.eclipse.core.runtime.jobs.Job;
 public class QSARNature
       implements IProjectNature
 {
-    
     /**
      * ID of this project nature
      */
     public static final String NATURE_ID = "net.bioclipse.qsar.QSARNature";
-
     private static final Logger logger = Logger.getLogger(QSARNature.class);
-    
    private IProject project;
-
    /**
     * Answer the associated project
     */
    public IProject getProject() {
       return project;
    }
-
    /**
     * Set the associated project
     */
    public void setProject(IProject project) {
       this.project = project;
    }
-   
    /**
     * Configures this nature for its project. This is called by the
     * workspace when natures are added to the project using
@@ -77,7 +69,6 @@ public class QSARNature
          }
       }.schedule();
    }
-
    /**
     * De-configures this nature for its project. This is called by the
     * workspace when natures are removed from the project using

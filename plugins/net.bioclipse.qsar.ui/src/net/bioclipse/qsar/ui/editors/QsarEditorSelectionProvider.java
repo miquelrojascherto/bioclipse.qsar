@@ -1,12 +1,10 @@
 package net.bioclipse.qsar.ui.editors;
-
 import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.jface.viewers.IPostSelectionProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-
 /**
  * IPostSelectionProvider implementation that delegates to another
  * ISelectionProvider or IPostSelectionProvider. The selection provider used
@@ -17,13 +15,9 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
  * @author Marc R. Hoffmann
  */
 public class QsarEditorSelectionProvider implements IPostSelectionProvider {
-
   private final ListenerList selectionListeners = new ListenerList();
-
   private final ListenerList postSelectionListeners = new ListenerList();
-
   private ISelectionProvider delegate;
-
   private ISelectionChangedListener selectionListener = new ISelectionChangedListener() {
     public void selectionChanged(SelectionChangedEvent event) {
       if (event.getSelectionProvider() == delegate) {
@@ -31,7 +25,6 @@ public class QsarEditorSelectionProvider implements IPostSelectionProvider {
       }
     }
   };
-
   private ISelectionChangedListener postSelectionListener = new ISelectionChangedListener() {
     public void selectionChanged(SelectionChangedEvent event) {
       if (event.getSelectionProvider() == delegate) {
@@ -39,7 +32,6 @@ public class QsarEditorSelectionProvider implements IPostSelectionProvider {
       }
     }
   };
-
   /**
    * Sets a new selection provider to delegate to. Selection listeners
    * registered with the previous delegate are removed before. 
@@ -62,15 +54,12 @@ public class QsarEditorSelectionProvider implements IPostSelectionProvider {
       fireSelectionChanged(newDelegate.getSelection());
     }
   }
-
   protected void fireSelectionChanged(ISelection selection) {
     fireSelectionChanged(selectionListeners, selection);
   }
-
   protected void firePostSelectionChanged(ISelection selection) {
     fireSelectionChanged(postSelectionListeners, selection);
   }
-
   private void fireSelectionChanged(ListenerList list, ISelection selection) {
     SelectionChangedEvent event = new SelectionChangedEvent(delegate, selection);
     Object[] listeners = list.getListeners();
@@ -79,36 +68,28 @@ public class QsarEditorSelectionProvider implements IPostSelectionProvider {
       listener.selectionChanged(event);
     }
   }
-
   // IPostSelectionProvider Implementation
-
   public void addSelectionChangedListener(ISelectionChangedListener listener) {
     selectionListeners.add(listener);
   }
-
   public void removeSelectionChangedListener(
       ISelectionChangedListener listener) {
     selectionListeners.remove(listener);
   }
-
   public void addPostSelectionChangedListener(
       ISelectionChangedListener listener) {
     postSelectionListeners.add(listener);
   }
-
   public void removePostSelectionChangedListener(
       ISelectionChangedListener listener) {
     postSelectionListeners.remove(listener);
   }
-
   public ISelection getSelection() {
     return delegate == null ? null : delegate.getSelection();
   }
-
   public void setSelection(ISelection selection) {
     if (delegate != null) {
       delegate.setSelection(selection);
     }
   }
-
 }

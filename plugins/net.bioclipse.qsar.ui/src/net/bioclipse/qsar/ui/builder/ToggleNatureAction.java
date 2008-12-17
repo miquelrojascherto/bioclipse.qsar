@@ -9,9 +9,7 @@
  *    Ola Spjuth - initial API and implementation
  *******************************************************************************/
 package net.bioclipse.qsar.ui.builder;
-
 import java.util.Iterator;
-
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.runtime.CoreException;
@@ -21,16 +19,13 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
-
 /**
  * Action to toggle QSARNature on and off
  * @author ola
  *
  */
 public class ToggleNatureAction implements IObjectActionDelegate {
-
     private ISelection selection;
-
     /*
      * (non-Javadoc)
      * 
@@ -54,7 +49,6 @@ public class ToggleNatureAction implements IObjectActionDelegate {
             }
         }
     }
-
     /*
      * (non-Javadoc)
      * 
@@ -64,7 +58,6 @@ public class ToggleNatureAction implements IObjectActionDelegate {
     public void selectionChanged(IAction action, ISelection selection) {
         this.selection = selection;
     }
-
     /*
      * (non-Javadoc)
      * 
@@ -73,7 +66,6 @@ public class ToggleNatureAction implements IObjectActionDelegate {
      */
     public void setActivePart(IAction action, IWorkbenchPart targetPart) {
     }
-
     /**
      * Toggles sample nature on a project
      * 
@@ -84,7 +76,6 @@ public class ToggleNatureAction implements IObjectActionDelegate {
         try {
             IProjectDescription description = project.getDescription();
             String[] natures = description.getNatureIds();
-
             for (int i = 0; i < natures.length; ++i) {
                 if (QSARNature.NATURE_ID.equals(natures[i])) {
                     // Remove the nature
@@ -97,7 +88,6 @@ public class ToggleNatureAction implements IObjectActionDelegate {
                     return;
                 }
             }
-
             // Add the nature
             String[] newNatures = new String[natures.length + 1];
             System.arraycopy(natures, 0, newNatures, 0, natures.length);
@@ -108,5 +98,4 @@ public class ToggleNatureAction implements IObjectActionDelegate {
         } catch (CoreException e) {
         }
     }
-
 }
