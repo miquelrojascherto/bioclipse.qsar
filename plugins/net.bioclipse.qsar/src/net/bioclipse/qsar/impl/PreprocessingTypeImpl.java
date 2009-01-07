@@ -12,19 +12,27 @@
  * $Id$
  */
 package net.bioclipse.qsar.impl;
+
 import java.util.Collection;
+
 import net.bioclipse.qsar.PreprocessingStepType;
 import net.bioclipse.qsar.PreprocessingType;
 import net.bioclipse.qsar.QsarPackage;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Preprocessing Type</b></em>'.
@@ -39,116 +47,126 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * @generated
  */
 public class PreprocessingTypeImpl extends EObjectImpl implements PreprocessingType {
-        /**
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        public static final String copyright = "Copyright (c) 2007-2008 The Bioclipse Project and others.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nwww.eclipse.org\u00ef\u00bf\u03a9epl-v10.html <http://www.eclipse.org/legal/epl-v10.html>\n\nContributors:\n    Ola Spjuth - initial API and implementation\n";
-        /**
-         * The cached value of the '{@link #getPreprocessingStep() <em>Preprocessing Step</em>}' containment reference list.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see #getPreprocessingStep()
-         * @generated
-         * @ordered
-         */
-        protected EList<PreprocessingStepType> preprocessingStep;
-        /**
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        protected PreprocessingTypeImpl() {
-                super();
-        }
-        /**
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        @Override
-        protected EClass eStaticClass() {
-                return QsarPackage.Literals.PREPROCESSING_TYPE;
-        }
-        /**
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        public EList<PreprocessingStepType> getPreprocessingStep() {
-                if (preprocessingStep == null) {
-                        preprocessingStep = new EObjectContainmentEList<PreprocessingStepType>(PreprocessingStepType.class, this, QsarPackage.PREPROCESSING_TYPE__PREPROCESSING_STEP);
-                }
-                return preprocessingStep;
-        }
-        /**
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        @Override
-        public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-                switch (featureID) {
-                        case QsarPackage.PREPROCESSING_TYPE__PREPROCESSING_STEP:
-                                return ((InternalEList<?>)getPreprocessingStep()).basicRemove(otherEnd, msgs);
-                }
-                return super.eInverseRemove(otherEnd, featureID, msgs);
-        }
-        /**
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        @Override
-        public Object eGet(int featureID, boolean resolve, boolean coreType) {
-                switch (featureID) {
-                        case QsarPackage.PREPROCESSING_TYPE__PREPROCESSING_STEP:
-                                return getPreprocessingStep();
-                }
-                return super.eGet(featureID, resolve, coreType);
-        }
-        /**
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        @SuppressWarnings("unchecked")
-        @Override
-        public void eSet(int featureID, Object newValue) {
-                switch (featureID) {
-                        case QsarPackage.PREPROCESSING_TYPE__PREPROCESSING_STEP:
-                                getPreprocessingStep().clear();
-                                getPreprocessingStep().addAll((Collection<? extends PreprocessingStepType>)newValue);
-                                return;
-                }
-                super.eSet(featureID, newValue);
-        }
-        /**
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        @Override
-        public void eUnset(int featureID) {
-                switch (featureID) {
-                        case QsarPackage.PREPROCESSING_TYPE__PREPROCESSING_STEP:
-                                getPreprocessingStep().clear();
-                                return;
-                }
-                super.eUnset(featureID);
-        }
-        /**
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        @Override
-        public boolean eIsSet(int featureID) {
-                switch (featureID) {
-                        case QsarPackage.PREPROCESSING_TYPE__PREPROCESSING_STEP:
-                                return preprocessingStep != null && !preprocessingStep.isEmpty();
-                }
-                return super.eIsSet(featureID);
-        }
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final String copyright = "Copyright (c) 2007-2008 The Bioclipse Project and others.\nAll rights reserved. This program and the accompanying materials\nare made available under the terms of the Eclipse Public License v1.0\nwhich accompanies this distribution, and is available at\nwww.eclipse.org\u00ef\u00bf\u03a9epl-v10.html <http://www.eclipse.org/legal/epl-v10.html>\n\nContributors:\n    Ola Spjuth - initial API and implementation\n";
+
+	/**
+	 * The cached value of the '{@link #getPreprocessingStep() <em>Preprocessing Step</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPreprocessingStep()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<PreprocessingStepType> preprocessingStep;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected PreprocessingTypeImpl() {
+		super();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	protected EClass eStaticClass() {
+		return QsarPackage.Literals.PREPROCESSING_TYPE;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<PreprocessingStepType> getPreprocessingStep() {
+		if (preprocessingStep == null) {
+			preprocessingStep = new EObjectContainmentEList<PreprocessingStepType>(PreprocessingStepType.class, this, QsarPackage.PREPROCESSING_TYPE__PREPROCESSING_STEP);
+		}
+		return preprocessingStep;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case QsarPackage.PREPROCESSING_TYPE__PREPROCESSING_STEP:
+				return ((InternalEList<?>)getPreprocessingStep()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
+			case QsarPackage.PREPROCESSING_TYPE__PREPROCESSING_STEP:
+				return getPreprocessingStep();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
+			case QsarPackage.PREPROCESSING_TYPE__PREPROCESSING_STEP:
+				getPreprocessingStep().clear();
+				getPreprocessingStep().addAll((Collection<? extends PreprocessingStepType>)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void eUnset(int featureID) {
+		switch (featureID) {
+			case QsarPackage.PREPROCESSING_TYPE__PREPROCESSING_STEP:
+				getPreprocessingStep().clear();
+				return;
+		}
+		super.eUnset(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
+			case QsarPackage.PREPROCESSING_TYPE__PREPROCESSING_STEP:
+				return preprocessingStep != null && !preprocessingStep.isEmpty();
+		}
+		return super.eIsSet(featureID);
+	}
+
 } //PreprocessingTypeImpl
