@@ -8,15 +8,20 @@
  *Contributors:
  *    Ola Spjuth - initial API and implementation
  *******************************************************************************/
+
 package net.bioclipse.qsar.ui.wizards;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+
 import org.apache.log4j.Logger;
 import net.bioclipse.core.util.LogUtils;
+
 import net.bioclipse.qsar.ui.builder.QSARBuilder;
 import net.bioclipse.qsar.ui.builder.QSARNature;
 import net.bioclipse.qsar.ui.util.QsarXMLUtils;
+
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
@@ -37,49 +42,62 @@ import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
+
 /**
  *A NewWizard to create a new QSARProject
  *
  * @author ola
  */
 public class NewQSARProjectWizard extends Wizard implements INewWizard {
+
     private static final Logger logger = Logger.getLogger(NewQSARProjectWizard.class);
+
     private WizardNewProjectCreationPage fFirstPage;
+
     private IWorkbench workbench;
     private IStructuredSelection selection;
+
     public NewQSARProjectWizard() {
         super();
 //        setDefaultPageImageDescriptor();
         setWindowTitle("New QSAR project");
     }
+
     /**
      * Add WizardNewProjectCreationPage from IDE
      */
     public void addPages() {
+
         super.addPages();
         fFirstPage = new WizardNewProjectCreationPage("New QSAR project");
         fFirstPage.setTitle("New QSAR project");
         fFirstPage.setDescription("Create a new QSAR project");
 //        fFirstPage.setImageDescriptor(ImageDescriptor.createFromFile(getClass(),
 //        "/org/ananas/xm/eclipse/resources/newproject58.gif"));
+
         addPage(fFirstPage);
+
     }
+
     /**
      * Create project and add QSARNature
      */
     @Override
     public boolean performFinish() {
+
         try
         {
             WorkspaceModifyOperation op =
                 new WorkspaceModifyOperation()
             {
+
                 @Override
                 protected void execute(IProgressMonitor monitor)
                 throws CoreException, InvocationTargetException,
                 InterruptedException {
                     createProject(monitor != null ?
                             monitor : new NullProgressMonitor());
+
                 }
             };
             getContainer().run(false,true,op);
@@ -94,6 +112,7 @@ public class NewQSARProjectWizard extends Wizard implements INewWizard {
             return false;
         }
         return true;     }
+
     /**
      * Init wizard
      */
@@ -103,6 +122,8 @@ public class NewQSARProjectWizard extends Wizard implements INewWizard {
         setWindowTitle("New QSAR Project");
 //        setDefaultPageImageDescriptor(TBC);
     }
+
+
     /**
      * Create project and add required natures, builders, folders, and files
      * @param monitor
@@ -112,11 +133,14 @@ public class NewQSARProjectWizard extends Wizard implements INewWizard {
         monitor.beginTask("Creating QSAR project",50);
         try
         {
+
             //Get WS root
             IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
             monitor.subTask("Creating directories");
+
             //Create the project
             IProject project = root.getProject(fFirstPage.getProjectName());
+
             //Add natures and builders
             IProjectDescription description = ResourcesPlugin.getWorkspace().newProjectDescription(project.getName());
             if(!Platform.getLocation().equals(fFirstPage.getLocationPath()))
@@ -126,21 +150,28 @@ public class NewQSARProjectWizard extends Wizard implements INewWizard {
             command.setBuilderName(QSARBuilder.BUILDER_ID);
             description.setBuildSpec(new ICommand[] { command });
             project.create(description,monitor);
+
             monitor.worked(10);
+
             //Open project
             project.open(monitor);
+
             //Set persistent properties (not used here/yet)
 //            project.setPersistentProperty(PluginConstants.SOURCE_PROPERTY_NAME,"src");
 //            project.setPersistentProperty(PluginConstants.RULES_PROPERTY_NAME,"rules");
 //            project.setPersistentProperty(PluginConstants.PUBLISH_PROPERTY_NAME,"publish");
 //            project.setPersistentProperty(PluginConstants.BUILD_PROPERTY_NAME,"false");
+
             monitor.worked(10);
+
             //Create folders
             IPath projectPath = project.getFullPath(),
             molPath = projectPath.append("molecules");
             IFolder molFolder = root.getFolder(molPath);
             createFolderHelper(molFolder,monitor);
+
             monitor.worked(10);
+
             //Create files (qsar.xml)
             monitor.subTask("Creating files");
             IPath qsarPath = projectPath.append("qsar.xml");
@@ -164,6 +195,7 @@ public class NewQSARProjectWizard extends Wizard implements INewWizard {
             monitor.done();
         }
     }
+
     /**
      * Create the folder in the closest parent which is a folder
      * @param folder
@@ -174,14 +206,18 @@ public class NewQSARProjectWizard extends Wizard implements INewWizard {
         try {
             if(!folder.exists()) {
                 IContainer parent = folder.getParent();
+
                 if(parent instanceof IFolder
                         && (!((IFolder)parent).exists())) {
+
                     createFolderHelper((IFolder)parent, monitor);
                 }
+
                 folder.create(false,true,monitor);
             }
         } catch (Exception e) {
             LogUtils.debugTrace(logger, e);
         }
     }
+
 }
