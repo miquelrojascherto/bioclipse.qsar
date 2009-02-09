@@ -19,13 +19,6 @@
    </license>
 
    <plugin
-         id="net.bioclipse.cdk.business"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="net.bioclipse.qsar"
          download-size="0"
          install-size="0"
@@ -41,13 +34,6 @@
 
    <plugin
          id="net.bioclipse.qsar.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.openscience.cdk"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -96,7 +82,20 @@
          unpack="false"/>
 
    <plugin
-         id="net.bioclipse.cdk.qsar"
+         id="net.bioclipse.chart"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="net.bioclipse.statistics"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="net.bioclipse.statistics.jama"
          download-size="0"
          install-size="0"
          version="0.0.0"
