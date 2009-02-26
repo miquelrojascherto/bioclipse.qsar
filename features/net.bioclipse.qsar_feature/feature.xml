@@ -18,6 +18,11 @@
       [Enter License Description here.]
    </license>
 
+   <requires>
+      <import feature="net.bioclipse.cdk_feature" version="2.0.0.B20090213"/>
+      <import feature="net.bioclipse.core_feature" version="2.0.0.B20090227"/>
+   </requires>
+
    <plugin
          id="net.bioclipse.qsar"
          download-size="0"
@@ -124,6 +129,13 @@
 
    <plugin
          id="org.eclipse.emf.common.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="net.bioclipse.cdk.qsar"
          download-size="0"
          install-size="0"
          version="0.0.0"
