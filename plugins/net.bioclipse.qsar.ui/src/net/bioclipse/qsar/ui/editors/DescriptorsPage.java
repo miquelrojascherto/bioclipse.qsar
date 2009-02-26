@@ -621,7 +621,7 @@ private Table paramsTable;
     	toolkit.adapt(paramsTable, true, true);
     	GridData gd7=new GridData(GridData.FILL_BOTH);
     	gd7.heightHint=40;
-    	gd7.minimumHeight=50;
+    	gd7.minimumHeight=150;
     	paramsTable.setLayoutData( gd7 );
 
     	paramsTable.setHeaderVisible(true);
