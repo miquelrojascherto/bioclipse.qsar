@@ -160,7 +160,7 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
     		@Override
     		public String getText(Object element) {
     			ResponseType response = (ResponseType)element;
-				if (response.getArrayValues()!=null)
+          if (response.getArrayValues()!=null && response.getArrayValues().length()>0)
 					return response.getArrayValues();
 				else
 					if (Float.isNaN(response.getValue()))
@@ -187,7 +187,7 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
 			@Override
 			protected Object getValue(Object element) {
 				ResponseType response = (ResponseType)element;
-				if (response.getArrayValues()!=null)
+				if (response.getArrayValues()!=null && response.getArrayValues().length()>0)
 					return response.getArrayValues();
 				else{
 					if (Float.isNaN(response.getValue()))
