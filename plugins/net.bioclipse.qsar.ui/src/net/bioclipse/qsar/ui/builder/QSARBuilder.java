@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,9 +59,13 @@ import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -277,7 +282,7 @@ private void scanQsarFile(IProgressMonitor monitor) throws OperationCanceledExce
 		return;
 	}
 
-	MoleculelistType mollist = qsarType.getMoleculelist();
+	final MoleculelistType mollist = qsarType.getMoleculelist();
 
 	if (mollist.getMoleculeResource()==null || mollist.getMoleculeResource().size()<=0){
 		logger.debug("No molecules in MoleculesList.");
@@ -288,7 +293,7 @@ private void scanQsarFile(IProgressMonitor monitor) throws OperationCanceledExce
 
 	//Get list of IMolecules from MoleculeResources
 	Map<ICDKMolecule, String> molMap=new HashMap<ICDKMolecule, String>();
-
+	
 	//Get list of responses from qsar.xml matching resources
 	//	   List<String> responseStrings=new ArrayList<String>();
 
@@ -307,7 +312,7 @@ private void scanQsarFile(IProgressMonitor monitor) throws OperationCanceledExce
 						if (response.getResourceIndex()==i){
 
 							//If we have array value, us it
-							if (response.getArrayValues()!=null){
+							if (response.getArrayValues()!=null && response.getArrayValues().length()>0){
 								newMols.get(i).getAtomContainer().setProperty(
 										QSARConstants.QSAR_RESPONSE_PROPERTY, 
 										response.getArrayValues());
@@ -339,14 +344,26 @@ private void scanQsarFile(IProgressMonitor monitor) throws OperationCanceledExce
 
 			//We've gone through all existing responses. Add missing responses now!
 			for (ICDKMolecule nmol : newMols){
-				if (!(molMap.containsKey(nmol))){
-					nmol.getAtomContainer().setProperty(
-							QSARConstants.QSAR_RESPONSE_PROPERTY, 
-							Float.NaN);
-					molMap.put(nmol, ""+Float.NaN);
-					logger.debug("Molecule: " + nmol.getName() +" had no response, " +
-					"so added NaN");
-				}
+			    boolean hasResult=false;
+			    for (Iterator<ICDKMolecule> it = molMap.keySet().iterator(); it.hasNext();){
+			        ICDKMolecule mapMol=it.next();
+			        //Cannot compare ICDKMolecules, some CGLIB issue
+			        if (mapMol.getAtomContainer().equals( nmol.getAtomContainer() )){
+			            hasResult=true;
+			        }
+			    }
+			    if (!hasResult){
+		          nmol.getAtomContainer().setProperty(
+                                          QSARConstants.QSAR_RESPONSE_PROPERTY, 
+                                          Float.NaN);
+		          molMap.put(nmol, ""+Float.NaN);
+		          logger.debug("Molecule: " + nmol.getName() +" had no response, " +
+		          "so added NaN");
+			    }
+			    
+			    
+//				if (!(molMap.containsKey(nmol))){
+//				}
 			}
 
 			//			mols.addAll(newMols);
@@ -360,19 +377,46 @@ private void scanQsarFile(IProgressMonitor monitor) throws OperationCanceledExce
 	}
 
 	logger.debug("==== Total loaded mols: " + molMap.size());
+	for (ICDKMolecule mol : molMap.keySet()){
+	    System.out.println("  ++++ " + mol.getName());
+	}
 
 	   //Get lists from molsMap
 	   List<ICDKMolecule> sortedMols=new ArrayList<ICDKMolecule>();
 	   sortedMols.addAll((Collection<? extends ICDKMolecule>) molMap.keySet());
 	   
 	   //Sort the mol based on name
-	   Collections.sort(sortedMols,new Comparator<ICDKMolecule>(){
-		   public int compare(ICDKMolecule o1, ICDKMolecule o2) {
-			   return o1.getName().compareTo(o2.getName());
-		   }
-	   });
+//	   Collections.sort(sortedMols,new Comparator<ICDKMolecule>(){
+//		   public int compare(ICDKMolecule o1, ICDKMolecule o2) {
+//			   return o1.getName().compareTo(o2.getName());
+//		   }
+//	   });
 	   
-	   //Set up straucture for dataset
+     //Sort the mol as they appear in original list, as this is intuitive
+	   //(we have used Set that destroys the sorting)
+   Collections.sort(sortedMols,new Comparator<ICDKMolecule>(){
+   public int compare(ICDKMolecule o1, ICDKMolecule o2) {
+       //Sort depending on what comes first in mollist which is input list
+       for (MoleculeResourceType mr : mollist.getMoleculeResource()){
+               IPath path=new Path(mr.getFile());
+               IFile f=ResourcesPlugin.getWorkspace().getRoot().getFile( path );
+           if (o1.getResource().getName().equalsIgnoreCase( f.getName() )){
+               if (o2.getResource().getName().equalsIgnoreCase( mr.getFile() )){
+                   //Same file, let filename decide
+                   return o1.getName().compareTo(o2.getName());
+               }
+               //o1 comes before o2 in list of files 
+               return -1;
+           }
+           else if (o2.getResource().getName().equalsIgnoreCase( f.getName() )){
+               return 1;
+           }
+       }
+       return o1.getName().compareTo(o2.getName());//Should not happen, fall back on name comparison
+   }
+ });
+	   
+	   //Set up structure for dataset
 	   List<String> columnLabels=new ArrayList<String>();
 	   List<String> rowLabels=new ArrayList<String>();
 	   double[][] dataset;
@@ -571,7 +615,7 @@ private void scanQsarFile(IProgressMonitor monitor) throws OperationCanceledExce
 				   processedFolder.create(true, true, new NullProgressMonitor());
 				   processedFolder.setDerived(true);
 			   }
-			   IFile molfile=processedFolder.getFile(cdkmol.getName()+"_"+cnt+".cml");
+			   IFile molfile=processedFolder.getFile(cdkmol.getName()+/*"_"+cnt+*/".cml");
 			   logger.debug("Attempting to write file with descr res: " + molfile);
 			   
 			   if (!(molfile.exists())){
