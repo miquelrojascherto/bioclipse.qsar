@@ -105,8 +105,8 @@
                   description="Number of bonds of a certain bond order."
                   name="BondCount">
                   <parameter
-                        defaultvalue="0"
-                        description="Bond order to count"
+                        defaultvalue=""
+                        description="Bond order to count. Possible values: are 's'=single, 'd'=double, 't'=triple, 'q'=quadruple and ''=all"
                         key="order">
                   </parameter>
              </descriptorImpl>
