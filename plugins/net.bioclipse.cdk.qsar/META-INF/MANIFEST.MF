@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Qsar Plug-in
+Bundle-Name: CDK Qsar
 Bundle-SymbolicName: net.bioclipse.cdk.qsar;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 2.0.0.B20090227
 Bundle-Activator: net.bioclipse.cdk.qsar.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -20,3 +20,4 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: org.apache.log4j;version="1.2.15"
+Bundle-Vendor: The Bioclipse Team
