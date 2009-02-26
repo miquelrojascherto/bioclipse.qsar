@@ -20,6 +20,7 @@ import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 import net.bioclipse.qsar.init.Activator;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.junit.Test;
@@ -42,6 +43,11 @@ public class TestQsarManager {
 		
 	}
 	
+  @Test
+  public void testSetings(){
+      assertNotNull( "Must run as PluginTest.", Activator.PLUGIN_ID );
+      
+  }
 	
 	@Test
 	public void testGetPreferences(){
@@ -54,6 +60,7 @@ public class TestQsarManager {
 		assertNotNull(prefsString);
 
 		System.out.println("Got prefs string: " + prefsString);
+		assertFalse( prefsString.equals( "ERROR" ) );
 		
 		assertTrue(prefsString.contains("descriptorProvider1"));
 		assertTrue(prefsString.contains("descriptorProvider2"));
@@ -65,7 +72,7 @@ public class TestQsarManager {
 	}
 
 	@Test
-	public void testGetCategories(){
+	public void testGetCategoriesAndFullCategories(){
 
 		//Get category IDs
 		List<String> lst = qsar.getCategories();
@@ -106,7 +113,7 @@ public class TestQsarManager {
 	}
 
 	@Test
-	public void testGetProviders(){
+	public void testGetProvidersAndFullProviders(){
 
 		//Get provider IDs
 		List<String> lst = qsar.getProviders();
@@ -159,9 +166,9 @@ public class TestQsarManager {
 	
 	
 	@Test
-	public void testGetDescriptors(){
+	public void testGetDescriptorsAndFullDescriptors(){
 
-		List<String> desc=qsar.getDescriptors();
+		List<String> desc=qsar.getDescriptorIDs();
 		assertNotNull(desc);
 		assertTrue(desc.size()>0);
 
@@ -200,6 +207,7 @@ public class TestQsarManager {
 		assertNotNull(desc.getDefinition());
 		
 	}
+
 	
 	
 	@Test
@@ -214,15 +222,36 @@ public class TestQsarManager {
 		DescriptorCategory cat2 = qsar.getCategoryByID(cat2id);
 		Descriptor desc=qsar.getDescriptorByID(descriptorID);
 		
-		List<Descriptor> descList1 = qsar.getDescriptors(cat1);
-		assertNotNull(descList1);
-		assertTrue(descList1.contains(desc));
-
-		List<Descriptor> descList2 = qsar.getDescriptors(cat2);
-		assertNotNull(descList2);
-		assertTrue(descList2.contains(desc));
+		List<Descriptor> descList1 = qsar.getDescriptorsInCategory(cat1);
+    assertNotNull(descList1);
+    assertTrue(descList1.contains(desc));
+    List<String> descList1_1 = qsar.getDescriptorsInCategory(cat1id);
+    assertNotNull(descList1_1);
+    assertEquals( descList1.size(), descList1_1.size() );
+    
+		List<Descriptor> descList2 = qsar.getDescriptorsInCategory(cat2);
+    assertNotNull(descList2);
+    assertTrue(descList2.contains(desc));
+    List<String> descList2_2 = qsar.getDescriptorsInCategory(cat2id);
+    assertNotNull(descList2_2);
+    assertEquals( descList2.size(), descList2_2.size() );
 
 	}
+
+  @Test
+  public void testGetDescriptorImplsByProvider(){
+
+    //Matches plugin.xml
+    String providerID="net.bioclipse.qsar.test.descriptorProvider1";
+    String providerID2="net.bioclipse.qsar.test.descriptorProvider2";
+    
+    String descriptorImplID="net.bioclipse.qsar.test.descriptor3";
+
+    assertEquals(2, qsar.getDescriptorImplsByProvider(providerID).size());
+    assertEquals(4, qsar.getDescriptorImplsByProvider(providerID2).size());
+    
+    assertTrue(qsar.existsDescriptorImpl(descriptorImplID));
+  }
 
 
 	@Test
@@ -241,6 +270,8 @@ public class TestQsarManager {
 		
 	}
 	
+
+	
 	@Test
 	public void testGetDescriptorImplNotInOntology(){
 
@@ -248,7 +279,7 @@ public class TestQsarManager {
 		System.out.println("Impl not in onology:");
 		System.out.println("=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.");
 		for (DescriptorImpl impl : qsar.getFullDescriptorImpls()){
-			if (qsar.getDescriptors().contains(impl.getDefinition())){
+			if (qsar.getDescriptorIDs().contains(impl.getDefinition())){
 				//All is well
 			}
 			else{
@@ -294,6 +325,7 @@ public class TestQsarManager {
 		
 		List<DescriptorImpl> descImplIDsFull = qsar.getDescriptorImplsForDescriptor(descriptor);
 		assertNotNull(descImplIDsFull);
+		assertTrue( descImplIDs.size()>0 );
 		assertEquals(descImplIDs.size(), descImplIDsFull.size());
 
 		assertTrue(descImplIDsFull.contains(impl1));
@@ -303,23 +335,18 @@ public class TestQsarManager {
 	}
 	
 
+  @Test
+  public void testExistsDescriptor(){
+      String descriptor1="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain";
+      String descriptor2="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChainWEEE";
 
-	@Test
-	public void testGetDescriptorImplsByProvider(){
+      boolean exists=qsar.existsDescriptor( descriptor1 );
+      assertTrue( exists );
+      boolean noexists=qsar.existsDescriptor( descriptor2 );
+      assertFalse( noexists );
+     
+  }
 
-		//Matches plugin.xml
-		String providerID="net.bioclipse.qsar.test.descriptorProvider1";
-		String providerID2="net.bioclipse.qsar.test.descriptorProvider2";
-		String cat1id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#molecularDescriptor";
-		String cat2id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#constitutionalDescriptor";
-		
-		String descriptorImplID="net.bioclipse.qsar.test.descriptor3";
-
-		assertEquals(2, qsar.getDescriptorImplsByProvider(providerID).size());
-		assertEquals(4, qsar.getDescriptorImplsByProvider(providerID2).size());
-		
-		assertTrue(qsar.existsDescriptor(descriptorImplID));
-	}
 
 
 	@Test
@@ -389,7 +416,36 @@ public class TestQsarManager {
 
 	}
 	
+  @Test
+  public void testGetPreferredImpl(){
+      String descriptorID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#BCUT";
+      String expectedImplID="net.bioclipse.qsar.test.descriptor1";
+
+      DescriptorImpl impl = qsar.getPreferredImpl( descriptorID );
+      assertNotNull( impl );
+      assertEquals( expectedImplID,impl.getId());
+
+  }
+
+  @Test
+  public void testDescriptorImpl(){
+      String descriptorID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#BCUT";
+      String providerID="";
+      String expectedImplID="net.bioclipse.qsar.test.descriptor1";
+
+      DescriptorImpl impl = qsar.getPreferredImpl( descriptorID );
+      assertNotNull( impl );
+      assertEquals( expectedImplID,impl.getId());
+
+  }
+
 	
+	
+	 /*====================================================
+   * Calculations below
+   * ====================================================
+   */
+
 	
 	@Test
 	public void testCalculateSingleMolSingleDescriptor(){
