@@ -2,19 +2,21 @@
 <!-- Schema file written by PDE -->
 <schema targetNamespace="net.bioclipse.qsar.ui" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
-      <appinfo>
+      <appInfo>
          <meta.schema plugin="net.bioclipse.qsar.ui" id="descriptorProvider" name="descriptorProvider"/>
-      </appinfo>
+      </appInfo>
       <documentation>
-         [Enter description of this extension point.]
+         DescriptorProviders contribute software and algorithms to calculate molecular descriptors for a chemical structure.
+
+
       </documentation>
    </annotation>
 
    <element name="extension">
       <annotation>
-         <appinfo>
+         <appInfo>
             <meta.element />
-         </appinfo>
+         </appInfo>
       </annotation>
       <complexType>
          <sequence>
@@ -40,15 +42,20 @@
                <documentation>
                   
                </documentation>
-               <appinfo>
+               <appInfo>
                   <meta.attribute translatable="true"/>
-               </appinfo>
+               </appInfo>
             </annotation>
          </attribute>
       </complexType>
    </element>
 
    <element name="provider">
+      <annotation>
+         <documentation>
+            A provider contributes a calculator that accepts a list of chemical structures and a list of descriptors (defined in Blue Obelisk Decriptor Ontology) and returns a map from the chemical structure to the result (a Float[]).
+         </documentation>
+      </annotation>
       <complexType>
          <sequence>
             <element ref="descriptorImpl" minOccurs="0" maxOccurs="unbounded"/>
@@ -58,9 +65,9 @@
                <documentation>
                   
                </documentation>
-               <appinfo>
+               <appInfo>
                   <meta.attribute kind="identifier"/>
-               </appinfo>
+               </appInfo>
             </annotation>
          </attribute>
          <attribute name="name" type="string" use="required">
@@ -75,9 +82,9 @@
                <documentation>
                   
                </documentation>
-               <appinfo>
+               <appInfo>
                   <meta.attribute kind="resource"/>
-               </appinfo>
+               </appInfo>
             </annotation>
          </attribute>
          <attribute name="calculator" type="string" use="required">
@@ -85,9 +92,9 @@
                <documentation>
                   
                </documentation>
-               <appinfo>
+               <appInfo>
                   <meta.attribute kind="java" basedOn=":net.bioclipse.qsar.descriptor.IDescriptorCalculator"/>
-               </appinfo>
+               </appInfo>
             </annotation>
          </attribute>
          <attribute name="acceptsSmiles" type="boolean">
@@ -143,6 +150,11 @@
    </element>
 
    <element name="descriptorImpl">
+      <annotation>
+         <documentation>
+            An implementation for a descriptor defined in Blue Obelisk Descriptor Ontology.
+         </documentation>
+      </annotation>
       <complexType>
          <sequence>
             <element ref="parameter" minOccurs="0" maxOccurs="unbounded"/>
@@ -152,9 +164,9 @@
                <documentation>
                   
                </documentation>
-               <appinfo>
+               <appInfo>
                   <meta.attribute kind="identifier"/>
-               </appinfo>
+               </appInfo>
             </annotation>
          </attribute>
          <attribute name="name" type="string" use="required">
@@ -174,7 +186,7 @@
          <attribute name="requires3D" type="boolean">
             <annotation>
                <documentation>
-                  
+                  If not specified, treated as false.
                </documentation>
             </annotation>
          </attribute>
@@ -197,9 +209,9 @@
 
    <element name="category">
       <annotation>
-         <appinfo>
+         <appInfo>
             <meta.element deprecated="true"/>
-         </appinfo>
+         </appInfo>
       </annotation>
       <complexType>
          <attribute name="id" type="string" use="required">
@@ -207,9 +219,9 @@
                <documentation>
                   
                </documentation>
-               <appinfo>
+               <appInfo>
                   <meta.attribute kind="identifier"/>
-               </appinfo>
+               </appInfo>
             </annotation>
          </attribute>
          <attribute name="name" type="string" use="required">
@@ -224,16 +236,24 @@
                <documentation>
                   
                </documentation>
-               <appinfo>
+               <appInfo>
                   <meta.attribute kind="resource"/>
-               </appinfo>
+               </appInfo>
             </annotation>
          </attribute>
       </complexType>
    </element>
 
    <element name="parameter">
+      <annotation>
+         <documentation>
+            A key-&gt; value parameter for a descriptor.
+         </documentation>
+      </annotation>
       <complexType>
+         <sequence>
+            <element ref="listedvalue" minOccurs="0" maxOccurs="unbounded"/>
+         </sequence>
          <attribute name="key" type="string" use="required">
             <annotation>
                <documentation>
@@ -258,37 +278,49 @@
       </complexType>
    </element>
 
+   <element name="listedvalue">
+      <complexType>
+         <attribute name="value" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
    <annotation>
-      <appinfo>
+      <appInfo>
          <meta.section type="since"/>
-      </appinfo>
+      </appInfo>
       <documentation>
          [Enter the first release in which this extension point appears.]
       </documentation>
    </annotation>
 
    <annotation>
-      <appinfo>
+      <appInfo>
          <meta.section type="examples"/>
-      </appinfo>
+      </appInfo>
       <documentation>
          [Enter extension point usage example here.]
       </documentation>
    </annotation>
 
    <annotation>
-      <appinfo>
+      <appInfo>
          <meta.section type="apiinfo"/>
-      </appinfo>
+      </appInfo>
       <documentation>
          [Enter API information here.]
       </documentation>
    </annotation>
 
    <annotation>
-      <appinfo>
+      <appInfo>
          <meta.section type="implementation"/>
-      </appinfo>
+      </appInfo>
       <documentation>
          [Enter information about supplied implementation of this extension point.]
       </documentation>
