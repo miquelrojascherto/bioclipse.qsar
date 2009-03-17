@@ -32,15 +32,14 @@ Require-Bundle: org.eclipse.core.runtime,
  net.bioclipse.ui,
  org.eclipse.ui,
  org.eclipse.ui.views,
- org.eclipse.core.resources
+ org.eclipse.core.resources,
+ net.bioclipse.qsar.model;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: net.bioclipse.qsar,
  net.bioclipse.qsar.business,
  net.bioclipse.qsar.descriptor,
  net.bioclipse.qsar.descriptor.model,
- net.bioclipse.qsar.impl,
  net.bioclipse.qsar.init,
- net.bioclipse.qsar.prefs,
- net.bioclipse.qsar.util
+ net.bioclipse.qsar.prefs
 Import-Package: org.apache.log4j;version="1.2.15"
 Bundle-Activator: net.bioclipse.qsar.init.Activator

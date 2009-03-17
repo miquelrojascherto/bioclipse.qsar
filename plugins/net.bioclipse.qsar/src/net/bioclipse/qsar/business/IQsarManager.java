@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
+import net.bioclipse.cdk.domain.ICDKMolecule;
 import net.bioclipse.core.PublishedMethod;
 import net.bioclipse.core.Recorded;
 import net.bioclipse.core.business.IBioclipseManager;
@@ -113,6 +114,16 @@ public interface IQsarManager extends IBioclipseManager{
                                         List<DescriptorParameter> params);
 
     boolean existsDescriptor( String descriptorID );
+
+    /**
+     * Calculate for all molecules, the descriptors in associated list.
+     * @param molDescMap Map of molecule to list of descriptors
+     * @param monitor
+     * @return
+     */
+    public Map<? extends IMolecule, List<IDescriptorResult>> calculate(
+          Map<? extends IMolecule, List<DescriptorType>> molDescMap,
+          IProgressMonitor monitor );
 
 
 

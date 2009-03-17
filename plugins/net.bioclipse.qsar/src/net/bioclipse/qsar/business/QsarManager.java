@@ -41,10 +41,11 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
+import net.bioclipse.cdk.domain.ICDKMolecule;
 import net.bioclipse.core.domain.IMolecule;
 import net.bioclipse.qsar.DescriptorType;
-import net.bioclipse.qsar.DescriptorimplType;
 import net.bioclipse.qsar.DescriptorlistType;
+import net.bioclipse.qsar.DescriptorproviderType;
 import net.bioclipse.qsar.ParameterType;
 import net.bioclipse.qsar.QSARConstants;
 import net.bioclipse.qsar.QsarFactory;
@@ -699,9 +700,9 @@ public class QsarManager implements IQsarManager{
 
             //Check if this descriptor is here, add if so
             for (DescriptorType descType: descriptorTypes){
-                DescriptorimplType descImpl = descType.getDescriptorimpl();
-
-                if (provider.getId().equals(descImpl.getId())){
+                String descImplId = descType.getProvider();
+                DescriptorProvider prov = getProviderByID( descImplId );
+                if (provider.getId().equals(prov.getId())){
                     descriptorTypesForProvider.add(descType);
                 }
             }
@@ -864,14 +865,14 @@ public class QsarManager implements IQsarManager{
         DescriptorType modelDescriptor=QsarFactory.eINSTANCE.createDescriptorType();
         modelDescriptor.setId(desc.getId());
         modelDescriptor.setNamespace(desc.getNamesapce());
-        cmd=AddCommand.create(editingDomain, descriptorList, QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTOR, modelDescriptor);
+        cmd=AddCommand.create(editingDomain, descriptorList, QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTORS, modelDescriptor);
         cCmd.append(cmd);
 
         //Check if provider already added to qsarModel
-        DescriptorimplType dimpl=null;
-        for (DescriptorimplType pdimpl : qsarModel.getDescriptorimpl()){
+        DescriptorproviderType dimpl=null;
+        for (DescriptorproviderType pdimpl : qsarModel.getDescriptorproviders()){
             if (pdimpl.getId().equals(impl.getProvider().getId())){
-                dimpl=QsarFactory.eINSTANCE.createDescriptorimplType();
+                dimpl=QsarFactory.eINSTANCE.createDescriptorproviderType();
                 dimpl.setId(pdimpl.getId());
             }
         }
@@ -886,25 +887,27 @@ public class QsarManager implements IQsarManager{
             String pvers=prov.getVersion();
             String pns=prov.getNamesapce();
 
-            //Create a provider (=descrImplType) in qsar model root
-            DescriptorimplType newdimpl=QsarFactory.eINSTANCE.createDescriptorimplType();
+            //Create a provider (=descrProviderType) in qsar model root
+            DescriptorproviderType newdimpl=QsarFactory.eINSTANCE.createDescriptorproviderType();
             newdimpl.setId(pid);
-            newdimpl.setNamespace(pns);
+            newdimpl.setURL(pns);
             newdimpl.setVendor(pvend);
             newdimpl.setName(pname);
             newdimpl.setVersion(pvers);
-            cmd=AddCommand.create(editingDomain, qsarModel, QsarPackage.Literals.QSAR_TYPE__DESCRIPTORIMPL, newdimpl);
+            cmd=AddCommand.create(editingDomain, qsarModel, QsarPackage.Literals.QSAR_TYPE__DESCRIPTORPROVIDERS, newdimpl);
             cCmd.append(cmd);
 
             //Reference the created impl by ID
-            dimpl=QsarFactory.eINSTANCE.createDescriptorimplType();
+            dimpl=QsarFactory.eINSTANCE.createDescriptorproviderType();
             dimpl.setId(newdimpl.getId());
 
         }
+        
+        modelDescriptor.setProvider( dimpl.getId() );
 
-        //Add found impl to descriptor element
-        cmd=SetCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__DESCRIPTORIMPL, dimpl);
-        cCmd.append(cmd);
+//        //Add found provider to descriptor element
+//        cmd=SetCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__PROVIDER, dimpl);
+//        cCmd.append(cmd);
 
         //Parameters
         if (impl.getParameters()!=null){
@@ -934,6 +937,15 @@ public class QsarManager implements IQsarManager{
         editingDomain.getCommandStack().execute(cCmd);
 
         return modelDescriptor;
+    }
+
+
+    public Map<? extends IMolecule, List<IDescriptorResult>> calculate(
+                                                                        Map<? extends IMolecule, List<DescriptorType>> molDescMap,
+                                                                        IProgressMonitor monitor ) {
+
+        // TODO Auto-generated method stub
+        return null;
     }
 
 

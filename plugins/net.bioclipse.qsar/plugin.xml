@@ -20,20 +20,6 @@
 
    <extension-point id="descriptorProvider" name="descriptorProvider" schema="schema/descriptorProvider.exsd"/>
 
-   <extension point="org.eclipse.emf.ecore.generated_package">
-      <package
-            uri="http://www.bioclipse.net/qsar"
-            class="net.bioclipse.qsar.QsarPackage"
-            genModel="model/qsar.genmodel"/>
-   </extension>
-
-   <extension point="org.eclipse.emf.ecore.extension_parser">
-      <parser
-            type="qsar"
-            class="net.bioclipse.qsar.util.QsarResourceFactoryImpl"/>
-   </extension>
-
-
    <extension
          point="net.bioclipse.scripting.contribution">
       <scriptContribution
