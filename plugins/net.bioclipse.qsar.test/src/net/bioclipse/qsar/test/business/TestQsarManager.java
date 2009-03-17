@@ -3,12 +3,14 @@ package net.bioclipse.qsar.test.business;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.domain.IMolecule;
 import net.bioclipse.core.domain.SMILESMolecule;
+import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.QSARConstants;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.business.QsarManager;
@@ -20,7 +22,7 @@ import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 import net.bioclipse.qsar.init.Activator;
 
-import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.junit.Test;
@@ -555,5 +557,78 @@ public class TestQsarManager {
 		
 
 	}
+	
+	 @Test
+	  public void testCalculateMolDescMap() throws BioclipseException{
+	    
+	    IMolecule mol1=new SMILESMolecule("C1CCCCC1CC(CC)CC");
+	    IMolecule mol2=new SMILESMolecule("C1CCCCC1CC(CC)CCCCCO");
+	    String descriptorID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain";
+	    String descriptorID2="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#BCUT";
+
+	    Descriptor desc1=qsar.getDescriptorByID( descriptorID );
+      Descriptor desc2=qsar.getDescriptorByID( descriptorID2 );
+      DescriptorImpl impl1 = qsar.getPreferredImpl( descriptorID );
+      DescriptorImpl impl2 = qsar.getPreferredImpl( descriptorID2 );
+	    
+      DescriptorType dtype1 = qsar.createDescriptorType( null, null, desc1, impl1, null );
+      DescriptorType dtype2 = qsar.createDescriptorType( null, null, desc2, impl2, null );
+      
+      Map<IMolecule, List<DescriptorType>> moldescmap=new HashMap<IMolecule, List<DescriptorType>>();
+      List<DescriptorType> list1=new ArrayList<DescriptorType>();
+      list1.add( dtype1 );
+      list1.add( dtype2 );
+      moldescmap.put( mol1, list1 );
+      List<DescriptorType> list2=new ArrayList<DescriptorType>();
+      list2.add( dtype2 );
+      moldescmap.put( mol2, list2 );
+
+      Map<? extends IMolecule, List<IDescriptorResult>> res = qsar.calculate( moldescmap, new NullProgressMonitor() );
+	    assertNotNull("QSAR calculation returned NULL", res);
+	    
+	    List<IDescriptorResult> res1=res.get(mol1);
+	    List<IDescriptorResult> res2=res.get(mol2);
+
+	    assertEquals(2, res1.size());
+	    assertEquals(1, res2.size());
+
+	    IDescriptorResult dres1=res1.get(0);
+	    IDescriptorResult dres11=res1.get(1);
+	    IDescriptorResult dres2=res2.get(0);
+
+	    assertNull(dres1.getErrorMessage());
+	    assertNull(dres11.getErrorMessage());
+	    assertNull(dres2.getErrorMessage());
+
+	    System.out.println("Mol: " + mol1.getSMILES());
+	    System.out.println("Desc " + dres1.getDescriptorId() +": " + 
+	        dres1.getLabels()[0] + "=" + dres1.getValues()[0] +", " + 
+	        dres1.getLabels()[1] + "=" + dres1.getValues()[1] +", " + 
+	        dres1.getLabels()[2] + "=" + dres1.getValues()[2] +", ");
+
+	    System.out.println("Mol: " + mol1.getSMILES());
+	    System.out.println("Desc " + dres11.getDescriptorId() +": " + 
+	        dres11.getLabels()[0] + "=" + dres11.getValues()[0] +", " + 
+	        dres11.getLabels()[1] + "=" + dres11.getValues()[1] +", " + 
+	        dres11.getLabels()[2] + "=" + dres11.getValues()[2] +", ");
+
+	    System.out.println("Mol: " + mol2.getSMILES());
+	    System.out.println("Desc " + dres2.getDescriptorId() +": " + 
+	        dres2.getLabels()[0] + "=" + dres2.getValues()[0] +", " + 
+	        dres2.getLabels()[1] + "=" + dres2.getValues()[1] +", " + 
+	        dres2.getLabels()[2] + "=" + dres2.getValues()[2] +", ");
+
+	    assertEquals(3, dres1.getLabels().length);
+	    assertEquals(3, dres1.getValues().length);
+	    assertEquals("label1", dres1.getLabels()[0]);
+	    assertEquals("label2", dres1.getLabels()[1]);
+	    assertEquals("label3", dres1.getLabels()[2]);
+	    assertEquals(new Float(15.2456), dres1.getValues()[0]);
+	    assertEquals(new Float(47.01), dres1.getValues()[1]);
+	    assertEquals(new Float(-6.44), dres1.getValues()[2]);
+	    
+
+	  }
+	
 
 }
