@@ -63,6 +63,11 @@
                         defaultvalue="C"
                         description="Element name. Wild card * means all atoms"
                         key="elementName">
+                        <listedvalue value="C" />
+                        <listedvalue value="N" />
+                        <listedvalue value="O" />
+                        <listedvalue value="H" />
+                        <listedvalue value="*" />
                   </parameter>
              </descriptorImpl>
              <descriptorImpl
