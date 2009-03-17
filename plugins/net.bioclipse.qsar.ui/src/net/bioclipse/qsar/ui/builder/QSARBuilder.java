@@ -44,6 +44,7 @@ import net.bioclipse.qsar.ResourceType;
 import net.bioclipse.qsar.ResponseType;
 import net.bioclipse.qsar.StructureType;
 import net.bioclipse.qsar.StructurelistType;
+import net.bioclipse.qsar.TypeType;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
 
@@ -256,6 +257,8 @@ public class QSARBuilder extends IncrementalProjectBuilder
         //Read project file (qsar.xml) into an EMF model
         QsarType qsarType=readModelFromProjectFile();
         
+        logger.debug( "Building qsar project: " + getProject().getName() );
+        
         //Verify at least one structure and one descriptor
         //================================================
         if (isQsarTypeEmpty(qsarType)){
@@ -264,23 +267,27 @@ public class QSARBuilder extends IncrementalProjectBuilder
 
         //Extract structures from model for descriptor calculation
         //================================================
-        //Map: Structure -> hasChanged
-        List<ICDKMolecule> allStructures=extractMoleculesFromQSARType(qsarType);
-        List<ICDKMolecule> changedStructures=extractChangedMoleculesFromQSARType(qsarType);
+        List<IMolecule> allStructures=extractMoleculesFromQSARType(qsarType);
+        logger.debug("All structures: \n" + debugMolList(allStructures) );
+        List<IMolecule> changedStructures=extractChangedMoleculesFromQSARType(qsarType);
+        logger.debug("Changed structures: \n" + debugMolList(changedStructures) );
         if (checkCancel(monitor))
             return;
         
         //List descriptors for calculation
         //================================================
         List<DescriptorType> allDescriptors=qsarType.getDescriptorlist().getDescriptors();
+        logger.debug("All descriptors: \n" + debugDescList(allDescriptors) );
         List<DescriptorType> changedDescriptors=getChangedDescriptorIDsInQSARType(qsarType);
+        logger.debug("Changed descriptors: \n" + debugDescList(changedDescriptors) );
         if (checkCancel(monitor))
             return;
         
         //Figure out which combos need calculations
         //================================================
         //Mol > List of descriptor IDs
-        Map<ICDKMolecule, List<DescriptorType>> molDescMap=getComboForCalculation(allStructures, changedStructures, allDescriptors, changedDescriptors);
+        Map<IMolecule, List<DescriptorType>> molDescMap=getComboForCalculation(allStructures, changedStructures, allDescriptors, changedDescriptors);
+        logger.debug("In need of calculation: \n" + debugMolDescMap(molDescMap));
         
         //Calculate descriptors for all such combos
         //================================================
@@ -288,12 +295,15 @@ public class QSARBuilder extends IncrementalProjectBuilder
         int jobSize=allDescriptors.size() * allStructures.size()+1;
         monitor.beginTask("Building QSAR project", jobSize);
         //Calculate all changed descriptors
-        Map<? extends IMolecule, List<IDescriptorResult>> resultMap = qsar.calculate(molDescMap, monitor);
+        Map<IMolecule, List<IDescriptorResult>> resultMap = qsar.calculate(molDescMap, monitor);
+        logger.debug("Calculation results: \n" + debugResultMap(resultMap));
         if (checkCancel(monitor))
             return;
         
         monitor.worked(1);
         monitor.subTask("Processing descriptor results");
+        //Process results, concatenate with already calculated mols
+        //TODO
 
         //Concatenate old values with new calculated values
         //TODO
@@ -308,6 +318,68 @@ public class QSARBuilder extends IncrementalProjectBuilder
     }
 
     /**
+     * Return a string for debugging a resultmap
+     * @param resultMap
+     * @return
+     */
+    private String debugResultMap(
+                          Map<IMolecule, List<IDescriptorResult>> resultMap ) {
+
+        String ret="";
+        for (IMolecule mol : resultMap.keySet()){
+            ret=ret+"Mol: " + mol+"\n";
+            for (IDescriptorResult res : resultMap.get( mol )){
+                ret=ret+ res + "\n";
+            }
+        }
+        return ret;
+    }
+
+    /**
+     * Return a String of contents in a moldescmap
+     * @param molDescMap
+     * @return
+     */
+    private String debugMolDescMap(
+                       Map<IMolecule, List<DescriptorType>> molDescMap ) {
+        String ret="";
+        for (IMolecule mol : molDescMap.keySet()){
+            ret=ret+"Mol: " + mol+"\n";
+            for (DescriptorType desc : molDescMap.get( mol )){
+                ret=ret+"    Desc: id=" + desc.getId() + " ; prov="
+                + desc.getProvider() + " ; params=" + desc.getParameter() + " \n";
+            }
+        }
+        return ret;
+    }
+
+    /**
+     * Colelct and return a string of all descriptors in a list
+     * @param allDescriptors
+     * @return
+     */
+    private String debugDescList( List<DescriptorType> allDescriptors ) {
+        String ret="";
+        for (DescriptorType desc : allDescriptors){
+            ret=ret+"DescriptorID=" + desc.getId() + " ; provider=" + desc.getProvider()+ " ; params=" + desc.getParameter() + "\n";
+        }
+        return ret;
+    }
+
+    /**
+     * Collect a String for debug output from a list of mols
+     * @param allStructures
+     * @return
+     */
+    private String debugMolList(List<IMolecule> allStructures) {
+        String ret="";
+        for (IMolecule mol : allStructures){
+            ret=ret+mol.getResource().getName()+"\n";
+        }
+        return ret;
+    }
+
+    /**
      * Figure out and set up map of ICDKMol > List of descriptors for any combo 
      * that needs to be calculated
      * @param allStructures
@@ -316,18 +388,18 @@ public class QSARBuilder extends IncrementalProjectBuilder
      * @param changedDescriptors
      * @return
      */
-    private Map<ICDKMolecule, List<DescriptorType>> getComboForCalculation(List<ICDKMolecule> allStructures, List<ICDKMolecule> changedStructures, List<DescriptorType> allDescriptors, List<DescriptorType> changedDescriptors) {
+    private Map<IMolecule, List<DescriptorType>> getComboForCalculation(List<IMolecule> allStructures, List<IMolecule> changedStructures, List<DescriptorType> allDescriptors, List<DescriptorType> changedDescriptors) {
 
-        Map<ICDKMolecule, List<DescriptorType>> molDescMap=new HashMap<ICDKMolecule, List<DescriptorType>>();
+        Map<IMolecule, List<DescriptorType>> molDescMap=new HashMap<IMolecule, List<DescriptorType>>();
 
         //Changedstructures need computing for all descriptors
-        for (ICDKMolecule changedStruct : changedStructures){
+        for (IMolecule changedStruct : changedStructures){
             molDescMap.put( changedStruct, allDescriptors );
         }
 
         //Changeddescriptors need computing for all molecules
         for (DescriptorType changedDesc : changedDescriptors){
-            for (ICDKMolecule struct : allStructures){
+            for (IMolecule struct : allStructures){
                 List<DescriptorType>  localDescList;
                 if (molDescMap.containsKey( struct )){
                     localDescList = molDescMap.get( struct );
@@ -361,7 +433,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
         return retlist;
     }
 
-    private List<ICDKMolecule> extractChangedMoleculesFromQSARType(
+    private List<IMolecule> extractChangedMoleculesFromQSARType(
                                                                     QsarType qsarType ) {
 
         // TODO Auto-generated method stub
@@ -375,8 +447,29 @@ public class QSARBuilder extends IncrementalProjectBuilder
      * @param qsarType
      * @return
      */
-    private List<ICDKMolecule> extractMoleculesFromQSARType(
+    private List<IMolecule> extractMoleculesFromQSARType(
                                                                      QsarType qsarType ) {
+        
+        for (ResourceType resource : qsarType.getStructurelist().getResources()){
+            if (resource.getURL() !=null && resource.getFile().length()>0){
+                //We have an URL
+                //FIXME
+            }
+            else if (resource.getFile()!=null && resource.getFile().length()>0){
+                //We have a file
+                //Load file with CDK
+                //TODO
+            }
+
+            for (StructureType structure : resource.getStructure()){
+                if (resource.getType().equals( TypeType.XML )){
+                    String id=structure.getResourceid();
+                }
+                if (resource.getType().equals( TypeType.TEXT )){
+                    int ix=structure.getResourceindex();
+                }
+            }
+        }
 
         // TODO Auto-generated method stub
         return null;
