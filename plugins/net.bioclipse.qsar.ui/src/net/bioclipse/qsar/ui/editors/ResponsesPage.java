@@ -19,10 +19,10 @@ import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.cdk.domain.ICDKMolecule;
 import net.bioclipse.core.business.BioclipseException;
-import net.bioclipse.qsar.MoleculeResourceType;
 import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
+import net.bioclipse.qsar.ResourceType;
 import net.bioclipse.qsar.ResponseType;
 import net.bioclipse.qsar.ResponsesListType;
 
@@ -147,8 +147,7 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
         	@Override
         	public String getText(Object element) {
         		ResponseType response = (ResponseType)element;
-        		return response.getMoleculeResource() + "-" + 
-        			response.getResourceIndex();
+        		return response.getStructureID();
         	}
         });
 
@@ -271,9 +270,9 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
 		List<ICDKMolecule> allMolecules=new ArrayList<ICDKMolecule>();
 		
 		//Go through all molecules in moleculeResources and make sure they have a response
-		for (MoleculeResourceType molres : qsarModel.getMoleculelist().getMoleculeResource()){
+		for (ResourceType molres : qsarModel.getStructurelist().getResources()){
 
-			int molIndex=0;
+			String structID="";
 			
 			//Only work with files for now. TODO: include URL:s 
 			try {
@@ -287,8 +286,8 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
 					
 					//Does this one have a response already?
 					for (ResponseType response : responsesList.getResponse()){
-						if (response.getMoleculeResource().equals(molres.getId())){
-							if (response.getResourceIndex()==molIndex){
+						if (response.getStructureID().equals(molres.getId())){
+							if (structID.equals( response.getStructureID() )){
 								logger.debug("Found an existing response for mol: " + mol.getName());
 								hasResponse=true;
 							}
@@ -298,8 +297,8 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
 					if (!hasResponse){
 						//Create a new response
 						ResponseType newResponse=QsarFactory.eINSTANCE.createResponseType();
-						newResponse.setMoleculeResource(molres.getId());
-						newResponse.setResourceIndex(molIndex);
+						newResponse.setStructureID( molres.getId());
+//						newResponse.setResourceIndex(structID);
 						newResponse.setValue(Float.NaN);
 						responsesList.getResponse().add(newResponse);
 						//Do not use command, this will fire dirty.
@@ -311,7 +310,7 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
 					//molecularResource (on resource removal).
 					
 					//Get next mol
-					molIndex++;
+//					structID++;//FIXME
 
 				}
 			} catch (IOException e) {

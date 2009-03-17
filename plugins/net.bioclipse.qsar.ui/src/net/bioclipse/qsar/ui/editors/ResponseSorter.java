@@ -16,8 +16,8 @@ public class ResponseSorter extends ViewerSorter {
 		ResponseType r1=(ResponseType)e1;
 		ResponseType r2=(ResponseType)e2;
 		
-		String s1=r1.getMoleculeResource()+"-"+r1.getResourceIndex();
-		String s2=r2.getMoleculeResource()+"-"+r2.getResourceIndex();
+		String s1=r1.getStructureID();
+		String s2=r2.getStructureID();
 		
 		return s1.compareTo(s2);
 		

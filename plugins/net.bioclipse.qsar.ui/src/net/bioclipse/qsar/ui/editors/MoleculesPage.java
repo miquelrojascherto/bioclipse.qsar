@@ -23,12 +23,12 @@ import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.cdk.domain.ICDKMolecule;
 import net.bioclipse.core.business.BioclipseException;
-import net.bioclipse.qsar.MoleculeResourceType;
-import net.bioclipse.qsar.MoleculelistType;
 import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
+import net.bioclipse.qsar.ResourceType;
 import net.bioclipse.qsar.ResponseType;
+import net.bioclipse.qsar.StructurelistType;
 import net.bioclipse.ui.dialogs.WSFileDialog;
 
 import org.apache.log4j.Logger;
@@ -121,7 +121,7 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
     private QsarEditorSelectionProvider selectionProvider;
 	private EditingDomain editingDomain;
 	
-	private MoleculelistType moleculeList;
+	private StructurelistType structList;
 	private QsarType qsarModel;
 	private IProject activeProject;
 
@@ -138,10 +138,10 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
         this.selectionProvider=selectionProvider;
 	    
 		//Get mollist from qsar model, init if empty (should not be)
-		moleculeList=qsarModel.getMoleculelist();
-		if (moleculeList==null){
-			moleculeList=QsarFactory.eINSTANCE.createMoleculelistType();
-			qsarModel.setMoleculelist(moleculeList);
+		structList=qsarModel.getStructurelist();
+		if (structList==null){
+			structList=QsarFactory.eINSTANCE.createStructurelistType();
+			qsarModel.setStructurelist( structList);
 		}
 		
 		editor.addPageChangedListener(this);
@@ -403,7 +403,7 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 				boolean skipFile=false;
 				
 				//Check if this file is already in model
-				for (MoleculeResourceType existingRes : moleculeList.getMoleculeResource()){
+				for (ResourceType existingRes : structList.getResources()){
 					if (existingRes.getName().equals(file.getName())){
 						throw new UnsupportedOperationException("File: " + 
 								file.getName() + 
@@ -459,12 +459,12 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 
 						if (!skipFile){
 							//Also add to QSAR model
-							MoleculeResourceType mol1=QsarFactory.eINSTANCE.createMoleculeResourceType();
-							mol1.setId(file.getName());
-							mol1.setName(file.getName());
-							mol1.setFile(file.getFullPath().toString());
-							Command cmd=AddCommand.create(editingDomain, moleculeList, 
-									QsarPackage.Literals.MOLECULELIST_TYPE__MOLECULE_RESOURCE, mol1);
+							ResourceType res=QsarFactory.eINSTANCE.createResourceType();
+							res.setId(file.getName());
+							res.setName(file.getName());
+							res.setFile(file.getFullPath().toString());
+							Command cmd=AddCommand.create(editingDomain, structList, 
+									QsarPackage.Literals.STRUCTURELIST_TYPE__RESOURCES, res);
 
 							ccmd.append(cmd);
 						}
@@ -499,17 +499,17 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 		IObservableSet knownElements = provider.getKnownElements();
 		IObservableMap[] observeMaps = EMFEditObservables.
 			observeMaps(editingDomain, knownElements, new EStructuralFeature[]{
-					QsarPackage.Literals.MOLECULE_RESOURCE_TYPE__ID,
-					QsarPackage.Literals.MOLECULE_RESOURCE_TYPE__NO_MOLS,
-					QsarPackage.Literals.MOLECULE_RESOURCE_TYPE__NO2D,
-					QsarPackage.Literals.MOLECULE_RESOURCE_TYPE__NO3D});
+					QsarPackage.Literals.STRUCTURE_TYPE__ID,
+//					QsarPackage.Literals.resouMOLECULE_RESOURCE_TYPE__NO_MOLS,
+					QsarPackage.Literals.RESOURCE_TYPE__NO2D,
+					QsarPackage.Literals.RESOURCE_TYPE__NO3D});
 		ObservableMapLabelProvider labelProvider =
 			new ObservableQSARLabelProvider(observeMaps);
 		molViewer.setLabelProvider(labelProvider);
 
 		// Person#addresses is the Viewer's input
-		molViewer.setInput(EMFEditObservables.observeList(Realm.getDefault(), editingDomain, moleculeList,
-			QsarPackage.Literals.MOLECULELIST_TYPE__MOLECULE_RESOURCE));
+		molViewer.setInput(EMFEditObservables.observeList(Realm.getDefault(), editingDomain, structList,
+			QsarPackage.Literals.STRUCTURELIST_TYPE__RESOURCES));
 
 	}
 
@@ -888,20 +888,20 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 		}
 		
 		for (Object obj : ssel.toList()){
-			if (!(obj instanceof MoleculeResourceType)) {
+			if (!(obj instanceof ResourceType)) {
 				//Should not happen
 				logger.error("A non-MoleculeResource selected in MolViewer: " + obj);
 				return;
 			}
 
-			MoleculeResourceType molres=(MoleculeResourceType)obj;
+			ResourceType molres=(ResourceType)obj;
 			
 			CompoundCommand ccmd=new CompoundCommand();
 
 			//First, remove any responses for this moleculeresource
 			if (qsarModel.getResponselist()!=null && qsarModel.getResponselist().getResponse().size()>0)
 			for (ResponseType response : qsarModel.getResponselist().getResponse()){
-				if (response.getMoleculeResource().equalsIgnoreCase(molres.getId())){
+				if (response.getStructureID().equalsIgnoreCase(molres.getId())){
 
 					//Schedule this response for removal
 					Command cmd=RemoveCommand.create(editingDomain, 
@@ -913,8 +913,7 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 
 
 			Command cmd=RemoveCommand.create(editingDomain, 
-					moleculeList, QsarPackage.Literals.
-					MOLECULELIST_TYPE__MOLECULE_RESOURCE, molres);
+				structList, QsarPackage.Literals.STRUCTURELIST_TYPE__RESOURCES, molres);
 			ccmd.append(cmd);
 			
 			//Execute all commands

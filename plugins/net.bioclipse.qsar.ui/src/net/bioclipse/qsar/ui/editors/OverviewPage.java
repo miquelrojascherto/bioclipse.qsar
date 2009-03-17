@@ -130,14 +130,14 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider{
 	private void updateValues() {
 
 		if (qsarModel.getDescriptorlist()!=null && 
-				qsarModel.getDescriptorlist().getDescriptor()!=null){
-			int ndesc=qsarModel.getDescriptorlist().getDescriptor().size();
+				qsarModel.getDescriptorlist().getDescriptors()!=null){
+			int ndesc=qsarModel.getDescriptorlist().getDescriptors().size();
 			lblNumDescriptors.setText(""+ndesc);
 		}
 
-		if (qsarModel.getMoleculelist()!=null && 
-				qsarModel.getMoleculelist().getMoleculeResource()!=null){
-			int ndesc=qsarModel.getMoleculelist().getMoleculeResource().size();
+		if (qsarModel.getStructurelist()!=null && 
+				qsarModel.getStructurelist().getResources()!=null){
+			int ndesc=qsarModel.getStructurelist().getResources().size();
 			lblNumFiles.setText(""+ndesc);
 		}
 

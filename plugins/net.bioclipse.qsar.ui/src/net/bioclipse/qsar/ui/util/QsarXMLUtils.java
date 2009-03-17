@@ -7,10 +7,11 @@ import java.util.Collections;
 
 import net.bioclipse.qsar.DescriptorlistType;
 import net.bioclipse.qsar.DocumentRoot;
-import net.bioclipse.qsar.MoleculelistType;
+import net.bioclipse.qsar.MetadataType;
 import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
+import net.bioclipse.qsar.StructurelistType;
 import net.bioclipse.qsar.util.QsarAdapterFactory;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
@@ -46,10 +47,17 @@ public class QsarXMLUtils {
 		//		//could not get SetCommand to work for root element, add directly 
 		root.setQsar(qsar);
 
-		MoleculelistType mollist=QsarFactory.eINSTANCE.createMoleculelistType();
-		cmd=SetCommand.create(editingDomain, qsar, QsarPackage.Literals.QSAR_TYPE__MOLECULELIST, mollist);
+		//Add metadata
+    MetadataType meta=QsarFactory.eINSTANCE.createMetadataType();
+    cmd=SetCommand.create(editingDomain, qsar, QsarPackage.Literals.QSAR_TYPE__METADATA, meta);
+    cCmd.append(cmd);
+
+    //Add structurelist
+		StructurelistType structlist=QsarFactory.eINSTANCE.createStructurelistType();
+		cmd=SetCommand.create(editingDomain, qsar, QsarPackage.Literals.QSAR_TYPE__STRUCTURELIST, structlist);
 		cCmd.append(cmd);
 
+    //Add descriptorlist
 		DescriptorlistType desclist=QsarFactory.eINSTANCE.createDescriptorlistType();
 		cmd=SetCommand.create(editingDomain, qsar, QsarPackage.Literals.QSAR_TYPE__DESCRIPTORLIST, desclist);
 		cCmd.append(cmd);

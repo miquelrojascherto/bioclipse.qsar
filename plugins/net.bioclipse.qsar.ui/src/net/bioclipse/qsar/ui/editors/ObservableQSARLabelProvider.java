@@ -2,10 +2,8 @@ package net.bioclipse.qsar.ui.editors;
 
 
 import net.bioclipse.qsar.DescriptorType;
-import net.bioclipse.qsar.MoleculeResourceType;
 import net.bioclipse.qsar.ParameterType;
-import net.bioclipse.qsar.QsarPackage;
-import net.bioclipse.qsar.provider.DescriptorTypeItemProvider;
+import net.bioclipse.qsar.ResourceType;
 import net.bioclipse.qsar.ui.Activator;
 
 import org.eclipse.core.databinding.observable.map.IObservableMap;
@@ -26,7 +24,7 @@ public class ObservableQSARLabelProvider extends ObservableMapLabelProvider{
 		if (element instanceof DescriptorType) {
 			return Activator.getImageDescriptor("icons/descriptor.png").createImage();
 		}
-		else if (element instanceof MoleculeResourceType) {
+		else if (element instanceof ResourceType) {
 			return Activator.getImageDescriptor("icons/benzene.gif").createImage();
 		}
 		

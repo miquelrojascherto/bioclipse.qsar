@@ -19,8 +19,8 @@ import java.util.List;
 import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.qsar.DescriptorType;
-import net.bioclipse.qsar.DescriptorimplType;
 import net.bioclipse.qsar.DescriptorlistType;
+import net.bioclipse.qsar.DescriptorproviderType;
 import net.bioclipse.qsar.ParameterType;
 import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
@@ -234,7 +234,7 @@ private Table paramsTable;
 
 		// Person#addresses is the Viewer's input
 		rightViewer.setInput(EMFEditObservables.observeList(Realm.getDefault(), editingDomain, descriptorList,
-			QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTOR));
+			QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTORS));
 
 	}
 
@@ -448,16 +448,16 @@ private Table paramsTable;
 		modelDescriptor.setNamespace(desc.getNamesapce());
 
 		//Check if provider already added to qsarModel
-		DescriptorimplType dimpl=null;
-		for (DescriptorimplType pdimpl : qsarModel.getDescriptorimpl()){
+		DescriptorproviderType dprov=null;
+		for (DescriptorproviderType pdimpl : qsarModel.getDescriptorproviders()){
 			if (pdimpl.getId().equals(impl.getProvider().getId())){
-				dimpl=QsarFactory.eINSTANCE.createDescriptorimplType();
-				dimpl.setId(pdimpl.getId());
+				dprov=QsarFactory.eINSTANCE.createDescriptorproviderType();
+				dprov.setId(pdimpl.getId());
 			}
 		}
 		
 		//If this is a new provider, add it to Qsar model
-		if (dimpl==null){
+		if (dprov==null){
 			DescriptorProvider prov = impl.getProvider();
 			
 			String pid=prov.getId();
@@ -467,23 +467,23 @@ private Table paramsTable;
 			String pns=prov.getNamesapce();
 
 			//Create a provider (=descrImplType) in qsar model root
-			DescriptorimplType newdimpl=QsarFactory.eINSTANCE.createDescriptorimplType();
-			newdimpl.setId(pid);
-			newdimpl.setNamespace(pns);
-			newdimpl.setVendor(pvend);
-			newdimpl.setName(pname);
-			newdimpl.setVersion(pvers);
-			cmd=AddCommand.create(editingDomain, qsarModel, QsarPackage.Literals.QSAR_TYPE__DESCRIPTORIMPL, newdimpl);
+			DescriptorproviderType newdprov=QsarFactory.eINSTANCE.createDescriptorproviderType();
+			newdprov.setId(pid);
+			newdprov.setURL( pns);
+			newdprov.setVendor(pvend);
+			newdprov.setName(pname);
+			newdprov.setVersion(pvers);
+			cmd=AddCommand.create(editingDomain, qsarModel, QsarPackage.Literals.QSAR_TYPE__DESCRIPTORPROVIDERS, newdprov);
 			cCmd.append(cmd);
 
 			//Reference the created impl by ID
-			dimpl=QsarFactory.eINSTANCE.createDescriptorimplType();
-			dimpl.setId(newdimpl.getId());
+			dprov=QsarFactory.eINSTANCE.createDescriptorproviderType();
+			dprov.setId(newdprov.getId());
 			
 		}
 
 		//Add found impl to descriptor element
-		cmd=SetCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__DESCRIPTORIMPL, dimpl);
+		cmd=SetCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__PROVIDER, dprov);
 		cCmd.append(cmd);
 
 		//Parameters
@@ -500,7 +500,7 @@ private Table paramsTable;
 		}
 		
 		//Add the descriptor to descriptorList last, for notification issues
-		cmd=AddCommand.create(editingDomain, descriptorList, QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTOR, modelDescriptor);
+		cmd=AddCommand.create(editingDomain, descriptorList, QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTORS, modelDescriptor);
 		cCmd.append(cmd);
 
 		//Execute the compiund command
@@ -526,7 +526,7 @@ private Table paramsTable;
     		
     		if (obj instanceof DescriptorType) {
 				DescriptorType descType = (DescriptorType) obj;
-				Command cmd=RemoveCommand.create(editingDomain, descriptorList, QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTOR, descType);
+				Command cmd=RemoveCommand.create(editingDomain, descriptorList, QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTORS, descType);
 				ccmd.append(cmd);
 			}
     		

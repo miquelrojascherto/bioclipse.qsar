@@ -98,7 +98,8 @@ public class DescriptorLabelProvider implements ITableLabelProvider, ILabelProvi
 			ResponseType response=(ResponseType)element;
 			
 			if (columnIndex==0){
-				return response.getMoleculeResource() + "-" + response.getResourceIndex();
+			    //TODO: changed, might need work: ols was: response.getResourceIndex()
+				return response.getStructureID() + "-" + response.getStructureID();
 			}
 			if (columnIndex==1){
 				if (response.getArrayValues()!=null)
