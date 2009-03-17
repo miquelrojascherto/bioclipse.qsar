@@ -683,54 +683,62 @@ public class QsarManager implements IQsarManager{
      * @param descriptorMap Map from descriptorImplID to List<DescriptorParameter>
      * @return
      */
-    public Map<? extends IMolecule, List<IDescriptorResult>> calculate(List<? extends IMolecule> molecules, 
-                                                                       List<DescriptorType> descriptorTypes, IProgressMonitor monitor)   throws OperationCanceledException{
+    public Map<? extends IMolecule, List<IDescriptorResult>> calculate(
+            List<? extends IMolecule> molecules, 
+            List<DescriptorType> descriptorTypes, IProgressMonitor monitor)   throws OperationCanceledException{
 
-        Map<IMolecule, List<IDescriptorResult>> allResults=
-            new HashMap<IMolecule, List<IDescriptorResult>>();
+        Map<IMolecule, List<DescriptorType>> molDescMap=new HashMap<IMolecule, List<DescriptorType>>();
 
-        //The problem is to collect all descriptor ID's and group by provider
-        //Loop over all providers
-        for (DescriptorProvider provider : getFullProviders()){
-
-            //Store descriptors and params to calculate for this provider in list
-            List<DescriptorType> descriptorTypesForProvider = new ArrayList<DescriptorType>();
-
-
-
-            //Check if this descriptor is here, add if so
-            for (DescriptorType descType: descriptorTypes){
-                String descImplId = descType.getProvider();
-                DescriptorProvider prov = getProviderByID( descImplId );
-                if (provider.getId().equals(prov.getId())){
-                    descriptorTypesForProvider.add(descType);
-                }
-            }
-
-
-            //If we have descs to calculate, do so
-            if (descriptorTypesForProvider.size()>0){
-                IDescriptorCalculator calculator=provider.getCalculator();
-                Map<? extends IMolecule, List<IDescriptorResult>> results = 
-                    calculator.calculateDescriptor(molecules, 
-                                                   descriptorTypesForProvider, monitor);
-
-                //Add these results to the molecule
-                for (IMolecule mol : results.keySet()){
-                    if (allResults.get(mol)==null) allResults.put(mol, new ArrayList<IDescriptorResult>());
-                    List<IDescriptorResult> reslist=allResults.get(mol);
-
-                    //Add the computed result to the reslist
-                    reslist.addAll(results.get(mol));
-                }
-
-            }
-
+        for (IMolecule mol : molecules){
+            molDescMap.put( mol, descriptorTypes );
         }
 
-        return allResults;
+        return calculate( molDescMap, monitor );
+        
+//        Map<IMolecule, List<IDescriptorResult>> allResults=
+//            new HashMap<IMolecule, List<IDescriptorResult>>();
+//
+//        //The problem is to collect all descriptor ID's and group by provider
+//        //Loop over all providers
+//        for (DescriptorProvider provider : getFullProviders()){
+//
+//            //Store descriptors and params to calculate for this provider in list
+//            List<DescriptorType> descriptorTypesForProvider = new ArrayList<DescriptorType>();
+//
+//
+//
+//            //Check if this descriptor is here, add if so
+//            for (DescriptorType descType: descriptorTypes){
+//                String descImplId = descType.getProvider();
+//                DescriptorProvider prov = getProviderByID( descImplId );
+//                if (provider.getId().equals(prov.getId())){
+//                    descriptorTypesForProvider.add(descType);
+//                }
+//            }
+//
+//
+//            //If we have descs to calculate, do so
+//            if (descriptorTypesForProvider.size()>0){
+//                IDescriptorCalculator calculator=provider.getCalculator();
+//                Map<? extends IMolecule, List<IDescriptorResult>> results = 
+//                    calculator.calculateDescriptor(molecules, 
+//                                                   descriptorTypesForProvider, monitor);
+//
+//                //Add these results to the molecule
+//                for (IMolecule mol : results.keySet()){
+//                    if (allResults.get(mol)==null) allResults.put(mol, new ArrayList<IDescriptorResult>());
+//                    List<IDescriptorResult> reslist=allResults.get(mol);
+//
+//                    //Add the computed result to the reslist
+//                    reslist.addAll(results.get(mol));
+//                }
+//
+//            }
+//
+//        }
+//
+//        return allResults;
     }
-
 
 
     //	/**
@@ -940,12 +948,69 @@ public class QsarManager implements IQsarManager{
     }
 
 
-    public Map<? extends IMolecule, List<IDescriptorResult>> calculate(
-                                                                        Map<? extends IMolecule, List<DescriptorType>> molDescMap,
-                                                                        IProgressMonitor monitor ) {
+    public Map<IMolecule, List<IDescriptorResult>> calculate(
+          Map<IMolecule, List<DescriptorType>> molDescMap,
+          IProgressMonitor monitor ) {
 
-        // TODO Auto-generated method stub
-        return null;
+        
+        Map<IMolecule, List<IDescriptorResult>> allResults=
+            new HashMap<IMolecule, List<IDescriptorResult>>();
+        
+        //We need to perform one QSAR calculation per provider
+        //So, collect them by provider from input Map
+        Map<DescriptorProvider,Map<IMolecule, List<DescriptorType>>> moldescByProvider 
+          = new HashMap<DescriptorProvider, Map<IMolecule,List<DescriptorType>>>();
+
+        //For all mols
+        for (IMolecule mol : molDescMap.keySet()){
+            List<DescriptorType> moldescriptors = molDescMap.get( mol );
+
+            //For all descr
+            for (DescriptorType desc : moldescriptors){
+                String providerID=desc.getProvider();
+                DescriptorProvider provider = getProviderByID( providerID );
+                if (!(moldescByProvider.containsKey( provider ))){
+                    //If not exists, create it
+                    moldescByProvider.put( provider, new HashMap<IMolecule, List<DescriptorType>>() );
+                }
+                Map<IMolecule, List<DescriptorType>> localMolDesc 
+                        = (Map<IMolecule, List<DescriptorType>>) moldescByProvider.get( provider );
+                
+                if (!(localMolDesc.containsKey( mol ))){
+                    localMolDesc.put( mol, new ArrayList<DescriptorType>() );
+                }
+                
+                List<DescriptorType> localTypes=localMolDesc.get( mol );
+                if (!(localTypes.contains( desc ))){
+                    localTypes.add( desc );
+                }
+            }
+        }
+
+        
+        //Process one provider at a time
+        for (DescriptorProvider provider : moldescByProvider.keySet()){
+
+            IDescriptorCalculator calculator=provider.getCalculator();
+            
+            Map<IMolecule, List<DescriptorType>> moldesc = moldescByProvider.get( provider );
+            
+            Map<? extends IMolecule, List<IDescriptorResult>> results = 
+                calculator.calculateDescriptor(moldesc, monitor);
+
+            //Add these results to the molecule
+            for (IMolecule mol : results.keySet()){
+                if (allResults.get(mol)==null) allResults.put(mol, new ArrayList<IDescriptorResult>());
+                List<IDescriptorResult> reslist=allResults.get(mol);
+
+                //Add the computed result to the reslist
+                reslist.addAll(results.get(mol));
+            }
+
+        }
+
+        return allResults;
+        
     }
 
 

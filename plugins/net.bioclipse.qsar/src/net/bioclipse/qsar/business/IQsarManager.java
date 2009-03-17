@@ -121,8 +121,8 @@ public interface IQsarManager extends IBioclipseManager{
      * @param monitor
      * @return
      */
-    public Map<? extends IMolecule, List<IDescriptorResult>> calculate(
-          Map<? extends IMolecule, List<DescriptorType>> molDescMap,
+    public Map<IMolecule, List<IDescriptorResult>> calculate(
+          Map<IMolecule, List<DescriptorType>> molDescMap,
           IProgressMonitor monitor );
 
 

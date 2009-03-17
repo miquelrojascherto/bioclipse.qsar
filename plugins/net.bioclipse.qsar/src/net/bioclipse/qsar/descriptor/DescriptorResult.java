@@ -56,5 +56,17 @@ public class DescriptorResult implements IDescriptorResult{
 	public void setValues(Float[] values) {
 		this.values = values;
 	}
+	
+	@Override
+    public String toString() {
+	    if (labels==null || labels.length<=0) return "null";
+	    
+	    String ret="DescriptorResult for descriptor=" + descriptorId +": ";
+	    for (int i=0; i< labels.length;i++){
+	        ret=ret+labels[i] + "=" + values[i];
+	    }
+
+	    return ret;
+    }
 
 }
