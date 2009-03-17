@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.bioclipse.net/qsar" elementFormDefault="unqualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.bioclipse.net/qsar" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore">
+
+
+    <element name="qsar" type="tns:qsarType"></element>
+    
+    <complexType name="qsarType">
+    	<sequence>
+    		<element name="structurelist" type="tns:structurelistType"
+    			maxOccurs="1" minOccurs="0">
+    		</element>
+    		<element name="descriptorlist" type="tns:descriptorlistType"
+    			maxOccurs="1" minOccurs="0">
+    		</element>
+    		<element name="descriptorproviders"
+    			type="tns:descriptorproviderType" maxOccurs="unbounded"
+    			minOccurs="0">
+    		</element>
+    		<element name="preprocessing" type="tns:preprocessingType"
+    			maxOccurs="1" minOccurs="0">
+    		</element>
+    		<element name="responselist" type="tns:responsesListType"
+    			maxOccurs="1" minOccurs="0">
+    		</element>
+    		<element name="responseunit" type="tns:responseunitType"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    		<element name="metadata" type="tns:metadataType" maxOccurs="1" minOccurs="1"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="structurelistType">
+    	<sequence>
+    		<element name="resources" type="tns:resourceType"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="descriptorlistType">
+    	<sequence>
+    		<element name="descriptors" type="tns:descriptorType"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="resourceType">
+    	<sequence>
+    		<element name="structure" type="tns:structureType"
+    			minOccurs="1" maxOccurs="unbounded">
+    		</element>
+    	</sequence>
+    	<attribute name="id" type="string" use="required"></attribute>
+    	<attribute name="name" type="string" use="required"></attribute>
+    	<attribute name="excluded" type="boolean" use="optional"></attribute>
+    	<attribute ecore:transient="true" name="no2d" type="int"
+    		default="-1">
+    	</attribute>
+    	<attribute ecore:transient="true" name="no3d" type="int"
+    		default="-1">
+    	</attribute>
+    	<attribute name="checksum" type="string"></attribute>
+    	<attribute name="type">
+    		<simpleType>
+    			<restriction base="string">
+    				<enumeration value="xml"></enumeration>
+    				<enumeration value="text"></enumeration>
+    			</restriction>
+    		</simpleType>
+    	</attribute>
+    	<attribute name="URL" type="string"></attribute>
+    	<attribute name="file" type="string"></attribute>
+    </complexType>
+
+    <complexType name="descriptorType">
+    	<sequence>
+    		<element name="parameter" type="tns:parameterType"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    	</sequence>
+    	<attribute name="id" type="string" use="required"></attribute>
+    	<attribute name="namespace" type="string"></attribute>
+    	<attribute name="provider" type="string"></attribute>
+    	<attribute ecore:transient="true" name="changed" type="boolean" default="false"></attribute>
+    </complexType>
+
+    <complexType name="parameterType">
+    	<attribute name="key" type="string" use="required"></attribute>
+    	<attribute name="value" type="string"></attribute>
+    </complexType>
+
+
+    <complexType name="preprocessingType">
+    	<sequence>
+    		<element name="preprocessingStep"
+    			type="tns:preprocessingStepType" maxOccurs="unbounded"
+    			minOccurs="0">
+    		</element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="preprocessingStepType">
+    	<attribute name="id" type="string"></attribute>
+    	<attribute name="namespace" type="string"></attribute>
+    	<attribute name="name" type="string"></attribute>
+    	<attribute name="vendor" type="string"></attribute>
+    	<attribute name="order" type="string"></attribute>
+    </complexType>
+
+    <complexType name="responsesListType">
+    	<sequence>
+    		<element name="response" type="tns:responseType" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="responseType">
+    	<choice>
+    		<element name="value" type="float"></element>
+            <element name="arrayValues" type="string"></element>
+    	</choice>
+    	<attribute name="structureID" type="string" use="required"></attribute>
+    	<attribute name="unit" type="string"></attribute>
+    </complexType>
+
+
+    <complexType name="responseunitType">
+        <attribute name="id" type="string"></attribute>
+    	<attribute name="name" type="string"></attribute>
+    	<attribute name="shortname" type="string"></attribute>
+    	<attribute name="description" type="string"></attribute>
+    	<attribute name="URL" type="string"></attribute>
+    </complexType>
+
+
+    <complexType name="structureType">
+    	<attribute name="id" type="string"></attribute>
+    	<attribute name="inchi" type="string"></attribute>
+    	<attribute name="resourceindex" type="int"></attribute>
+    	<attribute name="resourceid" type="string"></attribute>
+    	<attribute ecore:transient="true" name="changed" type="boolean" default="false"></attribute>
+    </complexType>
+
+
+
+
+    <complexType name="descriptorproviderType">
+    	<attribute name="id" type="string"></attribute>
+    	<attribute name="URL" type="string"></attribute>
+    	<attribute name="name" type="string"></attribute>
+    	<attribute name="vendor" type="string"></attribute>
+    	<attribute name="version" type="string"></attribute>
+    </complexType>
+
+    
+
+
+        <complexType name="metadataType">
+        	<sequence>
+        		<element name="reference" type="tns:referenceType" maxOccurs="unbounded" minOccurs="0"></element>
+        	</sequence>
+        	<attribute name="datasetname" type="string"></attribute>
+        	<attribute name="authors" type="string"></attribute>
+        	<attribute name="URL" type="string"></attribute>
+        	<attribute name="license" type="string"></attribute>
+        	<attribute name="description" type="string"></attribute>
+        </complexType>
+
+        <complexType name="referenceType">
+        	<attribute name="title" type="string"></attribute>
+        	<attribute name="authors" type="string"></attribute>
+        	<attribute name="journal" type="string"></attribute>
+        	<attribute name="year" type="string"></attribute>
+        	<attribute name="doi" type="string"></attribute>
+        </complexType>
+</schema>

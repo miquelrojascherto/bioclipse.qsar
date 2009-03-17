@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText=" Copyright (c) 2009 Ola Spjuth&#xA; All rights reserved. This program and the accompanying materials&#xA; are made available under the terms of the Eclipse Public License v1.0&#xA; which accompanies this distribution, and is available at&#xA; http://www.eclipse.org/legal/epl-v10.html&#xA;"
+    modelDirectory="/net.bioclipse.qsar.model/src" modelPluginID="net.bioclipse.qsar.model"
+    modelName="Qsar.model" modelPluginClass="" importerID="org.eclipse.xsd.ecore.importer"
+    complianceLevel="5.0" language="">
+  <foreignModel>qsar.xsd</foreignModel>
+  <genPackages prefix="Qsar" basePackage="net.bioclipse" resource="XML" disposableProviderFactory="true"
+      ecorePackage="qsar.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="qsar.ecore#//TypeType">
+      <genEnumLiterals ecoreEnumLiteral="qsar.ecore#//TypeType/xml"/>
+      <genEnumLiterals ecoreEnumLiteral="qsar.ecore#//TypeType/text"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="qsar.ecore#//TypeTypeObject"/>
+    <genClasses ecoreClass="qsar.ecore#//DescriptorlistType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//DescriptorlistType/descriptors"/>
+    </genClasses>
+    <genClasses ecoreClass="qsar.ecore#//DescriptorproviderType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorproviderType/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorproviderType/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorproviderType/uRL"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorproviderType/vendor"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorproviderType/version"/>
+    </genClasses>
+    <genClasses ecoreClass="qsar.ecore#//DescriptorType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//DescriptorType/parameter"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorType/changed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorType/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorType/namespace"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorType/provider"/>
+    </genClasses>
+    <genClasses ecoreClass="qsar.ecore#//DocumentRoot">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DocumentRoot/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference qsar.ecore#//DocumentRoot/xMLNSPrefixMap"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference qsar.ecore#//DocumentRoot/xSISchemaLocation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//DocumentRoot/qsar"/>
+    </genClasses>
+    <genClasses ecoreClass="qsar.ecore#//MetadataType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//MetadataType/reference"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MetadataType/authors"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MetadataType/datasetname"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MetadataType/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MetadataType/license"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//MetadataType/uRL"/>
+    </genClasses>
+    <genClasses ecoreClass="qsar.ecore#//ParameterType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ParameterType/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ParameterType/value"/>
+    </genClasses>
+    <genClasses ecoreClass="qsar.ecore#//PreprocessingStepType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//PreprocessingStepType/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//PreprocessingStepType/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//PreprocessingStepType/namespace"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//PreprocessingStepType/order"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//PreprocessingStepType/vendor"/>
+    </genClasses>
+    <genClasses ecoreClass="qsar.ecore#//PreprocessingType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//PreprocessingType/preprocessingStep"/>
+    </genClasses>
+    <genClasses ecoreClass="qsar.ecore#//QsarType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//QsarType/structurelist"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//QsarType/descriptorlist"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//QsarType/descriptorproviders"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//QsarType/preprocessing"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//QsarType/responselist"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//QsarType/responseunit"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//QsarType/metadata"/>
+    </genClasses>
+    <genClasses ecoreClass="qsar.ecore#//ReferenceType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ReferenceType/authors"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ReferenceType/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ReferenceType/journal"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ReferenceType/title"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ReferenceType/year"/>
+    </genClasses>
+    <genClasses ecoreClass="qsar.ecore#//ResourceType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//ResourceType/structure"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResourceType/checksum"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResourceType/excluded"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResourceType/file"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResourceType/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResourceType/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResourceType/no2d"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResourceType/no3d"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResourceType/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResourceType/uRL"/>
+    </genClasses>
+    <genClasses ecoreClass="qsar.ecore#//ResponsesListType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//ResponsesListType/response"/>
+    </genClasses>
+    <genClasses ecoreClass="qsar.ecore#//ResponseType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResponseType/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResponseType/arrayValues"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResponseType/structureID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResponseType/unit"/>
+    </genClasses>
+    <genClasses ecoreClass="qsar.ecore#//ResponseunitType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResponseunitType/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResponseunitType/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResponseunitType/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResponseunitType/shortname"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResponseunitType/uRL"/>
+    </genClasses>
+    <genClasses ecoreClass="qsar.ecore#//StructurelistType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//StructurelistType/resources"/>
+    </genClasses>
+    <genClasses ecoreClass="qsar.ecore#//StructureType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//StructureType/changed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//StructureType/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//StructureType/inchi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//StructureType/resourceid"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//StructureType/resourceindex"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
