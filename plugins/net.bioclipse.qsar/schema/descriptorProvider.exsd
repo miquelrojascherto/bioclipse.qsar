@@ -1,14 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="net.bioclipse.qsar.ui" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="net.bioclipse.qsar" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.bioclipse.qsar.ui" id="descriptorProvider" name="descriptorProvider"/>
+         <meta.schema plugin="net.bioclipse.qsar" id="descriptorProvider" name="descriptorProvider"/>
       </appInfo>
       <documentation>
          DescriptorProviders contribute software and algorithms to calculate molecular descriptors for a chemical structure.
-
-
       </documentation>
    </annotation>
 
