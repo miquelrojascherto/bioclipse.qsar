@@ -8,11 +8,11 @@
  *
  * $Id$
  */
-package net.bioclipse.qsar.util;
+package net.sf.bibtexml.util;
 
 import java.util.List;
 
-import net.bioclipse.qsar.*;
+import net.sf.bibtexml.*;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -27,10 +27,10 @@ import org.eclipse.emf.ecore.EObject;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * @see net.bioclipse.qsar.QsarPackage
+ * @see net.sf.bibtexml.BibtexmlPackage
  * @generated
  */
-public class QsarSwitch<T> {
+public class BibtexmlSwitch<T> {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -44,7 +44,7 @@ public class QsarSwitch<T> {
      * <!-- end-user-doc -->
      * @generated
      */
-    protected static QsarPackage modelPackage;
+    protected static BibtexmlPackage modelPackage;
 
     /**
      * Creates an instance of the switch.
@@ -52,9 +52,9 @@ public class QsarSwitch<T> {
      * <!-- end-user-doc -->
      * @generated
      */
-    public QsarSwitch() {
+    public BibtexmlSwitch() {
         if (modelPackage == null) {
-            modelPackage = QsarPackage.eINSTANCE;
+            modelPackage = BibtexmlPackage.eINSTANCE;
         }
     }
 
@@ -98,93 +98,112 @@ public class QsarSwitch<T> {
      */
     protected T doSwitch(int classifierID, EObject theEObject) {
         switch (classifierID) {
-            case QsarPackage.DESCRIPTORLIST_TYPE: {
-                DescriptorlistType descriptorlistType = (DescriptorlistType)theEObject;
-                T result = caseDescriptorlistType(descriptorlistType);
+            case BibtexmlPackage.ARTICLE_TYPE: {
+                ArticleType articleType = (ArticleType)theEObject;
+                T result = caseArticleType(articleType);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case QsarPackage.DESCRIPTORPROVIDER_TYPE: {
-                DescriptorproviderType descriptorproviderType = (DescriptorproviderType)theEObject;
-                T result = caseDescriptorproviderType(descriptorproviderType);
+            case BibtexmlPackage.BIB_TE_XML_ENTRIES_CLASS: {
+                BibTeXMLEntriesClass bibTeXMLEntriesClass = (BibTeXMLEntriesClass)theEObject;
+                T result = caseBibTeXMLEntriesClass(bibTeXMLEntriesClass);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case QsarPackage.DESCRIPTOR_TYPE: {
-                DescriptorType descriptorType = (DescriptorType)theEObject;
-                T result = caseDescriptorType(descriptorType);
+            case BibtexmlPackage.BOOKLET_TYPE: {
+                BookletType bookletType = (BookletType)theEObject;
+                T result = caseBookletType(bookletType);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case QsarPackage.DOCUMENT_ROOT: {
+            case BibtexmlPackage.BOOK_TYPE: {
+                BookType bookType = (BookType)theEObject;
+                T result = caseBookType(bookType);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case BibtexmlPackage.CONFERENCE_TYPE: {
+                ConferenceType conferenceType = (ConferenceType)theEObject;
+                T result = caseConferenceType(conferenceType);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case BibtexmlPackage.DOCUMENT_ROOT: {
                 DocumentRoot documentRoot = (DocumentRoot)theEObject;
                 T result = caseDocumentRoot(documentRoot);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case QsarPackage.METADATA_TYPE: {
-                MetadataType metadataType = (MetadataType)theEObject;
-                T result = caseMetadataType(metadataType);
+            case BibtexmlPackage.ENTRY_TYPE: {
+                EntryType entryType = (EntryType)theEObject;
+                T result = caseEntryType(entryType);
+                if (result == null) result = caseBibTeXMLEntriesClass(entryType);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case QsarPackage.PARAMETER_TYPE: {
-                ParameterType parameterType = (ParameterType)theEObject;
-                T result = caseParameterType(parameterType);
+            case BibtexmlPackage.FILE_TYPE: {
+                FileType fileType = (FileType)theEObject;
+                T result = caseFileType(fileType);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case QsarPackage.PREPROCESSING_STEP_TYPE: {
-                PreprocessingStepType preprocessingStepType = (PreprocessingStepType)theEObject;
-                T result = casePreprocessingStepType(preprocessingStepType);
+            case BibtexmlPackage.INBOOK_TYPE: {
+                InbookType inbookType = (InbookType)theEObject;
+                T result = caseInbookType(inbookType);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case QsarPackage.PREPROCESSING_TYPE: {
-                PreprocessingType preprocessingType = (PreprocessingType)theEObject;
-                T result = casePreprocessingType(preprocessingType);
+            case BibtexmlPackage.INCOLLECTION_TYPE: {
+                IncollectionType incollectionType = (IncollectionType)theEObject;
+                T result = caseIncollectionType(incollectionType);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case QsarPackage.QSAR_TYPE: {
-                QsarType qsarType = (QsarType)theEObject;
-                T result = caseQsarType(qsarType);
+            case BibtexmlPackage.INPROCEEDINGS_TYPE: {
+                InproceedingsType inproceedingsType = (InproceedingsType)theEObject;
+                T result = caseInproceedingsType(inproceedingsType);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case QsarPackage.RESOURCE_TYPE: {
-                ResourceType resourceType = (ResourceType)theEObject;
-                T result = caseResourceType(resourceType);
+            case BibtexmlPackage.MANUAL_TYPE: {
+                ManualType manualType = (ManualType)theEObject;
+                T result = caseManualType(manualType);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case QsarPackage.RESPONSES_LIST_TYPE: {
-                ResponsesListType responsesListType = (ResponsesListType)theEObject;
-                T result = caseResponsesListType(responsesListType);
+            case BibtexmlPackage.MASTERSTHESIS_TYPE: {
+                MastersthesisType mastersthesisType = (MastersthesisType)theEObject;
+                T result = caseMastersthesisType(mastersthesisType);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case QsarPackage.RESPONSE_TYPE: {
-                ResponseType responseType = (ResponseType)theEObject;
-                T result = caseResponseType(responseType);
+            case BibtexmlPackage.MISC_TYPE: {
+                MiscType miscType = (MiscType)theEObject;
+                T result = caseMiscType(miscType);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case QsarPackage.RESPONSEUNIT_TYPE: {
-                ResponseunitType responseunitType = (ResponseunitType)theEObject;
-                T result = caseResponseunitType(responseunitType);
+            case BibtexmlPackage.PHDTHESIS_TYPE: {
+                PhdthesisType phdthesisType = (PhdthesisType)theEObject;
+                T result = casePhdthesisType(phdthesisType);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case QsarPackage.STRUCTURELIST_TYPE: {
-                StructurelistType structurelistType = (StructurelistType)theEObject;
-                T result = caseStructurelistType(structurelistType);
+            case BibtexmlPackage.PROCEEDINGS_TYPE: {
+                ProceedingsType proceedingsType = (ProceedingsType)theEObject;
+                T result = caseProceedingsType(proceedingsType);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case QsarPackage.STRUCTURE_TYPE: {
-                StructureType structureType = (StructureType)theEObject;
-                T result = caseStructureType(structureType);
+            case BibtexmlPackage.TECHREPORT_TYPE: {
+                TechreportType techreportType = (TechreportType)theEObject;
+                T result = caseTechreportType(techreportType);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case BibtexmlPackage.UNPUBLISHED_TYPE: {
+                UnpublishedType unpublishedType = (UnpublishedType)theEObject;
+                T result = caseUnpublishedType(unpublishedType);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -193,47 +212,77 @@ public class QsarSwitch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Descriptorlist Type</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Article Type</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Descriptorlist Type</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Article Type</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseDescriptorlistType(DescriptorlistType object) {
+    public T caseArticleType(ArticleType object) {
         return null;
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Descriptorprovider Type</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Bib Te XML Entries Class</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Descriptorprovider Type</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Bib Te XML Entries Class</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseDescriptorproviderType(DescriptorproviderType object) {
+    public T caseBibTeXMLEntriesClass(BibTeXMLEntriesClass object) {
         return null;
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Descriptor Type</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Booklet Type</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Descriptor Type</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Booklet Type</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseDescriptorType(DescriptorType object) {
+    public T caseBookletType(BookletType object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Book Type</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Book Type</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseBookType(BookType object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Conference Type</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Conference Type</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseConferenceType(ConferenceType object) {
         return null;
     }
 
@@ -253,167 +302,182 @@ public class QsarSwitch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Metadata Type</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Entry Type</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Metadata Type</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Entry Type</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseMetadataType(MetadataType object) {
+    public T caseEntryType(EntryType object) {
         return null;
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Parameter Type</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>File Type</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Parameter Type</em>'.
+     * @return the result of interpreting the object as an instance of '<em>File Type</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseParameterType(ParameterType object) {
+    public T caseFileType(FileType object) {
         return null;
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Preprocessing Step Type</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Inbook Type</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Preprocessing Step Type</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Inbook Type</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T casePreprocessingStepType(PreprocessingStepType object) {
+    public T caseInbookType(InbookType object) {
         return null;
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Preprocessing Type</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Incollection Type</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Preprocessing Type</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Incollection Type</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T casePreprocessingType(PreprocessingType object) {
+    public T caseIncollectionType(IncollectionType object) {
         return null;
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Type</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Inproceedings Type</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Type</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Inproceedings Type</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseQsarType(QsarType object) {
+    public T caseInproceedingsType(InproceedingsType object) {
         return null;
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Resource Type</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Manual Type</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Resource Type</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Manual Type</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseResourceType(ResourceType object) {
+    public T caseManualType(ManualType object) {
         return null;
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Responses List Type</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Mastersthesis Type</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Responses List Type</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Mastersthesis Type</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseResponsesListType(ResponsesListType object) {
+    public T caseMastersthesisType(MastersthesisType object) {
         return null;
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Response Type</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Misc Type</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Response Type</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Misc Type</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseResponseType(ResponseType object) {
+    public T caseMiscType(MiscType object) {
         return null;
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Responseunit Type</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Phdthesis Type</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Responseunit Type</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Phdthesis Type</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseResponseunitType(ResponseunitType object) {
+    public T casePhdthesisType(PhdthesisType object) {
         return null;
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Structurelist Type</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Proceedings Type</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Structurelist Type</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Proceedings Type</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseStructurelistType(StructurelistType object) {
+    public T caseProceedingsType(ProceedingsType object) {
         return null;
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Structure Type</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Techreport Type</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Structure Type</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Techreport Type</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseStructureType(StructureType object) {
+    public T caseTechreportType(TechreportType object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Unpublished Type</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Unpublished Type</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseUnpublishedType(UnpublishedType object) {
         return null;
     }
 
@@ -432,4 +496,4 @@ public class QsarSwitch<T> {
         return null;
     }
 
-} //QsarSwitch
+} //BibtexmlSwitch

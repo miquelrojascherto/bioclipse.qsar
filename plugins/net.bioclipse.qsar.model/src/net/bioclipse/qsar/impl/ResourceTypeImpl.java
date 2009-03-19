@@ -46,6 +46,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link net.bioclipse.qsar.impl.ResourceTypeImpl#getName <em>Name</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.ResourceTypeImpl#getNo2d <em>No2d</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.ResourceTypeImpl#getNo3d <em>No3d</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.impl.ResourceTypeImpl#getNoMols <em>No Mols</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.ResourceTypeImpl#getType <em>Type</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.ResourceTypeImpl#getURL <em>URL</em>}</li>
  * </ul>
@@ -239,6 +240,35 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
     protected boolean no3dESet;
 
     /**
+     * The default value of the '{@link #getNoMols() <em>No Mols</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getNoMols()
+     * @generated
+     * @ordered
+     */
+    protected static final int NO_MOLS_EDEFAULT = 0;
+
+    /**
+     * The cached value of the '{@link #getNoMols() <em>No Mols</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getNoMols()
+     * @generated
+     * @ordered
+     */
+    protected int noMols = NO_MOLS_EDEFAULT;
+
+    /**
+     * This is true if the No Mols attribute has been set.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    protected boolean noMolsESet;
+
+    /**
      * The default value of the '{@link #getType() <em>Type</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -323,48 +353,6 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getURL() {
-        return uRL;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setURL(String newURL) {
-        String oldURL = uRL;
-        uRL = newURL;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.RESOURCE_TYPE__URL, oldURL, uRL));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public String getFile() {
-        return file;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setFile(String newFile) {
-        String oldFile = file;
-        file = newFile;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.RESOURCE_TYPE__FILE, oldFile, file));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public String getChecksum() {
         return checksum;
     }
@@ -425,6 +413,27 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
      */
     public boolean isSetExcluded() {
         return excludedESet;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getFile() {
+        return file;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setFile(String newFile) {
+        String oldFile = file;
+        file = newFile;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.RESOURCE_TYPE__FILE, oldFile, file));
     }
 
     /**
@@ -566,6 +575,52 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
      * <!-- end-user-doc -->
      * @generated
      */
+    public int getNoMols() {
+        return noMols;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setNoMols(int newNoMols) {
+        int oldNoMols = noMols;
+        noMols = newNoMols;
+        boolean oldNoMolsESet = noMolsESet;
+        noMolsESet = true;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.RESOURCE_TYPE__NO_MOLS, oldNoMols, noMols, !oldNoMolsESet));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void unsetNoMols() {
+        int oldNoMols = noMols;
+        boolean oldNoMolsESet = noMolsESet;
+        noMols = NO_MOLS_EDEFAULT;
+        noMolsESet = false;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.UNSET, QsarPackage.RESOURCE_TYPE__NO_MOLS, oldNoMols, NO_MOLS_EDEFAULT, oldNoMolsESet));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean isSetNoMols() {
+        return noMolsESet;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public TypeType getType() {
         return type;
     }
@@ -612,6 +667,27 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
      * <!-- end-user-doc -->
      * @generated
      */
+    public String getURL() {
+        return uRL;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setURL(String newURL) {
+        String oldURL = uRL;
+        uRL = newURL;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.RESOURCE_TYPE__URL, oldURL, uRL));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -645,6 +721,8 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
                 return new Integer(getNo2d());
             case QsarPackage.RESOURCE_TYPE__NO3D:
                 return new Integer(getNo3d());
+            case QsarPackage.RESOURCE_TYPE__NO_MOLS:
+                return new Integer(getNoMols());
             case QsarPackage.RESOURCE_TYPE__TYPE:
                 return getType();
             case QsarPackage.RESOURCE_TYPE__URL:
@@ -686,6 +764,9 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
                 return;
             case QsarPackage.RESOURCE_TYPE__NO3D:
                 setNo3d(((Integer)newValue).intValue());
+                return;
+            case QsarPackage.RESOURCE_TYPE__NO_MOLS:
+                setNoMols(((Integer)newValue).intValue());
                 return;
             case QsarPackage.RESOURCE_TYPE__TYPE:
                 setType((TypeType)newValue);
@@ -729,6 +810,9 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
             case QsarPackage.RESOURCE_TYPE__NO3D:
                 unsetNo3d();
                 return;
+            case QsarPackage.RESOURCE_TYPE__NO_MOLS:
+                unsetNoMols();
+                return;
             case QsarPackage.RESOURCE_TYPE__TYPE:
                 unsetType();
                 return;
@@ -763,6 +847,8 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
                 return isSetNo2d();
             case QsarPackage.RESOURCE_TYPE__NO3D:
                 return isSetNo3d();
+            case QsarPackage.RESOURCE_TYPE__NO_MOLS:
+                return isSetNoMols();
             case QsarPackage.RESOURCE_TYPE__TYPE:
                 return isSetType();
             case QsarPackage.RESOURCE_TYPE__URL:
@@ -795,6 +881,8 @@ public class ResourceTypeImpl extends EObjectImpl implements ResourceType {
         if (no2dESet) result.append(no2d); else result.append("<unset>");
         result.append(", no3d: ");
         if (no3dESet) result.append(no3d); else result.append("<unset>");
+        result.append(", noMols: ");
+        if (noMolsESet) result.append(noMols); else result.append("<unset>");
         result.append(", type: ");
         if (typeESet) result.append(type); else result.append("<unset>");
         result.append(", uRL: ");

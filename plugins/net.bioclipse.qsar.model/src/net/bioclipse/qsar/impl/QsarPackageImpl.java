@@ -21,7 +21,6 @@ import net.bioclipse.qsar.PreprocessingType;
 import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
-import net.bioclipse.qsar.ReferenceType;
 import net.bioclipse.qsar.ResourceType;
 import net.bioclipse.qsar.ResponseType;
 import net.bioclipse.qsar.ResponsesListType;
@@ -29,6 +28,10 @@ import net.bioclipse.qsar.ResponseunitType;
 import net.bioclipse.qsar.StructureType;
 import net.bioclipse.qsar.StructurelistType;
 import net.bioclipse.qsar.TypeType;
+
+import net.sf.bibtexml.BibtexmlPackage;
+
+import net.sf.bibtexml.impl.BibtexmlPackageImpl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -117,13 +120,6 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * @generated
      */
     private EClass qsarTypeEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass referenceTypeEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -240,11 +236,16 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
         // Initialize simple dependencies
         XMLTypePackage.eINSTANCE.eClass();
 
+        // Obtain or create and register interdependencies
+        BibtexmlPackageImpl theBibtexmlPackage = (BibtexmlPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(BibtexmlPackage.eNS_URI) instanceof BibtexmlPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(BibtexmlPackage.eNS_URI) : BibtexmlPackage.eINSTANCE);
+
         // Create package meta-data objects
         theQsarPackage.createPackageContents();
+        theBibtexmlPackage.createPackageContents();
 
         // Initialize created meta-data
         theQsarPackage.initializePackageContents();
+        theBibtexmlPackage.initializePackageContents();
 
         // Mark meta-data to indicate it can't be changed
         theQsarPackage.freeze();
@@ -662,60 +663,6 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getReferenceType() {
-        return referenceTypeEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getReferenceType_Authors() {
-        return (EAttribute)referenceTypeEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getReferenceType_Doi() {
-        return (EAttribute)referenceTypeEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getReferenceType_Journal() {
-        return (EAttribute)referenceTypeEClass.getEStructuralFeatures().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getReferenceType_Title() {
-        return (EAttribute)referenceTypeEClass.getEStructuralFeatures().get(3);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getReferenceType_Year() {
-        return (EAttribute)referenceTypeEClass.getEStructuralFeatures().get(4);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EClass getResourceType() {
         return resourceTypeEClass;
     }
@@ -734,24 +681,6 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getResourceType_URL() {
-        return (EAttribute)resourceTypeEClass.getEStructuralFeatures().get(9);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getResourceType_File() {
-        return (EAttribute)resourceTypeEClass.getEStructuralFeatures().get(3);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EAttribute getResourceType_Checksum() {
         return (EAttribute)resourceTypeEClass.getEStructuralFeatures().get(1);
     }
@@ -763,6 +692,15 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      */
     public EAttribute getResourceType_Excluded() {
         return (EAttribute)resourceTypeEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getResourceType_File() {
+        return (EAttribute)resourceTypeEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -806,8 +744,26 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getResourceType_Type() {
+    public EAttribute getResourceType_NoMols() {
         return (EAttribute)resourceTypeEClass.getEStructuralFeatures().get(8);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getResourceType_Type() {
+        return (EAttribute)resourceTypeEClass.getEStructuralFeatures().get(9);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getResourceType_URL() {
+        return (EAttribute)resourceTypeEClass.getEStructuralFeatures().get(10);
     }
 
     /**
@@ -968,8 +924,17 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getStructureType_Resourceindex() {
-        return (EAttribute)structureTypeEClass.getEStructuralFeatures().get(4);
+    public EAttribute getStructureType_Id() {
+        return (EAttribute)structureTypeEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getStructureType_Inchi() {
+        return (EAttribute)structureTypeEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -986,17 +951,8 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getStructureType_Id() {
-        return (EAttribute)structureTypeEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getStructureType_Inchi() {
-        return (EAttribute)structureTypeEClass.getEStructuralFeatures().get(2);
+    public EAttribute getStructureType_Resourceindex() {
+        return (EAttribute)structureTypeEClass.getEStructuralFeatures().get(4);
     }
 
     /**
@@ -1099,13 +1055,6 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
         createEReference(qsarTypeEClass, QSAR_TYPE__RESPONSEUNIT);
         createEReference(qsarTypeEClass, QSAR_TYPE__METADATA);
 
-        referenceTypeEClass = createEClass(REFERENCE_TYPE);
-        createEAttribute(referenceTypeEClass, REFERENCE_TYPE__AUTHORS);
-        createEAttribute(referenceTypeEClass, REFERENCE_TYPE__DOI);
-        createEAttribute(referenceTypeEClass, REFERENCE_TYPE__JOURNAL);
-        createEAttribute(referenceTypeEClass, REFERENCE_TYPE__TITLE);
-        createEAttribute(referenceTypeEClass, REFERENCE_TYPE__YEAR);
-
         resourceTypeEClass = createEClass(RESOURCE_TYPE);
         createEReference(resourceTypeEClass, RESOURCE_TYPE__STRUCTURE);
         createEAttribute(resourceTypeEClass, RESOURCE_TYPE__CHECKSUM);
@@ -1115,6 +1064,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
         createEAttribute(resourceTypeEClass, RESOURCE_TYPE__NAME);
         createEAttribute(resourceTypeEClass, RESOURCE_TYPE__NO2D);
         createEAttribute(resourceTypeEClass, RESOURCE_TYPE__NO3D);
+        createEAttribute(resourceTypeEClass, RESOURCE_TYPE__NO_MOLS);
         createEAttribute(resourceTypeEClass, RESOURCE_TYPE__TYPE);
         createEAttribute(resourceTypeEClass, RESOURCE_TYPE__URL);
 
@@ -1176,6 +1126,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 
         // Obtain other dependent packages
         XMLTypePackage theXMLTypePackage = (XMLTypePackage)EPackage.Registry.INSTANCE.getEPackage(XMLTypePackage.eNS_URI);
+        BibtexmlPackage theBibtexmlPackage = (BibtexmlPackage)EPackage.Registry.INSTANCE.getEPackage(BibtexmlPackage.eNS_URI);
 
         // Create type parameters
 
@@ -1208,7 +1159,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
         initEReference(getDocumentRoot_Qsar(), this.getQsarType(), null, "qsar", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
         initEClass(metadataTypeEClass, MetadataType.class, "MetadataType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getMetadataType_Reference(), this.getReferenceType(), null, "reference", null, 0, -1, MetadataType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMetadataType_Reference(), theBibtexmlPackage.getBibTeXMLEntriesClass(), null, "reference", null, 0, -1, MetadataType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getMetadataType_Authors(), theXMLTypePackage.getString(), "authors", null, 0, 1, MetadataType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getMetadataType_Datasetname(), theXMLTypePackage.getString(), "datasetname", null, 0, 1, MetadataType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getMetadataType_Description(), theXMLTypePackage.getString(), "description", null, 0, 1, MetadataType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1238,13 +1189,6 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
         initEReference(getQsarType_Responseunit(), this.getResponseunitType(), null, "responseunit", null, 0, -1, QsarType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getQsarType_Metadata(), this.getMetadataType(), null, "metadata", null, 1, 1, QsarType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(referenceTypeEClass, ReferenceType.class, "ReferenceType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getReferenceType_Authors(), theXMLTypePackage.getString(), "authors", null, 0, 1, ReferenceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getReferenceType_Doi(), theXMLTypePackage.getString(), "doi", null, 0, 1, ReferenceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getReferenceType_Journal(), theXMLTypePackage.getString(), "journal", null, 0, 1, ReferenceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getReferenceType_Title(), theXMLTypePackage.getString(), "title", null, 0, 1, ReferenceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getReferenceType_Year(), theXMLTypePackage.getString(), "year", null, 0, 1, ReferenceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
         initEClass(resourceTypeEClass, ResourceType.class, "ResourceType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getResourceType_Structure(), this.getStructureType(), null, "structure", null, 1, -1, ResourceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getResourceType_Checksum(), theXMLTypePackage.getString(), "checksum", null, 0, 1, ResourceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1254,6 +1198,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
         initEAttribute(getResourceType_Name(), theXMLTypePackage.getString(), "name", null, 1, 1, ResourceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getResourceType_No2d(), theXMLTypePackage.getInt(), "no2d", "-1", 0, 1, ResourceType.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getResourceType_No3d(), theXMLTypePackage.getInt(), "no3d", "-1", 0, 1, ResourceType.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getResourceType_NoMols(), theXMLTypePackage.getInt(), "noMols", "0", 0, 1, ResourceType.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getResourceType_Type(), this.getTypeType(), "type", null, 0, 1, ResourceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getResourceType_URL(), theXMLTypePackage.getString(), "uRL", null, 0, 1, ResourceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -1306,7 +1251,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * @generated
      */
     protected void createExtendedMetaDataAnnotations() {
-        String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";		
+        String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";			
         addAnnotation
           (descriptorlistTypeEClass, 
            source, 
@@ -1624,48 +1569,6 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
              "name", "metadata"
            });		
         addAnnotation
-          (referenceTypeEClass, 
-           source, 
-           new String[] {
-             "name", "referenceType",
-             "kind", "empty"
-           });		
-        addAnnotation
-          (getReferenceType_Authors(), 
-           source, 
-           new String[] {
-             "kind", "attribute",
-             "name", "authors"
-           });		
-        addAnnotation
-          (getReferenceType_Doi(), 
-           source, 
-           new String[] {
-             "kind", "attribute",
-             "name", "doi"
-           });		
-        addAnnotation
-          (getReferenceType_Journal(), 
-           source, 
-           new String[] {
-             "kind", "attribute",
-             "name", "journal"
-           });		
-        addAnnotation
-          (getReferenceType_Title(), 
-           source, 
-           new String[] {
-             "kind", "attribute",
-             "name", "title"
-           });		
-        addAnnotation
-          (getReferenceType_Year(), 
-           source, 
-           new String[] {
-             "kind", "attribute",
-             "name", "year"
-           });		
-        addAnnotation
           (resourceTypeEClass, 
            source, 
            new String[] {
@@ -1727,6 +1630,13 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
            new String[] {
              "kind", "attribute",
              "name", "no3d"
+           });		
+        addAnnotation
+          (getResourceType_NoMols(), 
+           source, 
+           new String[] {
+             "kind", "attribute",
+             "name", "noMols"
            });		
         addAnnotation
           (getResourceType_Type(), 

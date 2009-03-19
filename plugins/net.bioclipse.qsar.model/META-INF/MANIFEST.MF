@@ -9,7 +9,10 @@ Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: net.bioclipse.qsar,
  net.bioclipse.qsar.impl,
- net.bioclipse.qsar.util
+ net.bioclipse.qsar.util,
+ net.sf.bibtexml,
+ net.sf.bibtexml.impl,
+ net.sf.bibtexml.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.emf.ecore.xmi;visibility:=reexport

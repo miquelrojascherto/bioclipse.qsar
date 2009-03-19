@@ -28,6 +28,38 @@ import org.eclipse.emf.ecore.EReference;
  *   <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
+ * <!-- begin-model-doc -->
+ * <![CDATA[
+ * 
+ *   This schema expresses XML markup similar to the BibTeX language
+ *   specified for LaTeX, or actually its content model.
+ *   For documentation on BibTeX, see
+ *     http://www.ctan.org/tex-archive/biblio/bibtex/distribs/doc/
+ * 
+ *   Suggested invocation:
+ * 
+ *     <?xml version="1.0" encoding="UTF-8"?>
+ *     <bibtex:file xmlns:bibtex="http://bibtexml.sf.net/
+ *           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ *           xsi:schemaLocation="http://bibtexml.sf.net/ bibtexml.xsd">
+ *     ...
+ *     </bibtex:file>
+ * 
+ *   Available from  http://bibtexml.sf.net/
+ * 
+ *   This code originally developed by
+ *     Vidar Bronken Gundersen
+ *     Zeger W. Hendrikse
+ * 
+ *   This program is free software; you can redistribute it and/or
+ *   modify it under the terms of the GNU General Public License.
+ *   See  http://www.gnu.org/copyleft/gpl.html
+ * 
+ *   Todo:
+ *     Make fully modular and reusable.
+ * 
+ *   ]]>
+ * <!-- end-model-doc -->
  * @see net.bioclipse.qsar.QsarFactory
  * @model kind="package"
  * @generated
@@ -568,70 +600,6 @@ public interface QsarPackage extends EPackage {
     int QSAR_TYPE_FEATURE_COUNT = 7;
 
     /**
-     * The meta object id for the '{@link net.bioclipse.qsar.impl.ReferenceTypeImpl <em>Reference Type</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see net.bioclipse.qsar.impl.ReferenceTypeImpl
-     * @see net.bioclipse.qsar.impl.QsarPackageImpl#getReferenceType()
-     * @generated
-     */
-    int REFERENCE_TYPE = 9;
-
-    /**
-     * The feature id for the '<em><b>Authors</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REFERENCE_TYPE__AUTHORS = 0;
-
-    /**
-     * The feature id for the '<em><b>Doi</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REFERENCE_TYPE__DOI = 1;
-
-    /**
-     * The feature id for the '<em><b>Journal</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REFERENCE_TYPE__JOURNAL = 2;
-
-    /**
-     * The feature id for the '<em><b>Title</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REFERENCE_TYPE__TITLE = 3;
-
-    /**
-     * The feature id for the '<em><b>Year</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REFERENCE_TYPE__YEAR = 4;
-
-    /**
-     * The number of structural features of the '<em>Reference Type</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REFERENCE_TYPE_FEATURE_COUNT = 5;
-
-    /**
      * The meta object id for the '{@link net.bioclipse.qsar.impl.ResourceTypeImpl <em>Resource Type</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -639,7 +607,7 @@ public interface QsarPackage extends EPackage {
      * @see net.bioclipse.qsar.impl.QsarPackageImpl#getResourceType()
      * @generated
      */
-    int RESOURCE_TYPE = 10;
+    int RESOURCE_TYPE = 9;
 
     /**
      * The feature id for the '<em><b>Structure</b></em>' containment reference list.
@@ -714,13 +682,22 @@ public interface QsarPackage extends EPackage {
     int RESOURCE_TYPE__NO3D = 7;
 
     /**
+     * The feature id for the '<em><b>No Mols</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RESOURCE_TYPE__NO_MOLS = 8;
+
+    /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int RESOURCE_TYPE__TYPE = 8;
+    int RESOURCE_TYPE__TYPE = 9;
 
     /**
      * The feature id for the '<em><b>URL</b></em>' attribute.
@@ -729,7 +706,7 @@ public interface QsarPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int RESOURCE_TYPE__URL = 9;
+    int RESOURCE_TYPE__URL = 10;
 
     /**
      * The number of structural features of the '<em>Resource Type</em>' class.
@@ -738,7 +715,7 @@ public interface QsarPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int RESOURCE_TYPE_FEATURE_COUNT = 10;
+    int RESOURCE_TYPE_FEATURE_COUNT = 11;
 
     /**
      * The meta object id for the '{@link net.bioclipse.qsar.impl.ResponsesListTypeImpl <em>Responses List Type</em>}' class.
@@ -748,7 +725,7 @@ public interface QsarPackage extends EPackage {
      * @see net.bioclipse.qsar.impl.QsarPackageImpl#getResponsesListType()
      * @generated
      */
-    int RESPONSES_LIST_TYPE = 11;
+    int RESPONSES_LIST_TYPE = 10;
 
     /**
      * The feature id for the '<em><b>Response</b></em>' containment reference list.
@@ -776,7 +753,7 @@ public interface QsarPackage extends EPackage {
      * @see net.bioclipse.qsar.impl.QsarPackageImpl#getResponseType()
      * @generated
      */
-    int RESPONSE_TYPE = 12;
+    int RESPONSE_TYPE = 11;
 
     /**
      * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -831,7 +808,7 @@ public interface QsarPackage extends EPackage {
      * @see net.bioclipse.qsar.impl.QsarPackageImpl#getResponseunitType()
      * @generated
      */
-    int RESPONSEUNIT_TYPE = 13;
+    int RESPONSEUNIT_TYPE = 12;
 
     /**
      * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -895,7 +872,7 @@ public interface QsarPackage extends EPackage {
      * @see net.bioclipse.qsar.impl.QsarPackageImpl#getStructurelistType()
      * @generated
      */
-    int STRUCTURELIST_TYPE = 14;
+    int STRUCTURELIST_TYPE = 13;
 
     /**
      * The feature id for the '<em><b>Resources</b></em>' containment reference list.
@@ -923,7 +900,7 @@ public interface QsarPackage extends EPackage {
      * @see net.bioclipse.qsar.impl.QsarPackageImpl#getStructureType()
      * @generated
      */
-    int STRUCTURE_TYPE = 15;
+    int STRUCTURE_TYPE = 14;
 
     /**
      * The feature id for the '<em><b>Changed</b></em>' attribute.
@@ -987,7 +964,7 @@ public interface QsarPackage extends EPackage {
      * @see net.bioclipse.qsar.impl.QsarPackageImpl#getTypeType()
      * @generated
      */
-    int TYPE_TYPE = 16;
+    int TYPE_TYPE = 15;
 
     /**
      * The meta object id for the '<em>Type Type Object</em>' data type.
@@ -997,7 +974,7 @@ public interface QsarPackage extends EPackage {
      * @see net.bioclipse.qsar.impl.QsarPackageImpl#getTypeTypeObject()
      * @generated
      */
-    int TYPE_TYPE_OBJECT = 17;
+    int TYPE_TYPE_OBJECT = 16;
 
 
     /**
@@ -1487,71 +1464,6 @@ public interface QsarPackage extends EPackage {
     EReference getQsarType_Metadata();
 
     /**
-     * Returns the meta object for class '{@link net.bioclipse.qsar.ReferenceType <em>Reference Type</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Reference Type</em>'.
-     * @see net.bioclipse.qsar.ReferenceType
-     * @generated
-     */
-    EClass getReferenceType();
-
-    /**
-     * Returns the meta object for the attribute '{@link net.bioclipse.qsar.ReferenceType#getAuthors <em>Authors</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Authors</em>'.
-     * @see net.bioclipse.qsar.ReferenceType#getAuthors()
-     * @see #getReferenceType()
-     * @generated
-     */
-    EAttribute getReferenceType_Authors();
-
-    /**
-     * Returns the meta object for the attribute '{@link net.bioclipse.qsar.ReferenceType#getDoi <em>Doi</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Doi</em>'.
-     * @see net.bioclipse.qsar.ReferenceType#getDoi()
-     * @see #getReferenceType()
-     * @generated
-     */
-    EAttribute getReferenceType_Doi();
-
-    /**
-     * Returns the meta object for the attribute '{@link net.bioclipse.qsar.ReferenceType#getJournal <em>Journal</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Journal</em>'.
-     * @see net.bioclipse.qsar.ReferenceType#getJournal()
-     * @see #getReferenceType()
-     * @generated
-     */
-    EAttribute getReferenceType_Journal();
-
-    /**
-     * Returns the meta object for the attribute '{@link net.bioclipse.qsar.ReferenceType#getTitle <em>Title</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Title</em>'.
-     * @see net.bioclipse.qsar.ReferenceType#getTitle()
-     * @see #getReferenceType()
-     * @generated
-     */
-    EAttribute getReferenceType_Title();
-
-    /**
-     * Returns the meta object for the attribute '{@link net.bioclipse.qsar.ReferenceType#getYear <em>Year</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Year</em>'.
-     * @see net.bioclipse.qsar.ReferenceType#getYear()
-     * @see #getReferenceType()
-     * @generated
-     */
-    EAttribute getReferenceType_Year();
-
-    /**
      * Returns the meta object for class '{@link net.bioclipse.qsar.ResourceType <em>Resource Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1571,28 +1483,6 @@ public interface QsarPackage extends EPackage {
      * @generated
      */
     EReference getResourceType_Structure();
-
-    /**
-     * Returns the meta object for the attribute '{@link net.bioclipse.qsar.ResourceType#getURL <em>URL</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>URL</em>'.
-     * @see net.bioclipse.qsar.ResourceType#getURL()
-     * @see #getResourceType()
-     * @generated
-     */
-    EAttribute getResourceType_URL();
-
-    /**
-     * Returns the meta object for the attribute '{@link net.bioclipse.qsar.ResourceType#getFile <em>File</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>File</em>'.
-     * @see net.bioclipse.qsar.ResourceType#getFile()
-     * @see #getResourceType()
-     * @generated
-     */
-    EAttribute getResourceType_File();
 
     /**
      * Returns the meta object for the attribute '{@link net.bioclipse.qsar.ResourceType#getChecksum <em>Checksum</em>}'.
@@ -1615,6 +1505,17 @@ public interface QsarPackage extends EPackage {
      * @generated
      */
     EAttribute getResourceType_Excluded();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.bioclipse.qsar.ResourceType#getFile <em>File</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>File</em>'.
+     * @see net.bioclipse.qsar.ResourceType#getFile()
+     * @see #getResourceType()
+     * @generated
+     */
+    EAttribute getResourceType_File();
 
     /**
      * Returns the meta object for the attribute '{@link net.bioclipse.qsar.ResourceType#getId <em>Id</em>}'.
@@ -1661,6 +1562,17 @@ public interface QsarPackage extends EPackage {
     EAttribute getResourceType_No3d();
 
     /**
+     * Returns the meta object for the attribute '{@link net.bioclipse.qsar.ResourceType#getNoMols <em>No Mols</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>No Mols</em>'.
+     * @see net.bioclipse.qsar.ResourceType#getNoMols()
+     * @see #getResourceType()
+     * @generated
+     */
+    EAttribute getResourceType_NoMols();
+
+    /**
      * Returns the meta object for the attribute '{@link net.bioclipse.qsar.ResourceType#getType <em>Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1670,6 +1582,17 @@ public interface QsarPackage extends EPackage {
      * @generated
      */
     EAttribute getResourceType_Type();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.bioclipse.qsar.ResourceType#getURL <em>URL</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>URL</em>'.
+     * @see net.bioclipse.qsar.ResourceType#getURL()
+     * @see #getResourceType()
+     * @generated
+     */
+    EAttribute getResourceType_URL();
 
     /**
      * Returns the meta object for class '{@link net.bioclipse.qsar.ResponsesListType <em>Responses List Type</em>}'.
@@ -1854,28 +1777,6 @@ public interface QsarPackage extends EPackage {
     EAttribute getStructureType_Changed();
 
     /**
-     * Returns the meta object for the attribute '{@link net.bioclipse.qsar.StructureType#getResourceindex <em>Resourceindex</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Resourceindex</em>'.
-     * @see net.bioclipse.qsar.StructureType#getResourceindex()
-     * @see #getStructureType()
-     * @generated
-     */
-    EAttribute getStructureType_Resourceindex();
-
-    /**
-     * Returns the meta object for the attribute '{@link net.bioclipse.qsar.StructureType#getResourceid <em>Resourceid</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Resourceid</em>'.
-     * @see net.bioclipse.qsar.StructureType#getResourceid()
-     * @see #getStructureType()
-     * @generated
-     */
-    EAttribute getStructureType_Resourceid();
-
-    /**
      * Returns the meta object for the attribute '{@link net.bioclipse.qsar.StructureType#getId <em>Id</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1896,6 +1797,28 @@ public interface QsarPackage extends EPackage {
      * @generated
      */
     EAttribute getStructureType_Inchi();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.bioclipse.qsar.StructureType#getResourceid <em>Resourceid</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Resourceid</em>'.
+     * @see net.bioclipse.qsar.StructureType#getResourceid()
+     * @see #getStructureType()
+     * @generated
+     */
+    EAttribute getStructureType_Resourceid();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.bioclipse.qsar.StructureType#getResourceindex <em>Resourceindex</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Resourceindex</em>'.
+     * @see net.bioclipse.qsar.StructureType#getResourceindex()
+     * @see #getStructureType()
+     * @generated
+     */
+    EAttribute getStructureType_Resourceindex();
 
     /**
      * Returns the meta object for enum '{@link net.bioclipse.qsar.TypeType <em>Type Type</em>}'.
@@ -2320,56 +2243,6 @@ public interface QsarPackage extends EPackage {
         EReference QSAR_TYPE__METADATA = eINSTANCE.getQsarType_Metadata();
 
         /**
-         * The meta object literal for the '{@link net.bioclipse.qsar.impl.ReferenceTypeImpl <em>Reference Type</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see net.bioclipse.qsar.impl.ReferenceTypeImpl
-         * @see net.bioclipse.qsar.impl.QsarPackageImpl#getReferenceType()
-         * @generated
-         */
-        EClass REFERENCE_TYPE = eINSTANCE.getReferenceType();
-
-        /**
-         * The meta object literal for the '<em><b>Authors</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute REFERENCE_TYPE__AUTHORS = eINSTANCE.getReferenceType_Authors();
-
-        /**
-         * The meta object literal for the '<em><b>Doi</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute REFERENCE_TYPE__DOI = eINSTANCE.getReferenceType_Doi();
-
-        /**
-         * The meta object literal for the '<em><b>Journal</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute REFERENCE_TYPE__JOURNAL = eINSTANCE.getReferenceType_Journal();
-
-        /**
-         * The meta object literal for the '<em><b>Title</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute REFERENCE_TYPE__TITLE = eINSTANCE.getReferenceType_Title();
-
-        /**
-         * The meta object literal for the '<em><b>Year</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute REFERENCE_TYPE__YEAR = eINSTANCE.getReferenceType_Year();
-
-        /**
          * The meta object literal for the '{@link net.bioclipse.qsar.impl.ResourceTypeImpl <em>Resource Type</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2388,22 +2261,6 @@ public interface QsarPackage extends EPackage {
         EReference RESOURCE_TYPE__STRUCTURE = eINSTANCE.getResourceType_Structure();
 
         /**
-         * The meta object literal for the '<em><b>URL</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute RESOURCE_TYPE__URL = eINSTANCE.getResourceType_URL();
-
-        /**
-         * The meta object literal for the '<em><b>File</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute RESOURCE_TYPE__FILE = eINSTANCE.getResourceType_File();
-
-        /**
          * The meta object literal for the '<em><b>Checksum</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2418,6 +2275,14 @@ public interface QsarPackage extends EPackage {
          * @generated
          */
         EAttribute RESOURCE_TYPE__EXCLUDED = eINSTANCE.getResourceType_Excluded();
+
+        /**
+         * The meta object literal for the '<em><b>File</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute RESOURCE_TYPE__FILE = eINSTANCE.getResourceType_File();
 
         /**
          * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
@@ -2452,12 +2317,28 @@ public interface QsarPackage extends EPackage {
         EAttribute RESOURCE_TYPE__NO3D = eINSTANCE.getResourceType_No3d();
 
         /**
+         * The meta object literal for the '<em><b>No Mols</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute RESOURCE_TYPE__NO_MOLS = eINSTANCE.getResourceType_NoMols();
+
+        /**
          * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
         EAttribute RESOURCE_TYPE__TYPE = eINSTANCE.getResourceType_Type();
+
+        /**
+         * The meta object literal for the '<em><b>URL</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute RESOURCE_TYPE__URL = eINSTANCE.getResourceType_URL();
 
         /**
          * The meta object literal for the '{@link net.bioclipse.qsar.impl.ResponsesListTypeImpl <em>Responses List Type</em>}' class.
@@ -2606,22 +2487,6 @@ public interface QsarPackage extends EPackage {
         EAttribute STRUCTURE_TYPE__CHANGED = eINSTANCE.getStructureType_Changed();
 
         /**
-         * The meta object literal for the '<em><b>Resourceindex</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute STRUCTURE_TYPE__RESOURCEINDEX = eINSTANCE.getStructureType_Resourceindex();
-
-        /**
-         * The meta object literal for the '<em><b>Resourceid</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute STRUCTURE_TYPE__RESOURCEID = eINSTANCE.getStructureType_Resourceid();
-
-        /**
          * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2636,6 +2501,22 @@ public interface QsarPackage extends EPackage {
          * @generated
          */
         EAttribute STRUCTURE_TYPE__INCHI = eINSTANCE.getStructureType_Inchi();
+
+        /**
+         * The meta object literal for the '<em><b>Resourceid</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute STRUCTURE_TYPE__RESOURCEID = eINSTANCE.getStructureType_Resourceid();
+
+        /**
+         * The meta object literal for the '<em><b>Resourceindex</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute STRUCTURE_TYPE__RESOURCEINDEX = eINSTANCE.getStructureType_Resourceindex();
 
         /**
          * The meta object literal for the '{@link net.bioclipse.qsar.TypeType <em>Type Type</em>}' enum.

@@ -10,6 +10,8 @@
  */
 package net.bioclipse.qsar;
 
+import net.sf.bibtexml.BibTeXMLEntriesClass;
+
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
@@ -45,7 +47,7 @@ public interface MetadataType extends EObject {
 
     /**
      * Returns the value of the '<em><b>Reference</b></em>' containment reference list.
-     * The list contents are of type {@link net.bioclipse.qsar.ReferenceType}.
+     * The list contents are of type {@link net.sf.bibtexml.BibTeXMLEntriesClass}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Reference</em>' containment reference list isn't clear,
@@ -58,7 +60,7 @@ public interface MetadataType extends EObject {
      *        extendedMetaData="kind='element' name='reference'"
      * @generated
      */
-    EList<ReferenceType> getReference();
+    EList<BibTeXMLEntriesClass> getReference();
 
     /**
      * Returns the value of the '<em><b>Authors</b></em>' attribute.

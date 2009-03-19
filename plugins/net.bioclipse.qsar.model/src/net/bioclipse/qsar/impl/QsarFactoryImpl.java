@@ -81,7 +81,6 @@ public class QsarFactoryImpl extends EFactoryImpl implements QsarFactory {
             case QsarPackage.PREPROCESSING_STEP_TYPE: return createPreprocessingStepType();
             case QsarPackage.PREPROCESSING_TYPE: return createPreprocessingType();
             case QsarPackage.QSAR_TYPE: return createQsarType();
-            case QsarPackage.REFERENCE_TYPE: return createReferenceType();
             case QsarPackage.RESOURCE_TYPE: return createResourceType();
             case QsarPackage.RESPONSES_LIST_TYPE: return createResponsesListType();
             case QsarPackage.RESPONSE_TYPE: return createResponseType();
@@ -215,16 +214,6 @@ public class QsarFactoryImpl extends EFactoryImpl implements QsarFactory {
     public QsarType createQsarType() {
         QsarTypeImpl qsarType = new QsarTypeImpl();
         return qsarType;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public ReferenceType createReferenceType() {
-        ReferenceTypeImpl referenceType = new ReferenceTypeImpl();
-        return referenceType;
     }
 
     /**

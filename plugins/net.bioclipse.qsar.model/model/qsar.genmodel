@@ -6,6 +6,323 @@
     modelName="Qsar.model" modelPluginClass="" importerID="org.eclipse.xsd.ecore.importer"
     complianceLevel="5.0" language="">
   <foreignModel>qsar.xsd</foreignModel>
+  <genPackages prefix="Bibtexml" basePackage="net.sf" resource="XML" disposableProviderFactory="true"
+      ecorePackage="bibtexml.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="bibtexml.ecore#//MonthStringType">
+      <genEnumLiterals ecoreEnumLiteral="bibtexml.ecore#//MonthStringType/Jan"/>
+      <genEnumLiterals ecoreEnumLiteral="bibtexml.ecore#//MonthStringType/Feb"/>
+      <genEnumLiterals ecoreEnumLiteral="bibtexml.ecore#//MonthStringType/Mar"/>
+      <genEnumLiterals ecoreEnumLiteral="bibtexml.ecore#//MonthStringType/Apr"/>
+      <genEnumLiterals ecoreEnumLiteral="bibtexml.ecore#//MonthStringType/May"/>
+      <genEnumLiterals ecoreEnumLiteral="bibtexml.ecore#//MonthStringType/Jun"/>
+      <genEnumLiterals ecoreEnumLiteral="bibtexml.ecore#//MonthStringType/Jul"/>
+      <genEnumLiterals ecoreEnumLiteral="bibtexml.ecore#//MonthStringType/Aug"/>
+      <genEnumLiterals ecoreEnumLiteral="bibtexml.ecore#//MonthStringType/Sep"/>
+      <genEnumLiterals ecoreEnumLiteral="bibtexml.ecore#//MonthStringType/Oct"/>
+      <genEnumLiterals ecoreEnumLiteral="bibtexml.ecore#//MonthStringType/Nov"/>
+      <genEnumLiterals ecoreEnumLiteral="bibtexml.ecore#//MonthStringType/Dec"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="bibtexml.ecore#//EditionType"/>
+    <genDataTypes ecoreDataType="bibtexml.ecore#//MonthStringTypeObject"/>
+    <genDataTypes ecoreDataType="bibtexml.ecore#//MonthType"/>
+    <genDataTypes ecoreDataType="bibtexml.ecore#//PagesType"/>
+    <genClasses ecoreClass="bibtexml.ecore#//ArticleType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ArticleType/author"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ArticleType/title"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ArticleType/journal"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ArticleType/year"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ArticleType/volume"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ArticleType/number"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ArticleType/pages"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ArticleType/month"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ArticleType/note"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ArticleType/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ArticleType/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ArticleType/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ArticleType/url"/>
+    </genClasses>
+    <genClasses ecoreClass="bibtexml.ecore#//BibTeXMLEntriesClass">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//BibTeXMLEntriesClass/article"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//BibTeXMLEntriesClass/book"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//BibTeXMLEntriesClass/booklet"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//BibTeXMLEntriesClass/manual"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//BibTeXMLEntriesClass/techreport"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//BibTeXMLEntriesClass/mastersthesis"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//BibTeXMLEntriesClass/phdthesis"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//BibTeXMLEntriesClass/inbook"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//BibTeXMLEntriesClass/incollection"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//BibTeXMLEntriesClass/proceedings"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//BibTeXMLEntriesClass/inproceedings"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//BibTeXMLEntriesClass/conference"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//BibTeXMLEntriesClass/unpublished"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//BibTeXMLEntriesClass/misc"/>
+    </genClasses>
+    <genClasses ecoreClass="bibtexml.ecore#//BookletType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookletType/author"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookletType/title"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookletType/howpublished"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookletType/address"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookletType/month"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookletType/year"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookletType/note"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookletType/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookletType/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookletType/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookletType/url"/>
+    </genClasses>
+    <genClasses ecoreClass="bibtexml.ecore#//BookType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookType/author"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookType/editor"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookType/title"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookType/publisher"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookType/year"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookType/volume"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookType/number"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookType/series"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookType/address"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookType/edition"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookType/month"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookType/note"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookType/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookType/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookType/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookType/url"/>
+    </genClasses>
+    <genClasses ecoreClass="bibtexml.ecore#//ConferenceType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ConferenceType/author"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ConferenceType/title"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ConferenceType/booktitle"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ConferenceType/year"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ConferenceType/editor"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ConferenceType/volume"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ConferenceType/number"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ConferenceType/series"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ConferenceType/pages"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ConferenceType/address"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ConferenceType/month"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ConferenceType/organization"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ConferenceType/publisher"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ConferenceType/note"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ConferenceType/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ConferenceType/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ConferenceType/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ConferenceType/url"/>
+    </genClasses>
+    <genClasses ecoreClass="bibtexml.ecore#//DocumentRoot">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference bibtexml.ecore#//DocumentRoot/xMLNSPrefixMap"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference bibtexml.ecore#//DocumentRoot/xSISchemaLocation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/address"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/annote"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//DocumentRoot/article"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/author"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//DocumentRoot/book"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//DocumentRoot/booklet"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/booktitle"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/chapter"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//DocumentRoot/conference"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/edition"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/editor"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//DocumentRoot/entry"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//DocumentRoot/file"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/howpublished"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//DocumentRoot/inbook"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//DocumentRoot/incollection"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//DocumentRoot/inproceedings"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/institution"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/journal"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/key"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//DocumentRoot/manual"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//DocumentRoot/mastersthesis"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//DocumentRoot/misc"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/month"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/note"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/number"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/organization"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/pages"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//DocumentRoot/phdthesis"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//DocumentRoot/proceedings"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/publisher"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/school"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/series"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//DocumentRoot/techreport"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/title"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//DocumentRoot/unpublished"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/url"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/volume"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/year"/>
+    </genClasses>
+    <genClasses ecoreClass="bibtexml.ecore#//EntryType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//EntryType/id"/>
+    </genClasses>
+    <genClasses ecoreClass="bibtexml.ecore#//FileType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//FileType/entry"/>
+    </genClasses>
+    <genClasses ecoreClass="bibtexml.ecore#//InbookType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InbookType/author"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InbookType/editor"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InbookType/title"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InbookType/chapter"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InbookType/pages"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InbookType/pages1"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InbookType/publisher"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InbookType/year"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InbookType/volume"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InbookType/number"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InbookType/series"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InbookType/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InbookType/address"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InbookType/edition"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InbookType/month"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InbookType/note"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InbookType/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InbookType/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InbookType/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InbookType/url"/>
+    </genClasses>
+    <genClasses ecoreClass="bibtexml.ecore#//IncollectionType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//IncollectionType/author"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//IncollectionType/title"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//IncollectionType/booktitle"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//IncollectionType/publisher"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//IncollectionType/year"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//IncollectionType/editor"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//IncollectionType/volume"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//IncollectionType/number"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//IncollectionType/series"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//IncollectionType/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//IncollectionType/chapter"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//IncollectionType/pages"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//IncollectionType/address"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//IncollectionType/edition"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//IncollectionType/month"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//IncollectionType/note"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//IncollectionType/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//IncollectionType/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//IncollectionType/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//IncollectionType/url"/>
+    </genClasses>
+    <genClasses ecoreClass="bibtexml.ecore#//InproceedingsType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InproceedingsType/author"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InproceedingsType/title"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InproceedingsType/booktitle"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InproceedingsType/year"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InproceedingsType/editor"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InproceedingsType/volume"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InproceedingsType/number"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InproceedingsType/series"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InproceedingsType/pages"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InproceedingsType/address"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InproceedingsType/month"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InproceedingsType/organization"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InproceedingsType/publisher"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InproceedingsType/note"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InproceedingsType/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InproceedingsType/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InproceedingsType/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InproceedingsType/url"/>
+    </genClasses>
+    <genClasses ecoreClass="bibtexml.ecore#//ManualType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ManualType/author"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ManualType/title"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ManualType/organization"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ManualType/address"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ManualType/edition"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ManualType/month"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ManualType/year"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ManualType/note"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ManualType/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ManualType/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ManualType/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ManualType/url"/>
+    </genClasses>
+    <genClasses ecoreClass="bibtexml.ecore#//MastersthesisType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MastersthesisType/author"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MastersthesisType/title"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MastersthesisType/school"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MastersthesisType/year"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MastersthesisType/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MastersthesisType/address"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MastersthesisType/month"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MastersthesisType/note"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MastersthesisType/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MastersthesisType/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MastersthesisType/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MastersthesisType/url"/>
+    </genClasses>
+    <genClasses ecoreClass="bibtexml.ecore#//MiscType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MiscType/author"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MiscType/title"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MiscType/howpublished"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MiscType/month"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MiscType/year"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MiscType/note"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MiscType/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MiscType/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MiscType/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MiscType/url"/>
+    </genClasses>
+    <genClasses ecoreClass="bibtexml.ecore#//PhdthesisType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//PhdthesisType/author"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//PhdthesisType/title"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//PhdthesisType/school"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//PhdthesisType/year"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//PhdthesisType/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//PhdthesisType/address"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//PhdthesisType/month"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//PhdthesisType/note"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//PhdthesisType/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//PhdthesisType/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//PhdthesisType/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//PhdthesisType/url"/>
+    </genClasses>
+    <genClasses ecoreClass="bibtexml.ecore#//ProceedingsType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ProceedingsType/editor"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ProceedingsType/title"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ProceedingsType/year"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ProceedingsType/volume"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ProceedingsType/number"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ProceedingsType/series"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ProceedingsType/address"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ProceedingsType/month"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ProceedingsType/organization"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ProceedingsType/publisher"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ProceedingsType/note"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ProceedingsType/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ProceedingsType/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ProceedingsType/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ProceedingsType/url"/>
+    </genClasses>
+    <genClasses ecoreClass="bibtexml.ecore#//TechreportType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//TechreportType/author"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//TechreportType/title"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//TechreportType/institution"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//TechreportType/year"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//TechreportType/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//TechreportType/number"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//TechreportType/address"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//TechreportType/month"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//TechreportType/note"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//TechreportType/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//TechreportType/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//TechreportType/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//TechreportType/url"/>
+    </genClasses>
+    <genClasses ecoreClass="bibtexml.ecore#//UnpublishedType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//UnpublishedType/author"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//UnpublishedType/title"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//UnpublishedType/note"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//UnpublishedType/month"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//UnpublishedType/year"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//UnpublishedType/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//UnpublishedType/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//UnpublishedType/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//UnpublishedType/url"/>
+    </genClasses>
+  </genPackages>
   <genPackages prefix="Qsar" basePackage="net.bioclipse" resource="XML" disposableProviderFactory="true"
       ecorePackage="qsar.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="qsar.ecore#//TypeType">
@@ -67,13 +384,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//QsarType/responseunit"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//QsarType/metadata"/>
     </genClasses>
-    <genClasses ecoreClass="qsar.ecore#//ReferenceType">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ReferenceType/authors"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ReferenceType/doi"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ReferenceType/journal"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ReferenceType/title"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ReferenceType/year"/>
-    </genClasses>
     <genClasses ecoreClass="qsar.ecore#//ResourceType">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//ResourceType/structure"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResourceType/checksum"/>
@@ -83,6 +393,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResourceType/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResourceType/no2d"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResourceType/no3d"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResourceType/noMols"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResourceType/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//ResourceType/uRL"/>
     </genClasses>

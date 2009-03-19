@@ -14,7 +14,8 @@ import java.util.Collection;
 
 import net.bioclipse.qsar.MetadataType;
 import net.bioclipse.qsar.QsarPackage;
-import net.bioclipse.qsar.ReferenceType;
+
+import net.sf.bibtexml.BibTeXMLEntriesClass;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -64,7 +65,7 @@ public class MetadataTypeImpl extends EObjectImpl implements MetadataType {
      * @generated
      * @ordered
      */
-    protected EList<ReferenceType> reference;
+    protected EList<BibTeXMLEntriesClass> reference;
 
     /**
      * The default value of the '{@link #getAuthors() <em>Authors</em>}' attribute.
@@ -190,9 +191,9 @@ public class MetadataTypeImpl extends EObjectImpl implements MetadataType {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<ReferenceType> getReference() {
+    public EList<BibTeXMLEntriesClass> getReference() {
         if (reference == null) {
-            reference = new EObjectContainmentEList<ReferenceType>(ReferenceType.class, this, QsarPackage.METADATA_TYPE__REFERENCE);
+            reference = new EObjectContainmentEList<BibTeXMLEntriesClass>(BibTeXMLEntriesClass.class, this, QsarPackage.METADATA_TYPE__REFERENCE);
         }
         return reference;
     }
@@ -351,7 +352,7 @@ public class MetadataTypeImpl extends EObjectImpl implements MetadataType {
         switch (featureID) {
             case QsarPackage.METADATA_TYPE__REFERENCE:
                 getReference().clear();
-                getReference().addAll((Collection<? extends ReferenceType>)newValue);
+                getReference().addAll((Collection<? extends BibTeXMLEntriesClass>)newValue);
                 return;
             case QsarPackage.METADATA_TYPE__AUTHORS:
                 setAuthors((String)newValue);

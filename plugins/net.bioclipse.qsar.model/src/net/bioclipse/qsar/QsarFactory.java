@@ -118,15 +118,6 @@ public interface QsarFactory extends EFactory {
     QsarType createQsarType();
 
     /**
-     * Returns a new object of class '<em>Reference Type</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Reference Type</em>'.
-     * @generated
-     */
-    ReferenceType createReferenceType();
-
-    /**
      * Returns a new object of class '<em>Resource Type</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

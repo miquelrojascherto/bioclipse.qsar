@@ -233,6 +233,69 @@ public class StructureTypeImpl extends EObjectImpl implements StructureType {
      * <!-- end-user-doc -->
      * @generated
      */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setId(String newId) {
+        String oldId = id;
+        id = newId;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.STRUCTURE_TYPE__ID, oldId, id));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getInchi() {
+        return inchi;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setInchi(String newInchi) {
+        String oldInchi = inchi;
+        inchi = newInchi;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.STRUCTURE_TYPE__INCHI, oldInchi, inchi));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getResourceid() {
+        return resourceid;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setResourceid(String newResourceid) {
+        String oldResourceid = resourceid;
+        resourceid = newResourceid;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.STRUCTURE_TYPE__RESOURCEID, oldResourceid, resourceid));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public int getResourceindex() {
         return resourceindex;
     }
@@ -272,69 +335,6 @@ public class StructureTypeImpl extends EObjectImpl implements StructureType {
      */
     public boolean isSetResourceindex() {
         return resourceindexESet;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public String getResourceid() {
-        return resourceid;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setResourceid(String newResourceid) {
-        String oldResourceid = resourceid;
-        resourceid = newResourceid;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.STRUCTURE_TYPE__RESOURCEID, oldResourceid, resourceid));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setId(String newId) {
-        String oldId = id;
-        id = newId;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.STRUCTURE_TYPE__ID, oldId, id));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public String getInchi() {
-        return inchi;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setInchi(String newInchi) {
-        String oldInchi = inchi;
-        inchi = newInchi;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.STRUCTURE_TYPE__INCHI, oldInchi, inchi));
     }
 
     /**

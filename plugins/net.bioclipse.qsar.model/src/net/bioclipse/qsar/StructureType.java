@@ -96,87 +96,6 @@ public interface StructureType extends EObject {
     boolean isSetChanged();
 
     /**
-     * Returns the value of the '<em><b>Resourceindex</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Resourceindex</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Resourceindex</em>' attribute.
-     * @see #isSetResourceindex()
-     * @see #unsetResourceindex()
-     * @see #setResourceindex(int)
-     * @see net.bioclipse.qsar.QsarPackage#getStructureType_Resourceindex()
-     * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Int"
-     *        extendedMetaData="kind='attribute' name='resourceindex'"
-     * @generated
-     */
-    int getResourceindex();
-
-    /**
-     * Sets the value of the '{@link net.bioclipse.qsar.StructureType#getResourceindex <em>Resourceindex</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Resourceindex</em>' attribute.
-     * @see #isSetResourceindex()
-     * @see #unsetResourceindex()
-     * @see #getResourceindex()
-     * @generated
-     */
-    void setResourceindex(int value);
-
-    /**
-     * Unsets the value of the '{@link net.bioclipse.qsar.StructureType#getResourceindex <em>Resourceindex</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isSetResourceindex()
-     * @see #getResourceindex()
-     * @see #setResourceindex(int)
-     * @generated
-     */
-    void unsetResourceindex();
-
-    /**
-     * Returns whether the value of the '{@link net.bioclipse.qsar.StructureType#getResourceindex <em>Resourceindex</em>}' attribute is set.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return whether the value of the '<em>Resourceindex</em>' attribute is set.
-     * @see #unsetResourceindex()
-     * @see #getResourceindex()
-     * @see #setResourceindex(int)
-     * @generated
-     */
-    boolean isSetResourceindex();
-
-    /**
-     * Returns the value of the '<em><b>Resourceid</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Resourceid</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Resourceid</em>' attribute.
-     * @see #setResourceid(String)
-     * @see net.bioclipse.qsar.QsarPackage#getStructureType_Resourceid()
-     * @model dataType="org.eclipse.emf.ecore.xml.type.String"
-     *        extendedMetaData="kind='attribute' name='resourceid'"
-     * @generated
-     */
-    String getResourceid();
-
-    /**
-     * Sets the value of the '{@link net.bioclipse.qsar.StructureType#getResourceid <em>Resourceid</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Resourceid</em>' attribute.
-     * @see #getResourceid()
-     * @generated
-     */
-    void setResourceid(String value);
-
-    /**
      * Returns the value of the '<em><b>Id</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <p>
@@ -229,5 +148,86 @@ public interface StructureType extends EObject {
      * @generated
      */
     void setInchi(String value);
+
+    /**
+     * Returns the value of the '<em><b>Resourceid</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Resourceid</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Resourceid</em>' attribute.
+     * @see #setResourceid(String)
+     * @see net.bioclipse.qsar.QsarPackage#getStructureType_Resourceid()
+     * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+     *        extendedMetaData="kind='attribute' name='resourceid'"
+     * @generated
+     */
+    String getResourceid();
+
+    /**
+     * Sets the value of the '{@link net.bioclipse.qsar.StructureType#getResourceid <em>Resourceid</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Resourceid</em>' attribute.
+     * @see #getResourceid()
+     * @generated
+     */
+    void setResourceid(String value);
+
+    /**
+     * Returns the value of the '<em><b>Resourceindex</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Resourceindex</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Resourceindex</em>' attribute.
+     * @see #isSetResourceindex()
+     * @see #unsetResourceindex()
+     * @see #setResourceindex(int)
+     * @see net.bioclipse.qsar.QsarPackage#getStructureType_Resourceindex()
+     * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Int"
+     *        extendedMetaData="kind='attribute' name='resourceindex'"
+     * @generated
+     */
+    int getResourceindex();
+
+    /**
+     * Sets the value of the '{@link net.bioclipse.qsar.StructureType#getResourceindex <em>Resourceindex</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Resourceindex</em>' attribute.
+     * @see #isSetResourceindex()
+     * @see #unsetResourceindex()
+     * @see #getResourceindex()
+     * @generated
+     */
+    void setResourceindex(int value);
+
+    /**
+     * Unsets the value of the '{@link net.bioclipse.qsar.StructureType#getResourceindex <em>Resourceindex</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isSetResourceindex()
+     * @see #getResourceindex()
+     * @see #setResourceindex(int)
+     * @generated
+     */
+    void unsetResourceindex();
+
+    /**
+     * Returns whether the value of the '{@link net.bioclipse.qsar.StructureType#getResourceindex <em>Resourceindex</em>}' attribute is set.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return whether the value of the '<em>Resourceindex</em>' attribute is set.
+     * @see #unsetResourceindex()
+     * @see #getResourceindex()
+     * @see #setResourceindex(int)
+     * @generated
+     */
+    boolean isSetResourceindex();
 
 } // StructureType

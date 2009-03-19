@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link net.bioclipse.qsar.ResourceType#getName <em>Name</em>}</li>
  *   <li>{@link net.bioclipse.qsar.ResourceType#getNo2d <em>No2d</em>}</li>
  *   <li>{@link net.bioclipse.qsar.ResourceType#getNo3d <em>No3d</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.ResourceType#getNoMols <em>No Mols</em>}</li>
  *   <li>{@link net.bioclipse.qsar.ResourceType#getType <em>Type</em>}</li>
  *   <li>{@link net.bioclipse.qsar.ResourceType#getURL <em>URL</em>}</li>
  * </ul>
@@ -63,60 +64,6 @@ public interface ResourceType extends EObject {
      * @generated
      */
     EList<StructureType> getStructure();
-
-    /**
-     * Returns the value of the '<em><b>URL</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>URL</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>URL</em>' attribute.
-     * @see #setURL(String)
-     * @see net.bioclipse.qsar.QsarPackage#getResourceType_URL()
-     * @model dataType="org.eclipse.emf.ecore.xml.type.String"
-     *        extendedMetaData="kind='attribute' name='URL'"
-     * @generated
-     */
-    String getURL();
-
-    /**
-     * Sets the value of the '{@link net.bioclipse.qsar.ResourceType#getURL <em>URL</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>URL</em>' attribute.
-     * @see #getURL()
-     * @generated
-     */
-    void setURL(String value);
-
-    /**
-     * Returns the value of the '<em><b>File</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>File</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>File</em>' attribute.
-     * @see #setFile(String)
-     * @see net.bioclipse.qsar.QsarPackage#getResourceType_File()
-     * @model dataType="org.eclipse.emf.ecore.xml.type.String"
-     *        extendedMetaData="kind='attribute' name='file'"
-     * @generated
-     */
-    String getFile();
-
-    /**
-     * Sets the value of the '{@link net.bioclipse.qsar.ResourceType#getFile <em>File</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>File</em>' attribute.
-     * @see #getFile()
-     * @generated
-     */
-    void setFile(String value);
 
     /**
      * Returns the value of the '<em><b>Checksum</b></em>' attribute.
@@ -198,6 +145,33 @@ public interface ResourceType extends EObject {
      * @generated
      */
     boolean isSetExcluded();
+
+    /**
+     * Returns the value of the '<em><b>File</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>File</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>File</em>' attribute.
+     * @see #setFile(String)
+     * @see net.bioclipse.qsar.QsarPackage#getResourceType_File()
+     * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+     *        extendedMetaData="kind='attribute' name='file'"
+     * @generated
+     */
+    String getFile();
+
+    /**
+     * Sets the value of the '{@link net.bioclipse.qsar.ResourceType#getFile <em>File</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>File</em>' attribute.
+     * @see #getFile()
+     * @generated
+     */
+    void setFile(String value);
 
     /**
      * Returns the value of the '<em><b>Id</b></em>' attribute.
@@ -364,6 +338,61 @@ public interface ResourceType extends EObject {
     boolean isSetNo3d();
 
     /**
+     * Returns the value of the '<em><b>No Mols</b></em>' attribute.
+     * The default value is <code>"0"</code>.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>No Mols</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>No Mols</em>' attribute.
+     * @see #isSetNoMols()
+     * @see #unsetNoMols()
+     * @see #setNoMols(int)
+     * @see net.bioclipse.qsar.QsarPackage#getResourceType_NoMols()
+     * @model default="0" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Int" transient="true"
+     *        extendedMetaData="kind='attribute' name='noMols'"
+     * @generated
+     */
+    int getNoMols();
+
+    /**
+     * Sets the value of the '{@link net.bioclipse.qsar.ResourceType#getNoMols <em>No Mols</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>No Mols</em>' attribute.
+     * @see #isSetNoMols()
+     * @see #unsetNoMols()
+     * @see #getNoMols()
+     * @generated
+     */
+    void setNoMols(int value);
+
+    /**
+     * Unsets the value of the '{@link net.bioclipse.qsar.ResourceType#getNoMols <em>No Mols</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isSetNoMols()
+     * @see #getNoMols()
+     * @see #setNoMols(int)
+     * @generated
+     */
+    void unsetNoMols();
+
+    /**
+     * Returns whether the value of the '{@link net.bioclipse.qsar.ResourceType#getNoMols <em>No Mols</em>}' attribute is set.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return whether the value of the '<em>No Mols</em>' attribute is set.
+     * @see #unsetNoMols()
+     * @see #getNoMols()
+     * @see #setNoMols(int)
+     * @generated
+     */
+    boolean isSetNoMols();
+
+    /**
      * Returns the value of the '<em><b>Type</b></em>' attribute.
      * The literals are from the enumeration {@link net.bioclipse.qsar.TypeType}.
      * <!-- begin-user-doc -->
@@ -419,5 +448,32 @@ public interface ResourceType extends EObject {
      * @generated
      */
     boolean isSetType();
+
+    /**
+     * Returns the value of the '<em><b>URL</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>URL</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>URL</em>' attribute.
+     * @see #setURL(String)
+     * @see net.bioclipse.qsar.QsarPackage#getResourceType_URL()
+     * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+     *        extendedMetaData="kind='attribute' name='URL'"
+     * @generated
+     */
+    String getURL();
+
+    /**
+     * Sets the value of the '{@link net.bioclipse.qsar.ResourceType#getURL <em>URL</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>URL</em>' attribute.
+     * @see #getURL()
+     * @generated
+     */
+    void setURL(String value);
 
 } // ResourceType

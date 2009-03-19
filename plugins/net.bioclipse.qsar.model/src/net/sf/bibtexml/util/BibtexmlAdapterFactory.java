@@ -8,9 +8,9 @@
  *
  * $Id$
  */
-package net.bioclipse.qsar.util;
+package net.sf.bibtexml.util;
 
-import net.bioclipse.qsar.*;
+import net.sf.bibtexml.*;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -24,10 +24,10 @@ import org.eclipse.emf.ecore.EObject;
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * @see net.bioclipse.qsar.QsarPackage
+ * @see net.sf.bibtexml.BibtexmlPackage
  * @generated
  */
-public class QsarAdapterFactory extends AdapterFactoryImpl {
+public class BibtexmlAdapterFactory extends AdapterFactoryImpl {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -41,7 +41,7 @@ public class QsarAdapterFactory extends AdapterFactoryImpl {
      * <!-- end-user-doc -->
      * @generated
      */
-    protected static QsarPackage modelPackage;
+    protected static BibtexmlPackage modelPackage;
 
     /**
      * Creates an instance of the adapter factory.
@@ -49,9 +49,9 @@ public class QsarAdapterFactory extends AdapterFactoryImpl {
      * <!-- end-user-doc -->
      * @generated
      */
-    public QsarAdapterFactory() {
+    public BibtexmlAdapterFactory() {
         if (modelPackage == null) {
-            modelPackage = QsarPackage.eINSTANCE;
+            modelPackage = BibtexmlPackage.eINSTANCE;
         }
     }
 
@@ -80,67 +80,79 @@ public class QsarAdapterFactory extends AdapterFactoryImpl {
      * <!-- end-user-doc -->
      * @generated
      */
-    protected QsarSwitch<Adapter> modelSwitch =
-        new QsarSwitch<Adapter>() {
+    protected BibtexmlSwitch<Adapter> modelSwitch =
+        new BibtexmlSwitch<Adapter>() {
             @Override
-            public Adapter caseDescriptorlistType(DescriptorlistType object) {
-                return createDescriptorlistTypeAdapter();
+            public Adapter caseArticleType(ArticleType object) {
+                return createArticleTypeAdapter();
             }
             @Override
-            public Adapter caseDescriptorproviderType(DescriptorproviderType object) {
-                return createDescriptorproviderTypeAdapter();
+            public Adapter caseBibTeXMLEntriesClass(BibTeXMLEntriesClass object) {
+                return createBibTeXMLEntriesClassAdapter();
             }
             @Override
-            public Adapter caseDescriptorType(DescriptorType object) {
-                return createDescriptorTypeAdapter();
+            public Adapter caseBookletType(BookletType object) {
+                return createBookletTypeAdapter();
+            }
+            @Override
+            public Adapter caseBookType(BookType object) {
+                return createBookTypeAdapter();
+            }
+            @Override
+            public Adapter caseConferenceType(ConferenceType object) {
+                return createConferenceTypeAdapter();
             }
             @Override
             public Adapter caseDocumentRoot(DocumentRoot object) {
                 return createDocumentRootAdapter();
             }
             @Override
-            public Adapter caseMetadataType(MetadataType object) {
-                return createMetadataTypeAdapter();
+            public Adapter caseEntryType(EntryType object) {
+                return createEntryTypeAdapter();
             }
             @Override
-            public Adapter caseParameterType(ParameterType object) {
-                return createParameterTypeAdapter();
+            public Adapter caseFileType(FileType object) {
+                return createFileTypeAdapter();
             }
             @Override
-            public Adapter casePreprocessingStepType(PreprocessingStepType object) {
-                return createPreprocessingStepTypeAdapter();
+            public Adapter caseInbookType(InbookType object) {
+                return createInbookTypeAdapter();
             }
             @Override
-            public Adapter casePreprocessingType(PreprocessingType object) {
-                return createPreprocessingTypeAdapter();
+            public Adapter caseIncollectionType(IncollectionType object) {
+                return createIncollectionTypeAdapter();
             }
             @Override
-            public Adapter caseQsarType(QsarType object) {
-                return createQsarTypeAdapter();
+            public Adapter caseInproceedingsType(InproceedingsType object) {
+                return createInproceedingsTypeAdapter();
             }
             @Override
-            public Adapter caseResourceType(ResourceType object) {
-                return createResourceTypeAdapter();
+            public Adapter caseManualType(ManualType object) {
+                return createManualTypeAdapter();
             }
             @Override
-            public Adapter caseResponsesListType(ResponsesListType object) {
-                return createResponsesListTypeAdapter();
+            public Adapter caseMastersthesisType(MastersthesisType object) {
+                return createMastersthesisTypeAdapter();
             }
             @Override
-            public Adapter caseResponseType(ResponseType object) {
-                return createResponseTypeAdapter();
+            public Adapter caseMiscType(MiscType object) {
+                return createMiscTypeAdapter();
             }
             @Override
-            public Adapter caseResponseunitType(ResponseunitType object) {
-                return createResponseunitTypeAdapter();
+            public Adapter casePhdthesisType(PhdthesisType object) {
+                return createPhdthesisTypeAdapter();
             }
             @Override
-            public Adapter caseStructurelistType(StructurelistType object) {
-                return createStructurelistTypeAdapter();
+            public Adapter caseProceedingsType(ProceedingsType object) {
+                return createProceedingsTypeAdapter();
             }
             @Override
-            public Adapter caseStructureType(StructureType object) {
-                return createStructureTypeAdapter();
+            public Adapter caseTechreportType(TechreportType object) {
+                return createTechreportTypeAdapter();
+            }
+            @Override
+            public Adapter caseUnpublishedType(UnpublishedType object) {
+                return createUnpublishedTypeAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -163,55 +175,83 @@ public class QsarAdapterFactory extends AdapterFactoryImpl {
 
 
     /**
-     * Creates a new adapter for an object of class '{@link net.bioclipse.qsar.DescriptorlistType <em>Descriptorlist Type</em>}'.
+     * Creates a new adapter for an object of class '{@link net.sf.bibtexml.ArticleType <em>Article Type</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.bioclipse.qsar.DescriptorlistType
+     * @see net.sf.bibtexml.ArticleType
      * @generated
      */
-    public Adapter createDescriptorlistTypeAdapter() {
+    public Adapter createArticleTypeAdapter() {
         return null;
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.bioclipse.qsar.DescriptorproviderType <em>Descriptorprovider Type</em>}'.
+     * Creates a new adapter for an object of class '{@link net.sf.bibtexml.BibTeXMLEntriesClass <em>Bib Te XML Entries Class</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.bioclipse.qsar.DescriptorproviderType
+     * @see net.sf.bibtexml.BibTeXMLEntriesClass
      * @generated
      */
-    public Adapter createDescriptorproviderTypeAdapter() {
+    public Adapter createBibTeXMLEntriesClassAdapter() {
         return null;
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.bioclipse.qsar.DescriptorType <em>Descriptor Type</em>}'.
+     * Creates a new adapter for an object of class '{@link net.sf.bibtexml.BookletType <em>Booklet Type</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.bioclipse.qsar.DescriptorType
+     * @see net.sf.bibtexml.BookletType
      * @generated
      */
-    public Adapter createDescriptorTypeAdapter() {
+    public Adapter createBookletTypeAdapter() {
         return null;
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.bioclipse.qsar.DocumentRoot <em>Document Root</em>}'.
+     * Creates a new adapter for an object of class '{@link net.sf.bibtexml.BookType <em>Book Type</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.bioclipse.qsar.DocumentRoot
+     * @see net.sf.bibtexml.BookType
+     * @generated
+     */
+    public Adapter createBookTypeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link net.sf.bibtexml.ConferenceType <em>Conference Type</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see net.sf.bibtexml.ConferenceType
+     * @generated
+     */
+    public Adapter createConferenceTypeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link net.sf.bibtexml.DocumentRoot <em>Document Root</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see net.sf.bibtexml.DocumentRoot
      * @generated
      */
     public Adapter createDocumentRootAdapter() {
@@ -219,156 +259,170 @@ public class QsarAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.bioclipse.qsar.MetadataType <em>Metadata Type</em>}'.
+     * Creates a new adapter for an object of class '{@link net.sf.bibtexml.EntryType <em>Entry Type</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.bioclipse.qsar.MetadataType
+     * @see net.sf.bibtexml.EntryType
      * @generated
      */
-    public Adapter createMetadataTypeAdapter() {
+    public Adapter createEntryTypeAdapter() {
         return null;
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.bioclipse.qsar.ParameterType <em>Parameter Type</em>}'.
+     * Creates a new adapter for an object of class '{@link net.sf.bibtexml.FileType <em>File Type</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.bioclipse.qsar.ParameterType
+     * @see net.sf.bibtexml.FileType
      * @generated
      */
-    public Adapter createParameterTypeAdapter() {
+    public Adapter createFileTypeAdapter() {
         return null;
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.bioclipse.qsar.PreprocessingStepType <em>Preprocessing Step Type</em>}'.
+     * Creates a new adapter for an object of class '{@link net.sf.bibtexml.InbookType <em>Inbook Type</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.bioclipse.qsar.PreprocessingStepType
+     * @see net.sf.bibtexml.InbookType
      * @generated
      */
-    public Adapter createPreprocessingStepTypeAdapter() {
+    public Adapter createInbookTypeAdapter() {
         return null;
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.bioclipse.qsar.PreprocessingType <em>Preprocessing Type</em>}'.
+     * Creates a new adapter for an object of class '{@link net.sf.bibtexml.IncollectionType <em>Incollection Type</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.bioclipse.qsar.PreprocessingType
+     * @see net.sf.bibtexml.IncollectionType
      * @generated
      */
-    public Adapter createPreprocessingTypeAdapter() {
+    public Adapter createIncollectionTypeAdapter() {
         return null;
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.bioclipse.qsar.QsarType <em>Type</em>}'.
+     * Creates a new adapter for an object of class '{@link net.sf.bibtexml.InproceedingsType <em>Inproceedings Type</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.bioclipse.qsar.QsarType
+     * @see net.sf.bibtexml.InproceedingsType
      * @generated
      */
-    public Adapter createQsarTypeAdapter() {
+    public Adapter createInproceedingsTypeAdapter() {
         return null;
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.bioclipse.qsar.ResourceType <em>Resource Type</em>}'.
+     * Creates a new adapter for an object of class '{@link net.sf.bibtexml.ManualType <em>Manual Type</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.bioclipse.qsar.ResourceType
+     * @see net.sf.bibtexml.ManualType
      * @generated
      */
-    public Adapter createResourceTypeAdapter() {
+    public Adapter createManualTypeAdapter() {
         return null;
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.bioclipse.qsar.ResponsesListType <em>Responses List Type</em>}'.
+     * Creates a new adapter for an object of class '{@link net.sf.bibtexml.MastersthesisType <em>Mastersthesis Type</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.bioclipse.qsar.ResponsesListType
+     * @see net.sf.bibtexml.MastersthesisType
      * @generated
      */
-    public Adapter createResponsesListTypeAdapter() {
+    public Adapter createMastersthesisTypeAdapter() {
         return null;
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.bioclipse.qsar.ResponseType <em>Response Type</em>}'.
+     * Creates a new adapter for an object of class '{@link net.sf.bibtexml.MiscType <em>Misc Type</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.bioclipse.qsar.ResponseType
+     * @see net.sf.bibtexml.MiscType
      * @generated
      */
-    public Adapter createResponseTypeAdapter() {
+    public Adapter createMiscTypeAdapter() {
         return null;
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.bioclipse.qsar.ResponseunitType <em>Responseunit Type</em>}'.
+     * Creates a new adapter for an object of class '{@link net.sf.bibtexml.PhdthesisType <em>Phdthesis Type</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.bioclipse.qsar.ResponseunitType
+     * @see net.sf.bibtexml.PhdthesisType
      * @generated
      */
-    public Adapter createResponseunitTypeAdapter() {
+    public Adapter createPhdthesisTypeAdapter() {
         return null;
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.bioclipse.qsar.StructurelistType <em>Structurelist Type</em>}'.
+     * Creates a new adapter for an object of class '{@link net.sf.bibtexml.ProceedingsType <em>Proceedings Type</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.bioclipse.qsar.StructurelistType
+     * @see net.sf.bibtexml.ProceedingsType
      * @generated
      */
-    public Adapter createStructurelistTypeAdapter() {
+    public Adapter createProceedingsTypeAdapter() {
         return null;
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link net.bioclipse.qsar.StructureType <em>Structure Type</em>}'.
+     * Creates a new adapter for an object of class '{@link net.sf.bibtexml.TechreportType <em>Techreport Type</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see net.bioclipse.qsar.StructureType
+     * @see net.sf.bibtexml.TechreportType
      * @generated
      */
-    public Adapter createStructureTypeAdapter() {
+    public Adapter createTechreportTypeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link net.sf.bibtexml.UnpublishedType <em>Unpublished Type</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see net.sf.bibtexml.UnpublishedType
+     * @generated
+     */
+    public Adapter createUnpublishedTypeAdapter() {
         return null;
     }
 
@@ -384,4 +438,4 @@ public class QsarAdapterFactory extends AdapterFactoryImpl {
         return null;
     }
 
-} //QsarAdapterFactory
+} //BibtexmlAdapterFactory
