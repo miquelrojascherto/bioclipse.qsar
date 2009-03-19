@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bibtexml:file xmlns:bibtexml="http://bibtexml.sf.net/">
+  <bibtexml:entry>
+    <bibtexml:article>
+      <bibtexml:author>Spjuth, Ola and Helmus, Tobias and Willighagen, Egon and Kuhn, Stefan and Eklund, Martin and Wagener, Johannes and Murray-Rust, Peter and Steinbeck, Christoph and Wikberg, Jarl</bibtexml:author>
+      <bibtexml:title>Bioclipse: an open source workbench for chemo- and bioinformatics</bibtexml:title>
+      <bibtexml:journal>BMC Bioinformatics</bibtexml:journal>
+      <bibtexml:year>2007</bibtexml:year>
+      <bibtexml:volume>8</bibtexml:volume>
+      <bibtexml:number>1</bibtexml:number>
+      <bibtexml:pages>59</bibtexml:pages>
+      <bibtexml:doi>10.1186/1471-2105-8-59</bibtexml:doi>
+      <bibtexml:url>http://www.biomedcentral.com/1471-2105/8/59</bibtexml:url>
+    </bibtexml:article>
+  </bibtexml:entry>
+</bibtexml:file>
