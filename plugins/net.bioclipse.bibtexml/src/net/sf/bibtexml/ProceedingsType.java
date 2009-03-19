@@ -31,6 +31,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link net.sf.bibtexml.ProceedingsType#getNote <em>Note</em>}</li>
  *   <li>{@link net.sf.bibtexml.ProceedingsType#getKey <em>Key</em>}</li>
  *   <li>{@link net.sf.bibtexml.ProceedingsType#getCrossref <em>Crossref</em>}</li>
+ *   <li>{@link net.sf.bibtexml.ProceedingsType#getDoi <em>Doi</em>}</li>
+ *   <li>{@link net.sf.bibtexml.ProceedingsType#getUrl <em>Url</em>}</li>
  * </ul>
  * </p>
  *
@@ -433,5 +435,61 @@ public interface ProceedingsType extends EObject {
      * @generated
      */
     void setCrossref(String value);
+
+    /**
+     * Returns the value of the '<em><b>Doi</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * 
+     * [DOI] The work's Digital Object Identifier.
+     *       
+     * <!-- end-model-doc -->
+     * @return the value of the '<em>Doi</em>' attribute.
+     * @see #setDoi(String)
+     * @see net.sf.bibtexml.BibtexmlPackage#getProceedingsType_Doi()
+     * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+     *        extendedMetaData="kind='element' name='doi' namespace='##targetNamespace'"
+     * @generated
+     */
+    String getDoi();
+
+    /**
+     * Sets the value of the '{@link net.sf.bibtexml.ProceedingsType#getDoi <em>Doi</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Doi</em>' attribute.
+     * @see #getDoi()
+     * @generated
+     */
+    void setDoi(String value);
+
+    /**
+     * Returns the value of the '<em><b>Url</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * 
+     * [URL] The work's Universal Resource Locator.
+     *       
+     * <!-- end-model-doc -->
+     * @return the value of the '<em>Url</em>' attribute.
+     * @see #setUrl(String)
+     * @see net.sf.bibtexml.BibtexmlPackage#getProceedingsType_Url()
+     * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+     *        extendedMetaData="kind='element' name='url' namespace='##targetNamespace'"
+     * @generated
+     */
+    String getUrl();
+
+    /**
+     * Sets the value of the '{@link net.sf.bibtexml.ProceedingsType#getUrl <em>Url</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Url</em>' attribute.
+     * @see #getUrl()
+     * @generated
+     */
+    void setUrl(String value);
 
 } // ProceedingsType

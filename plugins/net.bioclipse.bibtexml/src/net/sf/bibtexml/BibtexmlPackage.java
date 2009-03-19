@@ -203,13 +203,31 @@ public interface BibtexmlPackage extends EPackage {
     int ARTICLE_TYPE__CROSSREF = 10;
 
     /**
+     * The feature id for the '<em><b>Doi</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ARTICLE_TYPE__DOI = 11;
+
+    /**
+     * The feature id for the '<em><b>Url</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ARTICLE_TYPE__URL = 12;
+
+    /**
      * The number of structural features of the '<em>Article Type</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ARTICLE_TYPE_FEATURE_COUNT = 11;
+    int ARTICLE_TYPE_FEATURE_COUNT = 13;
 
     /**
      * The meta object id for the '{@link net.sf.bibtexml.impl.BibTeXMLEntriesClassImpl <em>Bib Te XML Entries Class</em>}' class.
@@ -448,13 +466,31 @@ public interface BibtexmlPackage extends EPackage {
     int BOOKLET_TYPE__CROSSREF = 8;
 
     /**
+     * The feature id for the '<em><b>Doi</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BOOKLET_TYPE__DOI = 9;
+
+    /**
+     * The feature id for the '<em><b>Url</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BOOKLET_TYPE__URL = 10;
+
+    /**
      * The number of structural features of the '<em>Booklet Type</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int BOOKLET_TYPE_FEATURE_COUNT = 9;
+    int BOOKLET_TYPE_FEATURE_COUNT = 11;
 
     /**
      * The meta object id for the '{@link net.sf.bibtexml.impl.BookTypeImpl <em>Book Type</em>}' class.
@@ -593,13 +629,31 @@ public interface BibtexmlPackage extends EPackage {
     int BOOK_TYPE__CROSSREF = 13;
 
     /**
+     * The feature id for the '<em><b>Doi</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BOOK_TYPE__DOI = 14;
+
+    /**
+     * The feature id for the '<em><b>Url</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BOOK_TYPE__URL = 15;
+
+    /**
      * The number of structural features of the '<em>Book Type</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int BOOK_TYPE_FEATURE_COUNT = 14;
+    int BOOK_TYPE_FEATURE_COUNT = 16;
 
     /**
      * The meta object id for the '{@link net.sf.bibtexml.impl.ConferenceTypeImpl <em>Conference Type</em>}' class.
@@ -756,13 +810,31 @@ public interface BibtexmlPackage extends EPackage {
     int CONFERENCE_TYPE__CROSSREF = 15;
 
     /**
+     * The feature id for the '<em><b>Doi</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONFERENCE_TYPE__DOI = 16;
+
+    /**
+     * The feature id for the '<em><b>Url</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONFERENCE_TYPE__URL = 17;
+
+    /**
      * The number of structural features of the '<em>Conference Type</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int CONFERENCE_TYPE_FEATURE_COUNT = 16;
+    int CONFERENCE_TYPE_FEATURE_COUNT = 18;
 
     /**
      * The meta object id for the '{@link net.sf.bibtexml.impl.DocumentRootImpl <em>Document Root</em>}' class.
@@ -892,13 +964,22 @@ public interface BibtexmlPackage extends EPackage {
     int DOCUMENT_ROOT__CROSSREF = 12;
 
     /**
+     * The feature id for the '<em><b>Doi</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DOCUMENT_ROOT__DOI = 13;
+
+    /**
      * The feature id for the '<em><b>Edition</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__EDITION = 13;
+    int DOCUMENT_ROOT__EDITION = 14;
 
     /**
      * The feature id for the '<em><b>Editor</b></em>' attribute.
@@ -907,7 +988,7 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__EDITOR = 14;
+    int DOCUMENT_ROOT__EDITOR = 15;
 
     /**
      * The feature id for the '<em><b>Entry</b></em>' containment reference.
@@ -916,7 +997,7 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__ENTRY = 15;
+    int DOCUMENT_ROOT__ENTRY = 16;
 
     /**
      * The feature id for the '<em><b>File</b></em>' containment reference.
@@ -925,7 +1006,7 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__FILE = 16;
+    int DOCUMENT_ROOT__FILE = 17;
 
     /**
      * The feature id for the '<em><b>Howpublished</b></em>' attribute.
@@ -934,7 +1015,7 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__HOWPUBLISHED = 17;
+    int DOCUMENT_ROOT__HOWPUBLISHED = 18;
 
     /**
      * The feature id for the '<em><b>Inbook</b></em>' containment reference.
@@ -943,7 +1024,7 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__INBOOK = 18;
+    int DOCUMENT_ROOT__INBOOK = 19;
 
     /**
      * The feature id for the '<em><b>Incollection</b></em>' containment reference.
@@ -952,7 +1033,7 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__INCOLLECTION = 19;
+    int DOCUMENT_ROOT__INCOLLECTION = 20;
 
     /**
      * The feature id for the '<em><b>Inproceedings</b></em>' containment reference.
@@ -961,7 +1042,7 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__INPROCEEDINGS = 20;
+    int DOCUMENT_ROOT__INPROCEEDINGS = 21;
 
     /**
      * The feature id for the '<em><b>Institution</b></em>' attribute.
@@ -970,7 +1051,7 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__INSTITUTION = 21;
+    int DOCUMENT_ROOT__INSTITUTION = 22;
 
     /**
      * The feature id for the '<em><b>Journal</b></em>' attribute.
@@ -979,7 +1060,7 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__JOURNAL = 22;
+    int DOCUMENT_ROOT__JOURNAL = 23;
 
     /**
      * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -988,7 +1069,7 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__KEY = 23;
+    int DOCUMENT_ROOT__KEY = 24;
 
     /**
      * The feature id for the '<em><b>Manual</b></em>' containment reference.
@@ -997,7 +1078,7 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__MANUAL = 24;
+    int DOCUMENT_ROOT__MANUAL = 25;
 
     /**
      * The feature id for the '<em><b>Mastersthesis</b></em>' containment reference.
@@ -1006,7 +1087,7 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__MASTERSTHESIS = 25;
+    int DOCUMENT_ROOT__MASTERSTHESIS = 26;
 
     /**
      * The feature id for the '<em><b>Misc</b></em>' containment reference.
@@ -1015,7 +1096,7 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__MISC = 26;
+    int DOCUMENT_ROOT__MISC = 27;
 
     /**
      * The feature id for the '<em><b>Month</b></em>' attribute.
@@ -1024,7 +1105,7 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__MONTH = 27;
+    int DOCUMENT_ROOT__MONTH = 28;
 
     /**
      * The feature id for the '<em><b>Note</b></em>' attribute.
@@ -1033,7 +1114,7 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__NOTE = 28;
+    int DOCUMENT_ROOT__NOTE = 29;
 
     /**
      * The feature id for the '<em><b>Number</b></em>' attribute.
@@ -1042,7 +1123,7 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__NUMBER = 29;
+    int DOCUMENT_ROOT__NUMBER = 30;
 
     /**
      * The feature id for the '<em><b>Organization</b></em>' attribute.
@@ -1051,7 +1132,7 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__ORGANIZATION = 30;
+    int DOCUMENT_ROOT__ORGANIZATION = 31;
 
     /**
      * The feature id for the '<em><b>Pages</b></em>' attribute.
@@ -1060,7 +1141,7 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__PAGES = 31;
+    int DOCUMENT_ROOT__PAGES = 32;
 
     /**
      * The feature id for the '<em><b>Phdthesis</b></em>' containment reference.
@@ -1069,7 +1150,7 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__PHDTHESIS = 32;
+    int DOCUMENT_ROOT__PHDTHESIS = 33;
 
     /**
      * The feature id for the '<em><b>Proceedings</b></em>' containment reference.
@@ -1078,7 +1159,7 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__PROCEEDINGS = 33;
+    int DOCUMENT_ROOT__PROCEEDINGS = 34;
 
     /**
      * The feature id for the '<em><b>Publisher</b></em>' attribute.
@@ -1087,7 +1168,7 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__PUBLISHER = 34;
+    int DOCUMENT_ROOT__PUBLISHER = 35;
 
     /**
      * The feature id for the '<em><b>School</b></em>' attribute.
@@ -1096,7 +1177,7 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__SCHOOL = 35;
+    int DOCUMENT_ROOT__SCHOOL = 36;
 
     /**
      * The feature id for the '<em><b>Series</b></em>' attribute.
@@ -1105,7 +1186,7 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__SERIES = 36;
+    int DOCUMENT_ROOT__SERIES = 37;
 
     /**
      * The feature id for the '<em><b>Techreport</b></em>' containment reference.
@@ -1114,7 +1195,7 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__TECHREPORT = 37;
+    int DOCUMENT_ROOT__TECHREPORT = 38;
 
     /**
      * The feature id for the '<em><b>Title</b></em>' attribute.
@@ -1123,7 +1204,7 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__TITLE = 38;
+    int DOCUMENT_ROOT__TITLE = 39;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -1132,7 +1213,7 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__TYPE = 39;
+    int DOCUMENT_ROOT__TYPE = 40;
 
     /**
      * The feature id for the '<em><b>Unpublished</b></em>' containment reference.
@@ -1141,7 +1222,16 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__UNPUBLISHED = 40;
+    int DOCUMENT_ROOT__UNPUBLISHED = 41;
+
+    /**
+     * The feature id for the '<em><b>Url</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DOCUMENT_ROOT__URL = 42;
 
     /**
      * The feature id for the '<em><b>Volume</b></em>' attribute.
@@ -1150,7 +1240,7 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__VOLUME = 41;
+    int DOCUMENT_ROOT__VOLUME = 43;
 
     /**
      * The feature id for the '<em><b>Year</b></em>' attribute.
@@ -1159,7 +1249,7 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT__YEAR = 42;
+    int DOCUMENT_ROOT__YEAR = 44;
 
     /**
      * The number of structural features of the '<em>Document Root</em>' class.
@@ -1168,7 +1258,7 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DOCUMENT_ROOT_FEATURE_COUNT = 43;
+    int DOCUMENT_ROOT_FEATURE_COUNT = 45;
 
     /**
      * The meta object id for the '{@link net.sf.bibtexml.impl.EntryTypeImpl <em>Entry Type</em>}' class.
@@ -1525,13 +1615,31 @@ public interface BibtexmlPackage extends EPackage {
     int INBOOK_TYPE__CROSSREF = 17;
 
     /**
+     * The feature id for the '<em><b>Doi</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INBOOK_TYPE__DOI = 18;
+
+    /**
+     * The feature id for the '<em><b>Url</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INBOOK_TYPE__URL = 19;
+
+    /**
      * The number of structural features of the '<em>Inbook Type</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INBOOK_TYPE_FEATURE_COUNT = 18;
+    int INBOOK_TYPE_FEATURE_COUNT = 20;
 
     /**
      * The meta object id for the '{@link net.sf.bibtexml.impl.IncollectionTypeImpl <em>Incollection Type</em>}' class.
@@ -1706,13 +1814,31 @@ public interface BibtexmlPackage extends EPackage {
     int INCOLLECTION_TYPE__CROSSREF = 17;
 
     /**
+     * The feature id for the '<em><b>Doi</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INCOLLECTION_TYPE__DOI = 18;
+
+    /**
+     * The feature id for the '<em><b>Url</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INCOLLECTION_TYPE__URL = 19;
+
+    /**
      * The number of structural features of the '<em>Incollection Type</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INCOLLECTION_TYPE_FEATURE_COUNT = 18;
+    int INCOLLECTION_TYPE_FEATURE_COUNT = 20;
 
     /**
      * The meta object id for the '{@link net.sf.bibtexml.impl.InproceedingsTypeImpl <em>Inproceedings Type</em>}' class.
@@ -1869,13 +1995,31 @@ public interface BibtexmlPackage extends EPackage {
     int INPROCEEDINGS_TYPE__CROSSREF = 15;
 
     /**
+     * The feature id for the '<em><b>Doi</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INPROCEEDINGS_TYPE__DOI = 16;
+
+    /**
+     * The feature id for the '<em><b>Url</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INPROCEEDINGS_TYPE__URL = 17;
+
+    /**
      * The number of structural features of the '<em>Inproceedings Type</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INPROCEEDINGS_TYPE_FEATURE_COUNT = 16;
+    int INPROCEEDINGS_TYPE_FEATURE_COUNT = 18;
 
     /**
      * The meta object id for the '{@link net.sf.bibtexml.impl.ManualTypeImpl <em>Manual Type</em>}' class.
@@ -1978,13 +2122,31 @@ public interface BibtexmlPackage extends EPackage {
     int MANUAL_TYPE__CROSSREF = 9;
 
     /**
+     * The feature id for the '<em><b>Doi</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MANUAL_TYPE__DOI = 10;
+
+    /**
+     * The feature id for the '<em><b>Url</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MANUAL_TYPE__URL = 11;
+
+    /**
      * The number of structural features of the '<em>Manual Type</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MANUAL_TYPE_FEATURE_COUNT = 10;
+    int MANUAL_TYPE_FEATURE_COUNT = 12;
 
     /**
      * The meta object id for the '{@link net.sf.bibtexml.impl.MastersthesisTypeImpl <em>Mastersthesis Type</em>}' class.
@@ -2087,13 +2249,31 @@ public interface BibtexmlPackage extends EPackage {
     int MASTERSTHESIS_TYPE__CROSSREF = 9;
 
     /**
+     * The feature id for the '<em><b>Doi</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MASTERSTHESIS_TYPE__DOI = 10;
+
+    /**
+     * The feature id for the '<em><b>Url</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MASTERSTHESIS_TYPE__URL = 11;
+
+    /**
      * The number of structural features of the '<em>Mastersthesis Type</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MASTERSTHESIS_TYPE_FEATURE_COUNT = 10;
+    int MASTERSTHESIS_TYPE_FEATURE_COUNT = 12;
 
     /**
      * The meta object id for the '{@link net.sf.bibtexml.impl.MiscTypeImpl <em>Misc Type</em>}' class.
@@ -2178,13 +2358,31 @@ public interface BibtexmlPackage extends EPackage {
     int MISC_TYPE__CROSSREF = 7;
 
     /**
+     * The feature id for the '<em><b>Doi</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MISC_TYPE__DOI = 8;
+
+    /**
+     * The feature id for the '<em><b>Url</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MISC_TYPE__URL = 9;
+
+    /**
      * The number of structural features of the '<em>Misc Type</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MISC_TYPE_FEATURE_COUNT = 8;
+    int MISC_TYPE_FEATURE_COUNT = 10;
 
     /**
      * The meta object id for the '{@link net.sf.bibtexml.impl.PhdthesisTypeImpl <em>Phdthesis Type</em>}' class.
@@ -2287,13 +2485,31 @@ public interface BibtexmlPackage extends EPackage {
     int PHDTHESIS_TYPE__CROSSREF = 9;
 
     /**
+     * The feature id for the '<em><b>Doi</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PHDTHESIS_TYPE__DOI = 10;
+
+    /**
+     * The feature id for the '<em><b>Url</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PHDTHESIS_TYPE__URL = 11;
+
+    /**
      * The number of structural features of the '<em>Phdthesis Type</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int PHDTHESIS_TYPE_FEATURE_COUNT = 10;
+    int PHDTHESIS_TYPE_FEATURE_COUNT = 12;
 
     /**
      * The meta object id for the '{@link net.sf.bibtexml.impl.ProceedingsTypeImpl <em>Proceedings Type</em>}' class.
@@ -2423,13 +2639,31 @@ public interface BibtexmlPackage extends EPackage {
     int PROCEEDINGS_TYPE__CROSSREF = 12;
 
     /**
+     * The feature id for the '<em><b>Doi</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PROCEEDINGS_TYPE__DOI = 13;
+
+    /**
+     * The feature id for the '<em><b>Url</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PROCEEDINGS_TYPE__URL = 14;
+
+    /**
      * The number of structural features of the '<em>Proceedings Type</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int PROCEEDINGS_TYPE_FEATURE_COUNT = 13;
+    int PROCEEDINGS_TYPE_FEATURE_COUNT = 15;
 
     /**
      * The meta object id for the '{@link net.sf.bibtexml.impl.TechreportTypeImpl <em>Techreport Type</em>}' class.
@@ -2541,13 +2775,31 @@ public interface BibtexmlPackage extends EPackage {
     int TECHREPORT_TYPE__CROSSREF = 10;
 
     /**
+     * The feature id for the '<em><b>Doi</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHREPORT_TYPE__DOI = 11;
+
+    /**
+     * The feature id for the '<em><b>Url</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHREPORT_TYPE__URL = 12;
+
+    /**
      * The number of structural features of the '<em>Techreport Type</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TECHREPORT_TYPE_FEATURE_COUNT = 11;
+    int TECHREPORT_TYPE_FEATURE_COUNT = 13;
 
     /**
      * The meta object id for the '{@link net.sf.bibtexml.impl.UnpublishedTypeImpl <em>Unpublished Type</em>}' class.
@@ -2623,13 +2875,31 @@ public interface BibtexmlPackage extends EPackage {
     int UNPUBLISHED_TYPE__CROSSREF = 6;
 
     /**
+     * The feature id for the '<em><b>Doi</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int UNPUBLISHED_TYPE__DOI = 7;
+
+    /**
+     * The feature id for the '<em><b>Url</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int UNPUBLISHED_TYPE__URL = 8;
+
+    /**
      * The number of structural features of the '<em>Unpublished Type</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int UNPUBLISHED_TYPE_FEATURE_COUNT = 7;
+    int UNPUBLISHED_TYPE_FEATURE_COUNT = 9;
 
     /**
      * The meta object id for the '{@link net.sf.bibtexml.MonthStringType <em>Month String Type</em>}' enum.
@@ -2812,6 +3082,28 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      */
     EAttribute getArticleType_Crossref();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.ArticleType#getDoi <em>Doi</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Doi</em>'.
+     * @see net.sf.bibtexml.ArticleType#getDoi()
+     * @see #getArticleType()
+     * @generated
+     */
+    EAttribute getArticleType_Doi();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.ArticleType#getUrl <em>Url</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Url</em>'.
+     * @see net.sf.bibtexml.ArticleType#getUrl()
+     * @see #getArticleType()
+     * @generated
+     */
+    EAttribute getArticleType_Url();
 
     /**
      * Returns the meta object for class '{@link net.sf.bibtexml.BibTeXMLEntriesClass <em>Bib Te XML Entries Class</em>}'.
@@ -3087,6 +3379,28 @@ public interface BibtexmlPackage extends EPackage {
     EAttribute getBookletType_Crossref();
 
     /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.BookletType#getDoi <em>Doi</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Doi</em>'.
+     * @see net.sf.bibtexml.BookletType#getDoi()
+     * @see #getBookletType()
+     * @generated
+     */
+    EAttribute getBookletType_Doi();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.BookletType#getUrl <em>Url</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Url</em>'.
+     * @see net.sf.bibtexml.BookletType#getUrl()
+     * @see #getBookletType()
+     * @generated
+     */
+    EAttribute getBookletType_Url();
+
+    /**
      * Returns the meta object for class '{@link net.sf.bibtexml.BookType <em>Book Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3249,6 +3563,28 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      */
     EAttribute getBookType_Crossref();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.BookType#getDoi <em>Doi</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Doi</em>'.
+     * @see net.sf.bibtexml.BookType#getDoi()
+     * @see #getBookType()
+     * @generated
+     */
+    EAttribute getBookType_Doi();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.BookType#getUrl <em>Url</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Url</em>'.
+     * @see net.sf.bibtexml.BookType#getUrl()
+     * @see #getBookType()
+     * @generated
+     */
+    EAttribute getBookType_Url();
 
     /**
      * Returns the meta object for class '{@link net.sf.bibtexml.ConferenceType <em>Conference Type</em>}'.
@@ -3437,6 +3773,28 @@ public interface BibtexmlPackage extends EPackage {
     EAttribute getConferenceType_Crossref();
 
     /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.ConferenceType#getDoi <em>Doi</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Doi</em>'.
+     * @see net.sf.bibtexml.ConferenceType#getDoi()
+     * @see #getConferenceType()
+     * @generated
+     */
+    EAttribute getConferenceType_Doi();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.ConferenceType#getUrl <em>Url</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Url</em>'.
+     * @see net.sf.bibtexml.ConferenceType#getUrl()
+     * @see #getConferenceType()
+     * @generated
+     */
+    EAttribute getConferenceType_Url();
+
+    /**
      * Returns the meta object for class '{@link net.sf.bibtexml.DocumentRoot <em>Document Root</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3588,6 +3946,17 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      */
     EAttribute getDocumentRoot_Crossref();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.DocumentRoot#getDoi <em>Doi</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Doi</em>'.
+     * @see net.sf.bibtexml.DocumentRoot#getDoi()
+     * @see #getDocumentRoot()
+     * @generated
+     */
+    EAttribute getDocumentRoot_Doi();
 
     /**
      * Returns the meta object for the attribute '{@link net.sf.bibtexml.DocumentRoot#getEdition <em>Edition</em>}'.
@@ -3898,6 +4267,17 @@ public interface BibtexmlPackage extends EPackage {
     EReference getDocumentRoot_Unpublished();
 
     /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.DocumentRoot#getUrl <em>Url</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Url</em>'.
+     * @see net.sf.bibtexml.DocumentRoot#getUrl()
+     * @see #getDocumentRoot()
+     * @generated
+     */
+    EAttribute getDocumentRoot_Url();
+
+    /**
      * Returns the meta object for the attribute '{@link net.sf.bibtexml.DocumentRoot#getVolume <em>Volume</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4170,6 +4550,28 @@ public interface BibtexmlPackage extends EPackage {
     EAttribute getInbookType_Crossref();
 
     /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.InbookType#getDoi <em>Doi</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Doi</em>'.
+     * @see net.sf.bibtexml.InbookType#getDoi()
+     * @see #getInbookType()
+     * @generated
+     */
+    EAttribute getInbookType_Doi();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.InbookType#getUrl <em>Url</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Url</em>'.
+     * @see net.sf.bibtexml.InbookType#getUrl()
+     * @see #getInbookType()
+     * @generated
+     */
+    EAttribute getInbookType_Url();
+
+    /**
      * Returns the meta object for class '{@link net.sf.bibtexml.IncollectionType <em>Incollection Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4378,6 +4780,28 @@ public interface BibtexmlPackage extends EPackage {
     EAttribute getIncollectionType_Crossref();
 
     /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.IncollectionType#getDoi <em>Doi</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Doi</em>'.
+     * @see net.sf.bibtexml.IncollectionType#getDoi()
+     * @see #getIncollectionType()
+     * @generated
+     */
+    EAttribute getIncollectionType_Doi();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.IncollectionType#getUrl <em>Url</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Url</em>'.
+     * @see net.sf.bibtexml.IncollectionType#getUrl()
+     * @see #getIncollectionType()
+     * @generated
+     */
+    EAttribute getIncollectionType_Url();
+
+    /**
      * Returns the meta object for class '{@link net.sf.bibtexml.InproceedingsType <em>Inproceedings Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4564,6 +4988,28 @@ public interface BibtexmlPackage extends EPackage {
     EAttribute getInproceedingsType_Crossref();
 
     /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.InproceedingsType#getDoi <em>Doi</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Doi</em>'.
+     * @see net.sf.bibtexml.InproceedingsType#getDoi()
+     * @see #getInproceedingsType()
+     * @generated
+     */
+    EAttribute getInproceedingsType_Doi();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.InproceedingsType#getUrl <em>Url</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Url</em>'.
+     * @see net.sf.bibtexml.InproceedingsType#getUrl()
+     * @see #getInproceedingsType()
+     * @generated
+     */
+    EAttribute getInproceedingsType_Url();
+
+    /**
      * Returns the meta object for class '{@link net.sf.bibtexml.ManualType <em>Manual Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4682,6 +5128,28 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      */
     EAttribute getManualType_Crossref();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.ManualType#getDoi <em>Doi</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Doi</em>'.
+     * @see net.sf.bibtexml.ManualType#getDoi()
+     * @see #getManualType()
+     * @generated
+     */
+    EAttribute getManualType_Doi();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.ManualType#getUrl <em>Url</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Url</em>'.
+     * @see net.sf.bibtexml.ManualType#getUrl()
+     * @see #getManualType()
+     * @generated
+     */
+    EAttribute getManualType_Url();
 
     /**
      * Returns the meta object for class '{@link net.sf.bibtexml.MastersthesisType <em>Mastersthesis Type</em>}'.
@@ -4804,6 +5272,28 @@ public interface BibtexmlPackage extends EPackage {
     EAttribute getMastersthesisType_Crossref();
 
     /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.MastersthesisType#getDoi <em>Doi</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Doi</em>'.
+     * @see net.sf.bibtexml.MastersthesisType#getDoi()
+     * @see #getMastersthesisType()
+     * @generated
+     */
+    EAttribute getMastersthesisType_Doi();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.MastersthesisType#getUrl <em>Url</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Url</em>'.
+     * @see net.sf.bibtexml.MastersthesisType#getUrl()
+     * @see #getMastersthesisType()
+     * @generated
+     */
+    EAttribute getMastersthesisType_Url();
+
+    /**
      * Returns the meta object for class '{@link net.sf.bibtexml.MiscType <em>Misc Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4900,6 +5390,28 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      */
     EAttribute getMiscType_Crossref();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.MiscType#getDoi <em>Doi</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Doi</em>'.
+     * @see net.sf.bibtexml.MiscType#getDoi()
+     * @see #getMiscType()
+     * @generated
+     */
+    EAttribute getMiscType_Doi();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.MiscType#getUrl <em>Url</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Url</em>'.
+     * @see net.sf.bibtexml.MiscType#getUrl()
+     * @see #getMiscType()
+     * @generated
+     */
+    EAttribute getMiscType_Url();
 
     /**
      * Returns the meta object for class '{@link net.sf.bibtexml.PhdthesisType <em>Phdthesis Type</em>}'.
@@ -5020,6 +5532,28 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      */
     EAttribute getPhdthesisType_Crossref();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.PhdthesisType#getDoi <em>Doi</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Doi</em>'.
+     * @see net.sf.bibtexml.PhdthesisType#getDoi()
+     * @see #getPhdthesisType()
+     * @generated
+     */
+    EAttribute getPhdthesisType_Doi();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.PhdthesisType#getUrl <em>Url</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Url</em>'.
+     * @see net.sf.bibtexml.PhdthesisType#getUrl()
+     * @see #getPhdthesisType()
+     * @generated
+     */
+    EAttribute getPhdthesisType_Url();
 
     /**
      * Returns the meta object for class '{@link net.sf.bibtexml.ProceedingsType <em>Proceedings Type</em>}'.
@@ -5175,6 +5709,28 @@ public interface BibtexmlPackage extends EPackage {
     EAttribute getProceedingsType_Crossref();
 
     /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.ProceedingsType#getDoi <em>Doi</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Doi</em>'.
+     * @see net.sf.bibtexml.ProceedingsType#getDoi()
+     * @see #getProceedingsType()
+     * @generated
+     */
+    EAttribute getProceedingsType_Doi();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.ProceedingsType#getUrl <em>Url</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Url</em>'.
+     * @see net.sf.bibtexml.ProceedingsType#getUrl()
+     * @see #getProceedingsType()
+     * @generated
+     */
+    EAttribute getProceedingsType_Url();
+
+    /**
      * Returns the meta object for class '{@link net.sf.bibtexml.TechreportType <em>Techreport Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -5306,6 +5862,28 @@ public interface BibtexmlPackage extends EPackage {
     EAttribute getTechreportType_Crossref();
 
     /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.TechreportType#getDoi <em>Doi</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Doi</em>'.
+     * @see net.sf.bibtexml.TechreportType#getDoi()
+     * @see #getTechreportType()
+     * @generated
+     */
+    EAttribute getTechreportType_Doi();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.TechreportType#getUrl <em>Url</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Url</em>'.
+     * @see net.sf.bibtexml.TechreportType#getUrl()
+     * @see #getTechreportType()
+     * @generated
+     */
+    EAttribute getTechreportType_Url();
+
+    /**
      * Returns the meta object for class '{@link net.sf.bibtexml.UnpublishedType <em>Unpublished Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -5391,6 +5969,28 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      */
     EAttribute getUnpublishedType_Crossref();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.UnpublishedType#getDoi <em>Doi</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Doi</em>'.
+     * @see net.sf.bibtexml.UnpublishedType#getDoi()
+     * @see #getUnpublishedType()
+     * @generated
+     */
+    EAttribute getUnpublishedType_Doi();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.UnpublishedType#getUrl <em>Url</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Url</em>'.
+     * @see net.sf.bibtexml.UnpublishedType#getUrl()
+     * @see #getUnpublishedType()
+     * @generated
+     */
+    EAttribute getUnpublishedType_Url();
 
     /**
      * Returns the meta object for enum '{@link net.sf.bibtexml.MonthStringType <em>Month String Type</em>}'.
@@ -5569,6 +6169,22 @@ public interface BibtexmlPackage extends EPackage {
          * @generated
          */
         EAttribute ARTICLE_TYPE__CROSSREF = eINSTANCE.getArticleType_Crossref();
+
+        /**
+         * The meta object literal for the '<em><b>Doi</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute ARTICLE_TYPE__DOI = eINSTANCE.getArticleType_Doi();
+
+        /**
+         * The meta object literal for the '<em><b>Url</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute ARTICLE_TYPE__URL = eINSTANCE.getArticleType_Url();
 
         /**
          * The meta object literal for the '{@link net.sf.bibtexml.impl.BibTeXMLEntriesClassImpl <em>Bib Te XML Entries Class</em>}' class.
@@ -5775,6 +6391,22 @@ public interface BibtexmlPackage extends EPackage {
         EAttribute BOOKLET_TYPE__CROSSREF = eINSTANCE.getBookletType_Crossref();
 
         /**
+         * The meta object literal for the '<em><b>Doi</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute BOOKLET_TYPE__DOI = eINSTANCE.getBookletType_Doi();
+
+        /**
+         * The meta object literal for the '<em><b>Url</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute BOOKLET_TYPE__URL = eINSTANCE.getBookletType_Url();
+
+        /**
          * The meta object literal for the '{@link net.sf.bibtexml.impl.BookTypeImpl <em>Book Type</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -5895,6 +6527,22 @@ public interface BibtexmlPackage extends EPackage {
          * @generated
          */
         EAttribute BOOK_TYPE__CROSSREF = eINSTANCE.getBookType_Crossref();
+
+        /**
+         * The meta object literal for the '<em><b>Doi</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute BOOK_TYPE__DOI = eINSTANCE.getBookType_Doi();
+
+        /**
+         * The meta object literal for the '<em><b>Url</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute BOOK_TYPE__URL = eINSTANCE.getBookType_Url();
 
         /**
          * The meta object literal for the '{@link net.sf.bibtexml.impl.ConferenceTypeImpl <em>Conference Type</em>}' class.
@@ -6035,6 +6683,22 @@ public interface BibtexmlPackage extends EPackage {
         EAttribute CONFERENCE_TYPE__CROSSREF = eINSTANCE.getConferenceType_Crossref();
 
         /**
+         * The meta object literal for the '<em><b>Doi</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute CONFERENCE_TYPE__DOI = eINSTANCE.getConferenceType_Doi();
+
+        /**
+         * The meta object literal for the '<em><b>Url</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute CONFERENCE_TYPE__URL = eINSTANCE.getConferenceType_Url();
+
+        /**
          * The meta object literal for the '{@link net.sf.bibtexml.impl.DocumentRootImpl <em>Document Root</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -6147,6 +6811,14 @@ public interface BibtexmlPackage extends EPackage {
          * @generated
          */
         EAttribute DOCUMENT_ROOT__CROSSREF = eINSTANCE.getDocumentRoot_Crossref();
+
+        /**
+         * The meta object literal for the '<em><b>Doi</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DOCUMENT_ROOT__DOI = eINSTANCE.getDocumentRoot_Doi();
 
         /**
          * The meta object literal for the '<em><b>Edition</b></em>' attribute feature.
@@ -6373,6 +7045,14 @@ public interface BibtexmlPackage extends EPackage {
         EReference DOCUMENT_ROOT__UNPUBLISHED = eINSTANCE.getDocumentRoot_Unpublished();
 
         /**
+         * The meta object literal for the '<em><b>Url</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DOCUMENT_ROOT__URL = eINSTANCE.getDocumentRoot_Url();
+
+        /**
          * The meta object literal for the '<em><b>Volume</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -6579,6 +7259,22 @@ public interface BibtexmlPackage extends EPackage {
         EAttribute INBOOK_TYPE__CROSSREF = eINSTANCE.getInbookType_Crossref();
 
         /**
+         * The meta object literal for the '<em><b>Doi</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INBOOK_TYPE__DOI = eINSTANCE.getInbookType_Doi();
+
+        /**
+         * The meta object literal for the '<em><b>Url</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INBOOK_TYPE__URL = eINSTANCE.getInbookType_Url();
+
+        /**
          * The meta object literal for the '{@link net.sf.bibtexml.impl.IncollectionTypeImpl <em>Incollection Type</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -6733,6 +7429,22 @@ public interface BibtexmlPackage extends EPackage {
         EAttribute INCOLLECTION_TYPE__CROSSREF = eINSTANCE.getIncollectionType_Crossref();
 
         /**
+         * The meta object literal for the '<em><b>Doi</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INCOLLECTION_TYPE__DOI = eINSTANCE.getIncollectionType_Doi();
+
+        /**
+         * The meta object literal for the '<em><b>Url</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INCOLLECTION_TYPE__URL = eINSTANCE.getIncollectionType_Url();
+
+        /**
          * The meta object literal for the '{@link net.sf.bibtexml.impl.InproceedingsTypeImpl <em>Inproceedings Type</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -6871,6 +7583,22 @@ public interface BibtexmlPackage extends EPackage {
         EAttribute INPROCEEDINGS_TYPE__CROSSREF = eINSTANCE.getInproceedingsType_Crossref();
 
         /**
+         * The meta object literal for the '<em><b>Doi</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INPROCEEDINGS_TYPE__DOI = eINSTANCE.getInproceedingsType_Doi();
+
+        /**
+         * The meta object literal for the '<em><b>Url</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INPROCEEDINGS_TYPE__URL = eINSTANCE.getInproceedingsType_Url();
+
+        /**
          * The meta object literal for the '{@link net.sf.bibtexml.impl.ManualTypeImpl <em>Manual Type</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -6959,6 +7687,22 @@ public interface BibtexmlPackage extends EPackage {
          * @generated
          */
         EAttribute MANUAL_TYPE__CROSSREF = eINSTANCE.getManualType_Crossref();
+
+        /**
+         * The meta object literal for the '<em><b>Doi</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute MANUAL_TYPE__DOI = eINSTANCE.getManualType_Doi();
+
+        /**
+         * The meta object literal for the '<em><b>Url</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute MANUAL_TYPE__URL = eINSTANCE.getManualType_Url();
 
         /**
          * The meta object literal for the '{@link net.sf.bibtexml.impl.MastersthesisTypeImpl <em>Mastersthesis Type</em>}' class.
@@ -7051,6 +7795,22 @@ public interface BibtexmlPackage extends EPackage {
         EAttribute MASTERSTHESIS_TYPE__CROSSREF = eINSTANCE.getMastersthesisType_Crossref();
 
         /**
+         * The meta object literal for the '<em><b>Doi</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute MASTERSTHESIS_TYPE__DOI = eINSTANCE.getMastersthesisType_Doi();
+
+        /**
+         * The meta object literal for the '<em><b>Url</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute MASTERSTHESIS_TYPE__URL = eINSTANCE.getMastersthesisType_Url();
+
+        /**
          * The meta object literal for the '{@link net.sf.bibtexml.impl.MiscTypeImpl <em>Misc Type</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -7123,6 +7883,22 @@ public interface BibtexmlPackage extends EPackage {
          * @generated
          */
         EAttribute MISC_TYPE__CROSSREF = eINSTANCE.getMiscType_Crossref();
+
+        /**
+         * The meta object literal for the '<em><b>Doi</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute MISC_TYPE__DOI = eINSTANCE.getMiscType_Doi();
+
+        /**
+         * The meta object literal for the '<em><b>Url</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute MISC_TYPE__URL = eINSTANCE.getMiscType_Url();
 
         /**
          * The meta object literal for the '{@link net.sf.bibtexml.impl.PhdthesisTypeImpl <em>Phdthesis Type</em>}' class.
@@ -7213,6 +7989,22 @@ public interface BibtexmlPackage extends EPackage {
          * @generated
          */
         EAttribute PHDTHESIS_TYPE__CROSSREF = eINSTANCE.getPhdthesisType_Crossref();
+
+        /**
+         * The meta object literal for the '<em><b>Doi</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute PHDTHESIS_TYPE__DOI = eINSTANCE.getPhdthesisType_Doi();
+
+        /**
+         * The meta object literal for the '<em><b>Url</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute PHDTHESIS_TYPE__URL = eINSTANCE.getPhdthesisType_Url();
 
         /**
          * The meta object literal for the '{@link net.sf.bibtexml.impl.ProceedingsTypeImpl <em>Proceedings Type</em>}' class.
@@ -7329,6 +8121,22 @@ public interface BibtexmlPackage extends EPackage {
         EAttribute PROCEEDINGS_TYPE__CROSSREF = eINSTANCE.getProceedingsType_Crossref();
 
         /**
+         * The meta object literal for the '<em><b>Doi</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute PROCEEDINGS_TYPE__DOI = eINSTANCE.getProceedingsType_Doi();
+
+        /**
+         * The meta object literal for the '<em><b>Url</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute PROCEEDINGS_TYPE__URL = eINSTANCE.getProceedingsType_Url();
+
+        /**
          * The meta object literal for the '{@link net.sf.bibtexml.impl.TechreportTypeImpl <em>Techreport Type</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -7427,6 +8235,22 @@ public interface BibtexmlPackage extends EPackage {
         EAttribute TECHREPORT_TYPE__CROSSREF = eINSTANCE.getTechreportType_Crossref();
 
         /**
+         * The meta object literal for the '<em><b>Doi</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute TECHREPORT_TYPE__DOI = eINSTANCE.getTechreportType_Doi();
+
+        /**
+         * The meta object literal for the '<em><b>Url</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute TECHREPORT_TYPE__URL = eINSTANCE.getTechreportType_Url();
+
+        /**
          * The meta object literal for the '{@link net.sf.bibtexml.impl.UnpublishedTypeImpl <em>Unpublished Type</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -7491,6 +8315,22 @@ public interface BibtexmlPackage extends EPackage {
          * @generated
          */
         EAttribute UNPUBLISHED_TYPE__CROSSREF = eINSTANCE.getUnpublishedType_Crossref();
+
+        /**
+         * The meta object literal for the '<em><b>Doi</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute UNPUBLISHED_TYPE__DOI = eINSTANCE.getUnpublishedType_Doi();
+
+        /**
+         * The meta object literal for the '<em><b>Url</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute UNPUBLISHED_TYPE__URL = eINSTANCE.getUnpublishedType_Url();
 
         /**
          * The meta object literal for the '{@link net.sf.bibtexml.MonthStringType <em>Month String Type</em>}' enum.

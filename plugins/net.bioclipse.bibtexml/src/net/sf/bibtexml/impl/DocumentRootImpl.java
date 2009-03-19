@@ -66,6 +66,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link net.sf.bibtexml.impl.DocumentRootImpl#getChapter <em>Chapter</em>}</li>
  *   <li>{@link net.sf.bibtexml.impl.DocumentRootImpl#getConference <em>Conference</em>}</li>
  *   <li>{@link net.sf.bibtexml.impl.DocumentRootImpl#getCrossref <em>Crossref</em>}</li>
+ *   <li>{@link net.sf.bibtexml.impl.DocumentRootImpl#getDoi <em>Doi</em>}</li>
  *   <li>{@link net.sf.bibtexml.impl.DocumentRootImpl#getEdition <em>Edition</em>}</li>
  *   <li>{@link net.sf.bibtexml.impl.DocumentRootImpl#getEditor <em>Editor</em>}</li>
  *   <li>{@link net.sf.bibtexml.impl.DocumentRootImpl#getEntry <em>Entry</em>}</li>
@@ -94,6 +95,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link net.sf.bibtexml.impl.DocumentRootImpl#getTitle <em>Title</em>}</li>
  *   <li>{@link net.sf.bibtexml.impl.DocumentRootImpl#getType <em>Type</em>}</li>
  *   <li>{@link net.sf.bibtexml.impl.DocumentRootImpl#getUnpublished <em>Unpublished</em>}</li>
+ *   <li>{@link net.sf.bibtexml.impl.DocumentRootImpl#getUrl <em>Url</em>}</li>
  *   <li>{@link net.sf.bibtexml.impl.DocumentRootImpl#getVolume <em>Volume</em>}</li>
  *   <li>{@link net.sf.bibtexml.impl.DocumentRootImpl#getYear <em>Year</em>}</li>
  * </ul>
@@ -191,6 +193,16 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
      * @ordered
      */
     protected static final String CROSSREF_EDEFAULT = null;
+
+    /**
+     * The default value of the '{@link #getDoi() <em>Doi</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getDoi()
+     * @generated
+     * @ordered
+     */
+    protected static final String DOI_EDEFAULT = null;
 
     /**
      * The default value of the '{@link #getEdition() <em>Edition</em>}' attribute.
@@ -351,6 +363,16 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
      * @ordered
      */
     protected static final String TYPE_EDEFAULT = null;
+
+    /**
+     * The default value of the '{@link #getUrl() <em>Url</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getUrl()
+     * @generated
+     * @ordered
+     */
+    protected static final String URL_EDEFAULT = null;
 
     /**
      * The default value of the '{@link #getVolume() <em>Volume</em>}' attribute.
@@ -641,6 +663,24 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
      */
     public void setCrossref(String newCrossref) {
         ((FeatureMap.Internal)getMixed()).set(BibtexmlPackage.Literals.DOCUMENT_ROOT__CROSSREF, newCrossref);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getDoi() {
+        return (String)getMixed().get(BibtexmlPackage.Literals.DOCUMENT_ROOT__DOI, true);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setDoi(String newDoi) {
+        ((FeatureMap.Internal)getMixed()).set(BibtexmlPackage.Literals.DOCUMENT_ROOT__DOI, newDoi);
     }
 
     /**
@@ -1260,6 +1300,24 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
      * <!-- end-user-doc -->
      * @generated
      */
+    public String getUrl() {
+        return (String)getMixed().get(BibtexmlPackage.Literals.DOCUMENT_ROOT__URL, true);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setUrl(String newUrl) {
+        ((FeatureMap.Internal)getMixed()).set(BibtexmlPackage.Literals.DOCUMENT_ROOT__URL, newUrl);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public String getVolume() {
         return (String)getMixed().get(BibtexmlPackage.Literals.DOCUMENT_ROOT__VOLUME, true);
     }
@@ -1378,6 +1436,8 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
                 return getConference();
             case BibtexmlPackage.DOCUMENT_ROOT__CROSSREF:
                 return getCrossref();
+            case BibtexmlPackage.DOCUMENT_ROOT__DOI:
+                return getDoi();
             case BibtexmlPackage.DOCUMENT_ROOT__EDITION:
                 return getEdition();
             case BibtexmlPackage.DOCUMENT_ROOT__EDITOR:
@@ -1434,6 +1494,8 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
                 return getType();
             case BibtexmlPackage.DOCUMENT_ROOT__UNPUBLISHED:
                 return getUnpublished();
+            case BibtexmlPackage.DOCUMENT_ROOT__URL:
+                return getUrl();
             case BibtexmlPackage.DOCUMENT_ROOT__VOLUME:
                 return getVolume();
             case BibtexmlPackage.DOCUMENT_ROOT__YEAR:
@@ -1488,6 +1550,9 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
                 return;
             case BibtexmlPackage.DOCUMENT_ROOT__CROSSREF:
                 setCrossref((String)newValue);
+                return;
+            case BibtexmlPackage.DOCUMENT_ROOT__DOI:
+                setDoi((String)newValue);
                 return;
             case BibtexmlPackage.DOCUMENT_ROOT__EDITION:
                 setEdition((String)newValue);
@@ -1573,6 +1638,9 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
             case BibtexmlPackage.DOCUMENT_ROOT__UNPUBLISHED:
                 setUnpublished((UnpublishedType)newValue);
                 return;
+            case BibtexmlPackage.DOCUMENT_ROOT__URL:
+                setUrl((String)newValue);
+                return;
             case BibtexmlPackage.DOCUMENT_ROOT__VOLUME:
                 setVolume((String)newValue);
                 return;
@@ -1629,6 +1697,9 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
                 return;
             case BibtexmlPackage.DOCUMENT_ROOT__CROSSREF:
                 setCrossref(CROSSREF_EDEFAULT);
+                return;
+            case BibtexmlPackage.DOCUMENT_ROOT__DOI:
+                setDoi(DOI_EDEFAULT);
                 return;
             case BibtexmlPackage.DOCUMENT_ROOT__EDITION:
                 setEdition(EDITION_EDEFAULT);
@@ -1714,6 +1785,9 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
             case BibtexmlPackage.DOCUMENT_ROOT__UNPUBLISHED:
                 setUnpublished((UnpublishedType)null);
                 return;
+            case BibtexmlPackage.DOCUMENT_ROOT__URL:
+                setUrl(URL_EDEFAULT);
+                return;
             case BibtexmlPackage.DOCUMENT_ROOT__VOLUME:
                 setVolume(VOLUME_EDEFAULT);
                 return;
@@ -1758,6 +1832,8 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
                 return getConference() != null;
             case BibtexmlPackage.DOCUMENT_ROOT__CROSSREF:
                 return CROSSREF_EDEFAULT == null ? getCrossref() != null : !CROSSREF_EDEFAULT.equals(getCrossref());
+            case BibtexmlPackage.DOCUMENT_ROOT__DOI:
+                return DOI_EDEFAULT == null ? getDoi() != null : !DOI_EDEFAULT.equals(getDoi());
             case BibtexmlPackage.DOCUMENT_ROOT__EDITION:
                 return EDITION_EDEFAULT == null ? getEdition() != null : !EDITION_EDEFAULT.equals(getEdition());
             case BibtexmlPackage.DOCUMENT_ROOT__EDITOR:
@@ -1814,6 +1890,8 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
                 return TYPE_EDEFAULT == null ? getType() != null : !TYPE_EDEFAULT.equals(getType());
             case BibtexmlPackage.DOCUMENT_ROOT__UNPUBLISHED:
                 return getUnpublished() != null;
+            case BibtexmlPackage.DOCUMENT_ROOT__URL:
+                return URL_EDEFAULT == null ? getUrl() != null : !URL_EDEFAULT.equals(getUrl());
             case BibtexmlPackage.DOCUMENT_ROOT__VOLUME:
                 return VOLUME_EDEFAULT == null ? getVolume() != null : !VOLUME_EDEFAULT.equals(getVolume());
             case BibtexmlPackage.DOCUMENT_ROOT__YEAR:

@@ -45,6 +45,8 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *   <li>{@link net.sf.bibtexml.impl.InbookTypeImpl#getNote <em>Note</em>}</li>
  *   <li>{@link net.sf.bibtexml.impl.InbookTypeImpl#getKey <em>Key</em>}</li>
  *   <li>{@link net.sf.bibtexml.impl.InbookTypeImpl#getCrossref <em>Crossref</em>}</li>
+ *   <li>{@link net.sf.bibtexml.impl.InbookTypeImpl#getDoi <em>Doi</em>}</li>
+ *   <li>{@link net.sf.bibtexml.impl.InbookTypeImpl#getUrl <em>Url</em>}</li>
  * </ul>
  * </p>
  *
@@ -410,6 +412,46 @@ public class InbookTypeImpl extends EObjectImpl implements InbookType {
      * @ordered
      */
     protected String crossref = CROSSREF_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getDoi() <em>Doi</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getDoi()
+     * @generated
+     * @ordered
+     */
+    protected static final String DOI_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getDoi() <em>Doi</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getDoi()
+     * @generated
+     * @ordered
+     */
+    protected String doi = DOI_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getUrl() <em>Url</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getUrl()
+     * @generated
+     * @ordered
+     */
+    protected static final String URL_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getUrl() <em>Url</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getUrl()
+     * @generated
+     * @ordered
+     */
+    protected String url = URL_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -813,6 +855,48 @@ public class InbookTypeImpl extends EObjectImpl implements InbookType {
      * <!-- end-user-doc -->
      * @generated
      */
+    public String getDoi() {
+        return doi;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setDoi(String newDoi) {
+        String oldDoi = doi;
+        doi = newDoi;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, BibtexmlPackage.INBOOK_TYPE__DOI, oldDoi, doi));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setUrl(String newUrl) {
+        String oldUrl = url;
+        url = newUrl;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, BibtexmlPackage.INBOOK_TYPE__URL, oldUrl, url));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
@@ -852,6 +936,10 @@ public class InbookTypeImpl extends EObjectImpl implements InbookType {
                 return getKey();
             case BibtexmlPackage.INBOOK_TYPE__CROSSREF:
                 return getCrossref();
+            case BibtexmlPackage.INBOOK_TYPE__DOI:
+                return getDoi();
+            case BibtexmlPackage.INBOOK_TYPE__URL:
+                return getUrl();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -917,6 +1005,12 @@ public class InbookTypeImpl extends EObjectImpl implements InbookType {
                 return;
             case BibtexmlPackage.INBOOK_TYPE__CROSSREF:
                 setCrossref((String)newValue);
+                return;
+            case BibtexmlPackage.INBOOK_TYPE__DOI:
+                setDoi((String)newValue);
+                return;
+            case BibtexmlPackage.INBOOK_TYPE__URL:
+                setUrl((String)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -984,6 +1078,12 @@ public class InbookTypeImpl extends EObjectImpl implements InbookType {
             case BibtexmlPackage.INBOOK_TYPE__CROSSREF:
                 setCrossref(CROSSREF_EDEFAULT);
                 return;
+            case BibtexmlPackage.INBOOK_TYPE__DOI:
+                setDoi(DOI_EDEFAULT);
+                return;
+            case BibtexmlPackage.INBOOK_TYPE__URL:
+                setUrl(URL_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -1032,6 +1132,10 @@ public class InbookTypeImpl extends EObjectImpl implements InbookType {
                 return KEY_EDEFAULT == null ? key != null : !KEY_EDEFAULT.equals(key);
             case BibtexmlPackage.INBOOK_TYPE__CROSSREF:
                 return CROSSREF_EDEFAULT == null ? crossref != null : !CROSSREF_EDEFAULT.equals(crossref);
+            case BibtexmlPackage.INBOOK_TYPE__DOI:
+                return DOI_EDEFAULT == null ? doi != null : !DOI_EDEFAULT.equals(doi);
+            case BibtexmlPackage.INBOOK_TYPE__URL:
+                return URL_EDEFAULT == null ? url != null : !URL_EDEFAULT.equals(url);
         }
         return super.eIsSet(featureID);
     }
@@ -1082,6 +1186,10 @@ public class InbookTypeImpl extends EObjectImpl implements InbookType {
         result.append(key);
         result.append(", crossref: ");
         result.append(crossref);
+        result.append(", doi: ");
+        result.append(doi);
+        result.append(", url: ");
+        result.append(url);
         result.append(')');
         return result.toString();
     }

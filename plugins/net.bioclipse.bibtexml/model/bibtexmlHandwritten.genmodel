@@ -37,6 +37,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ArticleType/note"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ArticleType/key"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ArticleType/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ArticleType/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ArticleType/url"/>
     </genClasses>
     <genClasses ecoreClass="bibtexml.ecore#//BibTeXMLEntriesClass">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//BibTeXMLEntriesClass/article"/>
@@ -64,6 +66,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookletType/note"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookletType/key"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookletType/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookletType/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookletType/url"/>
     </genClasses>
     <genClasses ecoreClass="bibtexml.ecore#//BookType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookType/author"/>
@@ -80,6 +84,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookType/note"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookType/key"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookType/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookType/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookType/url"/>
     </genClasses>
     <genClasses ecoreClass="bibtexml.ecore#//ConferenceType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ConferenceType/author"/>
@@ -98,6 +104,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ConferenceType/note"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ConferenceType/key"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ConferenceType/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ConferenceType/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ConferenceType/url"/>
     </genClasses>
     <genClasses ecoreClass="bibtexml.ecore#//DocumentRoot">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/mixed"/>
@@ -113,6 +121,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/chapter"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//DocumentRoot/conference"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/doi"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/edition"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/editor"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//DocumentRoot/entry"/>
@@ -141,6 +150,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/title"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/type"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//DocumentRoot/unpublished"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/url"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/volume"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/year"/>
     </genClasses>
@@ -169,6 +179,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InbookType/note"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InbookType/key"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InbookType/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InbookType/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InbookType/url"/>
     </genClasses>
     <genClasses ecoreClass="bibtexml.ecore#//IncollectionType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//IncollectionType/author"/>
@@ -189,6 +201,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//IncollectionType/note"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//IncollectionType/key"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//IncollectionType/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//IncollectionType/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//IncollectionType/url"/>
     </genClasses>
     <genClasses ecoreClass="bibtexml.ecore#//InproceedingsType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InproceedingsType/author"/>
@@ -207,6 +221,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InproceedingsType/note"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InproceedingsType/key"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InproceedingsType/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InproceedingsType/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//InproceedingsType/url"/>
     </genClasses>
     <genClasses ecoreClass="bibtexml.ecore#//ManualType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ManualType/author"/>
@@ -219,6 +235,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ManualType/note"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ManualType/key"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ManualType/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ManualType/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ManualType/url"/>
     </genClasses>
     <genClasses ecoreClass="bibtexml.ecore#//MastersthesisType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MastersthesisType/author"/>
@@ -231,6 +249,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MastersthesisType/note"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MastersthesisType/key"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MastersthesisType/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MastersthesisType/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MastersthesisType/url"/>
     </genClasses>
     <genClasses ecoreClass="bibtexml.ecore#//MiscType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MiscType/author"/>
@@ -241,6 +261,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MiscType/note"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MiscType/key"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MiscType/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MiscType/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//MiscType/url"/>
     </genClasses>
     <genClasses ecoreClass="bibtexml.ecore#//PhdthesisType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//PhdthesisType/author"/>
@@ -253,6 +275,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//PhdthesisType/note"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//PhdthesisType/key"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//PhdthesisType/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//PhdthesisType/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//PhdthesisType/url"/>
     </genClasses>
     <genClasses ecoreClass="bibtexml.ecore#//ProceedingsType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ProceedingsType/editor"/>
@@ -268,6 +292,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ProceedingsType/note"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ProceedingsType/key"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ProceedingsType/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ProceedingsType/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//ProceedingsType/url"/>
     </genClasses>
     <genClasses ecoreClass="bibtexml.ecore#//TechreportType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//TechreportType/author"/>
@@ -281,6 +307,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//TechreportType/note"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//TechreportType/key"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//TechreportType/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//TechreportType/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//TechreportType/url"/>
     </genClasses>
     <genClasses ecoreClass="bibtexml.ecore#//UnpublishedType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//UnpublishedType/author"/>
@@ -290,6 +318,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//UnpublishedType/year"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//UnpublishedType/key"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//UnpublishedType/crossref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//UnpublishedType/doi"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//UnpublishedType/url"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

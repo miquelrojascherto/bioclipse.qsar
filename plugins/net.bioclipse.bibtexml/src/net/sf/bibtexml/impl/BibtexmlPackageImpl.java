@@ -403,6 +403,24 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getArticleType_Doi() {
+        return (EAttribute)articleTypeEClass.getEStructuralFeatures().get(11);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getArticleType_Url() {
+        return (EAttribute)articleTypeEClass.getEStructuralFeatures().get(12);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getBibTeXMLEntriesClass() {
         return bibTeXMLEntriesClassEClass;
     }
@@ -628,6 +646,24 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getBookletType_Doi() {
+        return (EAttribute)bookletTypeEClass.getEStructuralFeatures().get(9);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getBookletType_Url() {
+        return (EAttribute)bookletTypeEClass.getEStructuralFeatures().get(10);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getBookType() {
         return bookTypeEClass;
     }
@@ -756,6 +792,24 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      */
     public EAttribute getBookType_Crossref() {
         return (EAttribute)bookTypeEClass.getEStructuralFeatures().get(13);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getBookType_Doi() {
+        return (EAttribute)bookTypeEClass.getEStructuralFeatures().get(14);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getBookType_Url() {
+        return (EAttribute)bookTypeEClass.getEStructuralFeatures().get(15);
     }
 
     /**
@@ -916,6 +970,24 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getConferenceType_Doi() {
+        return (EAttribute)conferenceTypeEClass.getEStructuralFeatures().get(16);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getConferenceType_Url() {
+        return (EAttribute)conferenceTypeEClass.getEStructuralFeatures().get(17);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getDocumentRoot() {
         return documentRootEClass;
     }
@@ -1042,7 +1114,7 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getDocumentRoot_Edition() {
+    public EAttribute getDocumentRoot_Doi() {
         return (EAttribute)documentRootEClass.getEStructuralFeatures().get(13);
     }
 
@@ -1051,7 +1123,7 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getDocumentRoot_Editor() {
+    public EAttribute getDocumentRoot_Edition() {
         return (EAttribute)documentRootEClass.getEStructuralFeatures().get(14);
     }
 
@@ -1060,8 +1132,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getDocumentRoot_Entry() {
-        return (EReference)documentRootEClass.getEStructuralFeatures().get(15);
+    public EAttribute getDocumentRoot_Editor() {
+        return (EAttribute)documentRootEClass.getEStructuralFeatures().get(15);
     }
 
     /**
@@ -1069,7 +1141,7 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getDocumentRoot_File() {
+    public EReference getDocumentRoot_Entry() {
         return (EReference)documentRootEClass.getEStructuralFeatures().get(16);
     }
 
@@ -1078,8 +1150,17 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EReference getDocumentRoot_File() {
+        return (EReference)documentRootEClass.getEStructuralFeatures().get(17);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EAttribute getDocumentRoot_Howpublished() {
-        return (EAttribute)documentRootEClass.getEStructuralFeatures().get(17);
+        return (EAttribute)documentRootEClass.getEStructuralFeatures().get(18);
     }
 
     /**
@@ -1088,15 +1169,6 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * @generated
      */
     public EReference getDocumentRoot_Inbook() {
-        return (EReference)documentRootEClass.getEStructuralFeatures().get(18);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getDocumentRoot_Incollection() {
         return (EReference)documentRootEClass.getEStructuralFeatures().get(19);
     }
 
@@ -1105,7 +1177,7 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getDocumentRoot_Inproceedings() {
+    public EReference getDocumentRoot_Incollection() {
         return (EReference)documentRootEClass.getEStructuralFeatures().get(20);
     }
 
@@ -1114,8 +1186,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getDocumentRoot_Institution() {
-        return (EAttribute)documentRootEClass.getEStructuralFeatures().get(21);
+    public EReference getDocumentRoot_Inproceedings() {
+        return (EReference)documentRootEClass.getEStructuralFeatures().get(21);
     }
 
     /**
@@ -1123,7 +1195,7 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getDocumentRoot_Journal() {
+    public EAttribute getDocumentRoot_Institution() {
         return (EAttribute)documentRootEClass.getEStructuralFeatures().get(22);
     }
 
@@ -1132,7 +1204,7 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getDocumentRoot_Key() {
+    public EAttribute getDocumentRoot_Journal() {
         return (EAttribute)documentRootEClass.getEStructuralFeatures().get(23);
     }
 
@@ -1141,8 +1213,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getDocumentRoot_Manual() {
-        return (EReference)documentRootEClass.getEStructuralFeatures().get(24);
+    public EAttribute getDocumentRoot_Key() {
+        return (EAttribute)documentRootEClass.getEStructuralFeatures().get(24);
     }
 
     /**
@@ -1150,7 +1222,7 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getDocumentRoot_Mastersthesis() {
+    public EReference getDocumentRoot_Manual() {
         return (EReference)documentRootEClass.getEStructuralFeatures().get(25);
     }
 
@@ -1159,7 +1231,7 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getDocumentRoot_Misc() {
+    public EReference getDocumentRoot_Mastersthesis() {
         return (EReference)documentRootEClass.getEStructuralFeatures().get(26);
     }
 
@@ -1168,8 +1240,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getDocumentRoot_Month() {
-        return (EAttribute)documentRootEClass.getEStructuralFeatures().get(27);
+    public EReference getDocumentRoot_Misc() {
+        return (EReference)documentRootEClass.getEStructuralFeatures().get(27);
     }
 
     /**
@@ -1177,7 +1249,7 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getDocumentRoot_Note() {
+    public EAttribute getDocumentRoot_Month() {
         return (EAttribute)documentRootEClass.getEStructuralFeatures().get(28);
     }
 
@@ -1186,7 +1258,7 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getDocumentRoot_Number() {
+    public EAttribute getDocumentRoot_Note() {
         return (EAttribute)documentRootEClass.getEStructuralFeatures().get(29);
     }
 
@@ -1195,7 +1267,7 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getDocumentRoot_Organization() {
+    public EAttribute getDocumentRoot_Number() {
         return (EAttribute)documentRootEClass.getEStructuralFeatures().get(30);
     }
 
@@ -1204,7 +1276,7 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getDocumentRoot_Pages() {
+    public EAttribute getDocumentRoot_Organization() {
         return (EAttribute)documentRootEClass.getEStructuralFeatures().get(31);
     }
 
@@ -1213,8 +1285,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getDocumentRoot_Phdthesis() {
-        return (EReference)documentRootEClass.getEStructuralFeatures().get(32);
+    public EAttribute getDocumentRoot_Pages() {
+        return (EAttribute)documentRootEClass.getEStructuralFeatures().get(32);
     }
 
     /**
@@ -1222,7 +1294,7 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getDocumentRoot_Proceedings() {
+    public EReference getDocumentRoot_Phdthesis() {
         return (EReference)documentRootEClass.getEStructuralFeatures().get(33);
     }
 
@@ -1231,8 +1303,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getDocumentRoot_Publisher() {
-        return (EAttribute)documentRootEClass.getEStructuralFeatures().get(34);
+    public EReference getDocumentRoot_Proceedings() {
+        return (EReference)documentRootEClass.getEStructuralFeatures().get(34);
     }
 
     /**
@@ -1240,7 +1312,7 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getDocumentRoot_School() {
+    public EAttribute getDocumentRoot_Publisher() {
         return (EAttribute)documentRootEClass.getEStructuralFeatures().get(35);
     }
 
@@ -1249,7 +1321,7 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getDocumentRoot_Series() {
+    public EAttribute getDocumentRoot_School() {
         return (EAttribute)documentRootEClass.getEStructuralFeatures().get(36);
     }
 
@@ -1258,8 +1330,17 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getDocumentRoot_Series() {
+        return (EAttribute)documentRootEClass.getEStructuralFeatures().get(37);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EReference getDocumentRoot_Techreport() {
-        return (EReference)documentRootEClass.getEStructuralFeatures().get(37);
+        return (EReference)documentRootEClass.getEStructuralFeatures().get(38);
     }
 
     /**
@@ -1268,15 +1349,6 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * @generated
      */
     public EAttribute getDocumentRoot_Title() {
-        return (EAttribute)documentRootEClass.getEStructuralFeatures().get(38);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getDocumentRoot_Type() {
         return (EAttribute)documentRootEClass.getEStructuralFeatures().get(39);
     }
 
@@ -1285,8 +1357,26 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getDocumentRoot_Type() {
+        return (EAttribute)documentRootEClass.getEStructuralFeatures().get(40);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EReference getDocumentRoot_Unpublished() {
-        return (EReference)documentRootEClass.getEStructuralFeatures().get(40);
+        return (EReference)documentRootEClass.getEStructuralFeatures().get(41);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getDocumentRoot_Url() {
+        return (EAttribute)documentRootEClass.getEStructuralFeatures().get(42);
     }
 
     /**
@@ -1295,7 +1385,7 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * @generated
      */
     public EAttribute getDocumentRoot_Volume() {
-        return (EAttribute)documentRootEClass.getEStructuralFeatures().get(41);
+        return (EAttribute)documentRootEClass.getEStructuralFeatures().get(43);
     }
 
     /**
@@ -1304,7 +1394,7 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * @generated
      */
     public EAttribute getDocumentRoot_Year() {
-        return (EAttribute)documentRootEClass.getEStructuralFeatures().get(42);
+        return (EAttribute)documentRootEClass.getEStructuralFeatures().get(44);
     }
 
     /**
@@ -1519,6 +1609,24 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getInbookType_Doi() {
+        return (EAttribute)inbookTypeEClass.getEStructuralFeatures().get(18);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getInbookType_Url() {
+        return (EAttribute)inbookTypeEClass.getEStructuralFeatures().get(19);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getIncollectionType() {
         return incollectionTypeEClass;
     }
@@ -1690,6 +1798,24 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getIncollectionType_Doi() {
+        return (EAttribute)incollectionTypeEClass.getEStructuralFeatures().get(18);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getIncollectionType_Url() {
+        return (EAttribute)incollectionTypeEClass.getEStructuralFeatures().get(19);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getInproceedingsType() {
         return inproceedingsTypeEClass;
     }
@@ -1843,6 +1969,24 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getInproceedingsType_Doi() {
+        return (EAttribute)inproceedingsTypeEClass.getEStructuralFeatures().get(16);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getInproceedingsType_Url() {
+        return (EAttribute)inproceedingsTypeEClass.getEStructuralFeatures().get(17);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getManualType() {
         return manualTypeEClass;
     }
@@ -1935,6 +2079,24 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      */
     public EAttribute getManualType_Crossref() {
         return (EAttribute)manualTypeEClass.getEStructuralFeatures().get(9);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getManualType_Doi() {
+        return (EAttribute)manualTypeEClass.getEStructuralFeatures().get(10);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getManualType_Url() {
+        return (EAttribute)manualTypeEClass.getEStructuralFeatures().get(11);
     }
 
     /**
@@ -2041,6 +2203,24 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getMastersthesisType_Doi() {
+        return (EAttribute)mastersthesisTypeEClass.getEStructuralFeatures().get(10);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getMastersthesisType_Url() {
+        return (EAttribute)mastersthesisTypeEClass.getEStructuralFeatures().get(11);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getMiscType() {
         return miscTypeEClass;
     }
@@ -2115,6 +2295,24 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      */
     public EAttribute getMiscType_Crossref() {
         return (EAttribute)miscTypeEClass.getEStructuralFeatures().get(7);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getMiscType_Doi() {
+        return (EAttribute)miscTypeEClass.getEStructuralFeatures().get(8);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getMiscType_Url() {
+        return (EAttribute)miscTypeEClass.getEStructuralFeatures().get(9);
     }
 
     /**
@@ -2214,6 +2412,24 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      */
     public EAttribute getPhdthesisType_Crossref() {
         return (EAttribute)phdthesisTypeEClass.getEStructuralFeatures().get(9);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getPhdthesisType_Doi() {
+        return (EAttribute)phdthesisTypeEClass.getEStructuralFeatures().get(10);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getPhdthesisType_Url() {
+        return (EAttribute)phdthesisTypeEClass.getEStructuralFeatures().get(11);
     }
 
     /**
@@ -2347,6 +2563,24 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getProceedingsType_Doi() {
+        return (EAttribute)proceedingsTypeEClass.getEStructuralFeatures().get(13);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getProceedingsType_Url() {
+        return (EAttribute)proceedingsTypeEClass.getEStructuralFeatures().get(14);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getTechreportType() {
         return techreportTypeEClass;
     }
@@ -2455,6 +2689,24 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getTechreportType_Doi() {
+        return (EAttribute)techreportTypeEClass.getEStructuralFeatures().get(11);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getTechreportType_Url() {
+        return (EAttribute)techreportTypeEClass.getEStructuralFeatures().get(12);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getUnpublishedType() {
         return unpublishedTypeEClass;
     }
@@ -2520,6 +2772,24 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      */
     public EAttribute getUnpublishedType_Crossref() {
         return (EAttribute)unpublishedTypeEClass.getEStructuralFeatures().get(6);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getUnpublishedType_Doi() {
+        return (EAttribute)unpublishedTypeEClass.getEStructuralFeatures().get(7);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getUnpublishedType_Url() {
+        return (EAttribute)unpublishedTypeEClass.getEStructuralFeatures().get(8);
     }
 
     /**
@@ -2607,6 +2877,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         createEAttribute(articleTypeEClass, ARTICLE_TYPE__NOTE);
         createEAttribute(articleTypeEClass, ARTICLE_TYPE__KEY);
         createEAttribute(articleTypeEClass, ARTICLE_TYPE__CROSSREF);
+        createEAttribute(articleTypeEClass, ARTICLE_TYPE__DOI);
+        createEAttribute(articleTypeEClass, ARTICLE_TYPE__URL);
 
         bibTeXMLEntriesClassEClass = createEClass(BIB_TE_XML_ENTRIES_CLASS);
         createEReference(bibTeXMLEntriesClassEClass, BIB_TE_XML_ENTRIES_CLASS__ARTICLE);
@@ -2634,6 +2906,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         createEAttribute(bookletTypeEClass, BOOKLET_TYPE__NOTE);
         createEAttribute(bookletTypeEClass, BOOKLET_TYPE__KEY);
         createEAttribute(bookletTypeEClass, BOOKLET_TYPE__CROSSREF);
+        createEAttribute(bookletTypeEClass, BOOKLET_TYPE__DOI);
+        createEAttribute(bookletTypeEClass, BOOKLET_TYPE__URL);
 
         bookTypeEClass = createEClass(BOOK_TYPE);
         createEAttribute(bookTypeEClass, BOOK_TYPE__AUTHOR);
@@ -2650,6 +2924,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         createEAttribute(bookTypeEClass, BOOK_TYPE__NOTE);
         createEAttribute(bookTypeEClass, BOOK_TYPE__KEY);
         createEAttribute(bookTypeEClass, BOOK_TYPE__CROSSREF);
+        createEAttribute(bookTypeEClass, BOOK_TYPE__DOI);
+        createEAttribute(bookTypeEClass, BOOK_TYPE__URL);
 
         conferenceTypeEClass = createEClass(CONFERENCE_TYPE);
         createEAttribute(conferenceTypeEClass, CONFERENCE_TYPE__AUTHOR);
@@ -2668,6 +2944,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         createEAttribute(conferenceTypeEClass, CONFERENCE_TYPE__NOTE);
         createEAttribute(conferenceTypeEClass, CONFERENCE_TYPE__KEY);
         createEAttribute(conferenceTypeEClass, CONFERENCE_TYPE__CROSSREF);
+        createEAttribute(conferenceTypeEClass, CONFERENCE_TYPE__DOI);
+        createEAttribute(conferenceTypeEClass, CONFERENCE_TYPE__URL);
 
         documentRootEClass = createEClass(DOCUMENT_ROOT);
         createEAttribute(documentRootEClass, DOCUMENT_ROOT__MIXED);
@@ -2683,6 +2961,7 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         createEAttribute(documentRootEClass, DOCUMENT_ROOT__CHAPTER);
         createEReference(documentRootEClass, DOCUMENT_ROOT__CONFERENCE);
         createEAttribute(documentRootEClass, DOCUMENT_ROOT__CROSSREF);
+        createEAttribute(documentRootEClass, DOCUMENT_ROOT__DOI);
         createEAttribute(documentRootEClass, DOCUMENT_ROOT__EDITION);
         createEAttribute(documentRootEClass, DOCUMENT_ROOT__EDITOR);
         createEReference(documentRootEClass, DOCUMENT_ROOT__ENTRY);
@@ -2711,6 +2990,7 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         createEAttribute(documentRootEClass, DOCUMENT_ROOT__TITLE);
         createEAttribute(documentRootEClass, DOCUMENT_ROOT__TYPE);
         createEReference(documentRootEClass, DOCUMENT_ROOT__UNPUBLISHED);
+        createEAttribute(documentRootEClass, DOCUMENT_ROOT__URL);
         createEAttribute(documentRootEClass, DOCUMENT_ROOT__VOLUME);
         createEAttribute(documentRootEClass, DOCUMENT_ROOT__YEAR);
 
@@ -2739,6 +3019,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         createEAttribute(inbookTypeEClass, INBOOK_TYPE__NOTE);
         createEAttribute(inbookTypeEClass, INBOOK_TYPE__KEY);
         createEAttribute(inbookTypeEClass, INBOOK_TYPE__CROSSREF);
+        createEAttribute(inbookTypeEClass, INBOOK_TYPE__DOI);
+        createEAttribute(inbookTypeEClass, INBOOK_TYPE__URL);
 
         incollectionTypeEClass = createEClass(INCOLLECTION_TYPE);
         createEAttribute(incollectionTypeEClass, INCOLLECTION_TYPE__AUTHOR);
@@ -2759,6 +3041,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         createEAttribute(incollectionTypeEClass, INCOLLECTION_TYPE__NOTE);
         createEAttribute(incollectionTypeEClass, INCOLLECTION_TYPE__KEY);
         createEAttribute(incollectionTypeEClass, INCOLLECTION_TYPE__CROSSREF);
+        createEAttribute(incollectionTypeEClass, INCOLLECTION_TYPE__DOI);
+        createEAttribute(incollectionTypeEClass, INCOLLECTION_TYPE__URL);
 
         inproceedingsTypeEClass = createEClass(INPROCEEDINGS_TYPE);
         createEAttribute(inproceedingsTypeEClass, INPROCEEDINGS_TYPE__AUTHOR);
@@ -2777,6 +3061,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         createEAttribute(inproceedingsTypeEClass, INPROCEEDINGS_TYPE__NOTE);
         createEAttribute(inproceedingsTypeEClass, INPROCEEDINGS_TYPE__KEY);
         createEAttribute(inproceedingsTypeEClass, INPROCEEDINGS_TYPE__CROSSREF);
+        createEAttribute(inproceedingsTypeEClass, INPROCEEDINGS_TYPE__DOI);
+        createEAttribute(inproceedingsTypeEClass, INPROCEEDINGS_TYPE__URL);
 
         manualTypeEClass = createEClass(MANUAL_TYPE);
         createEAttribute(manualTypeEClass, MANUAL_TYPE__AUTHOR);
@@ -2789,6 +3075,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         createEAttribute(manualTypeEClass, MANUAL_TYPE__NOTE);
         createEAttribute(manualTypeEClass, MANUAL_TYPE__KEY);
         createEAttribute(manualTypeEClass, MANUAL_TYPE__CROSSREF);
+        createEAttribute(manualTypeEClass, MANUAL_TYPE__DOI);
+        createEAttribute(manualTypeEClass, MANUAL_TYPE__URL);
 
         mastersthesisTypeEClass = createEClass(MASTERSTHESIS_TYPE);
         createEAttribute(mastersthesisTypeEClass, MASTERSTHESIS_TYPE__AUTHOR);
@@ -2801,6 +3089,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         createEAttribute(mastersthesisTypeEClass, MASTERSTHESIS_TYPE__NOTE);
         createEAttribute(mastersthesisTypeEClass, MASTERSTHESIS_TYPE__KEY);
         createEAttribute(mastersthesisTypeEClass, MASTERSTHESIS_TYPE__CROSSREF);
+        createEAttribute(mastersthesisTypeEClass, MASTERSTHESIS_TYPE__DOI);
+        createEAttribute(mastersthesisTypeEClass, MASTERSTHESIS_TYPE__URL);
 
         miscTypeEClass = createEClass(MISC_TYPE);
         createEAttribute(miscTypeEClass, MISC_TYPE__AUTHOR);
@@ -2811,6 +3101,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         createEAttribute(miscTypeEClass, MISC_TYPE__NOTE);
         createEAttribute(miscTypeEClass, MISC_TYPE__KEY);
         createEAttribute(miscTypeEClass, MISC_TYPE__CROSSREF);
+        createEAttribute(miscTypeEClass, MISC_TYPE__DOI);
+        createEAttribute(miscTypeEClass, MISC_TYPE__URL);
 
         phdthesisTypeEClass = createEClass(PHDTHESIS_TYPE);
         createEAttribute(phdthesisTypeEClass, PHDTHESIS_TYPE__AUTHOR);
@@ -2823,6 +3115,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         createEAttribute(phdthesisTypeEClass, PHDTHESIS_TYPE__NOTE);
         createEAttribute(phdthesisTypeEClass, PHDTHESIS_TYPE__KEY);
         createEAttribute(phdthesisTypeEClass, PHDTHESIS_TYPE__CROSSREF);
+        createEAttribute(phdthesisTypeEClass, PHDTHESIS_TYPE__DOI);
+        createEAttribute(phdthesisTypeEClass, PHDTHESIS_TYPE__URL);
 
         proceedingsTypeEClass = createEClass(PROCEEDINGS_TYPE);
         createEAttribute(proceedingsTypeEClass, PROCEEDINGS_TYPE__EDITOR);
@@ -2838,6 +3132,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         createEAttribute(proceedingsTypeEClass, PROCEEDINGS_TYPE__NOTE);
         createEAttribute(proceedingsTypeEClass, PROCEEDINGS_TYPE__KEY);
         createEAttribute(proceedingsTypeEClass, PROCEEDINGS_TYPE__CROSSREF);
+        createEAttribute(proceedingsTypeEClass, PROCEEDINGS_TYPE__DOI);
+        createEAttribute(proceedingsTypeEClass, PROCEEDINGS_TYPE__URL);
 
         techreportTypeEClass = createEClass(TECHREPORT_TYPE);
         createEAttribute(techreportTypeEClass, TECHREPORT_TYPE__AUTHOR);
@@ -2851,6 +3147,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         createEAttribute(techreportTypeEClass, TECHREPORT_TYPE__NOTE);
         createEAttribute(techreportTypeEClass, TECHREPORT_TYPE__KEY);
         createEAttribute(techreportTypeEClass, TECHREPORT_TYPE__CROSSREF);
+        createEAttribute(techreportTypeEClass, TECHREPORT_TYPE__DOI);
+        createEAttribute(techreportTypeEClass, TECHREPORT_TYPE__URL);
 
         unpublishedTypeEClass = createEClass(UNPUBLISHED_TYPE);
         createEAttribute(unpublishedTypeEClass, UNPUBLISHED_TYPE__AUTHOR);
@@ -2860,6 +3158,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         createEAttribute(unpublishedTypeEClass, UNPUBLISHED_TYPE__YEAR);
         createEAttribute(unpublishedTypeEClass, UNPUBLISHED_TYPE__KEY);
         createEAttribute(unpublishedTypeEClass, UNPUBLISHED_TYPE__CROSSREF);
+        createEAttribute(unpublishedTypeEClass, UNPUBLISHED_TYPE__DOI);
+        createEAttribute(unpublishedTypeEClass, UNPUBLISHED_TYPE__URL);
 
         // Create enums
         monthStringTypeEEnum = createEEnum(MONTH_STRING_TYPE);
@@ -2917,6 +3217,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         initEAttribute(getArticleType_Note(), theXMLTypePackage.getString(), "note", null, 0, 1, ArticleType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getArticleType_Key(), theXMLTypePackage.getString(), "key", null, 0, 1, ArticleType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getArticleType_Crossref(), theXMLTypePackage.getString(), "crossref", null, 0, 1, ArticleType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getArticleType_Doi(), theXMLTypePackage.getString(), "doi", null, 0, 1, ArticleType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getArticleType_Url(), theXMLTypePackage.getString(), "url", null, 0, 1, ArticleType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(bibTeXMLEntriesClassEClass, BibTeXMLEntriesClass.class, "BibTeXMLEntriesClass", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getBibTeXMLEntriesClass_Article(), this.getArticleType(), null, "article", null, 0, 1, BibTeXMLEntriesClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2944,6 +3246,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         initEAttribute(getBookletType_Note(), theXMLTypePackage.getString(), "note", null, 0, 1, BookletType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getBookletType_Key(), theXMLTypePackage.getString(), "key", null, 0, 1, BookletType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getBookletType_Crossref(), theXMLTypePackage.getString(), "crossref", null, 0, 1, BookletType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getBookletType_Doi(), theXMLTypePackage.getString(), "doi", null, 0, 1, BookletType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getBookletType_Url(), theXMLTypePackage.getString(), "url", null, 0, 1, BookletType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(bookTypeEClass, BookType.class, "BookType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getBookType_Author(), theXMLTypePackage.getString(), "author", null, 0, 1, BookType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2960,6 +3264,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         initEAttribute(getBookType_Note(), theXMLTypePackage.getString(), "note", null, 0, 1, BookType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getBookType_Key(), theXMLTypePackage.getString(), "key", null, 0, 1, BookType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getBookType_Crossref(), theXMLTypePackage.getString(), "crossref", null, 0, 1, BookType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getBookType_Doi(), theXMLTypePackage.getString(), "doi", null, 0, 1, BookType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getBookType_Url(), theXMLTypePackage.getString(), "url", null, 0, 1, BookType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(conferenceTypeEClass, ConferenceType.class, "ConferenceType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getConferenceType_Author(), theXMLTypePackage.getString(), "author", null, 1, 1, ConferenceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2978,6 +3284,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         initEAttribute(getConferenceType_Note(), theXMLTypePackage.getString(), "note", null, 0, 1, ConferenceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getConferenceType_Key(), theXMLTypePackage.getString(), "key", null, 0, 1, ConferenceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getConferenceType_Crossref(), theXMLTypePackage.getString(), "crossref", null, 0, 1, ConferenceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getConferenceType_Doi(), theXMLTypePackage.getString(), "doi", null, 0, 1, ConferenceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getConferenceType_Url(), theXMLTypePackage.getString(), "url", null, 0, 1, ConferenceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(documentRootEClass, DocumentRoot.class, "DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getDocumentRoot_Mixed(), ecorePackage.getEFeatureMapEntry(), "mixed", null, 0, -1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2993,6 +3301,7 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         initEAttribute(getDocumentRoot_Chapter(), theXMLTypePackage.getPositiveInteger(), "chapter", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
         initEReference(getDocumentRoot_Conference(), this.getConferenceType(), null, "conference", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
         initEAttribute(getDocumentRoot_Crossref(), theXMLTypePackage.getString(), "crossref", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDocumentRoot_Doi(), theXMLTypePackage.getString(), "doi", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
         initEAttribute(getDocumentRoot_Edition(), this.getEditionType(), "edition", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
         initEAttribute(getDocumentRoot_Editor(), theXMLTypePackage.getString(), "editor", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
         initEReference(getDocumentRoot_Entry(), this.getEntryType(), null, "entry", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
@@ -3021,6 +3330,7 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         initEAttribute(getDocumentRoot_Title(), theXMLTypePackage.getString(), "title", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
         initEAttribute(getDocumentRoot_Type(), theXMLTypePackage.getString(), "type", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
         initEReference(getDocumentRoot_Unpublished(), this.getUnpublishedType(), null, "unpublished", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDocumentRoot_Url(), theXMLTypePackage.getString(), "url", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
         initEAttribute(getDocumentRoot_Volume(), theXMLTypePackage.getString(), "volume", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
         initEAttribute(getDocumentRoot_Year(), theXMLTypePackage.getGYear(), "year", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
@@ -3049,6 +3359,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         initEAttribute(getInbookType_Note(), theXMLTypePackage.getString(), "note", null, 0, 1, InbookType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getInbookType_Key(), theXMLTypePackage.getString(), "key", null, 0, 1, InbookType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getInbookType_Crossref(), theXMLTypePackage.getString(), "crossref", null, 0, 1, InbookType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getInbookType_Doi(), theXMLTypePackage.getString(), "doi", null, 0, 1, InbookType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getInbookType_Url(), theXMLTypePackage.getString(), "url", null, 0, 1, InbookType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(incollectionTypeEClass, IncollectionType.class, "IncollectionType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getIncollectionType_Author(), theXMLTypePackage.getString(), "author", null, 1, 1, IncollectionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3069,6 +3381,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         initEAttribute(getIncollectionType_Note(), theXMLTypePackage.getString(), "note", null, 0, 1, IncollectionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIncollectionType_Key(), theXMLTypePackage.getString(), "key", null, 0, 1, IncollectionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIncollectionType_Crossref(), theXMLTypePackage.getString(), "crossref", null, 0, 1, IncollectionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getIncollectionType_Doi(), theXMLTypePackage.getString(), "doi", null, 0, 1, IncollectionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getIncollectionType_Url(), theXMLTypePackage.getString(), "url", null, 0, 1, IncollectionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(inproceedingsTypeEClass, InproceedingsType.class, "InproceedingsType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getInproceedingsType_Author(), theXMLTypePackage.getString(), "author", null, 1, 1, InproceedingsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3087,6 +3401,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         initEAttribute(getInproceedingsType_Note(), theXMLTypePackage.getString(), "note", null, 0, 1, InproceedingsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getInproceedingsType_Key(), theXMLTypePackage.getString(), "key", null, 0, 1, InproceedingsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getInproceedingsType_Crossref(), theXMLTypePackage.getString(), "crossref", null, 0, 1, InproceedingsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getInproceedingsType_Doi(), theXMLTypePackage.getString(), "doi", null, 0, 1, InproceedingsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getInproceedingsType_Url(), theXMLTypePackage.getString(), "url", null, 0, 1, InproceedingsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(manualTypeEClass, ManualType.class, "ManualType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getManualType_Author(), theXMLTypePackage.getString(), "author", null, 0, 1, ManualType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3099,6 +3415,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         initEAttribute(getManualType_Note(), theXMLTypePackage.getString(), "note", null, 0, 1, ManualType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getManualType_Key(), theXMLTypePackage.getString(), "key", null, 0, 1, ManualType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getManualType_Crossref(), theXMLTypePackage.getString(), "crossref", null, 0, 1, ManualType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getManualType_Doi(), theXMLTypePackage.getString(), "doi", null, 0, 1, ManualType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getManualType_Url(), theXMLTypePackage.getString(), "url", null, 0, 1, ManualType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(mastersthesisTypeEClass, MastersthesisType.class, "MastersthesisType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getMastersthesisType_Author(), theXMLTypePackage.getString(), "author", null, 1, 1, MastersthesisType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3111,6 +3429,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         initEAttribute(getMastersthesisType_Note(), theXMLTypePackage.getString(), "note", null, 0, 1, MastersthesisType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getMastersthesisType_Key(), theXMLTypePackage.getString(), "key", null, 0, 1, MastersthesisType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getMastersthesisType_Crossref(), theXMLTypePackage.getString(), "crossref", null, 0, 1, MastersthesisType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getMastersthesisType_Doi(), theXMLTypePackage.getString(), "doi", null, 0, 1, MastersthesisType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getMastersthesisType_Url(), theXMLTypePackage.getString(), "url", null, 0, 1, MastersthesisType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(miscTypeEClass, MiscType.class, "MiscType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getMiscType_Author(), theXMLTypePackage.getString(), "author", null, 0, 1, MiscType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3121,6 +3441,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         initEAttribute(getMiscType_Note(), theXMLTypePackage.getString(), "note", null, 0, 1, MiscType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getMiscType_Key(), theXMLTypePackage.getString(), "key", null, 0, 1, MiscType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getMiscType_Crossref(), theXMLTypePackage.getString(), "crossref", null, 0, 1, MiscType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getMiscType_Doi(), theXMLTypePackage.getString(), "doi", null, 0, 1, MiscType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getMiscType_Url(), theXMLTypePackage.getString(), "url", null, 0, 1, MiscType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(phdthesisTypeEClass, PhdthesisType.class, "PhdthesisType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getPhdthesisType_Author(), theXMLTypePackage.getString(), "author", null, 1, 1, PhdthesisType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3133,6 +3455,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         initEAttribute(getPhdthesisType_Note(), theXMLTypePackage.getString(), "note", null, 0, 1, PhdthesisType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getPhdthesisType_Key(), theXMLTypePackage.getString(), "key", null, 0, 1, PhdthesisType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getPhdthesisType_Crossref(), theXMLTypePackage.getString(), "crossref", null, 0, 1, PhdthesisType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getPhdthesisType_Doi(), theXMLTypePackage.getString(), "doi", null, 0, 1, PhdthesisType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getPhdthesisType_Url(), theXMLTypePackage.getString(), "url", null, 0, 1, PhdthesisType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(proceedingsTypeEClass, ProceedingsType.class, "ProceedingsType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getProceedingsType_Editor(), theXMLTypePackage.getString(), "editor", null, 0, 1, ProceedingsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3148,6 +3472,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         initEAttribute(getProceedingsType_Note(), theXMLTypePackage.getString(), "note", null, 0, 1, ProceedingsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getProceedingsType_Key(), theXMLTypePackage.getString(), "key", null, 0, 1, ProceedingsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getProceedingsType_Crossref(), theXMLTypePackage.getString(), "crossref", null, 0, 1, ProceedingsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getProceedingsType_Doi(), theXMLTypePackage.getString(), "doi", null, 0, 1, ProceedingsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getProceedingsType_Url(), theXMLTypePackage.getString(), "url", null, 0, 1, ProceedingsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(techreportTypeEClass, TechreportType.class, "TechreportType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getTechreportType_Author(), theXMLTypePackage.getString(), "author", null, 1, 1, TechreportType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3161,6 +3487,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         initEAttribute(getTechreportType_Note(), theXMLTypePackage.getString(), "note", null, 0, 1, TechreportType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getTechreportType_Key(), theXMLTypePackage.getString(), "key", null, 0, 1, TechreportType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getTechreportType_Crossref(), theXMLTypePackage.getString(), "crossref", null, 0, 1, TechreportType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getTechreportType_Doi(), theXMLTypePackage.getString(), "doi", null, 0, 1, TechreportType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getTechreportType_Url(), theXMLTypePackage.getString(), "url", null, 0, 1, TechreportType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(unpublishedTypeEClass, UnpublishedType.class, "UnpublishedType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getUnpublishedType_Author(), theXMLTypePackage.getString(), "author", null, 1, 1, UnpublishedType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3170,6 +3498,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         initEAttribute(getUnpublishedType_Year(), theXMLTypePackage.getGYear(), "year", null, 0, 1, UnpublishedType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getUnpublishedType_Key(), theXMLTypePackage.getString(), "key", null, 0, 1, UnpublishedType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getUnpublishedType_Crossref(), theXMLTypePackage.getString(), "crossref", null, 0, 1, UnpublishedType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getUnpublishedType_Doi(), theXMLTypePackage.getString(), "doi", null, 0, 1, UnpublishedType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getUnpublishedType_Url(), theXMLTypePackage.getString(), "url", null, 0, 1, UnpublishedType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Initialize enums and add enum literals
         initEEnum(monthStringTypeEEnum, MonthStringType.class, "MonthStringType");
@@ -3301,6 +3631,22 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
            new String[] {
              "kind", "element",
              "name", "crossref",
+             "namespace", "##targetNamespace"
+           });			
+        addAnnotation
+          (getArticleType_Doi(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "doi",
+             "namespace", "##targetNamespace"
+           });			
+        addAnnotation
+          (getArticleType_Url(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "url",
              "namespace", "##targetNamespace"
            });		
         addAnnotation
@@ -3500,6 +3846,22 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
              "kind", "element",
              "name", "crossref",
              "namespace", "##targetNamespace"
+           });			
+        addAnnotation
+          (getBookletType_Doi(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "doi",
+             "namespace", "##targetNamespace"
+           });			
+        addAnnotation
+          (getBookletType_Url(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "url",
+             "namespace", "##targetNamespace"
            });		
         addAnnotation
           (bookTypeEClass, 
@@ -3618,6 +3980,22 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
            new String[] {
              "kind", "element",
              "name", "crossref",
+             "namespace", "##targetNamespace"
+           });			
+        addAnnotation
+          (getBookType_Doi(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "doi",
+             "namespace", "##targetNamespace"
+           });			
+        addAnnotation
+          (getBookType_Url(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "url",
              "namespace", "##targetNamespace"
            });		
         addAnnotation
@@ -3754,6 +4132,22 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
              "kind", "element",
              "name", "crossref",
              "namespace", "##targetNamespace"
+           });			
+        addAnnotation
+          (getConferenceType_Doi(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "doi",
+             "namespace", "##targetNamespace"
+           });			
+        addAnnotation
+          (getConferenceType_Url(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "url",
+             "namespace", "##targetNamespace"
            });		
         addAnnotation
           (documentRootEClass, 
@@ -3861,6 +4255,14 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
            new String[] {
              "kind", "element",
              "name", "crossref",
+             "namespace", "##targetNamespace"
+           });			
+        addAnnotation
+          (getDocumentRoot_Doi(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "doi",
              "namespace", "##targetNamespace"
            });			
         addAnnotation
@@ -4088,6 +4490,14 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
              "namespace", "##targetNamespace"
            });			
         addAnnotation
+          (getDocumentRoot_Url(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "url",
+             "namespace", "##targetNamespace"
+           });			
+        addAnnotation
           (getDocumentRoot_Volume(), 
            source, 
            new String[] {
@@ -4290,6 +4700,22 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
              "kind", "element",
              "name", "crossref",
              "namespace", "##targetNamespace"
+           });			
+        addAnnotation
+          (getInbookType_Doi(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "doi",
+             "namespace", "##targetNamespace"
+           });			
+        addAnnotation
+          (getInbookType_Url(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "url",
+             "namespace", "##targetNamespace"
            });		
         addAnnotation
           (incollectionTypeEClass, 
@@ -4441,6 +4867,22 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
              "kind", "element",
              "name", "crossref",
              "namespace", "##targetNamespace"
+           });			
+        addAnnotation
+          (getIncollectionType_Doi(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "doi",
+             "namespace", "##targetNamespace"
+           });			
+        addAnnotation
+          (getIncollectionType_Url(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "url",
+             "namespace", "##targetNamespace"
            });		
         addAnnotation
           (inproceedingsTypeEClass, 
@@ -4576,6 +5018,22 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
              "kind", "element",
              "name", "crossref",
              "namespace", "##targetNamespace"
+           });			
+        addAnnotation
+          (getInproceedingsType_Doi(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "doi",
+             "namespace", "##targetNamespace"
+           });			
+        addAnnotation
+          (getInproceedingsType_Url(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "url",
+             "namespace", "##targetNamespace"
            });		
         addAnnotation
           (manualTypeEClass, 
@@ -4662,6 +5120,22 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
            new String[] {
              "kind", "element",
              "name", "crossref",
+             "namespace", "##targetNamespace"
+           });			
+        addAnnotation
+          (getManualType_Doi(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "doi",
+             "namespace", "##targetNamespace"
+           });			
+        addAnnotation
+          (getManualType_Url(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "url",
              "namespace", "##targetNamespace"
            });		
         addAnnotation
@@ -4750,6 +5224,22 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
              "kind", "element",
              "name", "crossref",
              "namespace", "##targetNamespace"
+           });			
+        addAnnotation
+          (getMastersthesisType_Doi(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "doi",
+             "namespace", "##targetNamespace"
+           });			
+        addAnnotation
+          (getMastersthesisType_Url(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "url",
+             "namespace", "##targetNamespace"
            });		
         addAnnotation
           (miscTypeEClass, 
@@ -4820,6 +5310,22 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
            new String[] {
              "kind", "element",
              "name", "crossref",
+             "namespace", "##targetNamespace"
+           });			
+        addAnnotation
+          (getMiscType_Doi(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "doi",
+             "namespace", "##targetNamespace"
+           });			
+        addAnnotation
+          (getMiscType_Url(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "url",
              "namespace", "##targetNamespace"
            });		
         addAnnotation
@@ -4936,6 +5442,22 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
              "kind", "element",
              "name", "crossref",
              "namespace", "##targetNamespace"
+           });			
+        addAnnotation
+          (getPhdthesisType_Doi(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "doi",
+             "namespace", "##targetNamespace"
+           });			
+        addAnnotation
+          (getPhdthesisType_Url(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "url",
+             "namespace", "##targetNamespace"
            });		
         addAnnotation
           (proceedingsTypeEClass, 
@@ -5047,6 +5569,22 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
              "kind", "element",
              "name", "crossref",
              "namespace", "##targetNamespace"
+           });			
+        addAnnotation
+          (getProceedingsType_Doi(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "doi",
+             "namespace", "##targetNamespace"
+           });			
+        addAnnotation
+          (getProceedingsType_Url(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "url",
+             "namespace", "##targetNamespace"
            });		
         addAnnotation
           (techreportTypeEClass, 
@@ -5142,6 +5680,22 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
              "kind", "element",
              "name", "crossref",
              "namespace", "##targetNamespace"
+           });			
+        addAnnotation
+          (getTechreportType_Doi(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "doi",
+             "namespace", "##targetNamespace"
+           });			
+        addAnnotation
+          (getTechreportType_Url(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "url",
+             "namespace", "##targetNamespace"
            });		
         addAnnotation
           (unpublishedTypeEClass, 
@@ -5204,6 +5758,22 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
            new String[] {
              "kind", "element",
              "name", "crossref",
+             "namespace", "##targetNamespace"
+           });			
+        addAnnotation
+          (getUnpublishedType_Doi(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "doi",
+             "namespace", "##targetNamespace"
+           });			
+        addAnnotation
+          (getUnpublishedType_Url(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "url",
              "namespace", "##targetNamespace"
            });
     }

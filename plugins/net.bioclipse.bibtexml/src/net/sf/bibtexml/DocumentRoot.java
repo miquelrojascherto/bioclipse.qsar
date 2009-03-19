@@ -37,6 +37,7 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  *   <li>{@link net.sf.bibtexml.DocumentRoot#getChapter <em>Chapter</em>}</li>
  *   <li>{@link net.sf.bibtexml.DocumentRoot#getConference <em>Conference</em>}</li>
  *   <li>{@link net.sf.bibtexml.DocumentRoot#getCrossref <em>Crossref</em>}</li>
+ *   <li>{@link net.sf.bibtexml.DocumentRoot#getDoi <em>Doi</em>}</li>
  *   <li>{@link net.sf.bibtexml.DocumentRoot#getEdition <em>Edition</em>}</li>
  *   <li>{@link net.sf.bibtexml.DocumentRoot#getEditor <em>Editor</em>}</li>
  *   <li>{@link net.sf.bibtexml.DocumentRoot#getEntry <em>Entry</em>}</li>
@@ -65,6 +66,7 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  *   <li>{@link net.sf.bibtexml.DocumentRoot#getTitle <em>Title</em>}</li>
  *   <li>{@link net.sf.bibtexml.DocumentRoot#getType <em>Type</em>}</li>
  *   <li>{@link net.sf.bibtexml.DocumentRoot#getUnpublished <em>Unpublished</em>}</li>
+ *   <li>{@link net.sf.bibtexml.DocumentRoot#getUrl <em>Url</em>}</li>
  *   <li>{@link net.sf.bibtexml.DocumentRoot#getVolume <em>Volume</em>}</li>
  *   <li>{@link net.sf.bibtexml.DocumentRoot#getYear <em>Year</em>}</li>
  * </ul>
@@ -416,6 +418,34 @@ public interface DocumentRoot extends EObject {
      * @generated
      */
     void setCrossref(String value);
+
+    /**
+     * Returns the value of the '<em><b>Doi</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * 
+     * [DOI] The work's Digital Object Identifier.
+     *       
+     * <!-- end-model-doc -->
+     * @return the value of the '<em>Doi</em>' attribute.
+     * @see #setDoi(String)
+     * @see net.sf.bibtexml.BibtexmlPackage#getDocumentRoot_Doi()
+     * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" upper="-2" transient="true" volatile="true" derived="true"
+     *        extendedMetaData="kind='element' name='doi' namespace='##targetNamespace'"
+     * @generated
+     */
+    String getDoi();
+
+    /**
+     * Sets the value of the '{@link net.sf.bibtexml.DocumentRoot#getDoi <em>Doi</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Doi</em>' attribute.
+     * @see #getDoi()
+     * @generated
+     */
+    void setDoi(String value);
 
     /**
      * Returns the value of the '<em><b>Edition</b></em>' attribute.
@@ -1215,6 +1245,34 @@ public interface DocumentRoot extends EObject {
      * @generated
      */
     void setUnpublished(UnpublishedType value);
+
+    /**
+     * Returns the value of the '<em><b>Url</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * 
+     * [URL] The work's Universal Resource Locator.
+     *       
+     * <!-- end-model-doc -->
+     * @return the value of the '<em>Url</em>' attribute.
+     * @see #setUrl(String)
+     * @see net.sf.bibtexml.BibtexmlPackage#getDocumentRoot_Url()
+     * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String" upper="-2" transient="true" volatile="true" derived="true"
+     *        extendedMetaData="kind='element' name='url' namespace='##targetNamespace'"
+     * @generated
+     */
+    String getUrl();
+
+    /**
+     * Sets the value of the '{@link net.sf.bibtexml.DocumentRoot#getUrl <em>Url</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Url</em>' attribute.
+     * @see #getUrl()
+     * @generated
+     */
+    void setUrl(String value);
 
     /**
      * Returns the value of the '<em><b>Volume</b></em>' attribute.
