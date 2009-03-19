@@ -602,6 +602,7 @@ Fields from the standard bibliography styles.
         <element ref="bibtex:type" />
         <element ref="bibtex:volume" />
         <element ref="bibtex:year" />
+        <element ref="bibtex:doi" />
       </choice>
     </sequence>
   </group>
@@ -780,6 +781,13 @@ Fields from the standard bibliography styles.
     <annotation>
       <documentation xml:lang="en">
 [title] The work's title, typed as explained in the LaTeX book.
+      </documentation>
+    </annotation>
+  </element>
+  <element name="doi" type="string">
+    <annotation>
+      <documentation xml:lang="en">
+[DOI] The work's Digital Object Identifier.
       </documentation>
     </annotation>
   </element>
