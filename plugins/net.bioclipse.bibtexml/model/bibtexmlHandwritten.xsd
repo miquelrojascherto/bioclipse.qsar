@@ -111,6 +111,8 @@
   <sequence>
     <element minOccurs="0" ref="bibtex:key" />
     <element minOccurs="0" ref="bibtex:crossref" />
+    <element minOccurs="0" ref="bibtex:doi" />
+    <element minOccurs="0" ref="bibtex:url" />
   </sequence>
 </group>
 
@@ -602,6 +604,7 @@ Fields from the standard bibliography styles.
         <element ref="bibtex:type" />
         <element ref="bibtex:volume" />
         <element ref="bibtex:year" />
+        <element ref="bibtex:url" />
         <element ref="bibtex:doi" />
       </choice>
     </sequence>
@@ -838,6 +841,13 @@ Fields from the standard bibliography styles.
     @INPROCEEDINGS(no-gnats,
         crossref = "gg-proceedings",
     @PROCEEDINGS(gg-proceedings,
+      </documentation>
+    </annotation>
+  </element>
+  <element name="url" type="string">
+    <annotation>
+      <documentation xml:lang="en">
+[URL] The work's Universal Resource Locator.
       </documentation>
     </annotation>
   </element>
