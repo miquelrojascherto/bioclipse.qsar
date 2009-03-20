@@ -15,8 +15,10 @@ import java.util.Collection;
 import java.util.List;
 
 import net.bioclipse.qsar.MetadataType;
-import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
+
+import net.sf.bibtexml.BibtexmlFactory;
+
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -292,7 +294,7 @@ public class MetadataTypeItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (QsarPackage.Literals.METADATA_TYPE__REFERENCE,
-                 QsarFactory.eINSTANCE.createReferenceType()));
+                 BibtexmlFactory.eINSTANCE.createBibTeXMLEntriesClass()));
     }
 
     /**

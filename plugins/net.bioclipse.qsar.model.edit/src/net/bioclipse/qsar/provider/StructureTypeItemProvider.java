@@ -17,6 +17,7 @@ import java.util.List;
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.StructureType;
 
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
@@ -107,50 +108,6 @@ public class StructureTypeItemProvider
     }
 
     /**
-     * This adds a property descriptor for the Resourceindex feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addResourceindexPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_StructureType_resourceindex_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_StructureType_resourceindex_feature", "_UI_StructureType_type"),
-                 QsarPackage.Literals.STRUCTURE_TYPE__RESOURCEINDEX,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
-                 null,
-                 null));
-    }
-
-    /**
-     * This adds a property descriptor for the Resourceid feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addResourceidPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_StructureType_resourceid_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_StructureType_resourceid_feature", "_UI_StructureType_type"),
-                 QsarPackage.Literals.STRUCTURE_TYPE__RESOURCEID,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-                 null,
-                 null));
-    }
-
-    /**
      * This adds a property descriptor for the Id feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -190,6 +147,50 @@ public class StructureTypeItemProvider
                  false,
                  false,
                  ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the Resourceid feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addResourceidPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_StructureType_resourceid_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_StructureType_resourceid_feature", "_UI_StructureType_type"),
+                 QsarPackage.Literals.STRUCTURE_TYPE__RESOURCEID,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the Resourceindex feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addResourceindexPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_StructureType_resourceindex_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_StructureType_resourceindex_feature", "_UI_StructureType_type"),
+                 QsarPackage.Literals.STRUCTURE_TYPE__RESOURCEINDEX,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
                  null,
                  null));
     }

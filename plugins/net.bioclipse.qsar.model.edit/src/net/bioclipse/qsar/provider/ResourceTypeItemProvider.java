@@ -18,6 +18,7 @@ import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.ResourceType;
 
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
@@ -85,54 +86,11 @@ public class ResourceTypeItemProvider
             addNamePropertyDescriptor(object);
             addNo2dPropertyDescriptor(object);
             addNo3dPropertyDescriptor(object);
+            addNoMolsPropertyDescriptor(object);
             addTypePropertyDescriptor(object);
             addURLPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
-    }
-
-    /**
-     * This adds a property descriptor for the URL feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addURLPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_ResourceType_uRL_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ResourceType_uRL_feature", "_UI_ResourceType_type"),
-                 QsarPackage.Literals.RESOURCE_TYPE__URL,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-                 null,
-                 null));
-    }
-
-    /**
-     * This adds a property descriptor for the File feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addFilePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_ResourceType_file_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ResourceType_file_feature", "_UI_ResourceType_type"),
-                 QsarPackage.Literals.RESOURCE_TYPE__FILE,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-                 null,
-                 null));
     }
 
     /**
@@ -175,6 +133,28 @@ public class ResourceTypeItemProvider
                  false,
                  false,
                  ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the File feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addFilePropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_ResourceType_file_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_ResourceType_file_feature", "_UI_ResourceType_type"),
+                 QsarPackage.Literals.RESOURCE_TYPE__FILE,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
                  null,
                  null));
     }
@@ -268,6 +248,28 @@ public class ResourceTypeItemProvider
     }
 
     /**
+     * This adds a property descriptor for the No Mols feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addNoMolsPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_ResourceType_noMols_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_ResourceType_noMols_feature", "_UI_ResourceType_type"),
+                 QsarPackage.Literals.RESOURCE_TYPE__NO_MOLS,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
      * This adds a property descriptor for the Type feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -281,6 +283,28 @@ public class ResourceTypeItemProvider
                  getString("_UI_ResourceType_type_feature"),
                  getString("_UI_PropertyDescriptor_description", "_UI_ResourceType_type_feature", "_UI_ResourceType_type"),
                  QsarPackage.Literals.RESOURCE_TYPE__TYPE,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the URL feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addURLPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_ResourceType_uRL_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_ResourceType_uRL_feature", "_UI_ResourceType_type"),
+                 QsarPackage.Literals.RESOURCE_TYPE__URL,
                  true,
                  false,
                  false,
@@ -363,6 +387,7 @@ public class ResourceTypeItemProvider
             case QsarPackage.RESOURCE_TYPE__NAME:
             case QsarPackage.RESOURCE_TYPE__NO2D:
             case QsarPackage.RESOURCE_TYPE__NO3D:
+            case QsarPackage.RESOURCE_TYPE__NO_MOLS:
             case QsarPackage.RESOURCE_TYPE__TYPE:
             case QsarPackage.RESOURCE_TYPE__URL:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));

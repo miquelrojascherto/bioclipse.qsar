@@ -294,29 +294,6 @@ public class QsarItemProviderAdapterFactory extends QsarAdapterFactory implement
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.ReferenceType} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected ReferenceTypeItemProvider referenceTypeItemProvider;
-
-    /**
-     * This creates an adapter for a {@link net.bioclipse.qsar.ReferenceType}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createReferenceTypeAdapter() {
-        if (referenceTypeItemProvider == null) {
-            referenceTypeItemProvider = new ReferenceTypeItemProvider(this);
-        }
-
-        return referenceTypeItemProvider;
-    }
-
-    /**
      * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.ResourceType} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -562,7 +539,6 @@ public class QsarItemProviderAdapterFactory extends QsarAdapterFactory implement
         if (preprocessingStepTypeItemProvider != null) preprocessingStepTypeItemProvider.dispose();
         if (preprocessingTypeItemProvider != null) preprocessingTypeItemProvider.dispose();
         if (qsarTypeItemProvider != null) qsarTypeItemProvider.dispose();
-        if (referenceTypeItemProvider != null) referenceTypeItemProvider.dispose();
         if (resourceTypeItemProvider != null) resourceTypeItemProvider.dispose();
         if (responsesListTypeItemProvider != null) responsesListTypeItemProvider.dispose();
         if (responseTypeItemProvider != null) responseTypeItemProvider.dispose();
