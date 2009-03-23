@@ -82,7 +82,7 @@
   </sequence>
 </complexType>
 <element name="entry">
-  <complexType>
+  <complexType id="entryType">
     <complexContent>
       <extension base="bibtex:BibTeXML.entries.class">
         <attributeGroup ref="bibtex:attlist.entry" />
