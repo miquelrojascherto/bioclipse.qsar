@@ -81,14 +81,16 @@
     <group ref="bibtex:BibTeXML.standard.entries.class" minOccurs="0" />
   </sequence>
 </complexType>
-<element name="entry">
-  <complexType id="entryType">
-    <complexContent>
-      <extension base="bibtex:BibTeXML.entries.class">
-        <attributeGroup ref="bibtex:attlist.entry" />
-      </extension>
-    </complexContent>
-  </complexType>
+
+<complexType name="BibTeXML.entryType">
+  <complexContent>
+    <extension base="bibtex:BibTeXML.entries.class">
+      <attributeGroup ref="bibtex:attlist.entry" />
+    </extension>
+  </complexContent>
+</complexType>
+
+<element name="entry" type="bibtex:BibTeXML.entryType">
 </element>
 <attributeGroup name="attlist.entry">
   <attribute name="id" use="required" type="ID" />
