@@ -8,6 +8,7 @@ import net.bioclipse.qsar.descriptor.model.BaseEPObject;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
 import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
+import net.bioclipse.qsar.ui.Activator;
 
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
@@ -34,7 +35,6 @@ public class DescriptorLabelProvider implements ITableLabelProvider, ILabelProvi
 //			return desc;
 //		}
 		
-		/*
 		else if (element instanceof DescriptorType) {
 			if (desc==null) desc= Activator.getImageDescriptor(
 					"icons/descriptor.png").createImage();
@@ -51,13 +51,13 @@ public class DescriptorLabelProvider implements ITableLabelProvider, ILabelProvi
 				if (desc==null) desc= Activator.getImageDescriptor(
 						"icons/descriptor.png").createImage();
 				return desc;
-			}*/
+			}
 
 			else if (element instanceof BaseEPObject) {
 				BaseEPObject epobj = (BaseEPObject) element;
 				return epobj.getIcon();
 			}
-//		}
+		}
 		return null;
 	}
 

@@ -481,10 +481,12 @@ private Table paramsTable;
 			dprov.setId(newdprov.getId());
 			
 		}
+		
+		modelDescriptor.setProvider( dprov.getId() );
 
 		//Add found impl to descriptor element
-		cmd=SetCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__PROVIDER, dprov);
-		cCmd.append(cmd);
+//		cmd=SetCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__PROVIDER, dprov.getId());
+//		cCmd.append(cmd);
 
 		//Parameters
 		if (impl.getParameters()!=null){
