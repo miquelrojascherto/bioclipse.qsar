@@ -891,51 +891,18 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
      */
     protected void deleteSelectedMolecules() {
 
-
         IStructuredSelection ssel=(IStructuredSelection) molViewer.getSelection();
         if (ssel == null) {
             showMessage("Please select a molecule to remove");
             return;
         }
 
-        for (Object obj : ssel.toList()){
-            if (!(obj instanceof ResourceType)) {
-                //Should not happen
-                logger.error("A non-MoleculeResource selected in MolViewer: " + obj);
-                return;
-            }
-
-            ResourceType molres=(ResourceType)obj;
-
-            CompoundCommand ccmd=new CompoundCommand();
-
-            //First, remove any responses for this moleculeresource
-            if (qsarModel.getResponselist()!=null && qsarModel.getResponselist().getResponse().size()>0)
-                for (ResponseType response : qsarModel.getResponselist().getResponse()){
-                    if (response.getStructureID().equalsIgnoreCase(molres.getId())){
-
-                        //Schedule this response for removal
-                        Command cmd=RemoveCommand.create(editingDomain, 
-                                                         qsarModel.getResponselist(), QsarPackage.Literals.
-                                                         RESPONSES_LIST_TYPE__RESPONSE, response);
-                        ccmd.append(cmd);
-                    }
-                }
-
-
-            Command cmd=RemoveCommand.create(editingDomain, 
-                                             structList, QsarPackage.Literals.STRUCTURELIST_TYPE__RESOURCES, molres);
-            ccmd.append(cmd);
-
-            //Execute all commands
-            editingDomain.getCommandStack().execute(ccmd);
-
-        }
+        qsar.removeResourcesFromModel(qsarModel, editingDomain, ssel.toList());
 
         molViewer.refresh();
-
     }
 
+    
     private void showMessage(String message) {
         MessageDialog.openInformation( getSite().getShell(),
                                        "Information",
