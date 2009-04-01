@@ -73,7 +73,7 @@ public class DescriptorTypeImpl extends EObjectImpl implements DescriptorType {
      * @generated
      * @ordered
      */
-    protected static final boolean CHANGED_EDEFAULT = false;
+    protected static final boolean CHANGED_EDEFAULT = true;
 
     /**
      * The cached value of the '{@link #isChanged() <em>Changed</em>}' attribute.

@@ -94,7 +94,7 @@
 		<attribute name="namespace" type="string"></attribute>
 		<attribute name="provider" type="string"></attribute>
 		<attribute ecore:transient="true" name="changed" type="boolean"
-			default="false">
+			default="true">
 		</attribute>
 	</complexType>
 
@@ -154,7 +154,7 @@
 		<attribute name="resourceindex" type="int"></attribute>
 		<attribute name="resourceid" type="string"></attribute>
 		<attribute ecore:transient="true" name="changed" type="boolean"
-			default="false">
+			default="true">
 		</attribute>
 	</complexType>
 

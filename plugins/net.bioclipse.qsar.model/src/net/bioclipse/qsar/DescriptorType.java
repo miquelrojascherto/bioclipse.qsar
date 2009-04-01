@@ -61,7 +61,7 @@ public interface DescriptorType extends EObject {
 
     /**
      * Returns the value of the '<em><b>Changed</b></em>' attribute.
-     * The default value is <code>"false"</code>.
+     * The default value is <code>"true"</code>.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Changed</em>' attribute isn't clear,
@@ -73,7 +73,7 @@ public interface DescriptorType extends EObject {
      * @see #unsetChanged()
      * @see #setChanged(boolean)
      * @see net.bioclipse.qsar.QsarPackage#getDescriptorType_Changed()
-     * @model default="false" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean" transient="true"
+     * @model default="true" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean" transient="true"
      *        extendedMetaData="kind='attribute' name='changed'"
      * @generated
      */

@@ -1141,7 +1141,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 
         initEClass(descriptorTypeEClass, DescriptorType.class, "DescriptorType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getDescriptorType_Parameter(), this.getParameterType(), null, "parameter", null, 0, -1, DescriptorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getDescriptorType_Changed(), theXMLTypePackage.getBoolean(), "changed", "false", 0, 1, DescriptorType.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDescriptorType_Changed(), theXMLTypePackage.getBoolean(), "changed", "true", 0, 1, DescriptorType.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDescriptorType_Id(), theXMLTypePackage.getString(), "id", null, 1, 1, DescriptorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDescriptorType_Namespace(), theXMLTypePackage.getString(), "namespace", null, 0, 1, DescriptorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDescriptorType_Provider(), theXMLTypePackage.getString(), "provider", null, 0, 1, DescriptorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1216,7 +1216,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
         initEReference(getStructurelistType_Resources(), this.getResourceType(), null, "resources", null, 0, -1, StructurelistType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(structureTypeEClass, StructureType.class, "StructureType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getStructureType_Changed(), theXMLTypePackage.getBoolean(), "changed", "false", 0, 1, StructureType.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getStructureType_Changed(), theXMLTypePackage.getBoolean(), "changed", "true", 0, 1, StructureType.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getStructureType_Id(), theXMLTypePackage.getString(), "id", null, 0, 1, StructureType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getStructureType_Inchi(), theXMLTypePackage.getString(), "inchi", null, 0, 1, StructureType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getStructureType_Resourceid(), theXMLTypePackage.getString(), "resourceid", null, 0, 1, StructureType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
