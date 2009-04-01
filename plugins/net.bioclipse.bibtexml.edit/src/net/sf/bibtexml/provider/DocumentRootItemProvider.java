@@ -835,7 +835,7 @@ public class DocumentRootItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (BibtexmlPackage.Literals.DOCUMENT_ROOT__ENTRY,
-                 BibtexmlFactory.eINSTANCE.createEntryType()));
+                 BibtexmlFactory.eINSTANCE.createBibTeXMLEntryType()));
 
         newChildDescriptors.add
             (createChildParameter

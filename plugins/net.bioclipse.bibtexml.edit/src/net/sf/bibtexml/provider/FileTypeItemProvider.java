@@ -154,7 +154,7 @@ public class FileTypeItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (BibtexmlPackage.Literals.FILE_TYPE__ENTRY,
-                 BibtexmlFactory.eINSTANCE.createEntryType()));
+                 BibtexmlFactory.eINSTANCE.createBibTeXMLEntryType()));
     }
 
     /**

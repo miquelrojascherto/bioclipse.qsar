@@ -122,6 +122,29 @@ public class BibtexmlItemProviderAdapterFactory extends BibtexmlAdapterFactory i
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link net.sf.bibtexml.BibTeXMLEntryType} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected BibTeXMLEntryTypeItemProvider bibTeXMLEntryTypeItemProvider;
+
+    /**
+     * This creates an adapter for a {@link net.sf.bibtexml.BibTeXMLEntryType}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createBibTeXMLEntryTypeAdapter() {
+        if (bibTeXMLEntryTypeItemProvider == null) {
+            bibTeXMLEntryTypeItemProvider = new BibTeXMLEntryTypeItemProvider(this);
+        }
+
+        return bibTeXMLEntryTypeItemProvider;
+    }
+
+    /**
      * This keeps track of the one adapter used for all {@link net.sf.bibtexml.BookletType} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -211,29 +234,6 @@ public class BibtexmlItemProviderAdapterFactory extends BibtexmlAdapterFactory i
         }
 
         return documentRootItemProvider;
-    }
-
-    /**
-     * This keeps track of the one adapter used for all {@link net.sf.bibtexml.EntryType} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected EntryTypeItemProvider entryTypeItemProvider;
-
-    /**
-     * This creates an adapter for a {@link net.sf.bibtexml.EntryType}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createEntryTypeAdapter() {
-        if (entryTypeItemProvider == null) {
-            entryTypeItemProvider = new EntryTypeItemProvider(this);
-        }
-
-        return entryTypeItemProvider;
     }
 
     /**
@@ -590,11 +590,11 @@ public class BibtexmlItemProviderAdapterFactory extends BibtexmlAdapterFactory i
     public void dispose() {
         if (articleTypeItemProvider != null) articleTypeItemProvider.dispose();
         if (bibTeXMLEntriesClassItemProvider != null) bibTeXMLEntriesClassItemProvider.dispose();
+        if (bibTeXMLEntryTypeItemProvider != null) bibTeXMLEntryTypeItemProvider.dispose();
         if (bookletTypeItemProvider != null) bookletTypeItemProvider.dispose();
         if (bookTypeItemProvider != null) bookTypeItemProvider.dispose();
         if (conferenceTypeItemProvider != null) conferenceTypeItemProvider.dispose();
         if (documentRootItemProvider != null) documentRootItemProvider.dispose();
-        if (entryTypeItemProvider != null) entryTypeItemProvider.dispose();
         if (fileTypeItemProvider != null) fileTypeItemProvider.dispose();
         if (inbookTypeItemProvider != null) inbookTypeItemProvider.dispose();
         if (incollectionTypeItemProvider != null) incollectionTypeItemProvider.dispose();

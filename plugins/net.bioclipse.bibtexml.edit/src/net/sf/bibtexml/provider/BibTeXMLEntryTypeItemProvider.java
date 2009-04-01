@@ -10,8 +10,8 @@ package net.sf.bibtexml.provider;
 import java.util.Collection;
 import java.util.List;
 
+import net.sf.bibtexml.BibTeXMLEntryType;
 import net.sf.bibtexml.BibtexmlPackage;
-import net.sf.bibtexml.EntryType;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -27,12 +27,12 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link net.sf.bibtexml.EntryType} object.
+ * This is the item provider adapter for a {@link net.sf.bibtexml.BibTeXMLEntryType} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class EntryTypeItemProvider
+public class BibTeXMLEntryTypeItemProvider
     extends BibTeXMLEntriesClassItemProvider
     implements
         IEditingDomainItemProvider,
@@ -46,7 +46,7 @@ public class EntryTypeItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    public EntryTypeItemProvider(AdapterFactory adapterFactory) {
+    public BibTeXMLEntryTypeItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -77,9 +77,9 @@ public class EntryTypeItemProvider
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_EntryType_id_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_EntryType_id_feature", "_UI_EntryType_type"),
-                 BibtexmlPackage.Literals.ENTRY_TYPE__ID,
+                 getString("_UI_BibTeXMLEntryType_id_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_BibTeXMLEntryType_id_feature", "_UI_BibTeXMLEntryType_type"),
+                 BibtexmlPackage.Literals.BIB_TE_XML_ENTRY_TYPE__ID,
                  true,
                  false,
                  false,
@@ -89,14 +89,14 @@ public class EntryTypeItemProvider
     }
 
     /**
-     * This returns EntryType.gif.
+     * This returns BibTeXMLEntryType.gif.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/EntryType"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/BibTeXMLEntryType"));
     }
 
     /**
@@ -107,10 +107,10 @@ public class EntryTypeItemProvider
      */
     @Override
     public String getText(Object object) {
-        String label = ((EntryType)object).getId();
+        String label = ((BibTeXMLEntryType)object).getId();
         return label == null || label.length() == 0 ?
-            getString("_UI_EntryType_type") :
-            getString("_UI_EntryType_type") + " " + label;
+            getString("_UI_BibTeXMLEntryType_type") :
+            getString("_UI_BibTeXMLEntryType_type") + " " + label;
     }
 
     /**
@@ -124,8 +124,8 @@ public class EntryTypeItemProvider
     public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
-        switch (notification.getFeatureID(EntryType.class)) {
-            case BibtexmlPackage.ENTRY_TYPE__ID:
+        switch (notification.getFeatureID(BibTeXMLEntryType.class)) {
+            case BibtexmlPackage.BIB_TE_XML_ENTRY_TYPE__ID:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
         }
