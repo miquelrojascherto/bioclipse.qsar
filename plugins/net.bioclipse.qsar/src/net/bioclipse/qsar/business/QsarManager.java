@@ -11,6 +11,7 @@
  ******************************************************************************/
 package net.bioclipse.qsar.business;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -61,6 +63,7 @@ import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
 import net.bioclipse.qsar.ResourceType;
+import net.bioclipse.qsar.ResponseType;
 import net.bioclipse.qsar.StructureType;
 import net.bioclipse.qsar.StructurelistType;
 import net.bioclipse.qsar.descriptor.IDescriptorCalculator;
@@ -1041,6 +1044,10 @@ public class QsarManager implements IQsarManager{
         StructurelistType structList = qsarmodel.getStructurelist();
         CompoundCommand ccmd=new CompoundCommand();
 
+        //Intermediate storage to keep track of what we have added, 
+        //in order to get unique structureIds
+        List<String> storedStructureIDs=new ArrayList<String>();
+
         for (IResource resource : resourcesToAdd){
 
             if (resource instanceof IFile) {
@@ -1060,7 +1067,7 @@ public class QsarManager implements IQsarManager{
                 if (mollist==null || mollist.size()<=0){
                     throw new BioclipseException("No molecules in file");
                 }
-                
+
                 //Count no of 2D and 3D
                 int no2d=0;
                 int no3d=0;
@@ -1070,7 +1077,7 @@ public class QsarManager implements IQsarManager{
                     if (cdk.has3d( mol ))
                         no3d++;
                 }
-                
+
                 //Add resource to QSAR model
                 ResourceType res=QsarFactory.eINSTANCE.createResourceType();
                 res.setId(file.getName());
@@ -1086,13 +1093,39 @@ public class QsarManager implements IQsarManager{
                 //Add all structures in resource as well as children to resource
                 int molindex=0;
                 for (ICDKMolecule mol : mollist){
-                    
+
                     StructureType structure=QsarFactory.eINSTANCE.createStructureType();
+
+                    if (mol.getName()!=null && mol.getName().length()>0){
+                        if (existsStructureIDInModel(qsarmodel, mol.getName())){
+                            //Use a generated structureID
+                            structure.setId( getStructureName(resource,molindex) );
+                        }else{
+                            if (storedStructureIDs.contains( mol.getName() )){
+                                //Use a generated structureID
+                                structure.setId( getStructureName(resource,molindex) );
+                            }else{
+                                //IDs should not start with _
+                                if (mol.getName().startsWith( "_" )){
+                                    //Use a generated structureID
+                                    structure.setId( getStructureName(resource,molindex) );
+                                }else{
+                                    //This id is free and can be used
+                                    structure.setId( mol.getName() );
+                                }
+                            }
+                        }
+                    }else{
+                        //Use a generated structureID
+                        structure.setId( getStructureName(resource,molindex) );
+                    }
+
+                    storedStructureIDs.add( structure.getId() );
 
                     //If text-based (currently the only supported method in Bioclipse)
                     structure.setResourceindex( molindex );
                     structure.setChanged( true );
-                    
+
                     //Calculate and add inchi to structure
                     try {
                         String inchistr=inchi.generate( mol );
@@ -1101,11 +1134,11 @@ public class QsarManager implements IQsarManager{
                         logger.error("Could not generate inchi for mol " + 
                                      molindex + " in file " + file.getName());
                     }
-                    
+
                     cmd=AddCommand.create(editingDomain, res, 
-                      QsarPackage.Literals.RESOURCE_TYPE__STRUCTURE, structure);
+                                          QsarPackage.Literals.RESOURCE_TYPE__STRUCTURE, structure);
                     ccmd.append(cmd);
-                    
+
                     molindex++;
                 }
 
@@ -1116,6 +1149,47 @@ public class QsarManager implements IQsarManager{
         editingDomain.getCommandStack().execute(ccmd);    
 
     }
+
+
+    /**
+     * Check if this newid already exists in model
+     * @param qsarmodel
+     * @param newid
+     * @return
+     */
+    private boolean existsStructureIDInModel( QsarType qsarmodel, String newid ) {
+
+        for (ResourceType res : qsarmodel.getStructurelist().getResources()){
+            for (StructureType structure : res.getStructure()){
+                if (structure.getId().equals( newid ))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+
+
+    /**
+     * This method generates a name from a resource with an index
+     * @param resource
+     * @param molindex
+     * @return
+     */
+    private String getStructureName( IResource resource, int molindex ) {
+
+        String inputname=resource.getName();
+        if (molindex<=0)
+            return inputname;
+
+        String name=inputname.substring( 0, inputname.length()-4 );
+        String ext=inputname.substring( inputname.length()-4, inputname.length() );
+        //        return name +"_"+ molindex + ext;
+        return name + ext +"-"+ molindex;
+
+    }
+
+
 
 
     /**
@@ -1140,7 +1214,7 @@ public class QsarManager implements IQsarManager{
                     if (cdk.has3d( mol ))
                         no3d++;
                 }
-                
+
                 resource.setNo2d( no2d );
                 resource.setNo3d( no3d );
                 resource.setNoMols( mols.size() );
@@ -1149,6 +1223,46 @@ public class QsarManager implements IQsarManager{
             } catch ( CoreException e ) {
             }
         }
+    }
+
+
+
+    public void removeResourcesFromModel( QsarType qsarModel,
+                                          EditingDomain editingDomain, List<ResourceType> list ) {
+
+        CompoundCommand ccmd=new CompoundCommand();
+
+
+        for (ResourceType resource : list){
+
+            //Remove this resource, will remove responses too
+            Command cmd=RemoveCommand.create(editingDomain, 
+                                             qsarModel.getStructurelist(), 
+                                             QsarPackage.Literals.STRUCTURELIST_TYPE__RESOURCES, 
+                                             resource);
+            ccmd.append(cmd);
+
+            //Also remove all responses, if any
+            if (qsarModel.getResponselist()!=null && qsarModel.getResponselist().getResponse().size()>0){
+
+                for (StructureType structure : resource.getStructure()){
+                    for (ResponseType response : qsarModel.getResponselist().getResponse()){
+                        if (response.getStructureID().equals( structure.getId() )){
+                            //Remove this response
+                            cmd=RemoveCommand.create(editingDomain, 
+                                                     qsarModel.getResponselist(), QsarPackage.Literals.
+                                                     RESPONSES_LIST_TYPE__RESPONSE, response);
+                            ccmd.append(cmd);
+                        }
+                    }
+                }
+            }
+
+        }
+
+        //Execute all commands in a batch
+        editingDomain.getCommandStack().execute(ccmd);
+
     }
 
 }

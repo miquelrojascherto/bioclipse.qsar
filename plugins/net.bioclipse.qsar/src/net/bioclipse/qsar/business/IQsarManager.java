@@ -30,6 +30,7 @@ import net.bioclipse.core.business.IBioclipseManager;
 import net.bioclipse.core.domain.IMolecule;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.QsarType;
+import net.bioclipse.qsar.ResourceType;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
@@ -137,6 +138,9 @@ public interface IQsarManager extends IBioclipseManager{
                                                            CoreException;
 
     public void addCalculatedPropertiesToQsarModel( QsarType qsarModel );
+
+    public void removeResourcesFromModel( QsarType qsarModel,
+                                          EditingDomain editingDomain, List<ResourceType> list );
 
 
 
