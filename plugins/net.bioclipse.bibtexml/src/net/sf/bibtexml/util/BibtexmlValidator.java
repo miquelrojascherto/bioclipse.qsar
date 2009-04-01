@@ -111,6 +111,8 @@ public class BibtexmlValidator extends EObjectValidator {
                 return validateArticleType((ArticleType)value, diagnostics, context);
             case BibtexmlPackage.BIB_TE_XML_ENTRIES_CLASS:
                 return validateBibTeXMLEntriesClass((BibTeXMLEntriesClass)value, diagnostics, context);
+            case BibtexmlPackage.BIB_TE_XML_ENTRY_TYPE:
+                return validateBibTeXMLEntryType((BibTeXMLEntryType)value, diagnostics, context);
             case BibtexmlPackage.BOOKLET_TYPE:
                 return validateBookletType((BookletType)value, diagnostics, context);
             case BibtexmlPackage.BOOK_TYPE:
@@ -119,8 +121,6 @@ public class BibtexmlValidator extends EObjectValidator {
                 return validateConferenceType((ConferenceType)value, diagnostics, context);
             case BibtexmlPackage.DOCUMENT_ROOT:
                 return validateDocumentRoot((DocumentRoot)value, diagnostics, context);
-            case BibtexmlPackage.ENTRY_TYPE:
-                return validateEntryType((EntryType)value, diagnostics, context);
             case BibtexmlPackage.FILE_TYPE:
                 return validateFileType((FileType)value, diagnostics, context);
             case BibtexmlPackage.INBOOK_TYPE:
@@ -181,6 +181,15 @@ public class BibtexmlValidator extends EObjectValidator {
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean validateBibTeXMLEntryType(BibTeXMLEntryType bibTeXMLEntryType, DiagnosticChain diagnostics, Map<Object, Object> context) {
+        return validate_EveryDefaultConstraint(bibTeXMLEntryType, diagnostics, context);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public boolean validateBookletType(BookletType bookletType, DiagnosticChain diagnostics, Map<Object, Object> context) {
         return validate_EveryDefaultConstraint(bookletType, diagnostics, context);
     }
@@ -210,15 +219,6 @@ public class BibtexmlValidator extends EObjectValidator {
      */
     public boolean validateDocumentRoot(DocumentRoot documentRoot, DiagnosticChain diagnostics, Map<Object, Object> context) {
         return validate_EveryDefaultConstraint(documentRoot, diagnostics, context);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public boolean validateEntryType(EntryType entryType, DiagnosticChain diagnostics, Map<Object, Object> context) {
-        return validate_EveryDefaultConstraint(entryType, diagnostics, context);
     }
 
     /**

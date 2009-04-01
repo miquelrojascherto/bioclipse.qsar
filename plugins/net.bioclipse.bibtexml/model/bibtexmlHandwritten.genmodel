@@ -56,6 +56,9 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//BibTeXMLEntriesClass/unpublished"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//BibTeXMLEntriesClass/misc"/>
     </genClasses>
+    <genClasses ecoreClass="bibtexml.ecore#//BibTeXMLEntryType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BibTeXMLEntryType/id"/>
+    </genClasses>
     <genClasses ecoreClass="bibtexml.ecore#//BookletType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookletType/author"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//BookletType/title"/>
@@ -153,9 +156,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/url"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/volume"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//DocumentRoot/year"/>
-    </genClasses>
-    <genClasses ecoreClass="bibtexml.ecore#//EntryType">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bibtexml.ecore#//EntryType/id"/>
     </genClasses>
     <genClasses ecoreClass="bibtexml.ecore#//FileType">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bibtexml.ecore#//FileType/entry"/>

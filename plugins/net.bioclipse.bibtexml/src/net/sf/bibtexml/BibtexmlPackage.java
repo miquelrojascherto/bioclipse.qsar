@@ -375,6 +375,160 @@ public interface BibtexmlPackage extends EPackage {
     int BIB_TE_XML_ENTRIES_CLASS_FEATURE_COUNT = 14;
 
     /**
+     * The meta object id for the '{@link net.sf.bibtexml.impl.BibTeXMLEntryTypeImpl <em>Bib Te XML Entry Type</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see net.sf.bibtexml.impl.BibTeXMLEntryTypeImpl
+     * @see net.sf.bibtexml.impl.BibtexmlPackageImpl#getBibTeXMLEntryType()
+     * @generated
+     */
+    int BIB_TE_XML_ENTRY_TYPE = 2;
+
+    /**
+     * The feature id for the '<em><b>Article</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BIB_TE_XML_ENTRY_TYPE__ARTICLE = BIB_TE_XML_ENTRIES_CLASS__ARTICLE;
+
+    /**
+     * The feature id for the '<em><b>Book</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BIB_TE_XML_ENTRY_TYPE__BOOK = BIB_TE_XML_ENTRIES_CLASS__BOOK;
+
+    /**
+     * The feature id for the '<em><b>Booklet</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BIB_TE_XML_ENTRY_TYPE__BOOKLET = BIB_TE_XML_ENTRIES_CLASS__BOOKLET;
+
+    /**
+     * The feature id for the '<em><b>Manual</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BIB_TE_XML_ENTRY_TYPE__MANUAL = BIB_TE_XML_ENTRIES_CLASS__MANUAL;
+
+    /**
+     * The feature id for the '<em><b>Techreport</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BIB_TE_XML_ENTRY_TYPE__TECHREPORT = BIB_TE_XML_ENTRIES_CLASS__TECHREPORT;
+
+    /**
+     * The feature id for the '<em><b>Mastersthesis</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BIB_TE_XML_ENTRY_TYPE__MASTERSTHESIS = BIB_TE_XML_ENTRIES_CLASS__MASTERSTHESIS;
+
+    /**
+     * The feature id for the '<em><b>Phdthesis</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BIB_TE_XML_ENTRY_TYPE__PHDTHESIS = BIB_TE_XML_ENTRIES_CLASS__PHDTHESIS;
+
+    /**
+     * The feature id for the '<em><b>Inbook</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BIB_TE_XML_ENTRY_TYPE__INBOOK = BIB_TE_XML_ENTRIES_CLASS__INBOOK;
+
+    /**
+     * The feature id for the '<em><b>Incollection</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BIB_TE_XML_ENTRY_TYPE__INCOLLECTION = BIB_TE_XML_ENTRIES_CLASS__INCOLLECTION;
+
+    /**
+     * The feature id for the '<em><b>Proceedings</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BIB_TE_XML_ENTRY_TYPE__PROCEEDINGS = BIB_TE_XML_ENTRIES_CLASS__PROCEEDINGS;
+
+    /**
+     * The feature id for the '<em><b>Inproceedings</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BIB_TE_XML_ENTRY_TYPE__INPROCEEDINGS = BIB_TE_XML_ENTRIES_CLASS__INPROCEEDINGS;
+
+    /**
+     * The feature id for the '<em><b>Conference</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BIB_TE_XML_ENTRY_TYPE__CONFERENCE = BIB_TE_XML_ENTRIES_CLASS__CONFERENCE;
+
+    /**
+     * The feature id for the '<em><b>Unpublished</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BIB_TE_XML_ENTRY_TYPE__UNPUBLISHED = BIB_TE_XML_ENTRIES_CLASS__UNPUBLISHED;
+
+    /**
+     * The feature id for the '<em><b>Misc</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BIB_TE_XML_ENTRY_TYPE__MISC = BIB_TE_XML_ENTRIES_CLASS__MISC;
+
+    /**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BIB_TE_XML_ENTRY_TYPE__ID = BIB_TE_XML_ENTRIES_CLASS_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Bib Te XML Entry Type</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BIB_TE_XML_ENTRY_TYPE_FEATURE_COUNT = BIB_TE_XML_ENTRIES_CLASS_FEATURE_COUNT + 1;
+
+    /**
      * The meta object id for the '{@link net.sf.bibtexml.impl.BookletTypeImpl <em>Booklet Type</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -382,7 +536,7 @@ public interface BibtexmlPackage extends EPackage {
      * @see net.sf.bibtexml.impl.BibtexmlPackageImpl#getBookletType()
      * @generated
      */
-    int BOOKLET_TYPE = 2;
+    int BOOKLET_TYPE = 3;
 
     /**
      * The feature id for the '<em><b>Author</b></em>' attribute.
@@ -500,7 +654,7 @@ public interface BibtexmlPackage extends EPackage {
      * @see net.sf.bibtexml.impl.BibtexmlPackageImpl#getBookType()
      * @generated
      */
-    int BOOK_TYPE = 3;
+    int BOOK_TYPE = 4;
 
     /**
      * The feature id for the '<em><b>Author</b></em>' attribute.
@@ -663,7 +817,7 @@ public interface BibtexmlPackage extends EPackage {
      * @see net.sf.bibtexml.impl.BibtexmlPackageImpl#getConferenceType()
      * @generated
      */
-    int CONFERENCE_TYPE = 4;
+    int CONFERENCE_TYPE = 5;
 
     /**
      * The feature id for the '<em><b>Author</b></em>' attribute.
@@ -844,7 +998,7 @@ public interface BibtexmlPackage extends EPackage {
      * @see net.sf.bibtexml.impl.BibtexmlPackageImpl#getDocumentRoot()
      * @generated
      */
-    int DOCUMENT_ROOT = 5;
+    int DOCUMENT_ROOT = 6;
 
     /**
      * The feature id for the '<em><b>Mixed</b></em>' attribute list.
@@ -1259,160 +1413,6 @@ public interface BibtexmlPackage extends EPackage {
      * @ordered
      */
     int DOCUMENT_ROOT_FEATURE_COUNT = 45;
-
-    /**
-     * The meta object id for the '{@link net.sf.bibtexml.impl.EntryTypeImpl <em>Entry Type</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see net.sf.bibtexml.impl.EntryTypeImpl
-     * @see net.sf.bibtexml.impl.BibtexmlPackageImpl#getEntryType()
-     * @generated
-     */
-    int ENTRY_TYPE = 6;
-
-    /**
-     * The feature id for the '<em><b>Article</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ENTRY_TYPE__ARTICLE = BIB_TE_XML_ENTRIES_CLASS__ARTICLE;
-
-    /**
-     * The feature id for the '<em><b>Book</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ENTRY_TYPE__BOOK = BIB_TE_XML_ENTRIES_CLASS__BOOK;
-
-    /**
-     * The feature id for the '<em><b>Booklet</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ENTRY_TYPE__BOOKLET = BIB_TE_XML_ENTRIES_CLASS__BOOKLET;
-
-    /**
-     * The feature id for the '<em><b>Manual</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ENTRY_TYPE__MANUAL = BIB_TE_XML_ENTRIES_CLASS__MANUAL;
-
-    /**
-     * The feature id for the '<em><b>Techreport</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ENTRY_TYPE__TECHREPORT = BIB_TE_XML_ENTRIES_CLASS__TECHREPORT;
-
-    /**
-     * The feature id for the '<em><b>Mastersthesis</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ENTRY_TYPE__MASTERSTHESIS = BIB_TE_XML_ENTRIES_CLASS__MASTERSTHESIS;
-
-    /**
-     * The feature id for the '<em><b>Phdthesis</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ENTRY_TYPE__PHDTHESIS = BIB_TE_XML_ENTRIES_CLASS__PHDTHESIS;
-
-    /**
-     * The feature id for the '<em><b>Inbook</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ENTRY_TYPE__INBOOK = BIB_TE_XML_ENTRIES_CLASS__INBOOK;
-
-    /**
-     * The feature id for the '<em><b>Incollection</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ENTRY_TYPE__INCOLLECTION = BIB_TE_XML_ENTRIES_CLASS__INCOLLECTION;
-
-    /**
-     * The feature id for the '<em><b>Proceedings</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ENTRY_TYPE__PROCEEDINGS = BIB_TE_XML_ENTRIES_CLASS__PROCEEDINGS;
-
-    /**
-     * The feature id for the '<em><b>Inproceedings</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ENTRY_TYPE__INPROCEEDINGS = BIB_TE_XML_ENTRIES_CLASS__INPROCEEDINGS;
-
-    /**
-     * The feature id for the '<em><b>Conference</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ENTRY_TYPE__CONFERENCE = BIB_TE_XML_ENTRIES_CLASS__CONFERENCE;
-
-    /**
-     * The feature id for the '<em><b>Unpublished</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ENTRY_TYPE__UNPUBLISHED = BIB_TE_XML_ENTRIES_CLASS__UNPUBLISHED;
-
-    /**
-     * The feature id for the '<em><b>Misc</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ENTRY_TYPE__MISC = BIB_TE_XML_ENTRIES_CLASS__MISC;
-
-    /**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ENTRY_TYPE__ID = BIB_TE_XML_ENTRIES_CLASS_FEATURE_COUNT + 0;
-
-    /**
-     * The number of structural features of the '<em>Entry Type</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ENTRY_TYPE_FEATURE_COUNT = BIB_TE_XML_ENTRIES_CLASS_FEATURE_COUNT + 1;
 
     /**
      * The meta object id for the '{@link net.sf.bibtexml.impl.FileTypeImpl <em>File Type</em>}' class.
@@ -3270,6 +3270,27 @@ public interface BibtexmlPackage extends EPackage {
     EReference getBibTeXMLEntriesClass_Misc();
 
     /**
+     * Returns the meta object for class '{@link net.sf.bibtexml.BibTeXMLEntryType <em>Bib Te XML Entry Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Bib Te XML Entry Type</em>'.
+     * @see net.sf.bibtexml.BibTeXMLEntryType
+     * @generated
+     */
+    EClass getBibTeXMLEntryType();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.sf.bibtexml.BibTeXMLEntryType#getId <em>Id</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Id</em>'.
+     * @see net.sf.bibtexml.BibTeXMLEntryType#getId()
+     * @see #getBibTeXMLEntryType()
+     * @generated
+     */
+    EAttribute getBibTeXMLEntryType_Id();
+
+    /**
      * Returns the meta object for class '{@link net.sf.bibtexml.BookletType <em>Booklet Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4298,27 +4319,6 @@ public interface BibtexmlPackage extends EPackage {
      * @generated
      */
     EAttribute getDocumentRoot_Year();
-
-    /**
-     * Returns the meta object for class '{@link net.sf.bibtexml.EntryType <em>Entry Type</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Entry Type</em>'.
-     * @see net.sf.bibtexml.EntryType
-     * @generated
-     */
-    EClass getEntryType();
-
-    /**
-     * Returns the meta object for the attribute '{@link net.sf.bibtexml.EntryType#getId <em>Id</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Id</em>'.
-     * @see net.sf.bibtexml.EntryType#getId()
-     * @see #getEntryType()
-     * @generated
-     */
-    EAttribute getEntryType_Id();
 
     /**
      * Returns the meta object for class '{@link net.sf.bibtexml.FileType <em>File Type</em>}'.
@@ -6309,6 +6309,24 @@ public interface BibtexmlPackage extends EPackage {
         EReference BIB_TE_XML_ENTRIES_CLASS__MISC = eINSTANCE.getBibTeXMLEntriesClass_Misc();
 
         /**
+         * The meta object literal for the '{@link net.sf.bibtexml.impl.BibTeXMLEntryTypeImpl <em>Bib Te XML Entry Type</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see net.sf.bibtexml.impl.BibTeXMLEntryTypeImpl
+         * @see net.sf.bibtexml.impl.BibtexmlPackageImpl#getBibTeXMLEntryType()
+         * @generated
+         */
+        EClass BIB_TE_XML_ENTRY_TYPE = eINSTANCE.getBibTeXMLEntryType();
+
+        /**
+         * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute BIB_TE_XML_ENTRY_TYPE__ID = eINSTANCE.getBibTeXMLEntryType_Id();
+
+        /**
          * The meta object literal for the '{@link net.sf.bibtexml.impl.BookletTypeImpl <em>Booklet Type</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -7067,24 +7085,6 @@ public interface BibtexmlPackage extends EPackage {
          * @generated
          */
         EAttribute DOCUMENT_ROOT__YEAR = eINSTANCE.getDocumentRoot_Year();
-
-        /**
-         * The meta object literal for the '{@link net.sf.bibtexml.impl.EntryTypeImpl <em>Entry Type</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see net.sf.bibtexml.impl.EntryTypeImpl
-         * @see net.sf.bibtexml.impl.BibtexmlPackageImpl#getEntryType()
-         * @generated
-         */
-        EClass ENTRY_TYPE = eINSTANCE.getEntryType();
-
-        /**
-         * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute ENTRY_TYPE__ID = eINSTANCE.getEntryType_Id();
 
         /**
          * The meta object literal for the '{@link net.sf.bibtexml.impl.FileTypeImpl <em>File Type</em>}' class.

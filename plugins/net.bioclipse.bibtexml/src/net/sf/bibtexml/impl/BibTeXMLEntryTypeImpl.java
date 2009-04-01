@@ -6,8 +6,8 @@
  */
 package net.sf.bibtexml.impl;
 
+import net.sf.bibtexml.BibTeXMLEntryType;
 import net.sf.bibtexml.BibtexmlPackage;
-import net.sf.bibtexml.EntryType;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -17,18 +17,18 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Entry Type</b></em>'.
+ * An implementation of the model object '<em><b>Bib Te XML Entry Type</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link net.sf.bibtexml.impl.EntryTypeImpl#getId <em>Id</em>}</li>
+ *   <li>{@link net.sf.bibtexml.impl.BibTeXMLEntryTypeImpl#getId <em>Id</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class EntryTypeImpl extends BibTeXMLEntriesClassImpl implements EntryType {
+public class BibTeXMLEntryTypeImpl extends BibTeXMLEntriesClassImpl implements BibTeXMLEntryType {
     /**
      * The default value of the '{@link #getId() <em>Id</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -54,7 +54,7 @@ public class EntryTypeImpl extends BibTeXMLEntriesClassImpl implements EntryType
      * <!-- end-user-doc -->
      * @generated
      */
-    protected EntryTypeImpl() {
+    protected BibTeXMLEntryTypeImpl() {
         super();
     }
 
@@ -65,7 +65,7 @@ public class EntryTypeImpl extends BibTeXMLEntriesClassImpl implements EntryType
      */
     @Override
     protected EClass eStaticClass() {
-        return BibtexmlPackage.Literals.ENTRY_TYPE;
+        return BibtexmlPackage.Literals.BIB_TE_XML_ENTRY_TYPE;
     }
 
     /**
@@ -86,7 +86,7 @@ public class EntryTypeImpl extends BibTeXMLEntriesClassImpl implements EntryType
         String oldId = id;
         id = newId;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, BibtexmlPackage.ENTRY_TYPE__ID, oldId, id));
+            eNotify(new ENotificationImpl(this, Notification.SET, BibtexmlPackage.BIB_TE_XML_ENTRY_TYPE__ID, oldId, id));
     }
 
     /**
@@ -97,7 +97,7 @@ public class EntryTypeImpl extends BibTeXMLEntriesClassImpl implements EntryType
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case BibtexmlPackage.ENTRY_TYPE__ID:
+            case BibtexmlPackage.BIB_TE_XML_ENTRY_TYPE__ID:
                 return getId();
         }
         return super.eGet(featureID, resolve, coreType);
@@ -111,7 +111,7 @@ public class EntryTypeImpl extends BibTeXMLEntriesClassImpl implements EntryType
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case BibtexmlPackage.ENTRY_TYPE__ID:
+            case BibtexmlPackage.BIB_TE_XML_ENTRY_TYPE__ID:
                 setId((String)newValue);
                 return;
         }
@@ -126,7 +126,7 @@ public class EntryTypeImpl extends BibTeXMLEntriesClassImpl implements EntryType
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case BibtexmlPackage.ENTRY_TYPE__ID:
+            case BibtexmlPackage.BIB_TE_XML_ENTRY_TYPE__ID:
                 setId(ID_EDEFAULT);
                 return;
         }
@@ -141,7 +141,7 @@ public class EntryTypeImpl extends BibTeXMLEntriesClassImpl implements EntryType
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case BibtexmlPackage.ENTRY_TYPE__ID:
+            case BibtexmlPackage.BIB_TE_XML_ENTRY_TYPE__ID:
                 return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
         }
         return super.eIsSet(featureID);
@@ -163,4 +163,4 @@ public class EntryTypeImpl extends BibTeXMLEntriesClassImpl implements EntryType
         return result.toString();
     }
 
-} //EntryTypeImpl
+} //BibTeXMLEntryTypeImpl

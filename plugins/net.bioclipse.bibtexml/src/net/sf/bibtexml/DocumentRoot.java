@@ -516,13 +516,13 @@ public interface DocumentRoot extends EObject {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Entry</em>' containment reference.
-     * @see #setEntry(EntryType)
+     * @see #setEntry(BibTeXMLEntryType)
      * @see net.sf.bibtexml.BibtexmlPackage#getDocumentRoot_Entry()
      * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
      *        extendedMetaData="kind='element' name='entry' namespace='##targetNamespace'"
      * @generated
      */
-    EntryType getEntry();
+    BibTeXMLEntryType getEntry();
 
     /**
      * Sets the value of the '{@link net.sf.bibtexml.DocumentRoot#getEntry <em>Entry</em>}' containment reference.
@@ -532,7 +532,7 @@ public interface DocumentRoot extends EObject {
      * @see #getEntry()
      * @generated
      */
-    void setEntry(EntryType value);
+    void setEntry(BibTeXMLEntryType value);
 
     /**
      * Returns the value of the '<em><b>File</b></em>' containment reference.

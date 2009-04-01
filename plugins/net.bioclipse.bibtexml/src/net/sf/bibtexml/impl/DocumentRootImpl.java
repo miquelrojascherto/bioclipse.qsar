@@ -11,12 +11,12 @@ import java.math.BigInteger;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import net.sf.bibtexml.ArticleType;
+import net.sf.bibtexml.BibTeXMLEntryType;
 import net.sf.bibtexml.BibtexmlPackage;
 import net.sf.bibtexml.BookType;
 import net.sf.bibtexml.BookletType;
 import net.sf.bibtexml.ConferenceType;
 import net.sf.bibtexml.DocumentRoot;
-import net.sf.bibtexml.EntryType;
 import net.sf.bibtexml.FileType;
 import net.sf.bibtexml.InbookType;
 import net.sf.bibtexml.IncollectionType;
@@ -724,8 +724,8 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EntryType getEntry() {
-        return (EntryType)getMixed().get(BibtexmlPackage.Literals.DOCUMENT_ROOT__ENTRY, true);
+    public BibTeXMLEntryType getEntry() {
+        return (BibTeXMLEntryType)getMixed().get(BibtexmlPackage.Literals.DOCUMENT_ROOT__ENTRY, true);
     }
 
     /**
@@ -733,7 +733,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetEntry(EntryType newEntry, NotificationChain msgs) {
+    public NotificationChain basicSetEntry(BibTeXMLEntryType newEntry, NotificationChain msgs) {
         return ((FeatureMap.Internal)getMixed()).basicAdd(BibtexmlPackage.Literals.DOCUMENT_ROOT__ENTRY, newEntry, msgs);
     }
 
@@ -742,7 +742,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setEntry(EntryType newEntry) {
+    public void setEntry(BibTeXMLEntryType newEntry) {
         ((FeatureMap.Internal)getMixed()).set(BibtexmlPackage.Literals.DOCUMENT_ROOT__ENTRY, newEntry);
     }
 
@@ -1561,7 +1561,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
                 setEditor((String)newValue);
                 return;
             case BibtexmlPackage.DOCUMENT_ROOT__ENTRY:
-                setEntry((EntryType)newValue);
+                setEntry((BibTeXMLEntryType)newValue);
                 return;
             case BibtexmlPackage.DOCUMENT_ROOT__FILE:
                 setFile((FileType)newValue);
@@ -1708,7 +1708,7 @@ public class DocumentRootImpl extends EObjectImpl implements DocumentRoot {
                 setEditor(EDITOR_EDEFAULT);
                 return;
             case BibtexmlPackage.DOCUMENT_ROOT__ENTRY:
-                setEntry((EntryType)null);
+                setEntry((BibTeXMLEntryType)null);
                 return;
             case BibtexmlPackage.DOCUMENT_ROOT__FILE:
                 setFile((FileType)null);

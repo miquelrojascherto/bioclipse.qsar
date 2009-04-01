@@ -9,21 +9,21 @@ package net.sf.bibtexml;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Entry Type</b></em>'.
+ * A representation of the model object '<em><b>Bib Te XML Entry Type</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link net.sf.bibtexml.EntryType#getId <em>Id</em>}</li>
+ *   <li>{@link net.sf.bibtexml.BibTeXMLEntryType#getId <em>Id</em>}</li>
  * </ul>
  * </p>
  *
- * @see net.sf.bibtexml.BibtexmlPackage#getEntryType()
- * @model extendedMetaData="name='entry_._type' kind='elementOnly'"
+ * @see net.sf.bibtexml.BibtexmlPackage#getBibTeXMLEntryType()
+ * @model extendedMetaData="name='BibTeXML.entryType' kind='elementOnly'"
  * @generated
  */
-public interface EntryType extends BibTeXMLEntriesClass {
+public interface BibTeXMLEntryType extends BibTeXMLEntriesClass {
     /**
      * Returns the value of the '<em><b>Id</b></em>' attribute.
      * <!-- begin-user-doc -->
@@ -34,7 +34,7 @@ public interface EntryType extends BibTeXMLEntriesClass {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Id</em>' attribute.
      * @see #setId(String)
-     * @see net.sf.bibtexml.BibtexmlPackage#getEntryType_Id()
+     * @see net.sf.bibtexml.BibtexmlPackage#getBibTeXMLEntryType_Id()
      * @model id="true" dataType="org.eclipse.emf.ecore.xml.type.ID" required="true"
      *        extendedMetaData="kind='attribute' name='id'"
      * @generated
@@ -42,7 +42,7 @@ public interface EntryType extends BibTeXMLEntriesClass {
     String getId();
 
     /**
-     * Sets the value of the '{@link net.sf.bibtexml.EntryType#getId <em>Id</em>}' attribute.
+     * Sets the value of the '{@link net.sf.bibtexml.BibTeXMLEntryType#getId <em>Id</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Id</em>' attribute.
@@ -51,4 +51,4 @@ public interface EntryType extends BibTeXMLEntriesClass {
      */
     void setId(String value);
 
-} // EntryType
+} // BibTeXMLEntryType

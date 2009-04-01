@@ -8,13 +8,13 @@ package net.sf.bibtexml.impl;
 
 import net.sf.bibtexml.ArticleType;
 import net.sf.bibtexml.BibTeXMLEntriesClass;
+import net.sf.bibtexml.BibTeXMLEntryType;
 import net.sf.bibtexml.BibtexmlFactory;
 import net.sf.bibtexml.BibtexmlPackage;
 import net.sf.bibtexml.BookType;
 import net.sf.bibtexml.BookletType;
 import net.sf.bibtexml.ConferenceType;
 import net.sf.bibtexml.DocumentRoot;
-import net.sf.bibtexml.EntryType;
 import net.sf.bibtexml.FileType;
 import net.sf.bibtexml.InbookType;
 import net.sf.bibtexml.IncollectionType;
@@ -68,6 +68,13 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    private EClass bibTeXMLEntryTypeEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     private EClass bookletTypeEClass = null;
 
     /**
@@ -90,13 +97,6 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      * @generated
      */
     private EClass documentRootEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass entryTypeEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -549,6 +549,24 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      */
     public EReference getBibTeXMLEntriesClass_Misc() {
         return (EReference)bibTeXMLEntriesClassEClass.getEStructuralFeatures().get(13);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getBibTeXMLEntryType() {
+        return bibTeXMLEntryTypeEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getBibTeXMLEntryType_Id() {
+        return (EAttribute)bibTeXMLEntryTypeEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -1395,24 +1413,6 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
      */
     public EAttribute getDocumentRoot_Year() {
         return (EAttribute)documentRootEClass.getEStructuralFeatures().get(44);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getEntryType() {
-        return entryTypeEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getEntryType_Id() {
-        return (EAttribute)entryTypeEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -2896,6 +2896,9 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         createEReference(bibTeXMLEntriesClassEClass, BIB_TE_XML_ENTRIES_CLASS__UNPUBLISHED);
         createEReference(bibTeXMLEntriesClassEClass, BIB_TE_XML_ENTRIES_CLASS__MISC);
 
+        bibTeXMLEntryTypeEClass = createEClass(BIB_TE_XML_ENTRY_TYPE);
+        createEAttribute(bibTeXMLEntryTypeEClass, BIB_TE_XML_ENTRY_TYPE__ID);
+
         bookletTypeEClass = createEClass(BOOKLET_TYPE);
         createEAttribute(bookletTypeEClass, BOOKLET_TYPE__AUTHOR);
         createEAttribute(bookletTypeEClass, BOOKLET_TYPE__TITLE);
@@ -2993,9 +2996,6 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         createEAttribute(documentRootEClass, DOCUMENT_ROOT__URL);
         createEAttribute(documentRootEClass, DOCUMENT_ROOT__VOLUME);
         createEAttribute(documentRootEClass, DOCUMENT_ROOT__YEAR);
-
-        entryTypeEClass = createEClass(ENTRY_TYPE);
-        createEAttribute(entryTypeEClass, ENTRY_TYPE__ID);
 
         fileTypeEClass = createEClass(FILE_TYPE);
         createEReference(fileTypeEClass, FILE_TYPE__ENTRY);
@@ -3202,7 +3202,7 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         // Set bounds for type parameters
 
         // Add supertypes to classes
-        entryTypeEClass.getESuperTypes().add(this.getBibTeXMLEntriesClass());
+        bibTeXMLEntryTypeEClass.getESuperTypes().add(this.getBibTeXMLEntriesClass());
 
         // Initialize classes and features; add operations and parameters
         initEClass(articleTypeEClass, ArticleType.class, "ArticleType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -3235,6 +3235,9 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         initEReference(getBibTeXMLEntriesClass_Conference(), this.getConferenceType(), null, "conference", null, 0, 1, BibTeXMLEntriesClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getBibTeXMLEntriesClass_Unpublished(), this.getUnpublishedType(), null, "unpublished", null, 0, 1, BibTeXMLEntriesClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getBibTeXMLEntriesClass_Misc(), this.getMiscType(), null, "misc", null, 0, 1, BibTeXMLEntriesClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(bibTeXMLEntryTypeEClass, BibTeXMLEntryType.class, "BibTeXMLEntryType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getBibTeXMLEntryType_Id(), theXMLTypePackage.getID(), "id", null, 1, 1, BibTeXMLEntryType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(bookletTypeEClass, BookletType.class, "BookletType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getBookletType_Author(), theXMLTypePackage.getString(), "author", null, 0, 1, BookletType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3304,7 +3307,7 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         initEAttribute(getDocumentRoot_Doi(), theXMLTypePackage.getString(), "doi", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
         initEAttribute(getDocumentRoot_Edition(), this.getEditionType(), "edition", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
         initEAttribute(getDocumentRoot_Editor(), theXMLTypePackage.getString(), "editor", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-        initEReference(getDocumentRoot_Entry(), this.getEntryType(), null, "entry", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+        initEReference(getDocumentRoot_Entry(), this.getBibTeXMLEntryType(), null, "entry", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
         initEReference(getDocumentRoot_File(), this.getFileType(), null, "file", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
         initEAttribute(getDocumentRoot_Howpublished(), theXMLTypePackage.getString(), "howpublished", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
         initEReference(getDocumentRoot_Inbook(), this.getInbookType(), null, "inbook", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
@@ -3334,11 +3337,8 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
         initEAttribute(getDocumentRoot_Volume(), theXMLTypePackage.getString(), "volume", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
         initEAttribute(getDocumentRoot_Year(), theXMLTypePackage.getGYear(), "year", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
-        initEClass(entryTypeEClass, EntryType.class, "EntryType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getEntryType_Id(), theXMLTypePackage.getID(), "id", null, 1, 1, EntryType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
         initEClass(fileTypeEClass, FileType.class, "FileType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getFileType_Entry(), this.getEntryType(), null, "entry", null, 0, -1, FileType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getFileType_Entry(), this.getBibTeXMLEntryType(), null, "entry", null, 0, -1, FileType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(inbookTypeEClass, InbookType.class, "InbookType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getInbookType_Author(), theXMLTypePackage.getString(), "author", null, 0, 1, InbookType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3767,6 +3767,20 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
              "kind", "element",
              "name", "misc",
              "namespace", "##targetNamespace"
+           });		
+        addAnnotation
+          (bibTeXMLEntryTypeEClass, 
+           source, 
+           new String[] {
+             "name", "BibTeXML.entryType",
+             "kind", "elementOnly"
+           });		
+        addAnnotation
+          (getBibTeXMLEntryType_Id(), 
+           source, 
+           new String[] {
+             "kind", "attribute",
+             "name", "id"
            });		
         addAnnotation
           (bookletTypeEClass, 
@@ -4520,20 +4534,6 @@ public class BibtexmlPackageImpl extends EPackageImpl implements BibtexmlPackage
              "name", "edition_._type",
              "baseType", "http://www.eclipse.org/emf/2003/XMLType#string",
              "pattern", "[A-Z].*"
-           });		
-        addAnnotation
-          (entryTypeEClass, 
-           source, 
-           new String[] {
-             "name", "entry_._type",
-             "kind", "elementOnly"
-           });		
-        addAnnotation
-          (getEntryType_Id(), 
-           source, 
-           new String[] {
-             "kind", "attribute",
-             "name", "id"
            });		
         addAnnotation
           (fileTypeEClass, 

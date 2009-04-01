@@ -8,8 +8,8 @@ package net.sf.bibtexml.impl;
 
 import java.util.Collection;
 
+import net.sf.bibtexml.BibTeXMLEntryType;
 import net.sf.bibtexml.BibtexmlPackage;
-import net.sf.bibtexml.EntryType;
 import net.sf.bibtexml.FileType;
 
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -46,7 +46,7 @@ public class FileTypeImpl extends EObjectImpl implements FileType {
      * @generated
      * @ordered
      */
-    protected EList<EntryType> entry;
+    protected EList<BibTeXMLEntryType> entry;
 
     /**
      * <!-- begin-user-doc -->
@@ -72,9 +72,9 @@ public class FileTypeImpl extends EObjectImpl implements FileType {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<EntryType> getEntry() {
+    public EList<BibTeXMLEntryType> getEntry() {
         if (entry == null) {
-            entry = new EObjectContainmentEList<EntryType>(EntryType.class, this, BibtexmlPackage.FILE_TYPE__ENTRY);
+            entry = new EObjectContainmentEList<BibTeXMLEntryType>(BibTeXMLEntryType.class, this, BibtexmlPackage.FILE_TYPE__ENTRY);
         }
         return entry;
     }
@@ -118,7 +118,7 @@ public class FileTypeImpl extends EObjectImpl implements FileType {
         switch (featureID) {
             case BibtexmlPackage.FILE_TYPE__ENTRY:
                 getEntry().clear();
-                getEntry().addAll((Collection<? extends EntryType>)newValue);
+                getEntry().addAll((Collection<? extends BibTeXMLEntryType>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);

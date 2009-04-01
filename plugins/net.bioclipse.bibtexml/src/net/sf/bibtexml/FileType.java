@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.EObject;
 public interface FileType extends EObject {
     /**
      * Returns the value of the '<em><b>Entry</b></em>' containment reference list.
-     * The list contents are of type {@link net.sf.bibtexml.EntryType}.
+     * The list contents are of type {@link net.sf.bibtexml.BibTeXMLEntryType}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Entry</em>' containment reference list isn't clear,
@@ -42,6 +42,6 @@ public interface FileType extends EObject {
      *        extendedMetaData="kind='element' name='entry' namespace='##targetNamespace'"
      * @generated
      */
-    EList<EntryType> getEntry();
+    EList<BibTeXMLEntryType> getEntry();
 
 } // FileType

@@ -99,6 +99,13 @@ public class BibtexmlSwitch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case BibtexmlPackage.BIB_TE_XML_ENTRY_TYPE: {
+                BibTeXMLEntryType bibTeXMLEntryType = (BibTeXMLEntryType)theEObject;
+                T result = caseBibTeXMLEntryType(bibTeXMLEntryType);
+                if (result == null) result = caseBibTeXMLEntriesClass(bibTeXMLEntryType);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case BibtexmlPackage.BOOKLET_TYPE: {
                 BookletType bookletType = (BookletType)theEObject;
                 T result = caseBookletType(bookletType);
@@ -120,13 +127,6 @@ public class BibtexmlSwitch<T> {
             case BibtexmlPackage.DOCUMENT_ROOT: {
                 DocumentRoot documentRoot = (DocumentRoot)theEObject;
                 T result = caseDocumentRoot(documentRoot);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case BibtexmlPackage.ENTRY_TYPE: {
-                EntryType entryType = (EntryType)theEObject;
-                T result = caseEntryType(entryType);
-                if (result == null) result = caseBibTeXMLEntriesClass(entryType);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -231,6 +231,21 @@ public class BibtexmlSwitch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Bib Te XML Entry Type</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Bib Te XML Entry Type</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseBibTeXMLEntryType(BibTeXMLEntryType object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Booklet Type</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -287,21 +302,6 @@ public class BibtexmlSwitch<T> {
      * @generated
      */
     public T caseDocumentRoot(DocumentRoot object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Entry Type</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Entry Type</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseEntryType(EntryType object) {
         return null;
     }
 

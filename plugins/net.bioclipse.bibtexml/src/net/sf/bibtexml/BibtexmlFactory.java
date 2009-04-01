@@ -44,6 +44,15 @@ public interface BibtexmlFactory extends EFactory {
     BibTeXMLEntriesClass createBibTeXMLEntriesClass();
 
     /**
+     * Returns a new object of class '<em>Bib Te XML Entry Type</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Bib Te XML Entry Type</em>'.
+     * @generated
+     */
+    BibTeXMLEntryType createBibTeXMLEntryType();
+
+    /**
      * Returns a new object of class '<em>Booklet Type</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -78,15 +87,6 @@ public interface BibtexmlFactory extends EFactory {
      * @generated
      */
     DocumentRoot createDocumentRoot();
-
-    /**
-     * Returns a new object of class '<em>Entry Type</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Entry Type</em>'.
-     * @generated
-     */
-    EntryType createEntryType();
 
     /**
      * Returns a new object of class '<em>File Type</em>'.

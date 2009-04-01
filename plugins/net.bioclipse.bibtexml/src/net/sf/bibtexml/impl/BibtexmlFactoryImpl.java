@@ -68,11 +68,11 @@ public class BibtexmlFactoryImpl extends EFactoryImpl implements BibtexmlFactory
         switch (eClass.getClassifierID()) {
             case BibtexmlPackage.ARTICLE_TYPE: return createArticleType();
             case BibtexmlPackage.BIB_TE_XML_ENTRIES_CLASS: return createBibTeXMLEntriesClass();
+            case BibtexmlPackage.BIB_TE_XML_ENTRY_TYPE: return createBibTeXMLEntryType();
             case BibtexmlPackage.BOOKLET_TYPE: return createBookletType();
             case BibtexmlPackage.BOOK_TYPE: return createBookType();
             case BibtexmlPackage.CONFERENCE_TYPE: return createConferenceType();
             case BibtexmlPackage.DOCUMENT_ROOT: return createDocumentRoot();
-            case BibtexmlPackage.ENTRY_TYPE: return createEntryType();
             case BibtexmlPackage.FILE_TYPE: return createFileType();
             case BibtexmlPackage.INBOOK_TYPE: return createInbookType();
             case BibtexmlPackage.INCOLLECTION_TYPE: return createIncollectionType();
@@ -160,6 +160,16 @@ public class BibtexmlFactoryImpl extends EFactoryImpl implements BibtexmlFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    public BibTeXMLEntryType createBibTeXMLEntryType() {
+        BibTeXMLEntryTypeImpl bibTeXMLEntryType = new BibTeXMLEntryTypeImpl();
+        return bibTeXMLEntryType;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public BookletType createBookletType() {
         BookletTypeImpl bookletType = new BookletTypeImpl();
         return bookletType;
@@ -193,16 +203,6 @@ public class BibtexmlFactoryImpl extends EFactoryImpl implements BibtexmlFactory
     public DocumentRoot createDocumentRoot() {
         DocumentRootImpl documentRoot = new DocumentRootImpl();
         return documentRoot;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EntryType createEntryType() {
-        EntryTypeImpl entryType = new EntryTypeImpl();
-        return entryType;
     }
 
     /**

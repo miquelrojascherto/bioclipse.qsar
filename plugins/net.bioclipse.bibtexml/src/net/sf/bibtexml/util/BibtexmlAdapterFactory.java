@@ -80,6 +80,10 @@ public class BibtexmlAdapterFactory extends AdapterFactoryImpl {
                 return createBibTeXMLEntriesClassAdapter();
             }
             @Override
+            public Adapter caseBibTeXMLEntryType(BibTeXMLEntryType object) {
+                return createBibTeXMLEntryTypeAdapter();
+            }
+            @Override
             public Adapter caseBookletType(BookletType object) {
                 return createBookletTypeAdapter();
             }
@@ -94,10 +98,6 @@ public class BibtexmlAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseDocumentRoot(DocumentRoot object) {
                 return createDocumentRootAdapter();
-            }
-            @Override
-            public Adapter caseEntryType(EntryType object) {
-                return createEntryTypeAdapter();
             }
             @Override
             public Adapter caseFileType(FileType object) {
@@ -192,6 +192,20 @@ public class BibtexmlAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link net.sf.bibtexml.BibTeXMLEntryType <em>Bib Te XML Entry Type</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see net.sf.bibtexml.BibTeXMLEntryType
+     * @generated
+     */
+    public Adapter createBibTeXMLEntryTypeAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link net.sf.bibtexml.BookletType <em>Booklet Type</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -244,20 +258,6 @@ public class BibtexmlAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createDocumentRootAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link net.sf.bibtexml.EntryType <em>Entry Type</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see net.sf.bibtexml.EntryType
-     * @generated
-     */
-    public Adapter createEntryTypeAdapter() {
         return null;
     }
 
