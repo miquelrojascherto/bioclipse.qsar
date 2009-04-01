@@ -57,7 +57,7 @@ public interface MetadataType extends EObject {
      * @return the value of the '<em>Reference</em>' containment reference list.
      * @see net.bioclipse.qsar.QsarPackage#getMetadataType_Reference()
      * @model containment="true"
-     *        extendedMetaData="kind='element' name='reference'"
+     *        extendedMetaData="kind='element' name='reference' namespace='##targetNamespace'"
      * @generated
      */
     EList<BibTeXMLEntriesClass> getReference();

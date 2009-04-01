@@ -56,7 +56,7 @@ public interface QsarType extends EObject {
      * @see #setStructurelist(StructurelistType)
      * @see net.bioclipse.qsar.QsarPackage#getQsarType_Structurelist()
      * @model containment="true"
-     *        extendedMetaData="kind='element' name='structurelist'"
+     *        extendedMetaData="kind='element' name='structurelist' namespace='##targetNamespace'"
      * @generated
      */
     StructurelistType getStructurelist();
@@ -83,7 +83,7 @@ public interface QsarType extends EObject {
      * @see #setDescriptorlist(DescriptorlistType)
      * @see net.bioclipse.qsar.QsarPackage#getQsarType_Descriptorlist()
      * @model containment="true"
-     *        extendedMetaData="kind='element' name='descriptorlist'"
+     *        extendedMetaData="kind='element' name='descriptorlist' namespace='##targetNamespace'"
      * @generated
      */
     DescriptorlistType getDescriptorlist();
@@ -110,7 +110,7 @@ public interface QsarType extends EObject {
      * @return the value of the '<em>Descriptorproviders</em>' containment reference list.
      * @see net.bioclipse.qsar.QsarPackage#getQsarType_Descriptorproviders()
      * @model containment="true"
-     *        extendedMetaData="kind='element' name='descriptorproviders'"
+     *        extendedMetaData="kind='element' name='descriptorproviders' namespace='##targetNamespace'"
      * @generated
      */
     EList<DescriptorproviderType> getDescriptorproviders();
@@ -127,7 +127,7 @@ public interface QsarType extends EObject {
      * @see #setPreprocessing(PreprocessingType)
      * @see net.bioclipse.qsar.QsarPackage#getQsarType_Preprocessing()
      * @model containment="true"
-     *        extendedMetaData="kind='element' name='preprocessing'"
+     *        extendedMetaData="kind='element' name='preprocessing' namespace='##targetNamespace'"
      * @generated
      */
     PreprocessingType getPreprocessing();
@@ -154,7 +154,7 @@ public interface QsarType extends EObject {
      * @see #setResponselist(ResponsesListType)
      * @see net.bioclipse.qsar.QsarPackage#getQsarType_Responselist()
      * @model containment="true"
-     *        extendedMetaData="kind='element' name='responselist'"
+     *        extendedMetaData="kind='element' name='responselist' namespace='##targetNamespace'"
      * @generated
      */
     ResponsesListType getResponselist();
@@ -181,7 +181,7 @@ public interface QsarType extends EObject {
      * @return the value of the '<em>Responseunit</em>' containment reference list.
      * @see net.bioclipse.qsar.QsarPackage#getQsarType_Responseunit()
      * @model containment="true"
-     *        extendedMetaData="kind='element' name='responseunit'"
+     *        extendedMetaData="kind='element' name='responseunit' namespace='##targetNamespace'"
      * @generated
      */
     EList<ResponseunitType> getResponseunit();
@@ -198,7 +198,7 @@ public interface QsarType extends EObject {
      * @see #setMetadata(MetadataType)
      * @see net.bioclipse.qsar.QsarPackage#getQsarType_Metadata()
      * @model containment="true" required="true"
-     *        extendedMetaData="kind='element' name='metadata'"
+     *        extendedMetaData="kind='element' name='metadata' namespace='##targetNamespace'"
      * @generated
      */
     MetadataType getMetadata();

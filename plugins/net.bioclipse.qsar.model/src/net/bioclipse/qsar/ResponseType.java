@@ -53,7 +53,7 @@ public interface ResponseType extends EObject {
      * @see #setValue(float)
      * @see net.bioclipse.qsar.QsarPackage#getResponseType_Value()
      * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Float"
-     *        extendedMetaData="kind='element' name='value'"
+     *        extendedMetaData="kind='element' name='value' namespace='##targetNamespace'"
      * @generated
      */
     float getValue();
@@ -105,7 +105,7 @@ public interface ResponseType extends EObject {
      * @see #setArrayValues(String)
      * @see net.bioclipse.qsar.QsarPackage#getResponseType_ArrayValues()
      * @model dataType="org.eclipse.emf.ecore.xml.type.String"
-     *        extendedMetaData="kind='element' name='arrayValues'"
+     *        extendedMetaData="kind='element' name='arrayValues' namespace='##targetNamespace'"
      * @generated
      */
     String getArrayValues();

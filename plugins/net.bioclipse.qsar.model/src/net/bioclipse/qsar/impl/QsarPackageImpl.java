@@ -31,8 +31,6 @@ import net.bioclipse.qsar.TypeType;
 
 import net.sf.bibtexml.BibtexmlPackage;
 
-import net.sf.bibtexml.impl.BibtexmlPackageImpl;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -234,18 +232,14 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
         isInited = true;
 
         // Initialize simple dependencies
+        BibtexmlPackage.eINSTANCE.eClass();
         XMLTypePackage.eINSTANCE.eClass();
-
-        // Obtain or create and register interdependencies
-        BibtexmlPackageImpl theBibtexmlPackage = (BibtexmlPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(BibtexmlPackage.eNS_URI) instanceof BibtexmlPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(BibtexmlPackage.eNS_URI) : BibtexmlPackage.eINSTANCE);
 
         // Create package meta-data objects
         theQsarPackage.createPackageContents();
-        theBibtexmlPackage.createPackageContents();
 
         // Initialize created meta-data
         theQsarPackage.initializePackageContents();
-        theBibtexmlPackage.initializePackageContents();
 
         // Mark meta-data to indicate it can't be changed
         theQsarPackage.freeze();
@@ -1264,7 +1258,8 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
            source, 
            new String[] {
              "kind", "element",
-             "name", "descriptors"
+             "name", "descriptors",
+             "namespace", "##targetNamespace"
            });		
         addAnnotation
           (descriptorproviderTypeEClass, 
@@ -1320,7 +1315,8 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
            source, 
            new String[] {
              "kind", "element",
-             "name", "parameter"
+             "name", "parameter",
+             "namespace", "##targetNamespace"
            });		
         addAnnotation
           (getDescriptorType_Changed(), 
@@ -1398,7 +1394,8 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
            source, 
            new String[] {
              "kind", "element",
-             "name", "reference"
+             "name", "reference",
+             "namespace", "##targetNamespace"
            });		
         addAnnotation
           (getMetadataType_Authors(), 
@@ -1510,7 +1507,8 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
            source, 
            new String[] {
              "kind", "element",
-             "name", "preprocessingStep"
+             "name", "preprocessingStep",
+             "namespace", "##targetNamespace"
            });		
         addAnnotation
           (qsarTypeEClass, 
@@ -1524,49 +1522,56 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
            source, 
            new String[] {
              "kind", "element",
-             "name", "structurelist"
+             "name", "structurelist",
+             "namespace", "##targetNamespace"
            });		
         addAnnotation
           (getQsarType_Descriptorlist(), 
            source, 
            new String[] {
              "kind", "element",
-             "name", "descriptorlist"
+             "name", "descriptorlist",
+             "namespace", "##targetNamespace"
            });		
         addAnnotation
           (getQsarType_Descriptorproviders(), 
            source, 
            new String[] {
              "kind", "element",
-             "name", "descriptorproviders"
+             "name", "descriptorproviders",
+             "namespace", "##targetNamespace"
            });		
         addAnnotation
           (getQsarType_Preprocessing(), 
            source, 
            new String[] {
              "kind", "element",
-             "name", "preprocessing"
+             "name", "preprocessing",
+             "namespace", "##targetNamespace"
            });		
         addAnnotation
           (getQsarType_Responselist(), 
            source, 
            new String[] {
              "kind", "element",
-             "name", "responselist"
+             "name", "responselist",
+             "namespace", "##targetNamespace"
            });		
         addAnnotation
           (getQsarType_Responseunit(), 
            source, 
            new String[] {
              "kind", "element",
-             "name", "responseunit"
+             "name", "responseunit",
+             "namespace", "##targetNamespace"
            });		
         addAnnotation
           (getQsarType_Metadata(), 
            source, 
            new String[] {
              "kind", "element",
-             "name", "metadata"
+             "name", "metadata",
+             "namespace", "##targetNamespace"
            });		
         addAnnotation
           (resourceTypeEClass, 
@@ -1580,7 +1585,8 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
            source, 
            new String[] {
              "kind", "element",
-             "name", "structure"
+             "name", "structure",
+             "namespace", "##targetNamespace"
            });		
         addAnnotation
           (getResourceType_Checksum(), 
@@ -1664,7 +1670,8 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
            source, 
            new String[] {
              "kind", "element",
-             "name", "response"
+             "name", "response",
+             "namespace", "##targetNamespace"
            });		
         addAnnotation
           (responseTypeEClass, 
@@ -1678,14 +1685,16 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
            source, 
            new String[] {
              "kind", "element",
-             "name", "value"
+             "name", "value",
+             "namespace", "##targetNamespace"
            });		
         addAnnotation
           (getResponseType_ArrayValues(), 
            source, 
            new String[] {
              "kind", "element",
-             "name", "arrayValues"
+             "name", "arrayValues",
+             "namespace", "##targetNamespace"
            });		
         addAnnotation
           (getResponseType_StructureID(), 
@@ -1755,7 +1764,8 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
            source, 
            new String[] {
              "kind", "element",
-             "name", "resources"
+             "name", "resources",
+             "namespace", "##targetNamespace"
            });		
         addAnnotation
           (structureTypeEClass, 

@@ -54,7 +54,7 @@ public interface DescriptorType extends EObject {
      * @return the value of the '<em>Parameter</em>' containment reference list.
      * @see net.bioclipse.qsar.QsarPackage#getDescriptorType_Parameter()
      * @model containment="true"
-     *        extendedMetaData="kind='element' name='parameter'"
+     *        extendedMetaData="kind='element' name='parameter' namespace='##targetNamespace'"
      * @generated
      */
     EList<ParameterType> getParameter();

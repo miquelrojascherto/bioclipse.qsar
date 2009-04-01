@@ -50,7 +50,7 @@ public interface StructurelistType extends EObject {
      * @return the value of the '<em>Resources</em>' containment reference list.
      * @see net.bioclipse.qsar.QsarPackage#getStructurelistType_Resources()
      * @model containment="true"
-     *        extendedMetaData="kind='element' name='resources'"
+     *        extendedMetaData="kind='element' name='resources' namespace='##targetNamespace'"
      * @generated
      */
     EList<ResourceType> getResources();

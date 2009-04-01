@@ -50,7 +50,7 @@ public interface PreprocessingType extends EObject {
      * @return the value of the '<em>Preprocessing Step</em>' containment reference list.
      * @see net.bioclipse.qsar.QsarPackage#getPreprocessingType_PreprocessingStep()
      * @model containment="true"
-     *        extendedMetaData="kind='element' name='preprocessingStep'"
+     *        extendedMetaData="kind='element' name='preprocessingStep' namespace='##targetNamespace'"
      * @generated
      */
     EList<PreprocessingStepType> getPreprocessingStep();

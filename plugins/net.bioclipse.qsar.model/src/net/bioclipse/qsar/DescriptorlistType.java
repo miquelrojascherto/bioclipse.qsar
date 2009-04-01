@@ -50,7 +50,7 @@ public interface DescriptorlistType extends EObject {
      * @return the value of the '<em>Descriptors</em>' containment reference list.
      * @see net.bioclipse.qsar.QsarPackage#getDescriptorlistType_Descriptors()
      * @model containment="true"
-     *        extendedMetaData="kind='element' name='descriptors'"
+     *        extendedMetaData="kind='element' name='descriptors' namespace='##targetNamespace'"
      * @generated
      */
     EList<DescriptorType> getDescriptors();

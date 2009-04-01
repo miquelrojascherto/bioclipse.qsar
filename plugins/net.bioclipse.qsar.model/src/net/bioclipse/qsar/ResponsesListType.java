@@ -50,7 +50,7 @@ public interface ResponsesListType extends EObject {
      * @return the value of the '<em>Response</em>' containment reference list.
      * @see net.bioclipse.qsar.QsarPackage#getResponsesListType_Response()
      * @model containment="true"
-     *        extendedMetaData="kind='element' name='response'"
+     *        extendedMetaData="kind='element' name='response' namespace='##targetNamespace'"
      * @generated
      */
     EList<ResponseType> getResponse();
