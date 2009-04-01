@@ -10,6 +10,8 @@
  */
 package net.bioclipse.qsar.provider;
 
+import net.sf.bibtexml.provider.BibtexmlHandwrittenEditPlugin;
+
 import org.eclipse.emf.common.EMFPlugin;
 
 import org.eclipse.emf.common.util.ResourceLocator;
@@ -53,6 +55,7 @@ public final class QsarmodelEditPlugin extends EMFPlugin {
     public QsarmodelEditPlugin() {
         super
           (new ResourceLocator [] {
+             BibtexmlHandwrittenEditPlugin.INSTANCE,
            });
     }
 

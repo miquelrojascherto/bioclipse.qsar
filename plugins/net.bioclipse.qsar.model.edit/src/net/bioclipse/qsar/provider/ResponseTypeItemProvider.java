@@ -17,7 +17,6 @@ import java.util.List;
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.ResponseType;
 
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 

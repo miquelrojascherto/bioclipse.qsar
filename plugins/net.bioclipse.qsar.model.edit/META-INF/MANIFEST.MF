@@ -8,9 +8,10 @@ Bundle-Activator: net.bioclipse.qsar.provider.QsarmodelEditPlugin$Implementation
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: net.bioclipse.qsar.provider,
- net.sf.bibtexml.provider
+Export-Package: net.bioclipse.qsar.provider
 Require-Bundle: org.eclipse.core.runtime,
  net.bioclipse.qsar.model;visibility:=reexport,
- org.eclipse.emf.edit;visibility:=reexport
+ org.eclipse.emf.edit;visibility:=reexport,
+ net.bioclipse.bibtexml;visibility:=reexport,
+ net.bioclipse.bibtexml.edit;visibility:=reexport
 Bundle-ActivationPolicy: lazy

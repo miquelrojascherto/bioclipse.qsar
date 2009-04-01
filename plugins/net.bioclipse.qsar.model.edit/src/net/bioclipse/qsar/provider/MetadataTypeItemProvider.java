@@ -19,7 +19,6 @@ import net.bioclipse.qsar.QsarPackage;
 
 import net.sf.bibtexml.BibtexmlFactory;
 
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
@@ -295,6 +294,11 @@ public class MetadataTypeItemProvider
             (createChildParameter
                 (QsarPackage.Literals.METADATA_TYPE__REFERENCE,
                  BibtexmlFactory.eINSTANCE.createBibTeXMLEntriesClass()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (QsarPackage.Literals.METADATA_TYPE__REFERENCE,
+                 BibtexmlFactory.eINSTANCE.createBibTeXMLEntryType()));
     }
 
     /**
