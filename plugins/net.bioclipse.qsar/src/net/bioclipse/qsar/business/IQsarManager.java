@@ -12,9 +12,12 @@
 package net.bioclipse.qsar.business;
 
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -22,6 +25,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import net.bioclipse.cdk.domain.ICDKMolecule;
 import net.bioclipse.core.PublishedMethod;
 import net.bioclipse.core.Recorded;
+import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.business.IBioclipseManager;
 import net.bioclipse.core.domain.IMolecule;
 import net.bioclipse.qsar.DescriptorType;
@@ -124,6 +128,15 @@ public interface IQsarManager extends IBioclipseManager{
     public Map<IMolecule, List<IDescriptorResult>> calculate(
           Map<IMolecule, List<DescriptorType>> molDescMap,
           IProgressMonitor monitor );
+
+    
+    public void addResourcesToQsarModel( QsarType qsarmodel, EditingDomain editingDomain,
+                          List<IResource> resourcesToAdd, IProgressMonitor monitor )
+                                                           throws IOException,
+                                                           BioclipseException,
+                                                           CoreException;
+
+    public void addCalculatedPropertiesToQsarModel( QsarType qsarModel );
 
 
 

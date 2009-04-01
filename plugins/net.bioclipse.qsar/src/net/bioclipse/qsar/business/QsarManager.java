@@ -22,11 +22,16 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
@@ -40,9 +45,13 @@ import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.swt.widgets.Display;
 
+import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.cdk.domain.ICDKMolecule;
+import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.domain.IMolecule;
+import net.bioclipse.inchi.business.IInChIManager;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.DescriptorlistType;
 import net.bioclipse.qsar.DescriptorproviderType;
@@ -51,6 +60,9 @@ import net.bioclipse.qsar.QSARConstants;
 import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
+import net.bioclipse.qsar.ResourceType;
+import net.bioclipse.qsar.StructureType;
+import net.bioclipse.qsar.StructurelistType;
 import net.bioclipse.qsar.descriptor.IDescriptorCalculator;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
@@ -684,8 +696,8 @@ public class QsarManager implements IQsarManager{
      * @return
      */
     public Map<? extends IMolecule, List<IDescriptorResult>> calculate(
-            List<? extends IMolecule> molecules, 
-            List<DescriptorType> descriptorTypes, IProgressMonitor monitor)   throws OperationCanceledException{
+                                                                       List<? extends IMolecule> molecules, 
+                                                                       List<DescriptorType> descriptorTypes, IProgressMonitor monitor)   throws OperationCanceledException{
 
         Map<IMolecule, List<DescriptorType>> molDescMap=new HashMap<IMolecule, List<DescriptorType>>();
 
@@ -694,50 +706,50 @@ public class QsarManager implements IQsarManager{
         }
 
         return calculate( molDescMap, monitor );
-        
-//        Map<IMolecule, List<IDescriptorResult>> allResults=
-//            new HashMap<IMolecule, List<IDescriptorResult>>();
-//
-//        //The problem is to collect all descriptor ID's and group by provider
-//        //Loop over all providers
-//        for (DescriptorProvider provider : getFullProviders()){
-//
-//            //Store descriptors and params to calculate for this provider in list
-//            List<DescriptorType> descriptorTypesForProvider = new ArrayList<DescriptorType>();
-//
-//
-//
-//            //Check if this descriptor is here, add if so
-//            for (DescriptorType descType: descriptorTypes){
-//                String descImplId = descType.getProvider();
-//                DescriptorProvider prov = getProviderByID( descImplId );
-//                if (provider.getId().equals(prov.getId())){
-//                    descriptorTypesForProvider.add(descType);
-//                }
-//            }
-//
-//
-//            //If we have descs to calculate, do so
-//            if (descriptorTypesForProvider.size()>0){
-//                IDescriptorCalculator calculator=provider.getCalculator();
-//                Map<? extends IMolecule, List<IDescriptorResult>> results = 
-//                    calculator.calculateDescriptor(molecules, 
-//                                                   descriptorTypesForProvider, monitor);
-//
-//                //Add these results to the molecule
-//                for (IMolecule mol : results.keySet()){
-//                    if (allResults.get(mol)==null) allResults.put(mol, new ArrayList<IDescriptorResult>());
-//                    List<IDescriptorResult> reslist=allResults.get(mol);
-//
-//                    //Add the computed result to the reslist
-//                    reslist.addAll(results.get(mol));
-//                }
-//
-//            }
-//
-//        }
-//
-//        return allResults;
+
+        //        Map<IMolecule, List<IDescriptorResult>> allResults=
+        //            new HashMap<IMolecule, List<IDescriptorResult>>();
+        //
+        //        //The problem is to collect all descriptor ID's and group by provider
+        //        //Loop over all providers
+        //        for (DescriptorProvider provider : getFullProviders()){
+        //
+        //            //Store descriptors and params to calculate for this provider in list
+        //            List<DescriptorType> descriptorTypesForProvider = new ArrayList<DescriptorType>();
+        //
+        //
+        //
+        //            //Check if this descriptor is here, add if so
+        //            for (DescriptorType descType: descriptorTypes){
+        //                String descImplId = descType.getProvider();
+        //                DescriptorProvider prov = getProviderByID( descImplId );
+        //                if (provider.getId().equals(prov.getId())){
+        //                    descriptorTypesForProvider.add(descType);
+        //                }
+        //            }
+        //
+        //
+        //            //If we have descs to calculate, do so
+        //            if (descriptorTypesForProvider.size()>0){
+        //                IDescriptorCalculator calculator=provider.getCalculator();
+        //                Map<? extends IMolecule, List<IDescriptorResult>> results = 
+        //                    calculator.calculateDescriptor(molecules, 
+        //                                                   descriptorTypesForProvider, monitor);
+        //
+        //                //Add these results to the molecule
+        //                for (IMolecule mol : results.keySet()){
+        //                    if (allResults.get(mol)==null) allResults.put(mol, new ArrayList<IDescriptorResult>());
+        //                    List<IDescriptorResult> reslist=allResults.get(mol);
+        //
+        //                    //Add the computed result to the reslist
+        //                    reslist.addAll(results.get(mol));
+        //                }
+        //
+        //            }
+        //
+        //        }
+        //
+        //        return allResults;
     }
 
 
@@ -910,12 +922,12 @@ public class QsarManager implements IQsarManager{
             dimpl.setId(newdimpl.getId());
 
         }
-        
+
         modelDescriptor.setProvider( dimpl.getId() );
 
-//        //Add found provider to descriptor element
-//        cmd=SetCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__PROVIDER, dimpl);
-//        cCmd.append(cmd);
+        //        //Add found provider to descriptor element
+        //        cmd=SetCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__PROVIDER, dimpl);
+        //        cCmd.append(cmd);
 
         //Parameters
         if (impl.getParameters()!=null){
@@ -949,17 +961,17 @@ public class QsarManager implements IQsarManager{
 
 
     public Map<IMolecule, List<IDescriptorResult>> calculate(
-          Map<IMolecule, List<DescriptorType>> molDescMap,
-          IProgressMonitor monitor ) {
+                                                             Map<IMolecule, List<DescriptorType>> molDescMap,
+                                                             IProgressMonitor monitor ) {
 
-        
+
         Map<IMolecule, List<IDescriptorResult>> allResults=
             new HashMap<IMolecule, List<IDescriptorResult>>();
-        
+
         //We need to perform one QSAR calculation per provider
         //So, collect them by provider from input Map
         Map<DescriptorProvider,Map<IMolecule, List<DescriptorType>>> moldescByProvider 
-          = new HashMap<DescriptorProvider, Map<IMolecule,List<DescriptorType>>>();
+        = new HashMap<DescriptorProvider, Map<IMolecule,List<DescriptorType>>>();
 
         //For all mols
         for (IMolecule mol : molDescMap.keySet()){
@@ -974,12 +986,12 @@ public class QsarManager implements IQsarManager{
                     moldescByProvider.put( provider, new HashMap<IMolecule, List<DescriptorType>>() );
                 }
                 Map<IMolecule, List<DescriptorType>> localMolDesc 
-                        = (Map<IMolecule, List<DescriptorType>>) moldescByProvider.get( provider );
-                
+                = (Map<IMolecule, List<DescriptorType>>) moldescByProvider.get( provider );
+
                 if (!(localMolDesc.containsKey( mol ))){
                     localMolDesc.put( mol, new ArrayList<DescriptorType>() );
                 }
-                
+
                 List<DescriptorType> localTypes=localMolDesc.get( mol );
                 if (!(localTypes.contains( desc ))){
                     localTypes.add( desc );
@@ -987,14 +999,14 @@ public class QsarManager implements IQsarManager{
             }
         }
 
-        
+
         //Process one provider at a time
         for (DescriptorProvider provider : moldescByProvider.keySet()){
 
             IDescriptorCalculator calculator=provider.getCalculator();
-            
+
             Map<IMolecule, List<DescriptorType>> moldesc = moldescByProvider.get( provider );
-            
+
             Map<? extends IMolecule, List<IDescriptorResult>> results = 
                 calculator.calculateDescriptor(moldesc, monitor);
 
@@ -1010,8 +1022,133 @@ public class QsarManager implements IQsarManager{
         }
 
         return allResults;
-        
+
     }
 
+    //===============================
+    //QSAR model operatios below
+    //===============================
+
+    /**
+     * Add resources to QSAR model.
+     */
+    public void addResourcesToQsarModel(QsarType qsarmodel, EditingDomain editingDomain, 
+                                        List<IResource> resourcesToAdd, final IProgressMonitor monitor) throws IOException, BioclipseException, CoreException {
+
+        ICDKManager cdk = net.bioclipse.cdk.business.Activator.getDefault().getCDKManager();
+        IInChIManager inchi = net.bioclipse.inchi.business.Activator.getDefault().getInChIManager();
+
+        StructurelistType structList = qsarmodel.getStructurelist();
+        CompoundCommand ccmd=new CompoundCommand();
+
+        for (IResource resource : resourcesToAdd){
+
+            if (resource instanceof IFile) {
+                IFile file = (IFile) resource;
+
+                //Check if this file is already in model
+                for (ResourceType existingRes : structList.getResources()){
+                    if (existingRes.getName().equals(file.getName())){
+                        throw new UnsupportedOperationException("File: " + 
+                                                                file.getName() + 
+                        " already exists in QSAR analysis.");
+                    }
+                }
+
+                //Load molecules into file
+                List<ICDKMolecule> mollist = cdk.loadMolecules(file);
+                if (mollist==null || mollist.size()<=0){
+                    throw new BioclipseException("No molecules in file");
+                }
+                
+                //Count no of 2D and 3D
+                int no2d=0;
+                int no3d=0;
+                for (ICDKMolecule mol : mollist){
+                    if (cdk.has2d( mol ))
+                        no2d++;
+                    if (cdk.has3d( mol ))
+                        no3d++;
+                }
+                
+                //Add resource to QSAR model
+                ResourceType res=QsarFactory.eINSTANCE.createResourceType();
+                res.setId(file.getName());
+                res.setName(file.getName());
+                res.setFile(file.getFullPath().toString());
+                res.setNo2d( no2d );
+                res.setNo3d( no3d );
+                res.setNoMols( mollist.size() );
+                Command cmd=AddCommand.create(editingDomain, structList, 
+                                              QsarPackage.Literals.STRUCTURELIST_TYPE__RESOURCES, res);
+                ccmd.append(cmd);
+
+                //Add all structures in resource as well as children to resource
+                int molindex=0;
+                for (ICDKMolecule mol : mollist){
+                    
+                    StructureType structure=QsarFactory.eINSTANCE.createStructureType();
+
+                    //If text-based (currently the only supported method in Bioclipse)
+                    structure.setResourceindex( molindex );
+                    structure.setChanged( true );
+                    
+                    //Calculate and add inchi to structure
+                    try {
+                        String inchistr=inchi.generate( mol );
+                        structure.setInchi( inchistr );
+                    } catch ( Exception e ) {
+                        logger.error("Could not generate inchi for mol " + 
+                                     molindex + " in file " + file.getName());
+                    }
+                    
+                    cmd=AddCommand.create(editingDomain, res, 
+                      QsarPackage.Literals.RESOURCE_TYPE__STRUCTURE, structure);
+                    ccmd.append(cmd);
+                    
+                    molindex++;
+                }
+
+            }
+        }
+
+        //Execute the CompoundCommand
+        editingDomain.getCommandStack().execute(ccmd);    
+
+    }
+
+
+    /**
+     * Go through and add transient properties to EMF model, which are not 
+     * stored in file.
+     */
+    public void addCalculatedPropertiesToQsarModel( QsarType qsarModel ) {
+
+        ICDKManager cdk = net.bioclipse.cdk.business.Activator.getDefault().getCDKManager();
+
+        //Do resources first
+        for (ResourceType resource : qsarModel.getStructurelist().getResources()){
+            try {
+                List<ICDKMolecule> mols = cdk.loadMolecules( resource.getFile());
+
+                //Count no of 2D and 3D
+                int no2d=0;
+                int no3d=0;
+                for (ICDKMolecule mol : mols){
+                    if (cdk.has2d( mol ))
+                        no2d++;
+                    if (cdk.has3d( mol ))
+                        no3d++;
+                }
+                
+                resource.setNo2d( no2d );
+                resource.setNo3d( no3d );
+                resource.setNoMols( mols.size() );
+            } catch ( IOException e ) {
+            } catch ( BioclipseException e ) {
+            } catch ( CoreException e ) {
+            }
+        }
+    }
 
 }
