@@ -23,7 +23,7 @@
 
    <extension point="org.eclipse.emf.ecore.extension_parser">
       <parser
-            type="qsar"
+            type="xml"
             class="net.bioclipse.qsar.util.QsarResourceFactoryImpl"/>
    </extension>
 
