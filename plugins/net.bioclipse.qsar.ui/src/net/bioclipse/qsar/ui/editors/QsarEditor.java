@@ -170,6 +170,8 @@ import org.eclipse.emf.edit.ui.view.ExtendedPropertySheetPage;
 import net.bioclipse.core.util.LogUtils;
 import net.bioclipse.qsar.DocumentRoot;
 import net.bioclipse.qsar.QsarType;
+import net.bioclipse.qsar.business.IQsarManager;
+import net.bioclipse.qsar.init.Activator;
 import net.bioclipse.qsar.provider.QsarItemProviderAdapterFactory;
 import net.bioclipse.ui.editors.XMLEditor;
 
@@ -184,37 +186,34 @@ import org.eclipse.ui.actions.WorkspaceModifyOperation;
  * <!-- end-user-doc -->
  * @generated
  */
-public class QsarEditor
-    extends FormEditor
-    implements IEditingDomainProvider, ISelectionProvider, IAdaptable{
-    
-    
+public class QsarEditor extends FormEditor implements IEditingDomainProvider, 
+                                                 ISelectionProvider, IAdaptable{
+
     private static final Logger logger = Logger.getLogger(QsarEditor.class);
 
-    private MoleculesPage molPage;
-    
     private IProject activeProject;
 
-  private QsarType qsarModel;
+    private QsarType qsarModel;
+    private Resource resource;
+    private ResourceSetImpl resourceSet;
 
-  private Resource resource;
+    public int textEditorIndex;
+    public int molPageIndex;
+    public int descPageIndex;
+    public int responsesPageIndex;
+    public int overviewPageIndex;
 
-  private ResourceSetImpl resourceSet;
+    private MoleculesPage molPage;
+    private DescriptorsPage descPage;
+    private ResponsesPage responsesPage;
+    private OverviewPage overviewPage;
 
-  public int textEditorIndex;
-  public int molPageIndex;
-  public int descPageIndex;
-  public int responsesPageIndex;
-  public int overviewPageIndex;
+    private QsarEditorSelectionProvider selectionProvider;
+    private XMLEditor xmlEditor;
 
-  private QsarEditorSelectionProvider selectionProvider;
+    private IQsarManager qsar;
 
-  private DescriptorsPage descPage;
-  private ResponsesPage responsesPage;
-  private OverviewPage overviewPage;
-  
-  
-    
+
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -378,37 +377,37 @@ public class QsarEditor
      */
     protected IPartListener partListener =
         new IPartListener() {
-            public void partActivated(IWorkbenchPart p) {
-                if (p instanceof ContentOutline) {
-                    if (((ContentOutline)p).getCurrentPage() == contentOutlinePage) {
-                        getActionBarContributor().setActiveEditor(QsarEditor.this);
+        public void partActivated(IWorkbenchPart p) {
+            if (p instanceof ContentOutline) {
+                if (((ContentOutline)p).getCurrentPage() == contentOutlinePage) {
+                    getActionBarContributor().setActiveEditor(QsarEditor.this);
 
-                        setCurrentViewer(contentOutlineViewer);
-                    }
+                    setCurrentViewer(contentOutlineViewer);
                 }
-                else if (p instanceof PropertySheet) {
-                    if (((PropertySheet)p).getCurrentPage() == propertySheetPage) {
-                        getActionBarContributor().setActiveEditor(QsarEditor.this);
-                        handleActivate();
-                    }
-                }
-                else if (p == QsarEditor.this) {
+            }
+            else if (p instanceof PropertySheet) {
+                if (((PropertySheet)p).getCurrentPage() == propertySheetPage) {
+                    getActionBarContributor().setActiveEditor(QsarEditor.this);
                     handleActivate();
                 }
             }
-            public void partBroughtToTop(IWorkbenchPart p) {
-                // Ignore.
+            else if (p == QsarEditor.this) {
+                handleActivate();
             }
-            public void partClosed(IWorkbenchPart p) {
-                // Ignore.
-            }
-            public void partDeactivated(IWorkbenchPart p) {
-                // Ignore.
-            }
-            public void partOpened(IWorkbenchPart p) {
-                // Ignore.
-            }
-        };
+        }
+        public void partBroughtToTop(IWorkbenchPart p) {
+            // Ignore.
+        }
+        public void partClosed(IWorkbenchPart p) {
+            // Ignore.
+        }
+        public void partDeactivated(IWorkbenchPart p) {
+            // Ignore.
+        }
+        public void partOpened(IWorkbenchPart p) {
+            // Ignore.
+        }
+    };
 
     /**
      * Resources that have been removed since last activation.
@@ -458,49 +457,49 @@ public class QsarEditor
      */
     protected EContentAdapter problemIndicationAdapter = 
         new EContentAdapter() {
-            @Override
-            public void notifyChanged(Notification notification) {
-                if (notification.getNotifier() instanceof Resource) {
-                    switch (notification.getFeatureID(Resource.class)) {
-                        case Resource.RESOURCE__IS_LOADED:
-                        case Resource.RESOURCE__ERRORS:
-                        case Resource.RESOURCE__WARNINGS: {
-                            Resource resource = (Resource)notification.getNotifier();
-                            Diagnostic diagnostic = analyzeResourceProblems(resource, null);
-                            if (diagnostic.getSeverity() != Diagnostic.OK) {
-                                resourceToDiagnosticMap.put(resource, diagnostic);
-                            }
-                            else {
-                                resourceToDiagnosticMap.remove(resource);
-                            }
-
-                            if (updateProblemIndication) {
-                                getSite().getShell().getDisplay().asyncExec
-                                    (new Runnable() {
-                                         public void run() {
-                                             updateProblemIndication();
-                                         }
-                                     });
-                            }
-                            break;
+        @Override
+        public void notifyChanged(Notification notification) {
+            if (notification.getNotifier() instanceof Resource) {
+                switch (notification.getFeatureID(Resource.class)) {
+                    case Resource.RESOURCE__IS_LOADED:
+                    case Resource.RESOURCE__ERRORS:
+                    case Resource.RESOURCE__WARNINGS: {
+                        Resource resource = (Resource)notification.getNotifier();
+                        Diagnostic diagnostic = analyzeResourceProblems(resource, null);
+                        if (diagnostic.getSeverity() != Diagnostic.OK) {
+                            resourceToDiagnosticMap.put(resource, diagnostic);
                         }
+                        else {
+                            resourceToDiagnosticMap.remove(resource);
+                        }
+
+                        if (updateProblemIndication) {
+                            getSite().getShell().getDisplay().asyncExec
+                            (new Runnable() {
+                                public void run() {
+                                    updateProblemIndication();
+                                }
+                            });
+                        }
+                        break;
                     }
                 }
-                else {
-                    super.notifyChanged(notification);
-                }
             }
+            else {
+                super.notifyChanged(notification);
+            }
+        }
 
-            @Override
-            protected void setTarget(Resource target) {
-                basicSetTarget(target);
-            }
+        @Override
+        protected void setTarget(Resource target) {
+            basicSetTarget(target);
+        }
 
-            @Override
-            protected void unsetTarget(Resource target) {
-                basicUnsetTarget(target);
-            }
-        };
+        @Override
+        protected void unsetTarget(Resource target) {
+            basicUnsetTarget(target);
+        }
+    };
 
     /**
      * This listens for workspace changes.
@@ -510,76 +509,74 @@ public class QsarEditor
      */
     protected IResourceChangeListener resourceChangeListener =
         new IResourceChangeListener() {
-            public void resourceChanged(IResourceChangeEvent event) {
-                IResourceDelta delta = event.getDelta();
-                try {
-                    class ResourceDeltaVisitor implements IResourceDeltaVisitor {
-                        protected ResourceSet resourceSet = editingDomain.getResourceSet();
-                        protected Collection<Resource> changedResources = new ArrayList<Resource>();
-                        protected Collection<Resource> removedResources = new ArrayList<Resource>();
+        public void resourceChanged(IResourceChangeEvent event) {
+            IResourceDelta delta = event.getDelta();
+            try {
+                class ResourceDeltaVisitor implements IResourceDeltaVisitor {
+                    protected ResourceSet resourceSet = editingDomain.getResourceSet();
+                    protected Collection<Resource> changedResources = new ArrayList<Resource>();
+                    protected Collection<Resource> removedResources = new ArrayList<Resource>();
 
-                        public boolean visit(IResourceDelta delta) {
-                            if (delta.getResource().getType() == IResource.FILE) {
-                                if (delta.getKind() == IResourceDelta.REMOVED ||
+                    public boolean visit(IResourceDelta delta) {
+                        if (delta.getResource().getType() == IResource.FILE) {
+                            if (delta.getKind() == IResourceDelta.REMOVED ||
                                     delta.getKind() == IResourceDelta.CHANGED && delta.getFlags() != IResourceDelta.MARKERS) {
-                                    Resource resource = resourceSet.getResource(URI.createURI(delta.getFullPath().toString()), false);
-                                    if (resource != null) {
-                                        if (delta.getKind() == IResourceDelta.REMOVED) {
-                                            removedResources.add(resource);
-                                        }
-                                        else if (!savedResources.remove(resource)) {
-                                            changedResources.add(resource);
-                                        }
+                                Resource resource = resourceSet.getResource(URI.createURI(delta.getFullPath().toString()), false);
+                                if (resource != null) {
+                                    if (delta.getKind() == IResourceDelta.REMOVED) {
+                                        removedResources.add(resource);
+                                    }
+                                    else if (!savedResources.remove(resource)) {
+                                        changedResources.add(resource);
                                     }
                                 }
                             }
-
-                            return true;
                         }
 
-                        public Collection<Resource> getChangedResources() {
-                            return changedResources;
-                        }
-
-                        public Collection<Resource> getRemovedResources() {
-                            return removedResources;
-                        }
+                        return true;
                     }
 
-                    ResourceDeltaVisitor visitor = new ResourceDeltaVisitor();
-                    delta.accept(visitor);
-
-                    if (!visitor.getRemovedResources().isEmpty()) {
-                        removedResources.addAll(visitor.getRemovedResources());
-                        if (!isDirty()) {
-                            getSite().getShell().getDisplay().asyncExec
-                                (new Runnable() {
-                                     public void run() {
-                                         getSite().getPage().closeEditor(QsarEditor.this, false);
-                                     }
-                                 });
-                        }
+                    public Collection<Resource> getChangedResources() {
+                        return changedResources;
                     }
 
-                    if (!visitor.getChangedResources().isEmpty()) {
-                        changedResources.addAll(visitor.getChangedResources());
-                        if (getSite().getPage().getActiveEditor() == QsarEditor.this) {
-                            getSite().getShell().getDisplay().asyncExec
-                                (new Runnable() {
-                                     public void run() {
-                                         handleActivate();
-                                     }
-                                 });
-                        }
+                    public Collection<Resource> getRemovedResources() {
+                        return removedResources;
                     }
                 }
-                catch (CoreException exception) {
-                    logger.error(exception);
+
+                ResourceDeltaVisitor visitor = new ResourceDeltaVisitor();
+                delta.accept(visitor);
+
+                if (!visitor.getRemovedResources().isEmpty()) {
+                    removedResources.addAll(visitor.getRemovedResources());
+                    if (!isDirty()) {
+                        getSite().getShell().getDisplay().asyncExec
+                        (new Runnable() {
+                            public void run() {
+                                getSite().getPage().closeEditor(QsarEditor.this, false);
+                            }
+                        });
+                    }
+                }
+
+                if (!visitor.getChangedResources().isEmpty()) {
+                    changedResources.addAll(visitor.getChangedResources());
+                    if (getSite().getPage().getActiveEditor() == QsarEditor.this) {
+                        getSite().getShell().getDisplay().asyncExec
+                        (new Runnable() {
+                            public void run() {
+                                handleActivate();
+                            }
+                        });
+                    }
                 }
             }
-        };
-
-    private XMLEditor xmlEditor;
+            catch (CoreException exception) {
+                logger.error(exception);
+            }
+        }
+    };
 
     /**
      * Handles activation of the editor or it's associated views.
@@ -591,11 +588,11 @@ public class QsarEditor
         // Recompute the read only state.
         //
         if (editingDomain.getResourceToReadOnlyMap() != null) {
-          editingDomain.getResourceToReadOnlyMap().clear();
+            editingDomain.getResourceToReadOnlyMap().clear();
 
-          // Refresh any actions that may become enabled or disabled.
-          //
-          setSelection(getSelection());
+            // Refresh any actions that may become enabled or disabled.
+            //
+            setSelection(getSelection());
         }
 
         if (!removedResources.isEmpty()) {
@@ -652,7 +649,7 @@ public class QsarEditor
             updateProblemIndication();
         }
     }
-  
+
     /**
      * Updates the problems indication with the information described in the specified diagnostic.
      * <!-- begin-user-doc -->
@@ -663,11 +660,11 @@ public class QsarEditor
         if (updateProblemIndication) {
             BasicDiagnostic diagnostic =
                 new BasicDiagnostic
-                    (Diagnostic.OK,
-                     "net.bioclipse.qsar.model.editor",
-                     0,
-                     null,
-                     new Object [] { editingDomain.getResourceSet() });
+                (Diagnostic.OK,
+                 "net.bioclipse.qsar.model.editor",
+                 0,
+                 null,
+                 new Object [] { editingDomain.getResourceSet() });
             for (Diagnostic childDiagnostic : resourceToDiagnosticMap.values()) {
                 if (childDiagnostic.getSeverity() != Diagnostic.OK) {
                     diagnostic.add(childDiagnostic);
@@ -704,7 +701,7 @@ public class QsarEditor
                     }
                     catch (CoreException exception) {
                         logger.error(exception);
-                        }
+                    }
                 }
             }
         }
@@ -718,10 +715,10 @@ public class QsarEditor
      */
     protected boolean handleDirtyConflict() {
         return
-            MessageDialog.openQuestion
-                (getSite().getShell(),
-                 "_UI_FileConflict_label",
-                 "_WARN_FileConflict");
+        MessageDialog.openQuestion
+        (getSite().getShell(),
+         "_UI_FileConflict_label",
+        "_WARN_FileConflict");
     }
 
     /**
@@ -758,26 +755,26 @@ public class QsarEditor
         // Add a listener to set the most recent command's affected objects to be the selection of the viewer with focus.
         //
         commandStack.addCommandStackListener
-            (new CommandStackListener() {
-                 public void commandStackChanged(final EventObject event) {
-                     getContainer().getDisplay().asyncExec
-                         (new Runnable() {
-                              public void run() {
-                                  firePropertyChange(IEditorPart.PROP_DIRTY);
+        (new CommandStackListener() {
+            public void commandStackChanged(final EventObject event) {
+                getContainer().getDisplay().asyncExec
+                (new Runnable() {
+                    public void run() {
+                        firePropertyChange(IEditorPart.PROP_DIRTY);
 
-                                  // Try to select the affected objects.
-                                  //
-                                  Command mostRecentCommand = ((CommandStack)event.getSource()).getMostRecentCommand();
-                                  if (mostRecentCommand != null) {
-                                      setSelectionToViewer(mostRecentCommand.getAffectedObjects());
-                                  }
-                                  if (propertySheetPage != null && !propertySheetPage.getControl().isDisposed()) {
-                                      propertySheetPage.refresh();
-                                  }
-                              }
-                          });
-                 }
-             });
+                        // Try to select the affected objects.
+                        //
+                        Command mostRecentCommand = ((CommandStack)event.getSource()).getMostRecentCommand();
+                        if (mostRecentCommand != null) {
+                            setSelectionToViewer(mostRecentCommand.getAffectedObjects());
+                        }
+                        if (propertySheetPage != null && !propertySheetPage.getControl().isDisposed()) {
+                            propertySheetPage.refresh();
+                        }
+                    }
+                });
+            }
+        });
 
         // Create the editing domain with a special command stack.
         //
@@ -790,7 +787,7 @@ public class QsarEditor
      * <!-- end-user-doc -->
      * @generated
      */
-            @Override
+    @Override
     protected void firePropertyChange(int action) {
         super.firePropertyChange(action);
     }
@@ -813,14 +810,14 @@ public class QsarEditor
             //
             Runnable runnable =
                 new Runnable() {
-                    public void run() {
-                        // Try to select the items in the current content viewer of the editor.
-                        //
-                        if (currentViewer != null) {
-                            currentViewer.setSelection(new StructuredSelection(theSelection.toArray()), true);
-                        }
+                public void run() {
+                    // Try to select the items in the current content viewer of the editor.
+                    //
+                    if (currentViewer != null) {
+                        currentViewer.setSelection(new StructuredSelection(theSelection.toArray()), true);
                     }
-                };
+                }
+            };
             runnable.run();
         }
     }
@@ -927,12 +924,12 @@ public class QsarEditor
                 //
                 selectionChangedListener =
                     new ISelectionChangedListener() {
-                        // This just notifies those things that are affected by the section.
-                        //
-                        public void selectionChanged(SelectionChangedEvent selectionChangedEvent) {
-                            setSelection(selectionChangedEvent.getSelection());
-                        }
-                    };
+                    // This just notifies those things that are affected by the section.
+                    //
+                    public void selectionChanged(SelectionChangedEvent selectionChangedEvent) {
+                        setSelection(selectionChangedEvent.getSelection());
+                    }
+                };
             }
 
             // Stop listening to the old one.
@@ -957,7 +954,7 @@ public class QsarEditor
         }
     }
 
-  
+
 
     /**
      * This is the method called to load a resource into the editing domain's resource set based on the editor's input.
@@ -984,17 +981,20 @@ public class QsarEditor
             resourceToDiagnosticMap.put(resource,  analyzeResourceProblems(resource, exception));
         }
         editingDomain.getResourceSet().eAdapters().add(problemIndicationAdapter);
-        
+
         editingDomain.getResourceSet().getResources().get( 0 ).getContents();
-        
+
         if (resource != null) {
             DocumentRoot root = (DocumentRoot) resource.getContents().get(0);
 
             //Store the model in editor
             qsarModel=root.getQsar();
             logger.debug("QSAREditor read model file successfully");
-            
-          }
+
+            //Calculate non-stored properties like num of mols, no2D etc
+            qsar=Activator.getDefault().getQsarManager();
+            qsar.addCalculatedPropertiesToQsarModel(qsarModel);
+        }
 
     }
 
@@ -1009,22 +1009,22 @@ public class QsarEditor
         if (!resource.getErrors().isEmpty() || !resource.getWarnings().isEmpty()) {
             BasicDiagnostic basicDiagnostic =
                 new BasicDiagnostic
-                    (Diagnostic.ERROR,
-                     "net.bioclipse.qsar.model.editor",
-                     0,
-                     "_UI_CreateModelError_message",
-                     new Object [] { exception == null ? (Object)resource : exception });
+                (Diagnostic.ERROR,
+                 "net.bioclipse.qsar.model.editor",
+                 0,
+                 "_UI_CreateModelError_message",
+                 new Object [] { exception == null ? (Object)resource : exception });
             basicDiagnostic.merge(EcoreUtil.computeDiagnostic(resource, true));
             return basicDiagnostic;
         }
         else if (exception != null) {
             return
-                new BasicDiagnostic
-                    (Diagnostic.ERROR,
-                     "net.bioclipse.qsar.model.editor",
-                     0,
-                     "_UI_CreateModelError_message",
-                     new Object[] { exception });
+            new BasicDiagnostic
+            (Diagnostic.ERROR,
+             "net.bioclipse.qsar.model.editor",
+             0,
+             "_UI_CreateModelError_message",
+             new Object[] { exception });
         }
         else {
             return Diagnostic.OK_INSTANCE;
@@ -1131,12 +1131,12 @@ public class QsarEditor
 
                     // Make sure our popups work.
                     //
-//                    createContextMenuFor(contentOutlineViewer);
+                    //                    createContextMenuFor(contentOutlineViewer);
 
                     if (!editingDomain.getResourceSet().getResources().isEmpty()) {
-                      // Select the root object in the view.
-                      //
-                      contentOutlineViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)), true);
+                        // Select the root object in the view.
+                        //
+                        contentOutlineViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)), true);
                     }
                 }
 
@@ -1158,13 +1158,13 @@ public class QsarEditor
             // Listen to selection so that we can handle it is a special way.
             //
             contentOutlinePage.addSelectionChangedListener
-                (new ISelectionChangedListener() {
-                     // This ensures that we handle selections correctly.
-                     //
-                     public void selectionChanged(SelectionChangedEvent event) {
-                         handleContentOutlineSelection(event.getSelection());
-                     }
-                 });
+            (new ISelectionChangedListener() {
+                // This ensures that we handle selections correctly.
+                //
+                public void selectionChanged(SelectionChangedEvent event) {
+                    handleContentOutlineSelection(event.getSelection());
+                }
+            });
         }
 
         return contentOutlinePage;
@@ -1180,18 +1180,18 @@ public class QsarEditor
         if (propertySheetPage == null) {
             propertySheetPage =
                 new ExtendedPropertySheetPage(editingDomain) {
-                    @Override
-                    public void setSelectionToViewer(List<?> selection) {
-                        QsarEditor.this.setSelectionToViewer(selection);
-                        QsarEditor.this.setFocus();
-                    }
+                @Override
+                public void setSelectionToViewer(List<?> selection) {
+                    QsarEditor.this.setSelectionToViewer(selection);
+                    QsarEditor.this.setFocus();
+                }
 
-                    @Override
-                    public void setActionBars(IActionBars actionBars) {
-                        super.setActionBars(actionBars);
-                        getActionBarContributor().shareGlobalActions(this, actionBars);
-                    }
-                };
+                @Override
+                public void setActionBars(IActionBars actionBars) {
+                    super.setActionBars(actionBars);
+                    getActionBarContributor().shareGlobalActions(this, actionBars);
+                }
+            };
             propertySheetPage.setPropertySourceProvider(new AdapterFactoryContentProvider(adapterFactory));
         }
 
@@ -1265,30 +1265,30 @@ public class QsarEditor
         //
         WorkspaceModifyOperation operation =
             new WorkspaceModifyOperation() {
-                // This is the method that gets invoked when the operation runs.
+            // This is the method that gets invoked when the operation runs.
+            //
+            @Override
+            public void execute(IProgressMonitor monitor) {
+                // Save the resources to the file system.
                 //
-                @Override
-                public void execute(IProgressMonitor monitor) {
-                    // Save the resources to the file system.
-                    //
-                    boolean first = true;
-                    for (Resource resource : editingDomain.getResourceSet().getResources()) {
-                        if ((first || !resource.getContents().isEmpty() || isPersisted(resource)) && !editingDomain.isReadOnly(resource)) {
-                            try {
-                                long timeStamp = resource.getTimeStamp();
-                                resource.save(saveOptions);
-                                if (resource.getTimeStamp() != timeStamp) {
-                                    savedResources.add(resource);
-                                }
+                boolean first = true;
+                for (Resource resource : editingDomain.getResourceSet().getResources()) {
+                    if ((first || !resource.getContents().isEmpty() || isPersisted(resource)) && !editingDomain.isReadOnly(resource)) {
+                        try {
+                            long timeStamp = resource.getTimeStamp();
+                            resource.save(saveOptions);
+                            if (resource.getTimeStamp() != timeStamp) {
+                                savedResources.add(resource);
                             }
-                            catch (Exception exception) {
-                                resourceToDiagnosticMap.put(resource, analyzeResourceProblems(resource, exception));
-                            }
-                            first = false;
                         }
+                        catch (Exception exception) {
+                            resourceToDiagnosticMap.put(resource, analyzeResourceProblems(resource, exception));
+                        }
+                        first = false;
                     }
                 }
-            };
+            }
+        };
 
         updateProblemIndication = false;
         try {
@@ -1373,9 +1373,9 @@ public class QsarEditor
         setPartName(editorInput.getName());
         IProgressMonitor progressMonitor =
             getActionBars().getStatusLineManager() != null ?
-                getActionBars().getStatusLineManager().getProgressMonitor() :
-                new NullProgressMonitor();
-        doSave(progressMonitor);
+                    getActionBars().getStatusLineManager().getProgressMonitor() :
+                        new NullProgressMonitor();
+                    doSave(progressMonitor);
     }
 
     /**
@@ -1391,7 +1391,7 @@ public class QsarEditor
                     URI uri = URI.createURI(uriAttribute);
                     EObject eObject = editingDomain.getResourceSet().getEObject(uri, true);
                     if (eObject != null) {
-                      setSelectionToViewer(Collections.singleton(editingDomain.getWrapper(eObject)));
+                        setSelectionToViewer(Collections.singleton(editingDomain.getWrapper(eObject)));
                     }
                 }
             }
@@ -1485,7 +1485,7 @@ public class QsarEditor
      */
     public void setStatusLineManager(ISelection selection) {
         IStatusLineManager statusLineManager = currentViewer != null && currentViewer == contentOutlineViewer ?
-            contentOutlineStatusLineManager : getActionBars().getStatusLineManager();
+                contentOutlineStatusLineManager : getActionBars().getStatusLineManager();
 
         if (statusLineManager != null) {
             if (selection instanceof IStructuredSelection) {
@@ -1591,7 +1591,7 @@ public class QsarEditor
 
     @Override
     protected void addPages() {
-        
+
         // Creates the model from the editor input
         //
         createModel();
@@ -1610,38 +1610,38 @@ public class QsarEditor
         overviewPage=new OverviewPage(this, qsarModel, editingDomain, selectionProvider);
 
         try {
-                //Overview page comes first with summary
-                overviewPageIndex=addPage(overviewPage);
+            //Overview page comes first with summary
+            overviewPageIndex=addPage(overviewPage);
 
-                //Molecules page with interactions
-                molPageIndex=addPage(molPage);
+            //Molecules page with interactions
+            molPageIndex=addPage(molPage);
 
-                //Descriptors page
-                descPageIndex=addPage(descPage);
+            //Descriptors page
+            descPageIndex=addPage(descPage);
 
-                //Descriptors page
-                responsesPageIndex=addPage(responsesPage);
+            //Descriptors page
+            responsesPageIndex=addPage(responsesPage);
 
-                xmlEditor = new XMLEditor();
-                textEditorIndex = addPage(xmlEditor, getEditorInput());
-                setPageText(textEditorIndex, "Source");
+            xmlEditor = new XMLEditor();
+            textEditorIndex = addPage(xmlEditor, getEditorInput());
+            setPageText(textEditorIndex, "Source");
 
-            } catch (PartInitException e) {
-                LogUtils.debugTrace(logger, e);
-            }
-            
-            getSite().setSelectionProvider( selectionProvider );
-        
+        } catch (PartInitException e) {
+            LogUtils.debugTrace(logger, e);
+        }
+
+        getSite().setSelectionProvider( selectionProvider );
+
     }
 
     public IProject getActiveProject() {
-        
+
         return activeProject;
     }
 
-    
+
     public void setActiveProject( IProject activeProject ) {
-    
+
         this.activeProject = activeProject;
     }
 }
