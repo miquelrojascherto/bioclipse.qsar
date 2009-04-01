@@ -6,6 +6,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.DescriptorlistType;
 import net.bioclipse.qsar.DescriptorproviderType;
@@ -26,6 +30,9 @@ import net.bioclipse.qsar.StructurelistType;
 import net.bioclipse.qsar.TypeType;
 import net.bioclipse.qsar.util.QsarAdapterFactory;
 import net.bioclipse.qsar.util.QsarResourceFactoryImpl;
+import net.sf.bibtexml.ArticleType;
+import net.sf.bibtexml.BibTeXMLEntryType;
+import net.sf.bibtexml.BibtexmlFactory;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
@@ -73,8 +80,37 @@ public class TestWrite {
     meta.setURL( "http://www.bioclipse.net" );
     cmd=SetCommand.create(editingDomain, qsar, QsarPackage.Literals.QSAR_TYPE__METADATA, meta);
     cCmd.append(cmd);
-    
 
+    //Add a narticle as reference in bibtexml
+    BibTeXMLEntryType entry = BibtexmlFactory.eINSTANCE.createBibTeXMLEntryType();
+    entry.setId( "article1" );
+    
+    ArticleType article=BibtexmlFactory.eINSTANCE.createArticleType();
+    article.setAuthor( "Spjuth, Ola and Helmus, Tobias and Willighagen, Egon and Kuhn, Stefan and Eklund, Martin and Wagener, Johannes and Murray-Rust, Peter and Steinbeck, Christoph and Wikberg, Jarl" );
+    article.setTitle( "Bioclipse: an open source workbench for chemo- and bioinformatics" );
+    article.setJournal( "BMC Bioinformatics" );
+    article.setVolume( "8" );
+
+    try {
+        DatatypeFactory dt = DatatypeFactory.newInstance();
+        XMLGregorianCalendar cal = dt.newXMLGregorianCalendar();
+        cal.setYear( 2007 );
+        article.setYear( cal );
+    } catch ( DatatypeConfigurationException e ) {
+        e.printStackTrace();
+        return;
+    }
+    article.setNumber( "1" );
+    article.setPages( "59" );
+    article.setDoi( "10.1186/1471-2105-8-59" );
+    article.setUrl( "http://www.biomedcentral.com/1471-2105/8/59" );
+
+    entry.setArticle( article );
+
+    cmd=AddCommand.create(editingDomain, meta, QsarPackage.Literals.METADATA_TYPE__REFERENCE, entry);
+    cCmd.append(cmd);
+
+    //Add descriptor types
 		DescriptorproviderType cdk=QsarFactory.eINSTANCE.createDescriptorproviderType();
 		cdk.setId("cdk");
 		cdk.setURL("http://cdk.sourceforge.net");

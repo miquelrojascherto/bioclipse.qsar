@@ -1,38 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<qsar:qsar xmlns:qsar="http://www.bioclipse.net/qsar">
-  <structurelist>
-    <resources checksum="N/A" file="polycarpol.mol" id="mol1" name="polycarpol" type="text">
-      <structure id="struct1" inchi="N/A" resourceindex="0"/>
-    </resources>
-    <resources checksum="N/A" file="smallCollection.sdf" id="mol2" name="smallCollection" type="text">
-      <structure id="struct2" inchi="N/A" resourceindex="0"/>
-    </resources>
-    <resources id="res3" name="reserpine" type="xml" URL="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=5770&amp;disopt=SaveXML"/>
-  </structurelist>
-  <descriptorlist>
-    <descriptors id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#xlogP" namespace="http://www.blueobelisk.org" provider="cdk">
-      <parameter key="checkAromaticity" value="true"/>
-      <parameter key="salicylFlag" value="false"/>
-    </descriptors>
-    <descriptors id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomCount" namespace="http://www.blueobelisk.org" provider="cdk"/>
-  </descriptorlist>
-  <descriptorproviders id="cdk" name="Chemistry Development Kit" URL="http://cdk.sourceforge.net" vendor="Chemistry Development Kit" version="1.1.0.20080808"/>
-  <descriptorproviders id="dragon" name="Dragon descriptor" URL="http://talete.mi.it" vendor="Talete" version="5.14"/>
-  <preprocessing>
-    <preprocessingStep id="Smi23d" name="Generate 3D coordinates with smi23d" namespace="http://www.chembiogrid.org/cheminfo/smi23d/" order="1"/>
-    <preprocessingStep id="org.openscience.cdk.atomtype.sybyl" name="Sybyl Atom Types" namespace="http://cdk.sf.net" order="2"/>
-  </preprocessing>
-  <responselist>
-    <response structureID="mol2" unit="ic50">
-      <value>11.45</value>
-    </response>
-    <response unit="ic50">
-      <value>15.45</value>
-    </response>
-    <response structureID="res3" unit="ic50">
-      <arrayValues>12.56,23.45,34.56</arrayValues>
-    </response>
-  </responselist>
-  <responseunit description="Measure of the effectiveness of a compound in inhibiting biological or biochemical function" id="ic50" name="half maximal inhibitory concentration (IC50)" shortname="IC50" URL="http://en.wikipedia.org/wiki/IC50"/>
-  <metadata authors="Ola Spjuth" datasetname="olas dataset" description="A dataset describing a lot of thins. Pretty much everything." license="Creative Blah License" URL="http://www.bioclipse.net"/>
+<qsar:qsar xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bibtexml="http://bibtexml.sf.net/" xmlns:qsar="http://www.bioclipse.net/qsar">
+  <qsar:structurelist>
+    <qsar:resources checksum="N/A" file="polycarpol.mol" id="mol1" name="polycarpol" type="text">
+      <qsar:structure id="struct1" inchi="N/A" resourceindex="0"/>
+    </qsar:resources>
+    <qsar:resources checksum="N/A" file="smallCollection.sdf" id="mol2" name="smallCollection" type="text">
+      <qsar:structure id="struct2" inchi="N/A" resourceindex="0"/>
+    </qsar:resources>
+    <qsar:resources id="res3" name="reserpine" type="xml" URL="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=5770&amp;disopt=SaveXML"/>
+  </qsar:structurelist>
+  <qsar:descriptorlist>
+    <qsar:descriptors id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#xlogP" namespace="http://www.blueobelisk.org" provider="cdk">
+      <qsar:parameter key="checkAromaticity" value="true"/>
+      <qsar:parameter key="salicylFlag" value="false"/>
+    </qsar:descriptors>
+    <qsar:descriptors id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomCount" namespace="http://www.blueobelisk.org" provider="cdk"/>
+  </qsar:descriptorlist>
+  <qsar:descriptorproviders id="cdk" name="Chemistry Development Kit" URL="http://cdk.sourceforge.net" vendor="Chemistry Development Kit" version="1.1.0.20080808"/>
+  <qsar:descriptorproviders id="dragon" name="Dragon descriptor" URL="http://talete.mi.it" vendor="Talete" version="5.14"/>
+  <qsar:preprocessing>
+    <qsar:preprocessingStep id="Smi23d" name="Generate 3D coordinates with smi23d" namespace="http://www.chembiogrid.org/cheminfo/smi23d/" order="1"/>
+    <qsar:preprocessingStep id="org.openscience.cdk.atomtype.sybyl" name="Sybyl Atom Types" namespace="http://cdk.sf.net" order="2"/>
+  </qsar:preprocessing>
+  <qsar:responselist>
+    <qsar:response structureID="mol2" unit="ic50">
+      <qsar:value>11.45</qsar:value>
+    </qsar:response>
+    <qsar:response unit="ic50">
+      <qsar:value>15.45</qsar:value>
+    </qsar:response>
+    <qsar:response structureID="res3" unit="ic50">
+      <qsar:arrayValues>12.56,23.45,34.56</qsar:arrayValues>
+    </qsar:response>
+  </qsar:responselist>
+  <qsar:responseunit description="Measure of the effectiveness of a compound in inhibiting biological or biochemical function" id="ic50" name="half maximal inhibitory concentration (IC50)" shortname="IC50" URL="http://en.wikipedia.org/wiki/IC50"/>
+  <qsar:metadata authors="Ola Spjuth" datasetname="olas dataset" description="A dataset describing a lot of thins. Pretty much everything." license="Creative Blah License" URL="http://www.bioclipse.net">
+    <qsar:reference xsi:type="bibtexml:BibTeXML.entryType" id="article1">
+      <bibtexml:article>
+        <bibtexml:author>Spjuth, Ola and Helmus, Tobias and Willighagen, Egon and Kuhn, Stefan and Eklund, Martin and Wagener, Johannes and Murray-Rust, Peter and Steinbeck, Christoph and Wikberg, Jarl</bibtexml:author>
+        <bibtexml:title>Bioclipse: an open source workbench for chemo- and bioinformatics</bibtexml:title>
+        <bibtexml:journal>BMC Bioinformatics</bibtexml:journal>
+        <bibtexml:year>2007</bibtexml:year>
+        <bibtexml:volume>8</bibtexml:volume>
+        <bibtexml:number>1</bibtexml:number>
+        <bibtexml:pages>59</bibtexml:pages>
+        <bibtexml:doi>10.1186/1471-2105-8-59</bibtexml:doi>
+        <bibtexml:url>http://www.biomedcentral.com/1471-2105/8/59</bibtexml:url>
+      </bibtexml:article>
+    </qsar:reference>
+  </qsar:metadata>
 </qsar:qsar>
