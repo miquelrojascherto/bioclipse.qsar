@@ -31,13 +31,6 @@
          unpack="false"/>
 
    <plugin
-         id="net.bioclipse.qsar.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.emf"
          download-size="0"
          install-size="0"
@@ -143,6 +136,27 @@
 
    <plugin
          id="net.bioclipse.qsar.model.edit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="net.bioclipse.qsar.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="net.bioclipse.bibtexml"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="net.bioclipse.bibtexml.edit"
          download-size="0"
          install-size="0"
          version="0.0.0"
