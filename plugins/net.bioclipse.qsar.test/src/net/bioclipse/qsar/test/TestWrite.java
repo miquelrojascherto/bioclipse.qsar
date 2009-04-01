@@ -195,6 +195,15 @@ public class TestWrite {
 		res3.setType( TypeType.XML );
     cmd=AddCommand.create(editingDomain, structlist, QsarPackage.Literals.STRUCTURELIST_TYPE__RESOURCES, res3);
 		cCmd.append(cmd);
+		
+    //Add structures for resource3
+    StructureType struct3 = QsarFactory.eINSTANCE.createStructureType();
+    struct3.setId( "struct3" );
+    struct3.setResourceindex( 0 );
+    struct3.setInchi( "N/A" );
+    cmd=AddCommand.create(editingDomain, res3, QsarPackage.Literals.RESOURCE_TYPE__STRUCTURE, struct3);
+    cCmd.append(cmd);
+
 
 		//Add descriptors with parameters
 		//======================
@@ -282,7 +291,7 @@ public class TestWrite {
 		cCmd.append(cmd);
 
 		ResponseType response2=QsarFactory.eINSTANCE.createResponseType();
-    response1.setStructureID( res2.getId());
+    response2.setStructureID( res2.getId());
 		response2.setValue((float)15.45);
     response2.setUnit( unit1.getId() );
     //Add to responselist
