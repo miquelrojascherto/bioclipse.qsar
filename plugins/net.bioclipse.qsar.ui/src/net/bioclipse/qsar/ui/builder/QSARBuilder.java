@@ -47,6 +47,7 @@ import net.bioclipse.qsar.StructurelistType;
 import net.bioclipse.qsar.TypeType;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
+import net.bioclipse.qsar.util.QsarResourceFactoryImpl;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.ICommand;
@@ -265,6 +266,9 @@ public class QSARBuilder extends IncrementalProjectBuilder
             logger.debug("QSAR model does not contain structures and descriptors. Building canceled.");
         }
 
+        //FIXME: remove
+        if (true) return;
+        
         //Extract structures from model for descriptor calculation
         //================================================
         List<IMolecule> allStructures=extractMoleculesFromQSARType(qsarType);
@@ -288,6 +292,9 @@ public class QSARBuilder extends IncrementalProjectBuilder
         //Mol > List of descriptor IDs
         Map<IMolecule, List<DescriptorType>> molDescMap=getComboForCalculation(allStructures, changedStructures, allDescriptors, changedDescriptors);
         logger.debug("In need of calculation: \n" + debugMolDescMap(molDescMap));
+
+        //FIXME: remove and continue
+        if (true) return;
         
         //Calculate descriptors for all such combos
         //================================================
@@ -515,16 +522,25 @@ public class QSARBuilder extends IncrementalProjectBuilder
      */
     private QsarType readModelFromProjectFile() {
 
-        // Create a resource set.
-        ResourceSet resourceSet = new ResourceSetImpl();
-
-        // Register the default resource factory -- only needed for stand-alone!
-        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
-                                                                                Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
-
         // Register the package -- only needed for stand-alone!
         @SuppressWarnings("unused")
         QsarPackage qsarPackage=QsarPackage.eINSTANCE;
+
+        // Create a resource set.
+        ResourceSet resourceSet = new ResourceSetImpl();
+
+        // Register the appropriate resource factory to handle all file extensions.
+        //
+        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put
+            (Resource.Factory.Registry.DEFAULT_EXTENSION, 
+             new QsarResourceFactoryImpl());
+
+        // Register the package to ensure it is available during loading.
+        //
+        resourceSet.getPackageRegistry().put
+            (QsarPackage.eNS_URI, 
+             QsarPackage.eINSTANCE);
+
 
         IFile qsarfile = getProject().getFile("qsar.xml");
         logger.debug("QSAR file: " + qsarfile.getRawLocation().toOSString());

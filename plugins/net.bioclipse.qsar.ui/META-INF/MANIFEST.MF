@@ -22,6 +22,8 @@ Require-Bundle: net.bioclipse.core,
  net.bioclipse.qsar,
  net.bioclipse.qsar.model,
  net.bioclipse.qsar.model.edit,
+ net.bioclipse.bibtexml,
+ net.bioclipse.bibtexml.edit,
  org.eclipse.jface.text,
  net.bioclipse.cdk.business,
  org.openscience.cdk.interfaces,
@@ -38,7 +40,6 @@ Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.log4j
 Export-Package: net.bioclipse.qsar.ui,
  net.bioclipse.qsar.ui.builder,
- net.bioclipse.qsar.ui.editors,
  net.bioclipse.qsar.ui.prefs,
  net.bioclipse.qsar.ui.util,
  net.bioclipse.qsar.ui.wizards

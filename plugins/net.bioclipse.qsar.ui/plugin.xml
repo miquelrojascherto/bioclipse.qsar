@@ -10,11 +10,10 @@
             filenames="qsar.xml"
             icon="icons/descriptor.png"
             contributorClass="org.eclipse.emf.edit.ui.action.EditingDomainActionBarContributor"
-            class="net.bioclipse.qsar.ui.editors.QSARFormEditor"
-            id="net.bioclipse.qsar.editors.QSARFormEditor">
+            class="net.bioclipse.qsar.ui.editors.QsarEditor"
+            id="net.bioclipse.qsar.ui.editor2.QsarEditor">
       </editor>
    </extension>
-
 
    <extension
          id="net.bioclipse.qsar.QSARBuilder"

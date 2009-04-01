@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.bioclipse.qsar.DescriptorlistType;
 import net.bioclipse.qsar.DocumentRoot;
@@ -13,6 +15,7 @@ import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
 import net.bioclipse.qsar.StructurelistType;
 import net.bioclipse.qsar.util.QsarAdapterFactory;
+import net.bioclipse.qsar.util.QsarResourceFactoryImpl;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
@@ -21,6 +24,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -71,14 +75,19 @@ public class QsarXMLUtils {
 
 		try {
 			URI fileURI = URI.createFileURI(new File("myQSAR.xml").getAbsolutePath());
-			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("xml", new XMLResourceFactoryImpl());
+			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("xml", new QsarResourceFactoryImpl());
 
 			Resource resource=resourceSet.createResource(fileURI);
 			resource.getContents().add(root);
 
 			//Serialize to byte[] and print to sysout
 			ByteArrayOutputStream os=new ByteArrayOutputStream();
-			resource.save(os, Collections.EMPTY_MAP);
+
+			Map opts=new HashMap();
+	      opts.put(XMLResource.OPTION_SCHEMA_LOCATION, Boolean.TRUE);
+	      opts.put(XMLResource.OPTION_ENCODING, "UTF-8");
+
+			resource.save(os, opts);
 
 			return os.toByteArray();
 

@@ -2,6 +2,6 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry excluding="net/bioclipse/qsar/builder/QSARBuilderREF.java|net/bioclipse/qsar/builder/QSARNatureREF.java|net/bioclipse/qsar/ui/editors/QsarXMLEditor.java" kind="src" path="src"/>
+	<classpathentry excluding="net/bioclipse/qsar/builder/QSARBuilderREF.java|net/bioclipse/qsar/builder/QSARNatureREF.java|net/bioclipse/qsar/ui/editors/QsarXMLEditor.java|net/bioclipse/qsar/ui/editor3/DescriptorsPage.java|net/bioclipse/qsar/ui/editor3/MoleculesPage.java|net/bioclipse/qsar/ui/editor3/OverviewPage.java|net/bioclipse/qsar/ui/editor3/ResponsesPage.java" kind="src" path="src"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
