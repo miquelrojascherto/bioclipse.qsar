@@ -7,7 +7,9 @@
     <qsar:resources checksum="N/A" file="smallCollection.sdf" id="mol2" name="smallCollection" type="text">
       <qsar:structure id="struct2" inchi="N/A" resourceindex="0"/>
     </qsar:resources>
-    <qsar:resources id="res3" name="reserpine" type="xml" URL="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=5770&amp;disopt=SaveXML"/>
+    <qsar:resources id="res3" name="reserpine" type="xml" URL="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=5770&amp;disopt=SaveXML">
+      <qsar:structure id="struct3" inchi="N/A" resourceindex="0"/>
+    </qsar:resources>
   </qsar:structurelist>
   <qsar:descriptorlist>
     <qsar:descriptors id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#xlogP" namespace="http://www.blueobelisk.org" provider="cdk">
@@ -23,10 +25,10 @@
     <qsar:preprocessingStep id="org.openscience.cdk.atomtype.sybyl" name="Sybyl Atom Types" namespace="http://cdk.sf.net" order="2"/>
   </qsar:preprocessing>
   <qsar:responselist>
-    <qsar:response structureID="mol2" unit="ic50">
+    <qsar:response structureID="mol1" unit="ic50">
       <qsar:value>11.45</qsar:value>
     </qsar:response>
-    <qsar:response unit="ic50">
+    <qsar:response structureID="mol2" unit="ic50">
       <qsar:value>15.45</qsar:value>
     </qsar:response>
     <qsar:response structureID="res3" unit="ic50">
