@@ -17,9 +17,9 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 
 import net.sf.bibtexml.ArticleType;
+import net.sf.bibtexml.BibTeXMLEntryType;
 import net.sf.bibtexml.BibtexmlFactory;
 import net.sf.bibtexml.DocumentRoot;
-import net.sf.bibtexml.EntryType;
 import net.sf.bibtexml.FileType;
 import net.sf.bibtexml.util.BibtexmlAdapterFactory;
 import net.sf.bibtexml.util.BibtexmlResourceFactoryImpl;
@@ -40,7 +40,7 @@ public class TestWriteXML {
         FileType file = BibtexmlFactory.eINSTANCE.createFileType();
         root.setFile( file );
 
-        EntryType entry = BibtexmlFactory.eINSTANCE.createEntryType();
+        BibTeXMLEntryType entry = BibtexmlFactory.eINSTANCE.createBibTeXMLEntryType();
 
         ArticleType article=BibtexmlFactory.eINSTANCE.createArticleType();
         article.setAuthor( "Spjuth, Ola and Helmus, Tobias and Willighagen, Egon and Kuhn, Stefan and Eklund, Martin and Wagener, Johannes and Murray-Rust, Peter and Steinbeck, Christoph and Wikberg, Jarl" );

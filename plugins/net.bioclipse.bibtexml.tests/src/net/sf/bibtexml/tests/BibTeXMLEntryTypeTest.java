@@ -8,16 +8,16 @@ package net.sf.bibtexml.tests;
 
 import junit.textui.TestRunner;
 
+import net.sf.bibtexml.BibTeXMLEntryType;
 import net.sf.bibtexml.BibtexmlFactory;
-import net.sf.bibtexml.EntryType;
 
 /**
  * <!-- begin-user-doc -->
- * A test case for the model object '<em><b>Entry Type</b></em>'.
+ * A test case for the model object '<em><b>Bib Te XML Entry Type</b></em>'.
  * <!-- end-user-doc -->
  * @generated
  */
-public class EntryTypeTest extends BibTeXMLEntriesClassTest {
+public class BibTeXMLEntryTypeTest extends BibTeXMLEntriesClassTest {
 
     /**
      * <!-- begin-user-doc -->
@@ -25,28 +25,28 @@ public class EntryTypeTest extends BibTeXMLEntriesClassTest {
      * @generated
      */
     public static void main(String[] args) {
-        TestRunner.run(EntryTypeTest.class);
+        TestRunner.run(BibTeXMLEntryTypeTest.class);
     }
 
     /**
-     * Constructs a new Entry Type test case with the given name.
+     * Constructs a new Bib Te XML Entry Type test case with the given name.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    public EntryTypeTest(String name) {
+    public BibTeXMLEntryTypeTest(String name) {
         super(name);
     }
 
     /**
-     * Returns the fixture for this Entry Type test case.
+     * Returns the fixture for this Bib Te XML Entry Type test case.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
-    protected EntryType getFixture() {
-        return (EntryType)fixture;
+    protected BibTeXMLEntryType getFixture() {
+        return (BibTeXMLEntryType)fixture;
     }
 
     /**
@@ -57,7 +57,7 @@ public class EntryTypeTest extends BibTeXMLEntriesClassTest {
      */
     @Override
     protected void setUp() throws Exception {
-        setFixture(BibtexmlFactory.eINSTANCE.createEntryType());
+        setFixture(BibtexmlFactory.eINSTANCE.createBibTeXMLEntryType());
     }
 
     /**
@@ -71,4 +71,4 @@ public class EntryTypeTest extends BibTeXMLEntriesClassTest {
         setFixture(null);
     }
 
-} //EntryTypeTest
+} //BibTeXMLEntryTypeTest

@@ -489,10 +489,10 @@ public class DocumentRootTest extends TestCase {
     }
 
     /**
-     * Tests the '{@link net.sf.bibtexml.DocumentRoot#setEntry(net.sf.bibtexml.EntryType) <em>Entry</em>}' feature setter.
+     * Tests the '{@link net.sf.bibtexml.DocumentRoot#setEntry(net.sf.bibtexml.BibTeXMLEntryType) <em>Entry</em>}' feature setter.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see net.sf.bibtexml.DocumentRoot#setEntry(net.sf.bibtexml.EntryType)
+     * @see net.sf.bibtexml.DocumentRoot#setEntry(net.sf.bibtexml.BibTeXMLEntryType)
      * @generated
      */
     public void testSetEntry() {
