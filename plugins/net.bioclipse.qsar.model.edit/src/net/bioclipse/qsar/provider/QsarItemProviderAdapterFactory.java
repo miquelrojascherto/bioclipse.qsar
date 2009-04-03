@@ -133,6 +133,52 @@ public class QsarItemProviderAdapterFactory extends QsarAdapterFactory implement
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.DescriptorresultlistsType} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected DescriptorresultlistsTypeItemProvider descriptorresultlistsTypeItemProvider;
+
+    /**
+     * This creates an adapter for a {@link net.bioclipse.qsar.DescriptorresultlistsType}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createDescriptorresultlistsTypeAdapter() {
+        if (descriptorresultlistsTypeItemProvider == null) {
+            descriptorresultlistsTypeItemProvider = new DescriptorresultlistsTypeItemProvider(this);
+        }
+
+        return descriptorresultlistsTypeItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.DescriptorresultType} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected DescriptorresultTypeItemProvider descriptorresultTypeItemProvider;
+
+    /**
+     * This creates an adapter for a {@link net.bioclipse.qsar.DescriptorresultType}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createDescriptorresultTypeAdapter() {
+        if (descriptorresultTypeItemProvider == null) {
+            descriptorresultTypeItemProvider = new DescriptorresultTypeItemProvider(this);
+        }
+
+        return descriptorresultTypeItemProvider;
+    }
+
+    /**
      * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.DescriptorType} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -153,6 +199,29 @@ public class QsarItemProviderAdapterFactory extends QsarAdapterFactory implement
         }
 
         return descriptorTypeItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link net.bioclipse.qsar.DescriptorvalueType} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected DescriptorvalueTypeItemProvider descriptorvalueTypeItemProvider;
+
+    /**
+     * This creates an adapter for a {@link net.bioclipse.qsar.DescriptorvalueType}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createDescriptorvalueTypeAdapter() {
+        if (descriptorvalueTypeItemProvider == null) {
+            descriptorvalueTypeItemProvider = new DescriptorvalueTypeItemProvider(this);
+        }
+
+        return descriptorvalueTypeItemProvider;
     }
 
     /**
@@ -532,7 +601,10 @@ public class QsarItemProviderAdapterFactory extends QsarAdapterFactory implement
     public void dispose() {
         if (descriptorlistTypeItemProvider != null) descriptorlistTypeItemProvider.dispose();
         if (descriptorproviderTypeItemProvider != null) descriptorproviderTypeItemProvider.dispose();
+        if (descriptorresultlistsTypeItemProvider != null) descriptorresultlistsTypeItemProvider.dispose();
+        if (descriptorresultTypeItemProvider != null) descriptorresultTypeItemProvider.dispose();
         if (descriptorTypeItemProvider != null) descriptorTypeItemProvider.dispose();
+        if (descriptorvalueTypeItemProvider != null) descriptorvalueTypeItemProvider.dispose();
         if (documentRootItemProvider != null) documentRootItemProvider.dispose();
         if (metadataTypeItemProvider != null) metadataTypeItemProvider.dispose();
         if (parameterTypeItemProvider != null) parameterTypeItemProvider.dispose();

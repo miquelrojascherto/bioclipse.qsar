@@ -14,9 +14,9 @@ package net.bioclipse.qsar.provider;
 import java.util.Collection;
 import java.util.List;
 
+import net.bioclipse.qsar.DescriptorresultType;
 import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
-import net.bioclipse.qsar.QsarType;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -25,22 +25,24 @@ import org.eclipse.emf.common.util.ResourceLocator;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link net.bioclipse.qsar.QsarType} object.
+ * This is the item provider adapter for a {@link net.bioclipse.qsar.DescriptorresultType} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class QsarTypeItemProvider
+public class DescriptorresultTypeItemProvider
     extends ItemProviderAdapter
     implements
         IEditingDomainItemProvider,
@@ -61,7 +63,7 @@ public class QsarTypeItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    public QsarTypeItemProvider(AdapterFactory adapterFactory) {
+    public DescriptorresultTypeItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -76,8 +78,54 @@ public class QsarTypeItemProvider
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
+            addDescriptoridPropertyDescriptor(object);
+            addStructureidPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
+    }
+
+    /**
+     * This adds a property descriptor for the Descriptorid feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addDescriptoridPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_DescriptorresultType_descriptorid_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_DescriptorresultType_descriptorid_feature", "_UI_DescriptorresultType_type"),
+                 QsarPackage.Literals.DESCRIPTORRESULT_TYPE__DESCRIPTORID,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the Structureid feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addStructureidPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_DescriptorresultType_structureid_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_DescriptorresultType_structureid_feature", "_UI_DescriptorresultType_type"),
+                 QsarPackage.Literals.DESCRIPTORRESULT_TYPE__STRUCTUREID,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
+                 null));
     }
 
     /**
@@ -92,14 +140,7 @@ public class QsarTypeItemProvider
     public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
-            childrenFeatures.add(QsarPackage.Literals.QSAR_TYPE__STRUCTURELIST);
-            childrenFeatures.add(QsarPackage.Literals.QSAR_TYPE__DESCRIPTORLIST);
-            childrenFeatures.add(QsarPackage.Literals.QSAR_TYPE__DESCRIPTORPROVIDERS);
-            childrenFeatures.add(QsarPackage.Literals.QSAR_TYPE__PREPROCESSING);
-            childrenFeatures.add(QsarPackage.Literals.QSAR_TYPE__RESPONSELIST);
-            childrenFeatures.add(QsarPackage.Literals.QSAR_TYPE__RESPONSEUNIT);
-            childrenFeatures.add(QsarPackage.Literals.QSAR_TYPE__METADATA);
-            childrenFeatures.add(QsarPackage.Literals.QSAR_TYPE__DESCRIPTORRESULTLIST);
+            childrenFeatures.add(QsarPackage.Literals.DESCRIPTORRESULT_TYPE__DESCRIPTORVALUE);
         }
         return childrenFeatures;
     }
@@ -118,14 +159,14 @@ public class QsarTypeItemProvider
     }
 
     /**
-     * This returns QsarType.gif.
+     * This returns DescriptorresultType.gif.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/QsarType"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/DescriptorresultType"));
     }
 
     /**
@@ -136,7 +177,10 @@ public class QsarTypeItemProvider
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_QsarType_type");
+        String label = ((DescriptorresultType)object).getDescriptorid();
+        return label == null || label.length() == 0 ?
+            getString("_UI_DescriptorresultType_type") :
+            getString("_UI_DescriptorresultType_type") + " " + label;
     }
 
     /**
@@ -150,15 +194,12 @@ public class QsarTypeItemProvider
     public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
-        switch (notification.getFeatureID(QsarType.class)) {
-            case QsarPackage.QSAR_TYPE__STRUCTURELIST:
-            case QsarPackage.QSAR_TYPE__DESCRIPTORLIST:
-            case QsarPackage.QSAR_TYPE__DESCRIPTORPROVIDERS:
-            case QsarPackage.QSAR_TYPE__PREPROCESSING:
-            case QsarPackage.QSAR_TYPE__RESPONSELIST:
-            case QsarPackage.QSAR_TYPE__RESPONSEUNIT:
-            case QsarPackage.QSAR_TYPE__METADATA:
-            case QsarPackage.QSAR_TYPE__DESCRIPTORRESULTLIST:
+        switch (notification.getFeatureID(DescriptorresultType.class)) {
+            case QsarPackage.DESCRIPTORRESULT_TYPE__DESCRIPTORID:
+            case QsarPackage.DESCRIPTORRESULT_TYPE__STRUCTUREID:
+                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+                return;
+            case QsarPackage.DESCRIPTORRESULT_TYPE__DESCRIPTORVALUE:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
                 return;
         }
@@ -178,43 +219,8 @@ public class QsarTypeItemProvider
 
         newChildDescriptors.add
             (createChildParameter
-                (QsarPackage.Literals.QSAR_TYPE__STRUCTURELIST,
-                 QsarFactory.eINSTANCE.createStructurelistType()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (QsarPackage.Literals.QSAR_TYPE__DESCRIPTORLIST,
-                 QsarFactory.eINSTANCE.createDescriptorlistType()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (QsarPackage.Literals.QSAR_TYPE__DESCRIPTORPROVIDERS,
-                 QsarFactory.eINSTANCE.createDescriptorproviderType()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (QsarPackage.Literals.QSAR_TYPE__PREPROCESSING,
-                 QsarFactory.eINSTANCE.createPreprocessingType()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (QsarPackage.Literals.QSAR_TYPE__RESPONSELIST,
-                 QsarFactory.eINSTANCE.createResponsesListType()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (QsarPackage.Literals.QSAR_TYPE__RESPONSEUNIT,
-                 QsarFactory.eINSTANCE.createResponseunitType()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (QsarPackage.Literals.QSAR_TYPE__METADATA,
-                 QsarFactory.eINSTANCE.createMetadataType()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (QsarPackage.Literals.QSAR_TYPE__DESCRIPTORRESULTLIST,
-                 QsarFactory.eINSTANCE.createDescriptorresultlistsType()));
+                (QsarPackage.Literals.DESCRIPTORRESULT_TYPE__DESCRIPTORVALUE,
+                 QsarFactory.eINSTANCE.createDescriptorvalueType()));
     }
 
     /**
