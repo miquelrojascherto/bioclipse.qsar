@@ -13,6 +13,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.DescriptorlistType;
 import net.bioclipse.qsar.DescriptorproviderType;
+import net.bioclipse.qsar.DescriptorresultType;
+import net.bioclipse.qsar.DescriptorresultlistsType;
+import net.bioclipse.qsar.DescriptorvalueType;
 import net.bioclipse.qsar.DocumentRoot;
 import net.bioclipse.qsar.MetadataType;
 import net.bioclipse.qsar.ParameterType;
@@ -144,10 +147,10 @@ public class TestWrite {
 		ResponsesListType reslist=QsarFactory.eINSTANCE.createResponsesListType();
 		cmd=SetCommand.create(editingDomain, qsar, QsarPackage.Literals.QSAR_TYPE__RESPONSELIST, reslist);
 		cCmd.append(cmd);
-		
-//    UnitlistType ulist=QsarFactory.eINSTANCE.createUnitlistType();
-//    cmd=SetCommand.create(editingDomain, qsar, QsarPackage.Literals.QSAR_TYPE__UNITLIST, ulist);
-//    cCmd.append(cmd);
+
+		DescriptorresultlistsType descreslist=QsarFactory.eINSTANCE.createDescriptorresultlistsType();
+    cmd=SetCommand.create(editingDomain, qsar, QsarPackage.Literals.QSAR_TYPE__DESCRIPTORRESULTLIST, descreslist);
+    cCmd.append(cmd);
 
 
 		//Add resources and structures
@@ -305,6 +308,41 @@ public class TestWrite {
     //Add to responselist
 		cmd=AddCommand.create(editingDomain, reslist, QsarPackage.Literals.RESPONSES_LIST_TYPE__RESPONSE, response3);
 		cCmd.append(cmd);
+
+		
+		//Add some bogus descriptor results
+		DescriptorresultType descres1=QsarFactory.eINSTANCE.createDescriptorresultType();
+		descres1.setDescriptorid( desc1.getId() );
+		descres1.setStructureid( struct1.getId() );
+    cmd=AddCommand.create(editingDomain, descreslist, QsarPackage.Literals.DESCRIPTORRESULTLISTS_TYPE__DESCRIPTORRESULT, descres1);
+    cCmd.append(cmd);
+		
+		DescriptorvalueType dvalue1=QsarFactory.eINSTANCE.createDescriptorvalueType();
+		dvalue1.setIndex( 0 );
+    dvalue1.setLabel( "desc1_col1" );
+    dvalue1.setValue( "19.564" );
+    cmd=AddCommand.create(editingDomain, descres1, QsarPackage.Literals.DESCRIPTORRESULT_TYPE__DESCRIPTORVALUE, dvalue1);
+    cCmd.append(cmd);
+
+    DescriptorvalueType dvalue2=QsarFactory.eINSTANCE.createDescriptorvalueType();
+    dvalue2.setIndex( 1 );
+    dvalue2.setLabel( "desc1_col2" );
+    dvalue2.setValue( "76.2" );
+    cmd=AddCommand.create(editingDomain, descres1, QsarPackage.Literals.DESCRIPTORRESULT_TYPE__DESCRIPTORVALUE, dvalue2);
+    cCmd.append(cmd);
+
+    DescriptorresultType descres2=QsarFactory.eINSTANCE.createDescriptorresultType();
+    descres2.setDescriptorid( desc2.getId() );
+    descres2.setStructureid( struct1.getId() );
+    cmd=AddCommand.create(editingDomain, descreslist, QsarPackage.Literals.DESCRIPTORRESULTLISTS_TYPE__DESCRIPTORRESULT, descres2);
+    cCmd.append(cmd);
+    
+    DescriptorvalueType dvalue12=QsarFactory.eINSTANCE.createDescriptorvalueType();
+    dvalue12.setIndex( 0 );
+    dvalue12.setLabel( "desc2label" );
+    dvalue12.setValue( "19.564" );
+    cmd=AddCommand.create(editingDomain, descres2, QsarPackage.Literals.DESCRIPTORRESULT_TYPE__DESCRIPTORVALUE, dvalue12);
+    cCmd.append(cmd);
 
     
 		//Execute the CompoundCommand

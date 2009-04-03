@@ -51,4 +51,13 @@
       </bibtexml:article>
     </qsar:reference>
   </qsar:metadata>
+  <qsar:descriptorresultlist>
+    <qsar:descriptorresult descriptorid="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#xlogP" structureid="struct1">
+      <qsar:descriptorvalue index="0" label="desc1_col1" value="19.564"/>
+      <qsar:descriptorvalue index="1" label="desc1_col2" value="76.2"/>
+    </qsar:descriptorresult>
+    <qsar:descriptorresult descriptorid="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomCount" structureid="struct1">
+      <qsar:descriptorvalue index="0" label="desc2label" value="19.564"/>
+    </qsar:descriptorresult>
+  </qsar:descriptorresultlist>
 </qsar:qsar>
