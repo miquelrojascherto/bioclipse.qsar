@@ -886,8 +886,8 @@ public class QsarManager implements IQsarManager{
         Command cmd;
 
         DescriptorType modelDescriptor=QsarFactory.eINSTANCE.createDescriptorType();
-        modelDescriptor.setId(desc.getId());
-        modelDescriptor.setNamespace(desc.getNamesapce());
+        modelDescriptor.setId(generateUniqueDescriptorID(qsarModel));
+        modelDescriptor.setOntologyid( desc.getId());
         cmd=AddCommand.create(editingDomain, descriptorList, QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTORS, modelDescriptor);
         cCmd.append(cmd);
 
@@ -961,6 +961,31 @@ public class QsarManager implements IQsarManager{
 
         return modelDescriptor;
     }
+
+
+    /**
+     * Get a new unique descriptorID by combining String descriptor with the 
+     * lowest available int
+     * @param qsarModel
+     * @return
+     */
+    private String generateUniqueDescriptorID( QsarType qsarModel ) {
+
+        //Build arraylist of existing IDs
+        List<String> existingIDs=new ArrayList<String>();
+        for (DescriptorType desc : qsarModel.getDescriptorlist().getDescriptors()){
+            existingIDs.add( desc.getId() );
+        }
+        
+        int cnt=1;
+        String prefix="descriptor";
+        while(existingIDs.contains( prefix+cnt )){
+            cnt++;
+        }
+
+        return prefix+cnt;
+    }
+
 
 
     public Map<IMolecule, List<IDescriptorResult>> calculate(
@@ -1124,7 +1149,9 @@ public class QsarManager implements IQsarManager{
 
                     //If text-based (currently the only supported method in Bioclipse)
                     structure.setResourceindex( molindex );
-                    structure.setChanged( true );
+                    
+                    //FIXME: set structure changed in preferences!
+//                    structure.setChanged( true );
 
                     //Calculate and add inchi to structure
                     try {
@@ -1263,6 +1290,86 @@ public class QsarManager implements IQsarManager{
         //Execute all commands in a batch
         editingDomain.getCommandStack().execute(ccmd);
 
+    }
+
+
+    /**
+     * Add a descriptor to teh QSAR model
+     */
+    public void addDescriptorToModel( QsarType qsarModel, 
+                                      EditingDomain editingDomain,
+                                      Descriptor desc, 
+                                      DescriptorImpl impl ) {
+
+        //Collect all in a compound command, for ability 
+        //to undo everything at the same time
+      CompoundCommand cCmd = new CompoundCommand();
+      Command cmd;
+
+      DescriptorType modelDescriptor=QsarFactory.eINSTANCE.createDescriptorType();
+      modelDescriptor.setId(generateUniqueDescriptorID( qsarModel ));
+      modelDescriptor.setOntologyid( desc.getId());
+
+      //Check if provider already added to qsarModel
+      DescriptorproviderType dprov=null;
+      for (DescriptorproviderType pdimpl : qsarModel.getDescriptorproviders()){
+        if (pdimpl.getId().equals(impl.getProvider().getId())){
+          dprov=QsarFactory.eINSTANCE.createDescriptorproviderType();
+          dprov.setId(pdimpl.getId());
+        }
+      }
+      
+      //If this is a new provider, add it to Qsar model
+      if (dprov==null){
+        DescriptorProvider prov = impl.getProvider();
+        
+        String pid=prov.getId();
+        String pname=prov.getName();
+        String pvend=prov.getVendor();
+        String pvers=prov.getVersion();
+        String pns=prov.getNamesapce();
+
+        //Create a provider (=descrImplType) in qsar model root
+        DescriptorproviderType newdprov=QsarFactory.eINSTANCE.createDescriptorproviderType();
+        newdprov.setId(pid);
+        newdprov.setURL( pns);
+        newdprov.setVendor(pvend);
+        newdprov.setName(pname);
+        newdprov.setVersion(pvers);
+        cmd=AddCommand.create(editingDomain, qsarModel, QsarPackage.Literals.QSAR_TYPE__DESCRIPTORPROVIDERS, newdprov);
+        cCmd.append(cmd);
+
+        //Reference the created impl by ID
+        dprov=QsarFactory.eINSTANCE.createDescriptorproviderType();
+        dprov.setId(newdprov.getId());
+        
+      }
+      
+      modelDescriptor.setProvider( dprov.getId() );
+
+      //Add found impl to descriptor element
+//      cmd=SetCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__PROVIDER, dprov.getId());
+//      cCmd.append(cmd);
+
+      //Parameters
+      if (impl.getParameters()!=null){
+        for (DescriptorParameter param : impl.getParameters()){
+
+          ParameterType modelParam=QsarFactory.eINSTANCE.createParameterType();
+          modelParam.setKey(param.getKey());
+          modelParam.setValue(param.getValue());
+          cmd=AddCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__PARAMETER, modelParam);
+          cCmd.append(cmd);
+
+        }
+      }
+      
+      //Add the descriptor to descriptorList last, for notification issues
+      cmd=AddCommand.create(editingDomain, qsarModel.getDescriptorlist(), QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTORS, modelDescriptor);
+      cCmd.append(cmd);
+
+      //Execute the compiund command
+      editingDomain.getCommandStack().execute(cCmd);        
     }
 
 }
