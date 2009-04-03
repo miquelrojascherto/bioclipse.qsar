@@ -212,8 +212,8 @@ public class TestWrite {
 		//======================
 		//Desc1
 		DescriptorType desc1=QsarFactory.eINSTANCE.createDescriptorType();
-		desc1.setId("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#xlogP");
-		desc1.setNamespace("http://www.blueobelisk.org");
+		desc1.setId( "descriptor1" );
+		desc1.setOntologyid( "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#xlogP");
 		desc1.setProvider( cdk.getId() );
 		cmd=AddCommand.create(editingDomain, desclist, QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTORS, desc1);
 		cCmd.append(cmd);
@@ -232,8 +232,8 @@ public class TestWrite {
 
 		//Desc2
 		DescriptorType desc2=QsarFactory.eINSTANCE.createDescriptorType();
-		desc2.setId("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomCount");
-		desc2.setNamespace("http://www.blueobelisk.org");
+		desc2.setId( "descriptor2" );
+		desc2.setOntologyid("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomCount");
 		desc2.setProvider( dragon.getId() );
 
     //Desc2 provider
@@ -249,8 +249,8 @@ public class TestWrite {
 
 		//Desc2
 		DescriptorType desc3=QsarFactory.eINSTANCE.createDescriptorType();
-		desc3.setId("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomCount");
-		desc3.setNamespace("http://www.blueobelisk.org");
+    desc3.setId( "descriptor3" );
+		desc3.setOntologyid( "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomCount");
 		desc3.setProvider( cdk.getId() );
 		cmd=AddCommand.create(editingDomain, desclist, QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTORS, desc3);
 		cCmd.append(cmd);

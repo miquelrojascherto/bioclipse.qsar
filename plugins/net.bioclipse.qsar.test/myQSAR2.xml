@@ -12,11 +12,11 @@
     </qsar:resources>
   </qsar:structurelist>
   <qsar:descriptorlist>
-    <qsar:descriptors id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#xlogP" namespace="http://www.blueobelisk.org" provider="cdk">
+    <qsar:descriptors id="descriptor1" ontologyid="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#xlogP" provider="cdk">
       <qsar:parameter key="checkAromaticity" value="true"/>
       <qsar:parameter key="salicylFlag" value="false"/>
     </qsar:descriptors>
-    <qsar:descriptors id="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomCount" namespace="http://www.blueobelisk.org" provider="cdk"/>
+    <qsar:descriptors id="descriptor3" ontologyid="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomCount" provider="cdk"/>
   </qsar:descriptorlist>
   <qsar:descriptorproviders id="cdk" name="Chemistry Development Kit" URL="http://cdk.sourceforge.net" vendor="Chemistry Development Kit" version="1.1.0.20080808"/>
   <qsar:descriptorproviders id="dragon" name="Dragon descriptor" URL="http://talete.mi.it" vendor="Talete" version="5.14"/>
@@ -52,11 +52,11 @@
     </qsar:reference>
   </qsar:metadata>
   <qsar:descriptorresultlist>
-    <qsar:descriptorresult descriptorid="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#xlogP" structureid="struct1">
+    <qsar:descriptorresult descriptorid="descriptor1" structureid="struct1">
       <qsar:descriptorvalue index="0" label="desc1_col1" value="19.564"/>
       <qsar:descriptorvalue index="1" label="desc1_col2" value="76.2"/>
     </qsar:descriptorresult>
-    <qsar:descriptorresult descriptorid="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomCount" structureid="struct1">
+    <qsar:descriptorresult descriptorid="descriptor2" structureid="struct1">
       <qsar:descriptorvalue index="0" label="desc2label" value="19.564"/>
     </qsar:descriptorresult>
   </qsar:descriptorresultlist>
