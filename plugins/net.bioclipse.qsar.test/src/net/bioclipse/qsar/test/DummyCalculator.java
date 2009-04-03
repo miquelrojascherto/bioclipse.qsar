@@ -108,7 +108,7 @@ public class DummyCalculator implements IDescriptorCalculator {
 
             //Loop over all descriptors
             for (DescriptorType descType : moldesc.get( mol )){
-                String descriptorID=descType.getId();
+                String descriptorID=descType.getOntologyid();
 
                 //Dummy result
                 DescriptorResult res=new DescriptorResult();
