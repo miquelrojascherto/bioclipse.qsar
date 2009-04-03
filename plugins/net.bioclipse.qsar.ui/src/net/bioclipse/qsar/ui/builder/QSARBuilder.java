@@ -35,6 +35,7 @@ import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.cdk.domain.ICDKMolecule;
 import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.domain.IMolecule;
+import net.bioclipse.core.util.LogUtils;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.DescriptorlistType;
 import net.bioclipse.qsar.DescriptorresultType;
@@ -271,6 +272,11 @@ public class QSARBuilder extends IncrementalProjectBuilder
 
         //Read project file (qsar.xml) into an EMF model
         QsarType qsarModel=readModelFromProjectFile();
+        if (qsarModel==null){
+            logger.debug( "Building qsar project '" + getProject() + "' skipped " +
+            		"since project file could not be parsed." );
+            return;
+        }
 
         logger.debug( "******************************************\n" +
                       "Building qsar project: " + getProject().getName() );
@@ -294,8 +300,6 @@ public class QSARBuilder extends IncrementalProjectBuilder
         //================================================
         List<DescriptorType> allDescriptors=qsarModel.getDescriptorlist().getDescriptors();
         logger.debug("Descriptors: \n" + debugDescList(allDescriptors) );
-        //        List<DescriptorType> changedDescriptors=getChangedDescriptorIDsInQSARType(qsarType);
-        //        logger.debug("Changed descriptors: \n" + debugDescList(changedDescriptors) );
         if (checkCancel(monitor))
             return;
 
@@ -349,13 +353,13 @@ public class QSARBuilder extends IncrementalProjectBuilder
         //Set all structures to unchanged
         for (ResourceType resource : qsarModel.getStructurelist().getResources()){
             for (StructureType structure : resource.getStructure()){
-//                structure.setChanged( false );
+                setChangedInPreference(structure);
             }
         }
 
         //Set all descriptors to unchanged
         for (DescriptorType desc : qsarModel.getDescriptorlist().getDescriptors()){
-//                desc.setChanged( false );
+            setChangedInPreference(desc);
         }
 
     }
@@ -500,11 +504,10 @@ public class QSARBuilder extends IncrementalProjectBuilder
         for (DescriptorType desc : allDescriptors){
             ret=ret+"DescriptorID=" + desc.getId() + " ; provider=" + desc.getProvider()+ " ; params=" + desc.getParameter();
 
-            //FIXME: implement changed
-            //            if (desc.isChanged())
-//                ret=ret+" - CHANGED\n";
-//            else
-//                ret=ret+" - unchanged\n";
+            if (isDirtyInPreference( desc ))
+                ret=ret+" - CHANGED\n";
+            else
+                ret=ret+" - unchanged\n";
         }
         return ret;
     }
@@ -519,11 +522,10 @@ public class QSARBuilder extends IncrementalProjectBuilder
         for (StructureType structure : structureMap.keySet()){
             try {
                 ret=ret+structure.getId() + " - " + structureMap.get( structure ).getSMILES();
-                //FIXME: implement changed
-                //            if (desc.isChanged())
-//                    ret=ret+" - CHANGED\n";
-//                else
-//                    ret=ret+" - unchanged\n";
+                if (isDirtyInPreference( structure ))
+                    ret=ret+" - CHANGED\n";
+                else
+                    ret=ret+" - unchanged\n";
             } catch ( BioclipseException e ) {
                 e.printStackTrace();
             }
@@ -540,13 +542,13 @@ public class QSARBuilder extends IncrementalProjectBuilder
         //Changedstructures need computing for all descriptors
         for (StructureType structure : structureMap.keySet()){
             IMolecule mol=structureMap.get( structure);
-//            if (structure.isChanged())
+            if (isDirtyInPreference(structure))
                 molDescMap.put( mol, allDescriptors );
         }
 
         //Changeddescriptors need computing for all molecules
         for (DescriptorType desc : allDescriptors){
-//            if (desc.isChanged()){
+            if (isDirtyInPreference(desc)){
                 for (IMolecule mol : structureMap.values()){
                     List<DescriptorType>  localDescList;
                     if (molDescMap.containsKey( mol )){
@@ -559,12 +561,13 @@ public class QSARBuilder extends IncrementalProjectBuilder
                         localDescList.add( desc );
                     }
                 }
-//            }
+            }
 
         }
 
         return molDescMap;
     }
+
 
 
     /**
@@ -587,7 +590,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
 
             //            if (resource.getURL() !=null && resource.getURL()().length()>0){
             //                //We have an URL
-            //                //TODO: Not implemented yet
+            //                //TODO: URL is not implemented yet
             //            }
             //            else
             if (resource.getFile()!=null && resource.getFile().length()>0){
@@ -606,7 +609,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
                 for (StructureType structure : resource.getStructure()){
                     //                    if (resource.getType().equals( TypeType.XML )){
                     //                        String id=structure.getResourceid();
-                    //                        //TODO: not implemented yet
+                    //                        //TODO: XML-files is not implemented yet
                     //                    }
                     //                    if (resource.getType().equals( TypeType.TEXT )){
                     //                        int ix=structure.getResourceindex();
@@ -693,13 +696,18 @@ public class QSARBuilder extends IncrementalProjectBuilder
         URI fileURI = URI.createFileURI(qsarfile.getRawLocation().toOSString());
 
         // Demand load the resource for this file.
-        Resource resource = resourceSet.getResource(fileURI, true);
+        try{
+            Resource resource = resourceSet.getResource(fileURI, true);
+            DocumentRoot root=(DocumentRoot) resource.getContents().get(0);
+            QsarType qsarType=root.getQsar();
 
-        DocumentRoot root=(DocumentRoot) resource.getContents().get(0);
+            return qsarType;
+        }catch (Exception e){
+            logger.error("Could not read qsar.xml in project: " + getProject() 
+                         + " with error: " + e.getMessage());
+        }
 
-        QsarType qsarType=root.getQsar();
-
-        return qsarType;
+        return null;
     }
 
     /**
@@ -1432,4 +1440,31 @@ FIXME HERE
             logger.error(e);
         }
     }
+    
+    
+    private void setChangedInPreference( DescriptorType desc ) {
+
+        // TODO Auto-generated method stub
+        
+    }
+
+    private void setChangedInPreference( StructureType structure ) {
+
+        // TODO Auto-generated method stub
+        
+    }
+
+    private boolean isDirtyInPreference( DescriptorType desc ) {
+
+        // TODO Auto-generated method stub
+        return true;
+    }
+
+    private boolean isDirtyInPreference( StructureType structure ) {
+
+        // TODO Auto-generated method stub
+        return true;
+    }
+
+
 }
