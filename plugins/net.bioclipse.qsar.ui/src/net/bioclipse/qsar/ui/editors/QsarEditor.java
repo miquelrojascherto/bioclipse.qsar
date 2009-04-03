@@ -33,6 +33,8 @@ import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 
 import org.eclipse.core.runtime.CoreException;
@@ -610,6 +612,7 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
             handleChangedResources();
             changedResources.clear();
             savedResources.clear();
+
         }
     }
 
@@ -627,19 +630,38 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
             editingDomain.getCommandStack().flush();
 
             updateProblemIndication = false;
-            for (Resource resource : changedResources) {
-                if (resource.isLoaded()) {
-                    resource.unload();
-                    try {
-                        resource.load(Collections.EMPTY_MAP);
-                    }
-                    catch (IOException exception) {
-                        if (!resourceToDiagnosticMap.containsKey(resource)) {
-                            resourceToDiagnosticMap.put(resource, analyzeResourceProblems(resource, exception));
-                        }
-                    }
-                }
+            //We need to make sure that no build is run in background
+            
+            
+            try {
+                ResourcesPlugin.getWorkspace().run(
+                                                   new IWorkspaceRunnable() {
+                                                       public void run(IProgressMonitor monitor)
+                                                       throws CoreException
+                                                       {
+                                                           for (Resource resource : changedResources) {
+                                                               if (resource.isLoaded()) {
+                                                                   resource.unload();
+                                                                   try {
+                                                                       resource.load(Collections.EMPTY_MAP);
+                                                                   }
+                                                                   catch (IOException exception) {
+                                                                       if (!resourceToDiagnosticMap.containsKey(resource)) {
+                                                                           resourceToDiagnosticMap.put(resource, analyzeResourceProblems(resource, exception));
+                                                                       }
+                                                                   }
+                                                               }
+                                                           }
+                                                       }
+                                                   },
+//                                               getProject(),
+//                                               IWorkspace.AVOID_UPDATE,
+                                                   new NullProgressMonitor()
+                );
+            } catch ( CoreException e ) {
+                e.printStackTrace();
             }
+            
 
             if (AdapterFactoryEditingDomain.isStale(editorSelection)) {
                 setSelection(StructuredSelection.EMPTY);

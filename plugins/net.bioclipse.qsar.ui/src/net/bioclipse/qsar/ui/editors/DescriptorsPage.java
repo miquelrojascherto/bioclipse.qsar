@@ -415,7 +415,7 @@ private Table paramsTable;
 //					//Add this instance to rightViewer's model
 //					selectedDescriptors.add(inst);
 					
-					addDescriptorToModel(desc, impl);
+					qsar.addDescriptorToModel(qsarModel, editingDomain, desc, impl);
 					
 					
 				}else{
@@ -436,79 +436,6 @@ private Table paramsTable;
     }
 
 
-    private void addDescriptorToModel(Descriptor desc, DescriptorImpl impl) {
-    	
-    	//Collect all in a compound command, for ability 
-    	//to undo everything at the same time
-		CompoundCommand cCmd = new CompoundCommand();
-		Command cmd;
-
-    	DescriptorType modelDescriptor=QsarFactory.eINSTANCE.createDescriptorType();
-		modelDescriptor.setId(desc.getId());
-		modelDescriptor.setNamespace(desc.getNamesapce());
-
-		//Check if provider already added to qsarModel
-		DescriptorproviderType dprov=null;
-		for (DescriptorproviderType pdimpl : qsarModel.getDescriptorproviders()){
-			if (pdimpl.getId().equals(impl.getProvider().getId())){
-				dprov=QsarFactory.eINSTANCE.createDescriptorproviderType();
-				dprov.setId(pdimpl.getId());
-			}
-		}
-		
-		//If this is a new provider, add it to Qsar model
-		if (dprov==null){
-			DescriptorProvider prov = impl.getProvider();
-			
-			String pid=prov.getId();
-			String pname=prov.getName();
-			String pvend=prov.getVendor();
-			String pvers=prov.getVersion();
-			String pns=prov.getNamesapce();
-
-			//Create a provider (=descrImplType) in qsar model root
-			DescriptorproviderType newdprov=QsarFactory.eINSTANCE.createDescriptorproviderType();
-			newdprov.setId(pid);
-			newdprov.setURL( pns);
-			newdprov.setVendor(pvend);
-			newdprov.setName(pname);
-			newdprov.setVersion(pvers);
-			cmd=AddCommand.create(editingDomain, qsarModel, QsarPackage.Literals.QSAR_TYPE__DESCRIPTORPROVIDERS, newdprov);
-			cCmd.append(cmd);
-
-			//Reference the created impl by ID
-			dprov=QsarFactory.eINSTANCE.createDescriptorproviderType();
-			dprov.setId(newdprov.getId());
-			
-		}
-		
-		modelDescriptor.setProvider( dprov.getId() );
-
-		//Add found impl to descriptor element
-//		cmd=SetCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__PROVIDER, dprov.getId());
-//		cCmd.append(cmd);
-
-		//Parameters
-		if (impl.getParameters()!=null){
-			for (DescriptorParameter param : impl.getParameters()){
-
-				ParameterType modelParam=QsarFactory.eINSTANCE.createParameterType();
-				modelParam.setKey(param.getKey());
-				modelParam.setValue(param.getValue());
-				cmd=AddCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__PARAMETER, modelParam);
-				cCmd.append(cmd);
-
-			}
-		}
-		
-		//Add the descriptor to descriptorList last, for notification issues
-		cmd=AddCommand.create(editingDomain, descriptorList, QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTORS, modelDescriptor);
-		cCmd.append(cmd);
-
-		//Execute the compiund command
-		editingDomain.getCommandStack().execute(cCmd);
-
-	}
 
 
 	/**
