@@ -14,6 +14,7 @@ import java.util.Collection;
 
 import net.bioclipse.qsar.DescriptorlistType;
 import net.bioclipse.qsar.DescriptorproviderType;
+import net.bioclipse.qsar.DescriptorresultlistsType;
 import net.bioclipse.qsar.MetadataType;
 import net.bioclipse.qsar.PreprocessingType;
 import net.bioclipse.qsar.QsarPackage;
@@ -50,6 +51,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link net.bioclipse.qsar.impl.QsarTypeImpl#getResponselist <em>Responselist</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.QsarTypeImpl#getResponseunit <em>Responseunit</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.QsarTypeImpl#getMetadata <em>Metadata</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.impl.QsarTypeImpl#getDescriptorresultlist <em>Descriptorresultlist</em>}</li>
  * </ul>
  * </p>
  *
@@ -132,6 +134,16 @@ public class QsarTypeImpl extends EObjectImpl implements QsarType {
      * @ordered
      */
     protected MetadataType metadata;
+
+    /**
+     * The cached value of the '{@link #getDescriptorresultlist() <em>Descriptorresultlist</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getDescriptorresultlist()
+     * @generated
+     * @ordered
+     */
+    protected DescriptorresultlistsType descriptorresultlist;
 
     /**
      * <!-- begin-user-doc -->
@@ -396,6 +408,49 @@ public class QsarTypeImpl extends EObjectImpl implements QsarType {
      * <!-- end-user-doc -->
      * @generated
      */
+    public DescriptorresultlistsType getDescriptorresultlist() {
+        return descriptorresultlist;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetDescriptorresultlist(DescriptorresultlistsType newDescriptorresultlist, NotificationChain msgs) {
+        DescriptorresultlistsType oldDescriptorresultlist = descriptorresultlist;
+        descriptorresultlist = newDescriptorresultlist;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, QsarPackage.QSAR_TYPE__DESCRIPTORRESULTLIST, oldDescriptorresultlist, newDescriptorresultlist);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setDescriptorresultlist(DescriptorresultlistsType newDescriptorresultlist) {
+        if (newDescriptorresultlist != descriptorresultlist) {
+            NotificationChain msgs = null;
+            if (descriptorresultlist != null)
+                msgs = ((InternalEObject)descriptorresultlist).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - QsarPackage.QSAR_TYPE__DESCRIPTORRESULTLIST, null, msgs);
+            if (newDescriptorresultlist != null)
+                msgs = ((InternalEObject)newDescriptorresultlist).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - QsarPackage.QSAR_TYPE__DESCRIPTORRESULTLIST, null, msgs);
+            msgs = basicSetDescriptorresultlist(newDescriptorresultlist, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.QSAR_TYPE__DESCRIPTORRESULTLIST, newDescriptorresultlist, newDescriptorresultlist));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -413,6 +468,8 @@ public class QsarTypeImpl extends EObjectImpl implements QsarType {
                 return ((InternalEList<?>)getResponseunit()).basicRemove(otherEnd, msgs);
             case QsarPackage.QSAR_TYPE__METADATA:
                 return basicSetMetadata(null, msgs);
+            case QsarPackage.QSAR_TYPE__DESCRIPTORRESULTLIST:
+                return basicSetDescriptorresultlist(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -439,6 +496,8 @@ public class QsarTypeImpl extends EObjectImpl implements QsarType {
                 return getResponseunit();
             case QsarPackage.QSAR_TYPE__METADATA:
                 return getMetadata();
+            case QsarPackage.QSAR_TYPE__DESCRIPTORRESULTLIST:
+                return getDescriptorresultlist();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -475,6 +534,9 @@ public class QsarTypeImpl extends EObjectImpl implements QsarType {
             case QsarPackage.QSAR_TYPE__METADATA:
                 setMetadata((MetadataType)newValue);
                 return;
+            case QsarPackage.QSAR_TYPE__DESCRIPTORRESULTLIST:
+                setDescriptorresultlist((DescriptorresultlistsType)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -508,6 +570,9 @@ public class QsarTypeImpl extends EObjectImpl implements QsarType {
             case QsarPackage.QSAR_TYPE__METADATA:
                 setMetadata((MetadataType)null);
                 return;
+            case QsarPackage.QSAR_TYPE__DESCRIPTORRESULTLIST:
+                setDescriptorresultlist((DescriptorresultlistsType)null);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -534,6 +599,8 @@ public class QsarTypeImpl extends EObjectImpl implements QsarType {
                 return responseunit != null && !responseunit.isEmpty();
             case QsarPackage.QSAR_TYPE__METADATA:
                 return metadata != null;
+            case QsarPackage.QSAR_TYPE__DESCRIPTORRESULTLIST:
+                return descriptorresultlist != null;
         }
         return super.eIsSet(featureID);
     }

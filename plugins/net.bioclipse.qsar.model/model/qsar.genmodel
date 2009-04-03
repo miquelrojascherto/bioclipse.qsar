@@ -23,12 +23,25 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorproviderType/vendor"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorproviderType/version"/>
     </genClasses>
+    <genClasses ecoreClass="qsar.ecore#//DescriptorresultlistsType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//DescriptorresultlistsType/descriptorresult"/>
+    </genClasses>
+    <genClasses ecoreClass="qsar.ecore#//DescriptorresultType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//DescriptorresultType/descriptorvalue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorresultType/descriptorid"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorresultType/structureid"/>
+    </genClasses>
     <genClasses ecoreClass="qsar.ecore#//DescriptorType">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//DescriptorType/parameter"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorType/changed"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorType/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorType/namespace"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorType/provider"/>
+    </genClasses>
+    <genClasses ecoreClass="qsar.ecore#//DescriptorvalueType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorvalueType/index"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorvalueType/label"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorvalueType/value"/>
     </genClasses>
     <genClasses ecoreClass="qsar.ecore#//DocumentRoot">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DocumentRoot/mixed"/>
@@ -66,6 +79,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//QsarType/responselist"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//QsarType/responseunit"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//QsarType/metadata"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//QsarType/descriptorresultlist"/>
     </genClasses>
     <genClasses ecoreClass="qsar.ecore#//ResourceType">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//ResourceType/structure"/>

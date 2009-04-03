@@ -74,7 +74,10 @@ public class QsarFactoryImpl extends EFactoryImpl implements QsarFactory {
         switch (eClass.getClassifierID()) {
             case QsarPackage.DESCRIPTORLIST_TYPE: return createDescriptorlistType();
             case QsarPackage.DESCRIPTORPROVIDER_TYPE: return createDescriptorproviderType();
+            case QsarPackage.DESCRIPTORRESULTLISTS_TYPE: return createDescriptorresultlistsType();
+            case QsarPackage.DESCRIPTORRESULT_TYPE: return createDescriptorresultType();
             case QsarPackage.DESCRIPTOR_TYPE: return createDescriptorType();
+            case QsarPackage.DESCRIPTORVALUE_TYPE: return createDescriptorvalueType();
             case QsarPackage.DOCUMENT_ROOT: return createDocumentRoot();
             case QsarPackage.METADATA_TYPE: return createMetadataType();
             case QsarPackage.PARAMETER_TYPE: return createParameterType();
@@ -151,9 +154,39 @@ public class QsarFactoryImpl extends EFactoryImpl implements QsarFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    public DescriptorresultlistsType createDescriptorresultlistsType() {
+        DescriptorresultlistsTypeImpl descriptorresultlistsType = new DescriptorresultlistsTypeImpl();
+        return descriptorresultlistsType;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public DescriptorresultType createDescriptorresultType() {
+        DescriptorresultTypeImpl descriptorresultType = new DescriptorresultTypeImpl();
+        return descriptorresultType;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public DescriptorType createDescriptorType() {
         DescriptorTypeImpl descriptorType = new DescriptorTypeImpl();
         return descriptorType;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public DescriptorvalueType createDescriptorvalueType() {
+        DescriptorvalueTypeImpl descriptorvalueType = new DescriptorvalueTypeImpl();
+        return descriptorvalueType;
     }
 
     /**

@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link net.bioclipse.qsar.QsarType#getResponselist <em>Responselist</em>}</li>
  *   <li>{@link net.bioclipse.qsar.QsarType#getResponseunit <em>Responseunit</em>}</li>
  *   <li>{@link net.bioclipse.qsar.QsarType#getMetadata <em>Metadata</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.QsarType#getDescriptorresultlist <em>Descriptorresultlist</em>}</li>
  * </ul>
  * </p>
  *
@@ -212,5 +213,32 @@ public interface QsarType extends EObject {
      * @generated
      */
     void setMetadata(MetadataType value);
+
+    /**
+     * Returns the value of the '<em><b>Descriptorresultlist</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Descriptorresultlist</em>' containment reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Descriptorresultlist</em>' containment reference.
+     * @see #setDescriptorresultlist(DescriptorresultlistsType)
+     * @see net.bioclipse.qsar.QsarPackage#getQsarType_Descriptorresultlist()
+     * @model containment="true"
+     *        extendedMetaData="kind='element' name='descriptorresultlist' namespace='##targetNamespace'"
+     * @generated
+     */
+    DescriptorresultlistsType getDescriptorresultlist();
+
+    /**
+     * Sets the value of the '{@link net.bioclipse.qsar.QsarType#getDescriptorresultlist <em>Descriptorresultlist</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Descriptorresultlist</em>' containment reference.
+     * @see #getDescriptorresultlist()
+     * @generated
+     */
+    void setDescriptorresultlist(DescriptorresultlistsType value);
 
 } // QsarType

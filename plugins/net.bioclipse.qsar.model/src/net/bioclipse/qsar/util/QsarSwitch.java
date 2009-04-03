@@ -110,9 +110,27 @@ public class QsarSwitch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case QsarPackage.DESCRIPTORRESULTLISTS_TYPE: {
+                DescriptorresultlistsType descriptorresultlistsType = (DescriptorresultlistsType)theEObject;
+                T result = caseDescriptorresultlistsType(descriptorresultlistsType);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case QsarPackage.DESCRIPTORRESULT_TYPE: {
+                DescriptorresultType descriptorresultType = (DescriptorresultType)theEObject;
+                T result = caseDescriptorresultType(descriptorresultType);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case QsarPackage.DESCRIPTOR_TYPE: {
                 DescriptorType descriptorType = (DescriptorType)theEObject;
                 T result = caseDescriptorType(descriptorType);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case QsarPackage.DESCRIPTORVALUE_TYPE: {
+                DescriptorvalueType descriptorvalueType = (DescriptorvalueType)theEObject;
+                T result = caseDescriptorvalueType(descriptorvalueType);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -223,6 +241,36 @@ public class QsarSwitch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Descriptorresultlists Type</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Descriptorresultlists Type</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseDescriptorresultlistsType(DescriptorresultlistsType object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Descriptorresult Type</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Descriptorresult Type</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseDescriptorresultType(DescriptorresultType object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Descriptor Type</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -234,6 +282,21 @@ public class QsarSwitch<T> {
      * @generated
      */
     public T caseDescriptorType(DescriptorType object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Descriptorvalue Type</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Descriptorvalue Type</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseDescriptorvalueType(DescriptorvalueType object) {
         return null;
     }
 

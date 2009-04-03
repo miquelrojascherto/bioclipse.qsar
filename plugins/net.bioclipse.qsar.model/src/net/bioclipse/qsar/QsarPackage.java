@@ -197,6 +197,80 @@ public interface QsarPackage extends EPackage {
     int DESCRIPTORPROVIDER_TYPE_FEATURE_COUNT = 5;
 
     /**
+     * The meta object id for the '{@link net.bioclipse.qsar.impl.DescriptorresultlistsTypeImpl <em>Descriptorresultlists Type</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see net.bioclipse.qsar.impl.DescriptorresultlistsTypeImpl
+     * @see net.bioclipse.qsar.impl.QsarPackageImpl#getDescriptorresultlistsType()
+     * @generated
+     */
+    int DESCRIPTORRESULTLISTS_TYPE = 2;
+
+    /**
+     * The feature id for the '<em><b>Descriptorresult</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DESCRIPTORRESULTLISTS_TYPE__DESCRIPTORRESULT = 0;
+
+    /**
+     * The number of structural features of the '<em>Descriptorresultlists Type</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DESCRIPTORRESULTLISTS_TYPE_FEATURE_COUNT = 1;
+
+    /**
+     * The meta object id for the '{@link net.bioclipse.qsar.impl.DescriptorresultTypeImpl <em>Descriptorresult Type</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see net.bioclipse.qsar.impl.DescriptorresultTypeImpl
+     * @see net.bioclipse.qsar.impl.QsarPackageImpl#getDescriptorresultType()
+     * @generated
+     */
+    int DESCRIPTORRESULT_TYPE = 3;
+
+    /**
+     * The feature id for the '<em><b>Descriptorvalue</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DESCRIPTORRESULT_TYPE__DESCRIPTORVALUE = 0;
+
+    /**
+     * The feature id for the '<em><b>Descriptorid</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DESCRIPTORRESULT_TYPE__DESCRIPTORID = 1;
+
+    /**
+     * The feature id for the '<em><b>Structureid</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DESCRIPTORRESULT_TYPE__STRUCTUREID = 2;
+
+    /**
+     * The number of structural features of the '<em>Descriptorresult Type</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DESCRIPTORRESULT_TYPE_FEATURE_COUNT = 3;
+
+    /**
      * The meta object id for the '{@link net.bioclipse.qsar.impl.DescriptorTypeImpl <em>Descriptor Type</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -204,7 +278,7 @@ public interface QsarPackage extends EPackage {
      * @see net.bioclipse.qsar.impl.QsarPackageImpl#getDescriptorType()
      * @generated
      */
-    int DESCRIPTOR_TYPE = 2;
+    int DESCRIPTOR_TYPE = 4;
 
     /**
      * The feature id for the '<em><b>Parameter</b></em>' containment reference list.
@@ -261,6 +335,52 @@ public interface QsarPackage extends EPackage {
     int DESCRIPTOR_TYPE_FEATURE_COUNT = 5;
 
     /**
+     * The meta object id for the '{@link net.bioclipse.qsar.impl.DescriptorvalueTypeImpl <em>Descriptorvalue Type</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see net.bioclipse.qsar.impl.DescriptorvalueTypeImpl
+     * @see net.bioclipse.qsar.impl.QsarPackageImpl#getDescriptorvalueType()
+     * @generated
+     */
+    int DESCRIPTORVALUE_TYPE = 5;
+
+    /**
+     * The feature id for the '<em><b>Index</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DESCRIPTORVALUE_TYPE__INDEX = 0;
+
+    /**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DESCRIPTORVALUE_TYPE__LABEL = 1;
+
+    /**
+     * The feature id for the '<em><b>Value</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DESCRIPTORVALUE_TYPE__VALUE = 2;
+
+    /**
+     * The number of structural features of the '<em>Descriptorvalue Type</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DESCRIPTORVALUE_TYPE_FEATURE_COUNT = 3;
+
+    /**
      * The meta object id for the '{@link net.bioclipse.qsar.impl.DocumentRootImpl <em>Document Root</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -268,7 +388,7 @@ public interface QsarPackage extends EPackage {
      * @see net.bioclipse.qsar.impl.QsarPackageImpl#getDocumentRoot()
      * @generated
      */
-    int DOCUMENT_ROOT = 3;
+    int DOCUMENT_ROOT = 6;
 
     /**
      * The feature id for the '<em><b>Mixed</b></em>' attribute list.
@@ -323,7 +443,7 @@ public interface QsarPackage extends EPackage {
      * @see net.bioclipse.qsar.impl.QsarPackageImpl#getMetadataType()
      * @generated
      */
-    int METADATA_TYPE = 4;
+    int METADATA_TYPE = 7;
 
     /**
      * The feature id for the '<em><b>Reference</b></em>' containment reference list.
@@ -396,7 +516,7 @@ public interface QsarPackage extends EPackage {
      * @see net.bioclipse.qsar.impl.QsarPackageImpl#getParameterType()
      * @generated
      */
-    int PARAMETER_TYPE = 5;
+    int PARAMETER_TYPE = 8;
 
     /**
      * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -433,7 +553,7 @@ public interface QsarPackage extends EPackage {
      * @see net.bioclipse.qsar.impl.QsarPackageImpl#getPreprocessingStepType()
      * @generated
      */
-    int PREPROCESSING_STEP_TYPE = 6;
+    int PREPROCESSING_STEP_TYPE = 9;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -497,7 +617,7 @@ public interface QsarPackage extends EPackage {
      * @see net.bioclipse.qsar.impl.QsarPackageImpl#getPreprocessingType()
      * @generated
      */
-    int PREPROCESSING_TYPE = 7;
+    int PREPROCESSING_TYPE = 10;
 
     /**
      * The feature id for the '<em><b>Preprocessing Step</b></em>' containment reference list.
@@ -525,7 +645,7 @@ public interface QsarPackage extends EPackage {
      * @see net.bioclipse.qsar.impl.QsarPackageImpl#getQsarType()
      * @generated
      */
-    int QSAR_TYPE = 8;
+    int QSAR_TYPE = 11;
 
     /**
      * The feature id for the '<em><b>Structurelist</b></em>' containment reference.
@@ -591,13 +711,22 @@ public interface QsarPackage extends EPackage {
     int QSAR_TYPE__METADATA = 6;
 
     /**
+     * The feature id for the '<em><b>Descriptorresultlist</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int QSAR_TYPE__DESCRIPTORRESULTLIST = 7;
+
+    /**
      * The number of structural features of the '<em>Type</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int QSAR_TYPE_FEATURE_COUNT = 7;
+    int QSAR_TYPE_FEATURE_COUNT = 8;
 
     /**
      * The meta object id for the '{@link net.bioclipse.qsar.impl.ResourceTypeImpl <em>Resource Type</em>}' class.
@@ -607,7 +736,7 @@ public interface QsarPackage extends EPackage {
      * @see net.bioclipse.qsar.impl.QsarPackageImpl#getResourceType()
      * @generated
      */
-    int RESOURCE_TYPE = 9;
+    int RESOURCE_TYPE = 12;
 
     /**
      * The feature id for the '<em><b>Structure</b></em>' containment reference list.
@@ -725,7 +854,7 @@ public interface QsarPackage extends EPackage {
      * @see net.bioclipse.qsar.impl.QsarPackageImpl#getResponsesListType()
      * @generated
      */
-    int RESPONSES_LIST_TYPE = 10;
+    int RESPONSES_LIST_TYPE = 13;
 
     /**
      * The feature id for the '<em><b>Response</b></em>' containment reference list.
@@ -753,7 +882,7 @@ public interface QsarPackage extends EPackage {
      * @see net.bioclipse.qsar.impl.QsarPackageImpl#getResponseType()
      * @generated
      */
-    int RESPONSE_TYPE = 11;
+    int RESPONSE_TYPE = 14;
 
     /**
      * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -808,7 +937,7 @@ public interface QsarPackage extends EPackage {
      * @see net.bioclipse.qsar.impl.QsarPackageImpl#getResponseunitType()
      * @generated
      */
-    int RESPONSEUNIT_TYPE = 12;
+    int RESPONSEUNIT_TYPE = 15;
 
     /**
      * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -872,7 +1001,7 @@ public interface QsarPackage extends EPackage {
      * @see net.bioclipse.qsar.impl.QsarPackageImpl#getStructurelistType()
      * @generated
      */
-    int STRUCTURELIST_TYPE = 13;
+    int STRUCTURELIST_TYPE = 16;
 
     /**
      * The feature id for the '<em><b>Resources</b></em>' containment reference list.
@@ -900,7 +1029,7 @@ public interface QsarPackage extends EPackage {
      * @see net.bioclipse.qsar.impl.QsarPackageImpl#getStructureType()
      * @generated
      */
-    int STRUCTURE_TYPE = 14;
+    int STRUCTURE_TYPE = 17;
 
     /**
      * The feature id for the '<em><b>Changed</b></em>' attribute.
@@ -964,7 +1093,7 @@ public interface QsarPackage extends EPackage {
      * @see net.bioclipse.qsar.impl.QsarPackageImpl#getTypeType()
      * @generated
      */
-    int TYPE_TYPE = 15;
+    int TYPE_TYPE = 18;
 
     /**
      * The meta object id for the '<em>Type Type Object</em>' data type.
@@ -974,7 +1103,7 @@ public interface QsarPackage extends EPackage {
      * @see net.bioclipse.qsar.impl.QsarPackageImpl#getTypeTypeObject()
      * @generated
      */
-    int TYPE_TYPE_OBJECT = 16;
+    int TYPE_TYPE_OBJECT = 19;
 
 
     /**
@@ -1064,6 +1193,70 @@ public interface QsarPackage extends EPackage {
     EAttribute getDescriptorproviderType_Version();
 
     /**
+     * Returns the meta object for class '{@link net.bioclipse.qsar.DescriptorresultlistsType <em>Descriptorresultlists Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Descriptorresultlists Type</em>'.
+     * @see net.bioclipse.qsar.DescriptorresultlistsType
+     * @generated
+     */
+    EClass getDescriptorresultlistsType();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link net.bioclipse.qsar.DescriptorresultlistsType#getDescriptorresult <em>Descriptorresult</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Descriptorresult</em>'.
+     * @see net.bioclipse.qsar.DescriptorresultlistsType#getDescriptorresult()
+     * @see #getDescriptorresultlistsType()
+     * @generated
+     */
+    EReference getDescriptorresultlistsType_Descriptorresult();
+
+    /**
+     * Returns the meta object for class '{@link net.bioclipse.qsar.DescriptorresultType <em>Descriptorresult Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Descriptorresult Type</em>'.
+     * @see net.bioclipse.qsar.DescriptorresultType
+     * @generated
+     */
+    EClass getDescriptorresultType();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link net.bioclipse.qsar.DescriptorresultType#getDescriptorvalue <em>Descriptorvalue</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Descriptorvalue</em>'.
+     * @see net.bioclipse.qsar.DescriptorresultType#getDescriptorvalue()
+     * @see #getDescriptorresultType()
+     * @generated
+     */
+    EReference getDescriptorresultType_Descriptorvalue();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.bioclipse.qsar.DescriptorresultType#getDescriptorid <em>Descriptorid</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Descriptorid</em>'.
+     * @see net.bioclipse.qsar.DescriptorresultType#getDescriptorid()
+     * @see #getDescriptorresultType()
+     * @generated
+     */
+    EAttribute getDescriptorresultType_Descriptorid();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.bioclipse.qsar.DescriptorresultType#getStructureid <em>Structureid</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Structureid</em>'.
+     * @see net.bioclipse.qsar.DescriptorresultType#getStructureid()
+     * @see #getDescriptorresultType()
+     * @generated
+     */
+    EAttribute getDescriptorresultType_Structureid();
+
+    /**
      * Returns the meta object for class '{@link net.bioclipse.qsar.DescriptorType <em>Descriptor Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1127,6 +1320,49 @@ public interface QsarPackage extends EPackage {
      * @generated
      */
     EAttribute getDescriptorType_Provider();
+
+    /**
+     * Returns the meta object for class '{@link net.bioclipse.qsar.DescriptorvalueType <em>Descriptorvalue Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Descriptorvalue Type</em>'.
+     * @see net.bioclipse.qsar.DescriptorvalueType
+     * @generated
+     */
+    EClass getDescriptorvalueType();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.bioclipse.qsar.DescriptorvalueType#getIndex <em>Index</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Index</em>'.
+     * @see net.bioclipse.qsar.DescriptorvalueType#getIndex()
+     * @see #getDescriptorvalueType()
+     * @generated
+     */
+    EAttribute getDescriptorvalueType_Index();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.bioclipse.qsar.DescriptorvalueType#getLabel <em>Label</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Label</em>'.
+     * @see net.bioclipse.qsar.DescriptorvalueType#getLabel()
+     * @see #getDescriptorvalueType()
+     * @generated
+     */
+    EAttribute getDescriptorvalueType_Label();
+
+    /**
+     * Returns the meta object for the attribute '{@link net.bioclipse.qsar.DescriptorvalueType#getValue <em>Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Value</em>'.
+     * @see net.bioclipse.qsar.DescriptorvalueType#getValue()
+     * @see #getDescriptorvalueType()
+     * @generated
+     */
+    EAttribute getDescriptorvalueType_Value();
 
     /**
      * Returns the meta object for class '{@link net.bioclipse.qsar.DocumentRoot <em>Document Root</em>}'.
@@ -1462,6 +1698,17 @@ public interface QsarPackage extends EPackage {
      * @generated
      */
     EReference getQsarType_Metadata();
+
+    /**
+     * Returns the meta object for the containment reference '{@link net.bioclipse.qsar.QsarType#getDescriptorresultlist <em>Descriptorresultlist</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Descriptorresultlist</em>'.
+     * @see net.bioclipse.qsar.QsarType#getDescriptorresultlist()
+     * @see #getQsarType()
+     * @generated
+     */
+    EReference getQsarType_Descriptorresultlist();
 
     /**
      * Returns the meta object for class '{@link net.bioclipse.qsar.ResourceType <em>Resource Type</em>}'.
@@ -1933,6 +2180,58 @@ public interface QsarPackage extends EPackage {
         EAttribute DESCRIPTORPROVIDER_TYPE__VERSION = eINSTANCE.getDescriptorproviderType_Version();
 
         /**
+         * The meta object literal for the '{@link net.bioclipse.qsar.impl.DescriptorresultlistsTypeImpl <em>Descriptorresultlists Type</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see net.bioclipse.qsar.impl.DescriptorresultlistsTypeImpl
+         * @see net.bioclipse.qsar.impl.QsarPackageImpl#getDescriptorresultlistsType()
+         * @generated
+         */
+        EClass DESCRIPTORRESULTLISTS_TYPE = eINSTANCE.getDescriptorresultlistsType();
+
+        /**
+         * The meta object literal for the '<em><b>Descriptorresult</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DESCRIPTORRESULTLISTS_TYPE__DESCRIPTORRESULT = eINSTANCE.getDescriptorresultlistsType_Descriptorresult();
+
+        /**
+         * The meta object literal for the '{@link net.bioclipse.qsar.impl.DescriptorresultTypeImpl <em>Descriptorresult Type</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see net.bioclipse.qsar.impl.DescriptorresultTypeImpl
+         * @see net.bioclipse.qsar.impl.QsarPackageImpl#getDescriptorresultType()
+         * @generated
+         */
+        EClass DESCRIPTORRESULT_TYPE = eINSTANCE.getDescriptorresultType();
+
+        /**
+         * The meta object literal for the '<em><b>Descriptorvalue</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DESCRIPTORRESULT_TYPE__DESCRIPTORVALUE = eINSTANCE.getDescriptorresultType_Descriptorvalue();
+
+        /**
+         * The meta object literal for the '<em><b>Descriptorid</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DESCRIPTORRESULT_TYPE__DESCRIPTORID = eINSTANCE.getDescriptorresultType_Descriptorid();
+
+        /**
+         * The meta object literal for the '<em><b>Structureid</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DESCRIPTORRESULT_TYPE__STRUCTUREID = eINSTANCE.getDescriptorresultType_Structureid();
+
+        /**
          * The meta object literal for the '{@link net.bioclipse.qsar.impl.DescriptorTypeImpl <em>Descriptor Type</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -1981,6 +2280,40 @@ public interface QsarPackage extends EPackage {
          * @generated
          */
         EAttribute DESCRIPTOR_TYPE__PROVIDER = eINSTANCE.getDescriptorType_Provider();
+
+        /**
+         * The meta object literal for the '{@link net.bioclipse.qsar.impl.DescriptorvalueTypeImpl <em>Descriptorvalue Type</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see net.bioclipse.qsar.impl.DescriptorvalueTypeImpl
+         * @see net.bioclipse.qsar.impl.QsarPackageImpl#getDescriptorvalueType()
+         * @generated
+         */
+        EClass DESCRIPTORVALUE_TYPE = eINSTANCE.getDescriptorvalueType();
+
+        /**
+         * The meta object literal for the '<em><b>Index</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DESCRIPTORVALUE_TYPE__INDEX = eINSTANCE.getDescriptorvalueType_Index();
+
+        /**
+         * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DESCRIPTORVALUE_TYPE__LABEL = eINSTANCE.getDescriptorvalueType_Label();
+
+        /**
+         * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DESCRIPTORVALUE_TYPE__VALUE = eINSTANCE.getDescriptorvalueType_Value();
 
         /**
          * The meta object literal for the '{@link net.bioclipse.qsar.impl.DocumentRootImpl <em>Document Root</em>}' class.
@@ -2241,6 +2574,14 @@ public interface QsarPackage extends EPackage {
          * @generated
          */
         EReference QSAR_TYPE__METADATA = eINSTANCE.getQsarType_Metadata();
+
+        /**
+         * The meta object literal for the '<em><b>Descriptorresultlist</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference QSAR_TYPE__DESCRIPTORRESULTLIST = eINSTANCE.getQsarType_Descriptorresultlist();
 
         /**
          * The meta object literal for the '{@link net.bioclipse.qsar.impl.ResourceTypeImpl <em>Resource Type</em>}' class.

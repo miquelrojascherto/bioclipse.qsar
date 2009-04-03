@@ -91,8 +91,20 @@ public class QsarAdapterFactory extends AdapterFactoryImpl {
                 return createDescriptorproviderTypeAdapter();
             }
             @Override
+            public Adapter caseDescriptorresultlistsType(DescriptorresultlistsType object) {
+                return createDescriptorresultlistsTypeAdapter();
+            }
+            @Override
+            public Adapter caseDescriptorresultType(DescriptorresultType object) {
+                return createDescriptorresultTypeAdapter();
+            }
+            @Override
             public Adapter caseDescriptorType(DescriptorType object) {
                 return createDescriptorTypeAdapter();
+            }
+            @Override
+            public Adapter caseDescriptorvalueType(DescriptorvalueType object) {
+                return createDescriptorvalueTypeAdapter();
             }
             @Override
             public Adapter caseDocumentRoot(DocumentRoot object) {
@@ -191,6 +203,34 @@ public class QsarAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link net.bioclipse.qsar.DescriptorresultlistsType <em>Descriptorresultlists Type</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see net.bioclipse.qsar.DescriptorresultlistsType
+     * @generated
+     */
+    public Adapter createDescriptorresultlistsTypeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link net.bioclipse.qsar.DescriptorresultType <em>Descriptorresult Type</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see net.bioclipse.qsar.DescriptorresultType
+     * @generated
+     */
+    public Adapter createDescriptorresultTypeAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link net.bioclipse.qsar.DescriptorType <em>Descriptor Type</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -201,6 +241,20 @@ public class QsarAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createDescriptorTypeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link net.bioclipse.qsar.DescriptorvalueType <em>Descriptorvalue Type</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see net.bioclipse.qsar.DescriptorvalueType
+     * @generated
+     */
+    public Adapter createDescriptorvalueTypeAdapter() {
         return null;
     }
 

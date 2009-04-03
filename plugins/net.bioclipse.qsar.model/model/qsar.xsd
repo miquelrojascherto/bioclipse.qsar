@@ -35,6 +35,10 @@
 			<element name="metadata" type="tns:metadataType"
 				maxOccurs="1" minOccurs="1">
 			</element>
+			<element name="descriptorresultlist"
+				type="tns:descriptorresultlistsType" maxOccurs="1"
+				minOccurs="0">
+			</element>
 		</sequence>
 	</complexType>
 
@@ -187,4 +191,26 @@
 
 
 
+
+	<complexType name="descriptorresultlistsType">
+		<sequence>
+			<element name="descriptorresult" type="tns:descriptorresultType"
+				maxOccurs="unbounded" minOccurs="0">
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="descriptorresultType">
+		<sequence>
+			<element name="descriptorvalue" type="tns:descriptorvalueType" maxOccurs="unbounded" minOccurs="0"></element>
+		</sequence>
+		<attribute name="structureid" type="string"></attribute>
+		<attribute name="descriptorid" type="string"></attribute>
+	</complexType>
+
+	<complexType name="descriptorvalueType">
+		<attribute name="index" type="int"></attribute>
+		<attribute name="label" type="string"></attribute>
+		<attribute name="value" type="string"></attribute>
+	</complexType>
 </schema>

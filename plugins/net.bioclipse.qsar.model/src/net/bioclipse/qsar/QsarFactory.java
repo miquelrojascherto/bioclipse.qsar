@@ -55,6 +55,24 @@ public interface QsarFactory extends EFactory {
     DescriptorproviderType createDescriptorproviderType();
 
     /**
+     * Returns a new object of class '<em>Descriptorresultlists Type</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Descriptorresultlists Type</em>'.
+     * @generated
+     */
+    DescriptorresultlistsType createDescriptorresultlistsType();
+
+    /**
+     * Returns a new object of class '<em>Descriptorresult Type</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Descriptorresult Type</em>'.
+     * @generated
+     */
+    DescriptorresultType createDescriptorresultType();
+
+    /**
      * Returns a new object of class '<em>Descriptor Type</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -62,6 +80,15 @@ public interface QsarFactory extends EFactory {
      * @generated
      */
     DescriptorType createDescriptorType();
+
+    /**
+     * Returns a new object of class '<em>Descriptorvalue Type</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Descriptorvalue Type</em>'.
+     * @generated
+     */
+    DescriptorvalueType createDescriptorvalueType();
 
     /**
      * Returns a new object of class '<em>Document Root</em>'.

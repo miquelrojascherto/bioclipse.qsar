@@ -13,6 +13,9 @@ package net.bioclipse.qsar.impl;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.DescriptorlistType;
 import net.bioclipse.qsar.DescriptorproviderType;
+import net.bioclipse.qsar.DescriptorresultType;
+import net.bioclipse.qsar.DescriptorresultlistsType;
+import net.bioclipse.qsar.DescriptorvalueType;
 import net.bioclipse.qsar.DocumentRoot;
 import net.bioclipse.qsar.MetadataType;
 import net.bioclipse.qsar.ParameterType;
@@ -75,7 +78,28 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    private EClass descriptorresultlistsTypeEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass descriptorresultTypeEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     private EClass descriptorTypeEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass descriptorvalueTypeEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -324,6 +348,60 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getDescriptorresultlistsType() {
+        return descriptorresultlistsTypeEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getDescriptorresultlistsType_Descriptorresult() {
+        return (EReference)descriptorresultlistsTypeEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getDescriptorresultType() {
+        return descriptorresultTypeEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getDescriptorresultType_Descriptorvalue() {
+        return (EReference)descriptorresultTypeEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getDescriptorresultType_Descriptorid() {
+        return (EAttribute)descriptorresultTypeEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getDescriptorresultType_Structureid() {
+        return (EAttribute)descriptorresultTypeEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getDescriptorType() {
         return descriptorTypeEClass;
     }
@@ -371,6 +449,42 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      */
     public EAttribute getDescriptorType_Provider() {
         return (EAttribute)descriptorTypeEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getDescriptorvalueType() {
+        return descriptorvalueTypeEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getDescriptorvalueType_Index() {
+        return (EAttribute)descriptorvalueTypeEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getDescriptorvalueType_Label() {
+        return (EAttribute)descriptorvalueTypeEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getDescriptorvalueType_Value() {
+        return (EAttribute)descriptorvalueTypeEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -650,6 +764,15 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      */
     public EReference getQsarType_Metadata() {
         return (EReference)qsarTypeEClass.getEStructuralFeatures().get(6);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getQsarType_Descriptorresultlist() {
+        return (EReference)qsarTypeEClass.getEStructuralFeatures().get(7);
     }
 
     /**
@@ -1005,12 +1128,25 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
         createEAttribute(descriptorproviderTypeEClass, DESCRIPTORPROVIDER_TYPE__VENDOR);
         createEAttribute(descriptorproviderTypeEClass, DESCRIPTORPROVIDER_TYPE__VERSION);
 
+        descriptorresultlistsTypeEClass = createEClass(DESCRIPTORRESULTLISTS_TYPE);
+        createEReference(descriptorresultlistsTypeEClass, DESCRIPTORRESULTLISTS_TYPE__DESCRIPTORRESULT);
+
+        descriptorresultTypeEClass = createEClass(DESCRIPTORRESULT_TYPE);
+        createEReference(descriptorresultTypeEClass, DESCRIPTORRESULT_TYPE__DESCRIPTORVALUE);
+        createEAttribute(descriptorresultTypeEClass, DESCRIPTORRESULT_TYPE__DESCRIPTORID);
+        createEAttribute(descriptorresultTypeEClass, DESCRIPTORRESULT_TYPE__STRUCTUREID);
+
         descriptorTypeEClass = createEClass(DESCRIPTOR_TYPE);
         createEReference(descriptorTypeEClass, DESCRIPTOR_TYPE__PARAMETER);
         createEAttribute(descriptorTypeEClass, DESCRIPTOR_TYPE__CHANGED);
         createEAttribute(descriptorTypeEClass, DESCRIPTOR_TYPE__ID);
         createEAttribute(descriptorTypeEClass, DESCRIPTOR_TYPE__NAMESPACE);
         createEAttribute(descriptorTypeEClass, DESCRIPTOR_TYPE__PROVIDER);
+
+        descriptorvalueTypeEClass = createEClass(DESCRIPTORVALUE_TYPE);
+        createEAttribute(descriptorvalueTypeEClass, DESCRIPTORVALUE_TYPE__INDEX);
+        createEAttribute(descriptorvalueTypeEClass, DESCRIPTORVALUE_TYPE__LABEL);
+        createEAttribute(descriptorvalueTypeEClass, DESCRIPTORVALUE_TYPE__VALUE);
 
         documentRootEClass = createEClass(DOCUMENT_ROOT);
         createEAttribute(documentRootEClass, DOCUMENT_ROOT__MIXED);
@@ -1048,6 +1184,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
         createEReference(qsarTypeEClass, QSAR_TYPE__RESPONSELIST);
         createEReference(qsarTypeEClass, QSAR_TYPE__RESPONSEUNIT);
         createEReference(qsarTypeEClass, QSAR_TYPE__METADATA);
+        createEReference(qsarTypeEClass, QSAR_TYPE__DESCRIPTORRESULTLIST);
 
         resourceTypeEClass = createEClass(RESOURCE_TYPE);
         createEReference(resourceTypeEClass, RESOURCE_TYPE__STRUCTURE);
@@ -1139,12 +1276,25 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
         initEAttribute(getDescriptorproviderType_Vendor(), theXMLTypePackage.getString(), "vendor", null, 0, 1, DescriptorproviderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDescriptorproviderType_Version(), theXMLTypePackage.getString(), "version", null, 0, 1, DescriptorproviderType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+        initEClass(descriptorresultlistsTypeEClass, DescriptorresultlistsType.class, "DescriptorresultlistsType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getDescriptorresultlistsType_Descriptorresult(), this.getDescriptorresultType(), null, "descriptorresult", null, 0, -1, DescriptorresultlistsType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(descriptorresultTypeEClass, DescriptorresultType.class, "DescriptorresultType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getDescriptorresultType_Descriptorvalue(), this.getDescriptorvalueType(), null, "descriptorvalue", null, 0, -1, DescriptorresultType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDescriptorresultType_Descriptorid(), theXMLTypePackage.getString(), "descriptorid", null, 0, 1, DescriptorresultType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDescriptorresultType_Structureid(), theXMLTypePackage.getString(), "structureid", null, 0, 1, DescriptorresultType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
         initEClass(descriptorTypeEClass, DescriptorType.class, "DescriptorType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getDescriptorType_Parameter(), this.getParameterType(), null, "parameter", null, 0, -1, DescriptorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDescriptorType_Changed(), theXMLTypePackage.getBoolean(), "changed", "true", 0, 1, DescriptorType.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDescriptorType_Id(), theXMLTypePackage.getString(), "id", null, 1, 1, DescriptorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDescriptorType_Namespace(), theXMLTypePackage.getString(), "namespace", null, 0, 1, DescriptorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDescriptorType_Provider(), theXMLTypePackage.getString(), "provider", null, 0, 1, DescriptorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(descriptorvalueTypeEClass, DescriptorvalueType.class, "DescriptorvalueType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getDescriptorvalueType_Index(), theXMLTypePackage.getInt(), "index", null, 0, 1, DescriptorvalueType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDescriptorvalueType_Label(), theXMLTypePackage.getString(), "label", null, 0, 1, DescriptorvalueType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDescriptorvalueType_Value(), theXMLTypePackage.getString(), "value", null, 0, 1, DescriptorvalueType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(documentRootEClass, DocumentRoot.class, "DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getDocumentRoot_Mixed(), ecorePackage.getEFeatureMapEntry(), "mixed", null, 0, -1, null, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1182,6 +1332,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
         initEReference(getQsarType_Responselist(), this.getResponsesListType(), null, "responselist", null, 0, 1, QsarType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getQsarType_Responseunit(), this.getResponseunitType(), null, "responseunit", null, 0, -1, QsarType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getQsarType_Metadata(), this.getMetadataType(), null, "metadata", null, 1, 1, QsarType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getQsarType_Descriptorresultlist(), this.getDescriptorresultlistsType(), null, "descriptorresultlist", null, 0, 1, QsarType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(resourceTypeEClass, ResourceType.class, "ResourceType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getResourceType_Structure(), this.getStructureType(), null, "structure", null, 1, -1, ResourceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1304,6 +1455,50 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
              "name", "version"
            });		
         addAnnotation
+          (descriptorresultlistsTypeEClass, 
+           source, 
+           new String[] {
+             "name", "descriptorresultlistsType",
+             "kind", "elementOnly"
+           });		
+        addAnnotation
+          (getDescriptorresultlistsType_Descriptorresult(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "descriptorresult",
+             "namespace", "##targetNamespace"
+           });		
+        addAnnotation
+          (descriptorresultTypeEClass, 
+           source, 
+           new String[] {
+             "name", "descriptorresultType",
+             "kind", "elementOnly"
+           });		
+        addAnnotation
+          (getDescriptorresultType_Descriptorvalue(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "descriptorvalue",
+             "namespace", "##targetNamespace"
+           });		
+        addAnnotation
+          (getDescriptorresultType_Descriptorid(), 
+           source, 
+           new String[] {
+             "kind", "attribute",
+             "name", "descriptorid"
+           });		
+        addAnnotation
+          (getDescriptorresultType_Structureid(), 
+           source, 
+           new String[] {
+             "kind", "attribute",
+             "name", "structureid"
+           });		
+        addAnnotation
           (descriptorTypeEClass, 
            source, 
            new String[] {
@@ -1345,6 +1540,34 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
            new String[] {
              "kind", "attribute",
              "name", "provider"
+           });		
+        addAnnotation
+          (descriptorvalueTypeEClass, 
+           source, 
+           new String[] {
+             "name", "descriptorvalueType",
+             "kind", "empty"
+           });		
+        addAnnotation
+          (getDescriptorvalueType_Index(), 
+           source, 
+           new String[] {
+             "kind", "attribute",
+             "name", "index"
+           });		
+        addAnnotation
+          (getDescriptorvalueType_Label(), 
+           source, 
+           new String[] {
+             "kind", "attribute",
+             "name", "label"
+           });		
+        addAnnotation
+          (getDescriptorvalueType_Value(), 
+           source, 
+           new String[] {
+             "kind", "attribute",
+             "name", "value"
            });		
         addAnnotation
           (documentRootEClass, 
@@ -1571,6 +1794,14 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
            new String[] {
              "kind", "element",
              "name", "metadata",
+             "namespace", "##targetNamespace"
+           });		
+        addAnnotation
+          (getQsarType_Descriptorresultlist(), 
+           source, 
+           new String[] {
+             "kind", "element",
+             "name", "descriptorresultlist",
              "namespace", "##targetNamespace"
            });		
         addAnnotation
