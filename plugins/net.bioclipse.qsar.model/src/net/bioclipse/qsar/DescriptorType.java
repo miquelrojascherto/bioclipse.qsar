@@ -23,9 +23,8 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link net.bioclipse.qsar.DescriptorType#getParameter <em>Parameter</em>}</li>
- *   <li>{@link net.bioclipse.qsar.DescriptorType#isChanged <em>Changed</em>}</li>
  *   <li>{@link net.bioclipse.qsar.DescriptorType#getId <em>Id</em>}</li>
- *   <li>{@link net.bioclipse.qsar.DescriptorType#getNamespace <em>Namespace</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.DescriptorType#getOntologyid <em>Ontologyid</em>}</li>
  *   <li>{@link net.bioclipse.qsar.DescriptorType#getProvider <em>Provider</em>}</li>
  * </ul>
  * </p>
@@ -60,61 +59,6 @@ public interface DescriptorType extends EObject {
     EList<ParameterType> getParameter();
 
     /**
-     * Returns the value of the '<em><b>Changed</b></em>' attribute.
-     * The default value is <code>"true"</code>.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Changed</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Changed</em>' attribute.
-     * @see #isSetChanged()
-     * @see #unsetChanged()
-     * @see #setChanged(boolean)
-     * @see net.bioclipse.qsar.QsarPackage#getDescriptorType_Changed()
-     * @model default="true" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Boolean" transient="true"
-     *        extendedMetaData="kind='attribute' name='changed'"
-     * @generated
-     */
-    boolean isChanged();
-
-    /**
-     * Sets the value of the '{@link net.bioclipse.qsar.DescriptorType#isChanged <em>Changed</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Changed</em>' attribute.
-     * @see #isSetChanged()
-     * @see #unsetChanged()
-     * @see #isChanged()
-     * @generated
-     */
-    void setChanged(boolean value);
-
-    /**
-     * Unsets the value of the '{@link net.bioclipse.qsar.DescriptorType#isChanged <em>Changed</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isSetChanged()
-     * @see #isChanged()
-     * @see #setChanged(boolean)
-     * @generated
-     */
-    void unsetChanged();
-
-    /**
-     * Returns whether the value of the '{@link net.bioclipse.qsar.DescriptorType#isChanged <em>Changed</em>}' attribute is set.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return whether the value of the '<em>Changed</em>' attribute is set.
-     * @see #unsetChanged()
-     * @see #isChanged()
-     * @see #setChanged(boolean)
-     * @generated
-     */
-    boolean isSetChanged();
-
-    /**
      * Returns the value of the '<em><b>Id</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <p>
@@ -142,31 +86,31 @@ public interface DescriptorType extends EObject {
     void setId(String value);
 
     /**
-     * Returns the value of the '<em><b>Namespace</b></em>' attribute.
+     * Returns the value of the '<em><b>Ontologyid</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Namespace</em>' attribute isn't clear,
+     * If the meaning of the '<em>Ontologyid</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Namespace</em>' attribute.
-     * @see #setNamespace(String)
-     * @see net.bioclipse.qsar.QsarPackage#getDescriptorType_Namespace()
+     * @return the value of the '<em>Ontologyid</em>' attribute.
+     * @see #setOntologyid(String)
+     * @see net.bioclipse.qsar.QsarPackage#getDescriptorType_Ontologyid()
      * @model dataType="org.eclipse.emf.ecore.xml.type.String"
-     *        extendedMetaData="kind='attribute' name='namespace'"
+     *        extendedMetaData="kind='attribute' name='ontologyid'"
      * @generated
      */
-    String getNamespace();
+    String getOntologyid();
 
     /**
-     * Sets the value of the '{@link net.bioclipse.qsar.DescriptorType#getNamespace <em>Namespace</em>}' attribute.
+     * Sets the value of the '{@link net.bioclipse.qsar.DescriptorType#getOntologyid <em>Ontologyid</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Namespace</em>' attribute.
-     * @see #getNamespace()
+     * @param value the new value of the '<em>Ontologyid</em>' attribute.
+     * @see #getOntologyid()
      * @generated
      */
-    void setNamespace(String value);
+    void setOntologyid(String value);
 
     /**
      * Returns the value of the '<em><b>Provider</b></em>' attribute.

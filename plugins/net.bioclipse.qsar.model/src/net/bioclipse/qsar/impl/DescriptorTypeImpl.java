@@ -38,9 +38,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link net.bioclipse.qsar.impl.DescriptorTypeImpl#getParameter <em>Parameter</em>}</li>
- *   <li>{@link net.bioclipse.qsar.impl.DescriptorTypeImpl#isChanged <em>Changed</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.DescriptorTypeImpl#getId <em>Id</em>}</li>
- *   <li>{@link net.bioclipse.qsar.impl.DescriptorTypeImpl#getNamespace <em>Namespace</em>}</li>
+ *   <li>{@link net.bioclipse.qsar.impl.DescriptorTypeImpl#getOntologyid <em>Ontologyid</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.DescriptorTypeImpl#getProvider <em>Provider</em>}</li>
  * </ul>
  * </p>
@@ -66,35 +65,6 @@ public class DescriptorTypeImpl extends EObjectImpl implements DescriptorType {
     protected EList<ParameterType> parameter;
 
     /**
-     * The default value of the '{@link #isChanged() <em>Changed</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isChanged()
-     * @generated
-     * @ordered
-     */
-    protected static final boolean CHANGED_EDEFAULT = true;
-
-    /**
-     * The cached value of the '{@link #isChanged() <em>Changed</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isChanged()
-     * @generated
-     * @ordered
-     */
-    protected boolean changed = CHANGED_EDEFAULT;
-
-    /**
-     * This is true if the Changed attribute has been set.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    protected boolean changedESet;
-
-    /**
      * The default value of the '{@link #getId() <em>Id</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -115,24 +85,24 @@ public class DescriptorTypeImpl extends EObjectImpl implements DescriptorType {
     protected String id = ID_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getNamespace() <em>Namespace</em>}' attribute.
+     * The default value of the '{@link #getOntologyid() <em>Ontologyid</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getNamespace()
+     * @see #getOntologyid()
      * @generated
      * @ordered
      */
-    protected static final String NAMESPACE_EDEFAULT = null;
+    protected static final String ONTOLOGYID_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getNamespace() <em>Namespace</em>}' attribute.
+     * The cached value of the '{@link #getOntologyid() <em>Ontologyid</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getNamespace()
+     * @see #getOntologyid()
      * @generated
      * @ordered
      */
-    protected String namespace = NAMESPACE_EDEFAULT;
+    protected String ontologyid = ONTOLOGYID_EDEFAULT;
 
     /**
      * The default value of the '{@link #getProvider() <em>Provider</em>}' attribute.
@@ -190,52 +160,6 @@ public class DescriptorTypeImpl extends EObjectImpl implements DescriptorType {
      * <!-- end-user-doc -->
      * @generated
      */
-    public boolean isChanged() {
-        return changed;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setChanged(boolean newChanged) {
-        boolean oldChanged = changed;
-        changed = newChanged;
-        boolean oldChangedESet = changedESet;
-        changedESet = true;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.DESCRIPTOR_TYPE__CHANGED, oldChanged, changed, !oldChangedESet));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void unsetChanged() {
-        boolean oldChanged = changed;
-        boolean oldChangedESet = changedESet;
-        changed = CHANGED_EDEFAULT;
-        changedESet = false;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.UNSET, QsarPackage.DESCRIPTOR_TYPE__CHANGED, oldChanged, CHANGED_EDEFAULT, oldChangedESet));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public boolean isSetChanged() {
-        return changedESet;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public String getId() {
         return id;
     }
@@ -257,8 +181,8 @@ public class DescriptorTypeImpl extends EObjectImpl implements DescriptorType {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getNamespace() {
-        return namespace;
+    public String getOntologyid() {
+        return ontologyid;
     }
 
     /**
@@ -266,11 +190,11 @@ public class DescriptorTypeImpl extends EObjectImpl implements DescriptorType {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setNamespace(String newNamespace) {
-        String oldNamespace = namespace;
-        namespace = newNamespace;
+    public void setOntologyid(String newOntologyid) {
+        String oldOntologyid = ontologyid;
+        ontologyid = newOntologyid;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.DESCRIPTOR_TYPE__NAMESPACE, oldNamespace, namespace));
+            eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.DESCRIPTOR_TYPE__ONTOLOGYID, oldOntologyid, ontologyid));
     }
 
     /**
@@ -318,12 +242,10 @@ public class DescriptorTypeImpl extends EObjectImpl implements DescriptorType {
         switch (featureID) {
             case QsarPackage.DESCRIPTOR_TYPE__PARAMETER:
                 return getParameter();
-            case QsarPackage.DESCRIPTOR_TYPE__CHANGED:
-                return isChanged() ? Boolean.TRUE : Boolean.FALSE;
             case QsarPackage.DESCRIPTOR_TYPE__ID:
                 return getId();
-            case QsarPackage.DESCRIPTOR_TYPE__NAMESPACE:
-                return getNamespace();
+            case QsarPackage.DESCRIPTOR_TYPE__ONTOLOGYID:
+                return getOntologyid();
             case QsarPackage.DESCRIPTOR_TYPE__PROVIDER:
                 return getProvider();
         }
@@ -343,14 +265,11 @@ public class DescriptorTypeImpl extends EObjectImpl implements DescriptorType {
                 getParameter().clear();
                 getParameter().addAll((Collection<? extends ParameterType>)newValue);
                 return;
-            case QsarPackage.DESCRIPTOR_TYPE__CHANGED:
-                setChanged(((Boolean)newValue).booleanValue());
-                return;
             case QsarPackage.DESCRIPTOR_TYPE__ID:
                 setId((String)newValue);
                 return;
-            case QsarPackage.DESCRIPTOR_TYPE__NAMESPACE:
-                setNamespace((String)newValue);
+            case QsarPackage.DESCRIPTOR_TYPE__ONTOLOGYID:
+                setOntologyid((String)newValue);
                 return;
             case QsarPackage.DESCRIPTOR_TYPE__PROVIDER:
                 setProvider((String)newValue);
@@ -370,14 +289,11 @@ public class DescriptorTypeImpl extends EObjectImpl implements DescriptorType {
             case QsarPackage.DESCRIPTOR_TYPE__PARAMETER:
                 getParameter().clear();
                 return;
-            case QsarPackage.DESCRIPTOR_TYPE__CHANGED:
-                unsetChanged();
-                return;
             case QsarPackage.DESCRIPTOR_TYPE__ID:
                 setId(ID_EDEFAULT);
                 return;
-            case QsarPackage.DESCRIPTOR_TYPE__NAMESPACE:
-                setNamespace(NAMESPACE_EDEFAULT);
+            case QsarPackage.DESCRIPTOR_TYPE__ONTOLOGYID:
+                setOntologyid(ONTOLOGYID_EDEFAULT);
                 return;
             case QsarPackage.DESCRIPTOR_TYPE__PROVIDER:
                 setProvider(PROVIDER_EDEFAULT);
@@ -396,12 +312,10 @@ public class DescriptorTypeImpl extends EObjectImpl implements DescriptorType {
         switch (featureID) {
             case QsarPackage.DESCRIPTOR_TYPE__PARAMETER:
                 return parameter != null && !parameter.isEmpty();
-            case QsarPackage.DESCRIPTOR_TYPE__CHANGED:
-                return isSetChanged();
             case QsarPackage.DESCRIPTOR_TYPE__ID:
                 return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-            case QsarPackage.DESCRIPTOR_TYPE__NAMESPACE:
-                return NAMESPACE_EDEFAULT == null ? namespace != null : !NAMESPACE_EDEFAULT.equals(namespace);
+            case QsarPackage.DESCRIPTOR_TYPE__ONTOLOGYID:
+                return ONTOLOGYID_EDEFAULT == null ? ontologyid != null : !ONTOLOGYID_EDEFAULT.equals(ontologyid);
             case QsarPackage.DESCRIPTOR_TYPE__PROVIDER:
                 return PROVIDER_EDEFAULT == null ? provider != null : !PROVIDER_EDEFAULT.equals(provider);
         }
@@ -418,12 +332,10 @@ public class DescriptorTypeImpl extends EObjectImpl implements DescriptorType {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (changed: ");
-        if (changedESet) result.append(changed); else result.append("<unset>");
-        result.append(", id: ");
+        result.append(" (id: ");
         result.append(id);
-        result.append(", namespace: ");
-        result.append(namespace);
+        result.append(", ontologyid: ");
+        result.append(ontologyid);
         result.append(", provider: ");
         result.append(provider);
         result.append(')');

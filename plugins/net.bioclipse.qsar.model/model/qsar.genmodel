@@ -33,9 +33,8 @@
     </genClasses>
     <genClasses ecoreClass="qsar.ecore#//DescriptorType">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//DescriptorType/parameter"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorType/changed"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorType/id"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorType/namespace"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorType/ontologyid"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute qsar.ecore#//DescriptorType/provider"/>
     </genClasses>
     <genClasses ecoreClass="qsar.ecore#//DescriptorvalueType">
@@ -114,7 +113,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference qsar.ecore#//StructurelistType/resources"/>
     </genClasses>
     <genClasses ecoreClass="qsar.ecore#//StructureType">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//StructureType/changed"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//StructureType/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//StructureType/inchi"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute qsar.ecore#//StructureType/resourceid"/>

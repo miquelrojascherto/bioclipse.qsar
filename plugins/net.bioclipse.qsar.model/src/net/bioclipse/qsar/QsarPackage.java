@@ -290,31 +290,22 @@ public interface QsarPackage extends EPackage {
     int DESCRIPTOR_TYPE__PARAMETER = 0;
 
     /**
-     * The feature id for the '<em><b>Changed</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DESCRIPTOR_TYPE__CHANGED = 1;
-
-    /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DESCRIPTOR_TYPE__ID = 2;
+    int DESCRIPTOR_TYPE__ID = 1;
 
     /**
-     * The feature id for the '<em><b>Namespace</b></em>' attribute.
+     * The feature id for the '<em><b>Ontologyid</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DESCRIPTOR_TYPE__NAMESPACE = 3;
+    int DESCRIPTOR_TYPE__ONTOLOGYID = 2;
 
     /**
      * The feature id for the '<em><b>Provider</b></em>' attribute.
@@ -323,7 +314,7 @@ public interface QsarPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DESCRIPTOR_TYPE__PROVIDER = 4;
+    int DESCRIPTOR_TYPE__PROVIDER = 3;
 
     /**
      * The number of structural features of the '<em>Descriptor Type</em>' class.
@@ -332,7 +323,7 @@ public interface QsarPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DESCRIPTOR_TYPE_FEATURE_COUNT = 5;
+    int DESCRIPTOR_TYPE_FEATURE_COUNT = 4;
 
     /**
      * The meta object id for the '{@link net.bioclipse.qsar.impl.DescriptorvalueTypeImpl <em>Descriptorvalue Type</em>}' class.
@@ -1032,22 +1023,13 @@ public interface QsarPackage extends EPackage {
     int STRUCTURE_TYPE = 17;
 
     /**
-     * The feature id for the '<em><b>Changed</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int STRUCTURE_TYPE__CHANGED = 0;
-
-    /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int STRUCTURE_TYPE__ID = 1;
+    int STRUCTURE_TYPE__ID = 0;
 
     /**
      * The feature id for the '<em><b>Inchi</b></em>' attribute.
@@ -1056,7 +1038,7 @@ public interface QsarPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int STRUCTURE_TYPE__INCHI = 2;
+    int STRUCTURE_TYPE__INCHI = 1;
 
     /**
      * The feature id for the '<em><b>Resourceid</b></em>' attribute.
@@ -1065,7 +1047,7 @@ public interface QsarPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int STRUCTURE_TYPE__RESOURCEID = 3;
+    int STRUCTURE_TYPE__RESOURCEID = 2;
 
     /**
      * The feature id for the '<em><b>Resourceindex</b></em>' attribute.
@@ -1074,7 +1056,7 @@ public interface QsarPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int STRUCTURE_TYPE__RESOURCEINDEX = 4;
+    int STRUCTURE_TYPE__RESOURCEINDEX = 3;
 
     /**
      * The number of structural features of the '<em>Structure Type</em>' class.
@@ -1083,7 +1065,7 @@ public interface QsarPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int STRUCTURE_TYPE_FEATURE_COUNT = 5;
+    int STRUCTURE_TYPE_FEATURE_COUNT = 4;
 
     /**
      * The meta object id for the '{@link net.bioclipse.qsar.TypeType <em>Type Type</em>}' enum.
@@ -1278,17 +1260,6 @@ public interface QsarPackage extends EPackage {
     EReference getDescriptorType_Parameter();
 
     /**
-     * Returns the meta object for the attribute '{@link net.bioclipse.qsar.DescriptorType#isChanged <em>Changed</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Changed</em>'.
-     * @see net.bioclipse.qsar.DescriptorType#isChanged()
-     * @see #getDescriptorType()
-     * @generated
-     */
-    EAttribute getDescriptorType_Changed();
-
-    /**
      * Returns the meta object for the attribute '{@link net.bioclipse.qsar.DescriptorType#getId <em>Id</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1300,15 +1271,15 @@ public interface QsarPackage extends EPackage {
     EAttribute getDescriptorType_Id();
 
     /**
-     * Returns the meta object for the attribute '{@link net.bioclipse.qsar.DescriptorType#getNamespace <em>Namespace</em>}'.
+     * Returns the meta object for the attribute '{@link net.bioclipse.qsar.DescriptorType#getOntologyid <em>Ontologyid</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Namespace</em>'.
-     * @see net.bioclipse.qsar.DescriptorType#getNamespace()
+     * @return the meta object for the attribute '<em>Ontologyid</em>'.
+     * @see net.bioclipse.qsar.DescriptorType#getOntologyid()
      * @see #getDescriptorType()
      * @generated
      */
-    EAttribute getDescriptorType_Namespace();
+    EAttribute getDescriptorType_Ontologyid();
 
     /**
      * Returns the meta object for the attribute '{@link net.bioclipse.qsar.DescriptorType#getProvider <em>Provider</em>}'.
@@ -2013,17 +1984,6 @@ public interface QsarPackage extends EPackage {
     EClass getStructureType();
 
     /**
-     * Returns the meta object for the attribute '{@link net.bioclipse.qsar.StructureType#isChanged <em>Changed</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Changed</em>'.
-     * @see net.bioclipse.qsar.StructureType#isChanged()
-     * @see #getStructureType()
-     * @generated
-     */
-    EAttribute getStructureType_Changed();
-
-    /**
      * Returns the meta object for the attribute '{@link net.bioclipse.qsar.StructureType#getId <em>Id</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2250,14 +2210,6 @@ public interface QsarPackage extends EPackage {
         EReference DESCRIPTOR_TYPE__PARAMETER = eINSTANCE.getDescriptorType_Parameter();
 
         /**
-         * The meta object literal for the '<em><b>Changed</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute DESCRIPTOR_TYPE__CHANGED = eINSTANCE.getDescriptorType_Changed();
-
-        /**
          * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2266,12 +2218,12 @@ public interface QsarPackage extends EPackage {
         EAttribute DESCRIPTOR_TYPE__ID = eINSTANCE.getDescriptorType_Id();
 
         /**
-         * The meta object literal for the '<em><b>Namespace</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Ontologyid</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute DESCRIPTOR_TYPE__NAMESPACE = eINSTANCE.getDescriptorType_Namespace();
+        EAttribute DESCRIPTOR_TYPE__ONTOLOGYID = eINSTANCE.getDescriptorType_Ontologyid();
 
         /**
          * The meta object literal for the '<em><b>Provider</b></em>' attribute feature.
@@ -2818,14 +2770,6 @@ public interface QsarPackage extends EPackage {
          * @generated
          */
         EClass STRUCTURE_TYPE = eINSTANCE.getStructureType();
-
-        /**
-         * The meta object literal for the '<em><b>Changed</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute STRUCTURE_TYPE__CHANGED = eINSTANCE.getStructureType_Changed();
 
         /**
          * The meta object literal for the '<em><b>Id</b></em>' attribute feature.

@@ -27,7 +27,6 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link net.bioclipse.qsar.impl.StructureTypeImpl#isChanged <em>Changed</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.StructureTypeImpl#getId <em>Id</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.StructureTypeImpl#getInchi <em>Inchi</em>}</li>
  *   <li>{@link net.bioclipse.qsar.impl.StructureTypeImpl#getResourceid <em>Resourceid</em>}</li>
@@ -44,35 +43,6 @@ public class StructureTypeImpl extends EObjectImpl implements StructureType {
      * @generated
      */
     public static final String copyright = " Copyright (c) 2009 Ola Spjuth\n All rights reserved. This program and the accompanying materials\n are made available under the terms of the Eclipse Public License v1.0\n which accompanies this distribution, and is available at\n http://www.eclipse.org/legal/epl-v10.html\n";
-
-    /**
-     * The default value of the '{@link #isChanged() <em>Changed</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isChanged()
-     * @generated
-     * @ordered
-     */
-    protected static final boolean CHANGED_EDEFAULT = true;
-
-    /**
-     * The cached value of the '{@link #isChanged() <em>Changed</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isChanged()
-     * @generated
-     * @ordered
-     */
-    protected boolean changed = CHANGED_EDEFAULT;
-
-    /**
-     * This is true if the Changed attribute has been set.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    protected boolean changedESet;
 
     /**
      * The default value of the '{@link #getId() <em>Id</em>}' attribute.
@@ -180,52 +150,6 @@ public class StructureTypeImpl extends EObjectImpl implements StructureType {
     @Override
     protected EClass eStaticClass() {
         return QsarPackage.Literals.STRUCTURE_TYPE;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public boolean isChanged() {
-        return changed;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setChanged(boolean newChanged) {
-        boolean oldChanged = changed;
-        changed = newChanged;
-        boolean oldChangedESet = changedESet;
-        changedESet = true;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, QsarPackage.STRUCTURE_TYPE__CHANGED, oldChanged, changed, !oldChangedESet));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void unsetChanged() {
-        boolean oldChanged = changed;
-        boolean oldChangedESet = changedESet;
-        changed = CHANGED_EDEFAULT;
-        changedESet = false;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.UNSET, QsarPackage.STRUCTURE_TYPE__CHANGED, oldChanged, CHANGED_EDEFAULT, oldChangedESet));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public boolean isSetChanged() {
-        return changedESet;
     }
 
     /**
@@ -345,8 +269,6 @@ public class StructureTypeImpl extends EObjectImpl implements StructureType {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case QsarPackage.STRUCTURE_TYPE__CHANGED:
-                return isChanged() ? Boolean.TRUE : Boolean.FALSE;
             case QsarPackage.STRUCTURE_TYPE__ID:
                 return getId();
             case QsarPackage.STRUCTURE_TYPE__INCHI:
@@ -367,9 +289,6 @@ public class StructureTypeImpl extends EObjectImpl implements StructureType {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case QsarPackage.STRUCTURE_TYPE__CHANGED:
-                setChanged(((Boolean)newValue).booleanValue());
-                return;
             case QsarPackage.STRUCTURE_TYPE__ID:
                 setId((String)newValue);
                 return;
@@ -394,9 +313,6 @@ public class StructureTypeImpl extends EObjectImpl implements StructureType {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case QsarPackage.STRUCTURE_TYPE__CHANGED:
-                unsetChanged();
-                return;
             case QsarPackage.STRUCTURE_TYPE__ID:
                 setId(ID_EDEFAULT);
                 return;
@@ -421,8 +337,6 @@ public class StructureTypeImpl extends EObjectImpl implements StructureType {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case QsarPackage.STRUCTURE_TYPE__CHANGED:
-                return isSetChanged();
             case QsarPackage.STRUCTURE_TYPE__ID:
                 return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
             case QsarPackage.STRUCTURE_TYPE__INCHI:
@@ -445,9 +359,7 @@ public class StructureTypeImpl extends EObjectImpl implements StructureType {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (changed: ");
-        if (changedESet) result.append(changed); else result.append("<unset>");
-        result.append(", id: ");
+        result.append(" (id: ");
         result.append(id);
         result.append(", inchi: ");
         result.append(inchi);

@@ -420,7 +420,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getDescriptorType_Changed() {
+    public EAttribute getDescriptorType_Id() {
         return (EAttribute)descriptorTypeEClass.getEStructuralFeatures().get(1);
     }
 
@@ -429,7 +429,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getDescriptorType_Id() {
+    public EAttribute getDescriptorType_Ontologyid() {
         return (EAttribute)descriptorTypeEClass.getEStructuralFeatures().get(2);
     }
 
@@ -438,17 +438,8 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getDescriptorType_Namespace() {
-        return (EAttribute)descriptorTypeEClass.getEStructuralFeatures().get(3);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EAttribute getDescriptorType_Provider() {
-        return (EAttribute)descriptorTypeEClass.getEStructuralFeatures().get(4);
+        return (EAttribute)descriptorTypeEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -1032,7 +1023,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getStructureType_Changed() {
+    public EAttribute getStructureType_Id() {
         return (EAttribute)structureTypeEClass.getEStructuralFeatures().get(0);
     }
 
@@ -1041,7 +1032,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getStructureType_Id() {
+    public EAttribute getStructureType_Inchi() {
         return (EAttribute)structureTypeEClass.getEStructuralFeatures().get(1);
     }
 
@@ -1050,7 +1041,7 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getStructureType_Inchi() {
+    public EAttribute getStructureType_Resourceid() {
         return (EAttribute)structureTypeEClass.getEStructuralFeatures().get(2);
     }
 
@@ -1059,17 +1050,8 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getStructureType_Resourceid() {
-        return (EAttribute)structureTypeEClass.getEStructuralFeatures().get(3);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EAttribute getStructureType_Resourceindex() {
-        return (EAttribute)structureTypeEClass.getEStructuralFeatures().get(4);
+        return (EAttribute)structureTypeEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -1138,9 +1120,8 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 
         descriptorTypeEClass = createEClass(DESCRIPTOR_TYPE);
         createEReference(descriptorTypeEClass, DESCRIPTOR_TYPE__PARAMETER);
-        createEAttribute(descriptorTypeEClass, DESCRIPTOR_TYPE__CHANGED);
         createEAttribute(descriptorTypeEClass, DESCRIPTOR_TYPE__ID);
-        createEAttribute(descriptorTypeEClass, DESCRIPTOR_TYPE__NAMESPACE);
+        createEAttribute(descriptorTypeEClass, DESCRIPTOR_TYPE__ONTOLOGYID);
         createEAttribute(descriptorTypeEClass, DESCRIPTOR_TYPE__PROVIDER);
 
         descriptorvalueTypeEClass = createEClass(DESCRIPTORVALUE_TYPE);
@@ -1219,7 +1200,6 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
         createEReference(structurelistTypeEClass, STRUCTURELIST_TYPE__RESOURCES);
 
         structureTypeEClass = createEClass(STRUCTURE_TYPE);
-        createEAttribute(structureTypeEClass, STRUCTURE_TYPE__CHANGED);
         createEAttribute(structureTypeEClass, STRUCTURE_TYPE__ID);
         createEAttribute(structureTypeEClass, STRUCTURE_TYPE__INCHI);
         createEAttribute(structureTypeEClass, STRUCTURE_TYPE__RESOURCEID);
@@ -1286,9 +1266,8 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
 
         initEClass(descriptorTypeEClass, DescriptorType.class, "DescriptorType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getDescriptorType_Parameter(), this.getParameterType(), null, "parameter", null, 0, -1, DescriptorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getDescriptorType_Changed(), theXMLTypePackage.getBoolean(), "changed", "true", 0, 1, DescriptorType.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDescriptorType_Id(), theXMLTypePackage.getString(), "id", null, 1, 1, DescriptorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getDescriptorType_Namespace(), theXMLTypePackage.getString(), "namespace", null, 0, 1, DescriptorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDescriptorType_Ontologyid(), theXMLTypePackage.getString(), "ontologyid", null, 0, 1, DescriptorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDescriptorType_Provider(), theXMLTypePackage.getString(), "provider", null, 0, 1, DescriptorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(descriptorvalueTypeEClass, DescriptorvalueType.class, "DescriptorvalueType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1367,7 +1346,6 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
         initEReference(getStructurelistType_Resources(), this.getResourceType(), null, "resources", null, 0, -1, StructurelistType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(structureTypeEClass, StructureType.class, "StructureType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getStructureType_Changed(), theXMLTypePackage.getBoolean(), "changed", "true", 0, 1, StructureType.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getStructureType_Id(), theXMLTypePackage.getString(), "id", null, 0, 1, StructureType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getStructureType_Inchi(), theXMLTypePackage.getString(), "inchi", null, 0, 1, StructureType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getStructureType_Resourceid(), theXMLTypePackage.getString(), "resourceid", null, 0, 1, StructureType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1514,13 +1492,6 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
              "namespace", "##targetNamespace"
            });		
         addAnnotation
-          (getDescriptorType_Changed(), 
-           source, 
-           new String[] {
-             "kind", "attribute",
-             "name", "changed"
-           });		
-        addAnnotation
           (getDescriptorType_Id(), 
            source, 
            new String[] {
@@ -1528,11 +1499,11 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
              "name", "id"
            });		
         addAnnotation
-          (getDescriptorType_Namespace(), 
+          (getDescriptorType_Ontologyid(), 
            source, 
            new String[] {
              "kind", "attribute",
-             "name", "namespace"
+             "name", "ontologyid"
            });		
         addAnnotation
           (getDescriptorType_Provider(), 
@@ -2004,13 +1975,6 @@ public class QsarPackageImpl extends EPackageImpl implements QsarPackage {
            new String[] {
              "name", "structureType",
              "kind", "empty"
-           });		
-        addAnnotation
-          (getStructureType_Changed(), 
-           source, 
-           new String[] {
-             "kind", "attribute",
-             "name", "changed"
            });		
         addAnnotation
           (getStructureType_Id(), 
