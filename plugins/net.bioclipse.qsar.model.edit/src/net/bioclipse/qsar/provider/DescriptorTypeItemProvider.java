@@ -78,33 +78,10 @@ public class DescriptorTypeItemProvider
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
-            addChangedPropertyDescriptor(object);
             addIdPropertyDescriptor(object);
-            addNamespacePropertyDescriptor(object);
+            addOntologyidPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
-    }
-
-    /**
-     * This adds a property descriptor for the Changed feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addChangedPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_DescriptorType_changed_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_DescriptorType_changed_feature", "_UI_DescriptorType_type"),
-                 QsarPackage.Literals.DESCRIPTOR_TYPE__CHANGED,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-                 null,
-                 null));
     }
 
     /**
@@ -130,19 +107,19 @@ public class DescriptorTypeItemProvider
     }
 
     /**
-     * This adds a property descriptor for the Namespace feature.
+     * This adds a property descriptor for the Ontologyid feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addNamespacePropertyDescriptor(Object object) {
+    protected void addOntologyidPropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_DescriptorType_namespace_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_DescriptorType_namespace_feature", "_UI_DescriptorType_type"),
-                 QsarPackage.Literals.DESCRIPTOR_TYPE__NAMESPACE,
+                 getString("_UI_DescriptorType_ontologyid_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_DescriptorType_ontologyid_feature", "_UI_DescriptorType_type"),
+                 QsarPackage.Literals.DESCRIPTOR_TYPE__ONTOLOGYID,
                  true,
                  false,
                  false,
@@ -219,9 +196,8 @@ public class DescriptorTypeItemProvider
         updateChildren(notification);
 
         switch (notification.getFeatureID(DescriptorType.class)) {
-            case QsarPackage.DESCRIPTOR_TYPE__CHANGED:
             case QsarPackage.DESCRIPTOR_TYPE__ID:
-            case QsarPackage.DESCRIPTOR_TYPE__NAMESPACE:
+            case QsarPackage.DESCRIPTOR_TYPE__ONTOLOGYID:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
             case QsarPackage.DESCRIPTOR_TYPE__PARAMETER:

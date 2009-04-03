@@ -75,35 +75,12 @@ public class StructureTypeItemProvider
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
-            addChangedPropertyDescriptor(object);
             addIdPropertyDescriptor(object);
             addInchiPropertyDescriptor(object);
             addResourceidPropertyDescriptor(object);
             addResourceindexPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
-    }
-
-    /**
-     * This adds a property descriptor for the Changed feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addChangedPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_StructureType_changed_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_StructureType_changed_feature", "_UI_StructureType_type"),
-                 QsarPackage.Literals.STRUCTURE_TYPE__CHANGED,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-                 null,
-                 null));
     }
 
     /**
@@ -231,7 +208,6 @@ public class StructureTypeItemProvider
         updateChildren(notification);
 
         switch (notification.getFeatureID(StructureType.class)) {
-            case QsarPackage.STRUCTURE_TYPE__CHANGED:
             case QsarPackage.STRUCTURE_TYPE__ID:
             case QsarPackage.STRUCTURE_TYPE__INCHI:
             case QsarPackage.STRUCTURE_TYPE__RESOURCEID:
