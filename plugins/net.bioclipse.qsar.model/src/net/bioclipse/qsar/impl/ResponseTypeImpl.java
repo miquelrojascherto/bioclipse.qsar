@@ -52,7 +52,7 @@ public class ResponseTypeImpl extends EObjectImpl implements ResponseType {
      * @generated
      * @ordered
      */
-    protected static final float VALUE_EDEFAULT = 0.0F;
+    protected static final float VALUE_EDEFAULT = Float.NaN;
 
     /**
      * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.

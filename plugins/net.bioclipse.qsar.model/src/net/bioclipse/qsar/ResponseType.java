@@ -41,6 +41,7 @@ public interface ResponseType extends EObject {
 
     /**
      * Returns the value of the '<em><b>Value</b></em>' attribute.
+     * The default value is <code>"NaN"</code>.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Value</em>' attribute isn't clear,
@@ -52,7 +53,7 @@ public interface ResponseType extends EObject {
      * @see #unsetValue()
      * @see #setValue(float)
      * @see net.bioclipse.qsar.QsarPackage#getResponseType_Value()
-     * @model unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Float"
+     * @model default="NaN" unsettable="true" dataType="org.eclipse.emf.ecore.xml.type.Float"
      *        extendedMetaData="kind='element' name='value' namespace='##targetNamespace'"
      * @generated
      */
