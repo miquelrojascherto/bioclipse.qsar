@@ -21,6 +21,7 @@ import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.DescriptorlistType;
 import net.bioclipse.qsar.DescriptorproviderType;
+import net.bioclipse.qsar.DescriptorresultType;
 import net.bioclipse.qsar.ParameterType;
 import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
@@ -32,6 +33,7 @@ import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorModel;
 import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
+import net.bioclipse.qsar.ui.QsarHelper;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.databinding.observable.Realm;
@@ -127,21 +129,21 @@ public class DescriptorsPage extends FormPage implements IEditingDomainProvider,
 	 * This list of Descriptors in the qsar model. Also used as input to 
 	 * rightViewer, containing the selected descrriptors
 	 */
-	private DescriptorlistType descriptorList;
+//	private DescriptorlistType descriptorList;
 	
 	IQsarManager qsar;
 	
 	private OnlyWithImplFilter onlyWithImplFilter = new OnlyWithImplFilter();
 
 //	private EList<DescriptorimplType> providerList;
-	private QsarType qsarModel;
+//	private QsarType qsarModel;
 private TableViewer paramsViewer;
 private Table paramsTable;
 
 //	private List<DescriptorInstance> selectedDescriptors;
 
     
-	public DescriptorsPage(FormEditor editor, QsarType qsarModel, 
+	public DescriptorsPage(FormEditor editor, 
 			EditingDomain editingDomain, QsarEditorSelectionProvider selectionProvider) {
 
 		super(editor, "qsar.descriptors", "Descriptors");
@@ -150,18 +152,11 @@ private Table paramsTable;
 		//Get Managers via OSGI
         qsar=net.bioclipse.qsar.init.Activator.getDefault().getQsarManager();
 		cdk=Activator.getDefault().getCDKManager();
-		this.qsarModel = qsarModel;
+		QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
 
 		formatter = new DecimalFormat("0.00");
         this.selectionProvider=selectionProvider;
-
-		//Get descriptorList from qsar model, init if empty (should not be)
-        descriptorList=qsarModel.getDescriptorlist();
-		if (descriptorList==null){
-			descriptorList=QsarFactory.eINSTANCE.createDescriptorlistType();
-			qsarModel.setDescriptorlist(descriptorList);
-		}
-		
+        
 		editor.addPageChangedListener(this);
 
 	}
@@ -227,16 +222,31 @@ private Table paramsTable;
 		IObservableSet knownElements = provider.getKnownElements();
 		IObservableMap[] observeMaps = EMFEditObservables.
 			observeMaps(editingDomain, knownElements, new EStructuralFeature[]{
-					QsarPackage.Literals.DESCRIPTOR_TYPE__ID});
+					QsarPackage.Literals.DESCRIPTOR_TYPE__ONTOLOGYID});
 		ObservableMapLabelProvider labelProvider =
 			new ObservableQSARLabelProvider(observeMaps);
 		rightViewer.setLabelProvider(labelProvider);
+
+		DescriptorlistType descriptorList = getDescriptorListFromModel();
 
 		// Person#addresses is the Viewer's input
 		rightViewer.setInput(EMFEditObservables.observeList(Realm.getDefault(), editingDomain, descriptorList,
 			QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTORS));
 
 	}
+
+
+    private DescriptorlistType getDescriptorListFromModel() {
+
+        //Get descriptorList from qsar model, init if empty (should not be)
+		QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
+		DescriptorlistType descriptorList = qsarModel.getDescriptorlist();
+		if (descriptorList==null){
+		    descriptorList=QsarFactory.eINSTANCE.createDescriptorlistType();
+		    qsarModel.setDescriptorlist(descriptorList);
+		}
+        return descriptorList;
+    }
 
 
 	/**
@@ -414,9 +424,11 @@ private Table paramsTable;
 //
 //					//Add this instance to rightViewer's model
 //					selectedDescriptors.add(inst);
+				    
+//				    System.out.println("Qsar model: " + qsarModel);
 					
-					qsar.addDescriptorToModel(qsarModel, editingDomain, desc, impl);
-					
+				    QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
+				    qsar.addDescriptorToModel(qsarModel, editingDomain, desc, impl);
 					
 				}else{
 					errorList.add("No implementation available for descriptor: " + desc);
@@ -448,16 +460,46 @@ private Table paramsTable;
 		
     	CompoundCommand ccmd=new CompoundCommand();
 
+      DescriptorlistType descriptorList = getDescriptorListFromModel();
+
     	//Collect commands from selection
     	for (Iterator<?> it=ssel.iterator(); it.hasNext();){
-
     		Object obj = it.next();
     		
     		if (obj instanceof DescriptorType) {
 				DescriptorType descType = (DescriptorType) obj;
 				Command cmd=RemoveCommand.create(editingDomain, descriptorList, QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTORS, descType);
 				ccmd.append(cmd);
+        logger.debug("Removing descriptor: " + descType.getId());
+				
+        //Also delete any descriptorresults for this descriptor
+        QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
+        for (DescriptorresultType dres : qsarModel.getDescriptorresultlist().getDescriptorresult()){
+            if (dres.getDescriptorid().equals( descType.getId() )){
+                cmd=RemoveCommand.create(editingDomain, qsarModel.getDescriptorresultlist(), QsarPackage.Literals.DESCRIPTORRESULTLISTS_TYPE__DESCRIPTORRESULT, dres);
+                ccmd.append(cmd);
+                logger.debug("   Removing corresponding descriptorresult: " + dres);
+            }
+        }
+        
+        //Check for unused descriptorproviders and remove them too
+        for (DescriptorproviderType prov : qsarModel.getDescriptorproviders()){
+            boolean remove=true;
+            for (DescriptorType desc : qsarModel.getDescriptorlist().getDescriptors()){
+                if (desc.getProvider().equals( prov.getId() )){
+                    //Nope, still used
+                    remove=false;
+                }
+            }
+            if (remove){
+                cmd=RemoveCommand.create(editingDomain, qsarModel.getDescriptorproviders(), QsarPackage.Literals.QSAR_TYPE__DESCRIPTORPROVIDERS, prov);
+                ccmd.append(cmd);
+                logger.debug("  No uses of qsar provider " + prov.getId() +" so removed.");
+            }
+        }
+
 			}
+    		
     		
     	}
 
@@ -722,10 +764,17 @@ private Table paramsTable;
 
 	public void pageChanged(PageChangedEvent event) {
 
-		if (event.getSelectedPage()!=this) return;
-		
-		activatePage();
-		
+	    //Always sync model on page change
+//	    qsarModel=((QsarEditor)getEditor()).getQsarModel();
+
+	    if (event.getSelectedPage()!=this) return;
+
+	    if (rightViewer!=null){
+	        populateRightViewerFromModel();
+	    }
+
+	    activatePage();
+
 	}
 
 

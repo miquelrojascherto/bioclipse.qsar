@@ -54,6 +54,7 @@ import net.bioclipse.qsar.TypeType;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.impl.DocumentRootImpl;
+import net.bioclipse.qsar.ui.QsarHelper;
 import net.bioclipse.qsar.util.QsarResourceFactoryImpl;
 
 import org.apache.log4j.Logger;
@@ -76,6 +77,8 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.preferences.DefaultScope;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -223,10 +226,14 @@ public class QSARBuilder extends IncrementalProjectBuilder
         for (int i = 0; i < children.length; i++) {
             IResourceDelta child = children[i];
             String fileName = child.getProjectRelativePath().lastSegment();
-            if (fileName.equals("qsar.xml"))
+            if (fileName.equals(getQsarFile().getName()))
                 return true;
         }
         return false;
+    }
+    
+    private IFile getQsarFile(){
+        return getProject().getFile( "qsar.xml" );
     }
 
     /**
@@ -303,10 +310,10 @@ public class QSARBuilder extends IncrementalProjectBuilder
         if (checkCancel(monitor))
             return;
 
-        //Figure out which combos need calculations
+        //Figure out which combos need calculations: dirty or no existing responses
         //================================================
         //Mol > List of descriptor IDs
-        Map<IMolecule, List<DescriptorType>> molDescMap=getComboForCalculation(structureMap, allDescriptors);
+        Map<IMolecule, List<DescriptorType>> molDescMap=getComboForCalculation(structureMap, allDescriptors, qsarModel);
         logger.debug("In need of calculation: \n" + debugMolDescMap(molDescMap));
 
         //Calculate descriptors for all such combos
@@ -329,11 +336,12 @@ public class QSARBuilder extends IncrementalProjectBuilder
         //Save qsarmodel
         saveModelToProjectFile(qsarModel);
         
-        //Make all structures and descriptors not dirty.
+        //Make all structures and descriptors not dirty and save the prefs
         makeAllNonDirty(qsarModel);
 
         //FIXME: remove and continue when finished above
         if (true) return;
+
 
 
         //Serialize qsarmodel to CSV file
@@ -348,19 +356,20 @@ public class QSARBuilder extends IncrementalProjectBuilder
 
     private void makeAllNonDirty(QsarType qsarModel) {
 
-        //FIXME: implement!
-        
-        //Set all structures to unchanged
+        //Set all structures to changed=false
         for (ResourceType resource : qsarModel.getStructurelist().getResources()){
             for (StructureType structure : resource.getStructure()){
-                setChangedInPreference(structure);
+                QsarHelper.setChangedInPreference(structure, getProject(), false);
             }
         }
 
-        //Set all descriptors to unchanged
+        //Set all descriptors to changed=false
         for (DescriptorType desc : qsarModel.getDescriptorlist().getDescriptors()){
-            setChangedInPreference(desc);
+            QsarHelper.setChangedInPreference(desc, getProject(), false);
         }
+
+        //Store prefs
+        net.bioclipse.qsar.ui.Activator.getDefault().savePluginPreferences();
 
     }
 
@@ -389,12 +398,16 @@ public class QSARBuilder extends IncrementalProjectBuilder
                 //Loop over all descriptors
                 for (IDescriptorResult descres : resultMap.get( mol )){
                     
+                    logger.debug( " ## Attempting to store struct: " 
+                                  + structure.getId() + " - AND - " 
+                                  + descres.getDescriptor().getOntologyid());
+                    
                     //If this descriptorresult already exists in qsarmodel, use it
                     DescriptorresultType dres=getDescriptorResultFromQsarModel(qsarModel, descres, structure);
                     if (dres==null){
                         //Else, create a new
                         dres=QsarFactory.eINSTANCE.createDescriptorresultType();
-                        dres.setDescriptorid( descres.getDescriptorId() );
+                        dres.setDescriptorid( descres.getDescriptor().getId() );
                         dres.setStructureid( structure.getId());
                         qsarModel.getDescriptorresultlist().getDescriptorresult().add( dres );
                     }
@@ -409,6 +422,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
                         dval.setLabel( descres.getLabels()[i] );
                         dval.setValue( "" + descres.getValues()[i] );
                         dres.getDescriptorvalue().add( dval );
+                        logger.debug( "   #### added value: " + dval  );
                     }
                 }
 
@@ -433,7 +447,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
                                                                    StructureType structure ) {
         
         for (DescriptorresultType lres : qsarModel.getDescriptorresultlist().getDescriptorresult()){
-            if (lres.getDescriptorid().equals( descres.getDescriptorId() ) && 
+            if (lres.getDescriptorid().equals( descres.getDescriptor().getId() ) && 
                     lres.getStructureid().equals( structure.getId() ))
                 return lres;
         }
@@ -504,7 +518,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
         for (DescriptorType desc : allDescriptors){
             ret=ret+"DescriptorID=" + desc.getId() + " ; provider=" + desc.getProvider()+ " ; params=" + desc.getParameter();
 
-            if (isDirtyInPreference( desc ))
+            if (QsarHelper.isDirtyInPreference( desc, getProject() ))
                 ret=ret+" - CHANGED\n";
             else
                 ret=ret+" - unchanged\n";
@@ -522,7 +536,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
         for (StructureType structure : structureMap.keySet()){
             try {
                 ret=ret+structure.getId() + " - " + structureMap.get( structure ).getSMILES();
-                if (isDirtyInPreference( structure ))
+                if (QsarHelper.isDirtyInPreference( structure, getProject() ))
                     ret=ret+" - CHANGED\n";
                 else
                     ret=ret+" - unchanged\n";
@@ -535,26 +549,35 @@ public class QSARBuilder extends IncrementalProjectBuilder
 
     private Map<IMolecule, List<DescriptorType>> getComboForCalculation(
                                                                         Map<StructureType, IMolecule> structureMap,
-                                                                        List<DescriptorType> allDescriptors ) {
+                                                                        List<DescriptorType> allDescriptors, QsarType qsarModel ) {
 
         Map<IMolecule, List<DescriptorType>> molDescMap=new HashMap<IMolecule, List<DescriptorType>>();
 
-        //Changedstructures need computing for all descriptors
+        //A Changed structure needs computing for all descriptors
         for (StructureType structure : structureMap.keySet()){
             IMolecule mol=structureMap.get( structure);
-            if (isDirtyInPreference(structure))
+            if (QsarHelper.isDirtyInPreference(structure, getProject()))
                 molDescMap.put( mol, allDescriptors );
         }
 
-        //Changeddescriptors need computing for all molecules
+        //A descriptor need computing for all molecules
         for (DescriptorType desc : allDescriptors){
-            if (isDirtyInPreference(desc)){
-                for (IMolecule mol : structureMap.values()){
+            for (StructureType structure : structureMap.keySet()){
+                IMolecule mol = structureMap.get( structure );
+                
+//                logger.debug("Combo: " + structure.getId() + "--" + desc.getId() + " is dirty: " + QsarHelper.isDirtyInPreference(desc, getProject()));
+//                logger.debug("Combo: " + structure.getId() + "--" + desc.getId() + " has response empty: " + isResponseEmpty(desc, structure, qsarModel));
+                
+                //If descriptor is dirty
+                if (QsarHelper.isDirtyInPreference(desc, getProject())
+                        || isResponseEmpty(desc, structure, qsarModel)       
+                ){
                     List<DescriptorType>  localDescList;
                     if (molDescMap.containsKey( mol )){
                         localDescList = molDescMap.get( mol );
                     }else{
                         localDescList = new ArrayList<DescriptorType>();
+                        molDescMap.put( mol, localDescList );
                     }
 
                     if (!(localDescList.contains( desc ))){
@@ -569,6 +592,25 @@ public class QSARBuilder extends IncrementalProjectBuilder
     }
 
 
+
+    private boolean isResponseEmpty( DescriptorType desc, StructureType structure, QsarType qsarModel) {
+
+        
+        for (DescriptorresultType res: qsarModel.getDescriptorresultlist().getDescriptorresult()){
+            
+            if (res.getDescriptorid().equals( desc.getId() ) 
+                    &&
+                    res.getStructureid().equals( structure.getId() )){
+                //Make sure we have values
+                if (res.getDescriptorvalue()!=null && res.getDescriptorvalue().size()>0)
+                    //No, it's not empty, we've found at least one result
+                    return false;
+            }
+        }
+
+        //Yes, it's empty
+        return true;
+    }
 
     /**
      * Extract all molecules and if they have changed to a Map
@@ -689,15 +731,17 @@ public class QSARBuilder extends IncrementalProjectBuilder
          QsarPackage.eINSTANCE);
 
 
-        IFile qsarfile = getProject().getFile("qsar.xml");
+        IFile qsarfile = getQsarFile();
         logger.debug("QSAR file: " + qsarfile.getRawLocation().toOSString());
 
         // Get the URI of the model file.
-        URI fileURI = URI.createFileURI(qsarfile.getRawLocation().toOSString());
+//        URI fileURI = URI.createFileURI(qsarfile.getRawLocation().toOSString());
+        
+        URI uri=URI.createPlatformResourceURI(getQsarFile().getFullPath().toString(), true);
 
         // Demand load the resource for this file.
         try{
-            Resource resource = resourceSet.getResource(fileURI, true);
+            Resource resource = resourceSet.getResource(uri, true);
             DocumentRoot root=(DocumentRoot) resource.getContents().get(0);
             QsarType qsarType=root.getQsar();
 
@@ -722,15 +766,16 @@ public class QSARBuilder extends IncrementalProjectBuilder
         root.setQsar( qsarModel );
 
         ResourceSet resourceSet=new ResourceSetImpl();
-        URI fileURI;
+//        URI fileURI;
         try {
             //For now, only one QSAR file per project
-            IFile qsarfile = getProject().getFile("qsar.xml");
-            fileURI = URI.createFileURI(qsarfile.getRawLocation().toOSString());
-
+//            IFile qsarfile = getProject().getFile("qsar.xml");
+//            fileURI = URI.createFileURI(qsarfile.getRawLocation().toOSString());
+            URI uri=URI.createPlatformResourceURI(getQsarFile().getFullPath().toString(), true);
+            
             Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("xml", new QsarResourceFactoryImpl());
 
-            Resource resource=resourceSet.createResource(fileURI);
+            Resource resource=resourceSet.createResource(uri);
             resource.getContents().add(root);
 
             //Serialize with extra options
@@ -1442,29 +1487,6 @@ FIXME HERE
     }
     
     
-    private void setChangedInPreference( DescriptorType desc ) {
-
-        // TODO Auto-generated method stub
-        
-    }
-
-    private void setChangedInPreference( StructureType structure ) {
-
-        // TODO Auto-generated method stub
-        
-    }
-
-    private boolean isDirtyInPreference( DescriptorType desc ) {
-
-        // TODO Auto-generated method stub
-        return true;
-    }
-
-    private boolean isDirtyInPreference( StructureType structure ) {
-
-        // TODO Auto-generated method stub
-        return true;
-    }
 
 
 }

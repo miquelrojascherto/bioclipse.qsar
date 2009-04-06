@@ -195,7 +195,7 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
 
     private IProject activeProject;
 
-    private QsarType qsarModel;
+//    private QsarType qsarModel;
     private Resource resource;
     private ResourceSetImpl resourceSet;
 
@@ -580,6 +580,10 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
         }
     };
 
+    private AdapterFactoryItemDelegator itemDelegator;
+
+    private AdapterFactoryLabelProvider labelProvider;
+
     /**
      * Handles activation of the editor or it's associated views.
      * <!-- begin-user-doc -->
@@ -630,8 +634,6 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
             editingDomain.getCommandStack().flush();
 
             updateProblemIndication = false;
-            //We need to make sure that no build is run in background
-            
             
             try {
                 ResourcesPlugin.getWorkspace().run(
@@ -644,6 +646,10 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
                                                                    resource.unload();
                                                                    try {
                                                                        resource.load(Collections.EMPTY_MAP);
+//                                                                       getQsarModel( resource );
+                                                                       
+                                                                       //Force a page change to pick up model reload on page
+                                                                       setActivePage( getActivePage() );
                                                                    }
                                                                    catch (IOException exception) {
                                                                        if (!resourceToDiagnosticMap.containsKey(resource)) {
@@ -801,6 +807,11 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
         // Create the editing domain with a special command stack.
         //
         editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, new HashMap<Resource, Boolean>());
+        
+     // These provide access to the model items, their property source and label
+        this.itemDelegator = new AdapterFactoryItemDelegator(adapterFactory);
+        this.labelProvider = new AdapterFactoryLabelProvider(adapterFactory);
+
     }
 
     /**
@@ -987,7 +998,7 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
     public void createModel() {
         URI resourceURI = EditUIUtil.getURI(getEditorInput());
         Exception exception = null;
-        Resource resource = null;
+        resource = null;
         try {
             // Load the resource through the editing domain.
             //
@@ -1004,20 +1015,27 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
         }
         editingDomain.getResourceSet().eAdapters().add(problemIndicationAdapter);
 
-        editingDomain.getResourceSet().getResources().get( 0 ).getContents();
+        //Calculate non-stored properties like num of mols, no2D etc
+        qsar=Activator.getDefault().getQsarManager();
+        if (getQsarModel()!=null){
+            qsar.addCalculatedPropertiesToQsarModel(getQsarModel());
+            logger.debug(" ## ## QSAREditor read model file successfully");
+        }else{
+            logger.error(" ## ## QSAREditor read model file FAILED");
+        }
+
+    }
+
+    public QsarType getQsarModel() {
 
         if (resource != null) {
             DocumentRoot root = (DocumentRoot) resource.getContents().get(0);
 
             //Store the model in editor
-            qsarModel=root.getQsar();
-            logger.debug("QSAREditor read model file successfully");
-
-            //Calculate non-stored properties like num of mols, no2D etc
-            qsar=Activator.getDefault().getQsarManager();
-            qsar.addCalculatedPropertiesToQsarModel(qsarModel);
+            return root.getQsar();
         }
-
+        
+        return null;
     }
 
     /**
@@ -1617,6 +1635,8 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
         // Creates the model from the editor input
         //
         createModel();
+        
+        QsarType qsarModel = getQsarModel();
 
         selectionProvider=new QsarEditorSelectionProvider();
 
@@ -1627,7 +1647,7 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
 
         //Create the MoleculesPage
         molPage=new MoleculesPage(this, qsarModel, editingDomain, selectionProvider);
-        descPage=new DescriptorsPage(this, qsarModel, editingDomain, selectionProvider);
+        descPage=new DescriptorsPage(this, editingDomain, selectionProvider);
         responsesPage=new ResponsesPage(this, qsarModel, editingDomain, selectionProvider);
         overviewPage=new OverviewPage(this, qsarModel, editingDomain, selectionProvider);
 
@@ -1666,4 +1686,16 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
 
         this.activeProject = activeProject;
     }
+
+    
+//    public QsarType getQsarModel() {
+//    
+//        return qsarModel;
+//    }
+//
+//    
+//    public void setQsarModel( QsarType qsarModel ) {
+//    
+//        this.qsarModel = qsarModel;
+//    }
 }
