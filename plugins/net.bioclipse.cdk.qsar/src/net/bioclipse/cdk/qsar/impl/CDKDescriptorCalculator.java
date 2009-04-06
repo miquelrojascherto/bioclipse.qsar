@@ -203,25 +203,24 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
             }
 
 
-            String descriptorID=descType.getOntologyid();			
-            logger.debug("Calculating descriptor: " + descriptorID + "for mol: " + cdkmol.getName());
-            monitor.subTask("Molecule: " + cdkmol.getName() + "\nDescriptor: " + descriptorID);
+            logger.debug("CDK calculating descriptor: " + descType.getOntologyid() + "for mol: " + cdkmol.getName());
+            monitor.subTask("Molecule: " + cdkmol.getName() + "\nDescriptor: " + descType.getOntologyid());
             monitor.worked(1);
 
 
             //This is where we store the result
             DescriptorResult res=new DescriptorResult();
-            res.setDescriptorId(descriptorID);
+            res.setDescriptor( descType );
 
             //Get descriptor by id
-            IMolecularDescriptor cdkDescriptor = getDescriptorMap().get(descriptorID);
+            IMolecularDescriptor cdkDescriptor = getDescriptorMap().get(descType.getOntologyid());
 
             //If we had errors in atomcontainer, add error here
             if (atomcontainerError!=null){
                 res.setErrorMessage(atomcontainerError);
                 logger.debug("Error message set to: " + res.getErrorMessage());
             }else if (cdkDescriptor==null){
-                res.setErrorMessage("Descriptor not supported in cdk: " + descriptorID);
+                res.setErrorMessage("Descriptor not supported in cdk: " + descType.getOntologyid());
                 logger.debug("Error message set to: " + res.getErrorMessage());
             }
 
@@ -241,7 +240,7 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
                             .getParameterNames().length<=0){
 
                         logger.error("Trying to set params for descrImpl: " + 
-                                     descriptorID + " but corresponding " +
+                                     descType.getOntologyid() + " but corresponding " +
                         "CDKDescriptor does not accept any params.");
 
                     }
@@ -376,7 +375,7 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
 
                 //Check that we got back correct number of values
                 if (resultLabels.length != resultVals.length) {
-                    System.out.println("WARN: #labels != #vals for " + descriptorID);
+                    System.out.println("WARN: #labels != #vals for " + descType.getOntologyid());
                 }
 
                 res.setLabels(resultLabels);
