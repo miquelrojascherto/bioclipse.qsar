@@ -145,6 +145,10 @@ public interface IQsarManager extends IBioclipseManager{
     public void addDescriptorToModel( QsarType qsarModel, EditingDomain editingDomain, Descriptor desc,
                                       DescriptorImpl impl );
 
+    public void removeDescriptorsFromModel( QsarType qsarModel,
+                                            EditingDomain editingDomain,
+                                            List<DescriptorType> list );
+
 
 
 }

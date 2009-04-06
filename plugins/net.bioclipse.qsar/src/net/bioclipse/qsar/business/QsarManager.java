@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -57,6 +58,7 @@ import net.bioclipse.inchi.business.IInChIManager;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.DescriptorlistType;
 import net.bioclipse.qsar.DescriptorproviderType;
+import net.bioclipse.qsar.DescriptorresultType;
 import net.bioclipse.qsar.ParameterType;
 import net.bioclipse.qsar.QSARConstants;
 import net.bioclipse.qsar.QsarFactory;
@@ -976,7 +978,7 @@ public class QsarManager implements IQsarManager{
         for (DescriptorType desc : qsarModel.getDescriptorlist().getDescriptors()){
             existingIDs.add( desc.getId() );
         }
-        
+
         int cnt=1;
         String prefix="descriptor";
         while(existingIDs.contains( prefix+cnt )){
@@ -1149,9 +1151,9 @@ public class QsarManager implements IQsarManager{
 
                     //If text-based (currently the only supported method in Bioclipse)
                     structure.setResourceindex( molindex );
-                    
+
                     //FIXME: set structure changed in preferences!
-//                    structure.setChanged( true );
+                    //                    structure.setChanged( true );
 
                     //Calculate and add inchi to structure
                     try {
@@ -1303,73 +1305,120 @@ public class QsarManager implements IQsarManager{
 
         //Collect all in a compound command, for ability 
         //to undo everything at the same time
-      CompoundCommand cCmd = new CompoundCommand();
-      Command cmd;
+        CompoundCommand cCmd = new CompoundCommand();
+        Command cmd;
 
-      DescriptorType modelDescriptor=QsarFactory.eINSTANCE.createDescriptorType();
-      modelDescriptor.setId(generateUniqueDescriptorID( qsarModel ));
-      modelDescriptor.setOntologyid( desc.getId());
+        DescriptorType modelDescriptor=QsarFactory.eINSTANCE.createDescriptorType();
+        modelDescriptor.setId(generateUniqueDescriptorID( qsarModel ));
+        modelDescriptor.setOntologyid( desc.getId());
 
-      //Check if provider already added to qsarModel
-      DescriptorproviderType dprov=null;
-      for (DescriptorproviderType pdimpl : qsarModel.getDescriptorproviders()){
-        if (pdimpl.getId().equals(impl.getProvider().getId())){
-          dprov=QsarFactory.eINSTANCE.createDescriptorproviderType();
-          dprov.setId(pdimpl.getId());
+        //Check if provider already added to qsarModel
+        DescriptorproviderType dprov=null;
+        for (DescriptorproviderType pdimpl : qsarModel.getDescriptorproviders()){
+            if (pdimpl.getId().equals(impl.getProvider().getId())){
+                dprov=QsarFactory.eINSTANCE.createDescriptorproviderType();
+                dprov.setId(pdimpl.getId());
+            }
         }
-      }
-      
-      //If this is a new provider, add it to Qsar model
-      if (dprov==null){
-        DescriptorProvider prov = impl.getProvider();
-        
-        String pid=prov.getId();
-        String pname=prov.getName();
-        String pvend=prov.getVendor();
-        String pvers=prov.getVersion();
-        String pns=prov.getNamesapce();
 
-        //Create a provider (=descrImplType) in qsar model root
-        DescriptorproviderType newdprov=QsarFactory.eINSTANCE.createDescriptorproviderType();
-        newdprov.setId(pid);
-        newdprov.setURL( pns);
-        newdprov.setVendor(pvend);
-        newdprov.setName(pname);
-        newdprov.setVersion(pvers);
-        cmd=AddCommand.create(editingDomain, qsarModel, QsarPackage.Literals.QSAR_TYPE__DESCRIPTORPROVIDERS, newdprov);
+        //If this is a new provider, add it to Qsar model
+        if (dprov==null){
+            DescriptorProvider prov = impl.getProvider();
+
+            String pid=prov.getId();
+            String pname=prov.getName();
+            String pvend=prov.getVendor();
+            String pvers=prov.getVersion();
+            String pns=prov.getNamesapce();
+
+            //Create a provider (=descrImplType) in qsar model root
+            DescriptorproviderType newdprov=QsarFactory.eINSTANCE.createDescriptorproviderType();
+            newdprov.setId(pid);
+            newdprov.setURL( pns);
+            newdprov.setVendor(pvend);
+            newdprov.setName(pname);
+            newdprov.setVersion(pvers);
+            cmd=AddCommand.create(editingDomain, qsarModel, QsarPackage.Literals.QSAR_TYPE__DESCRIPTORPROVIDERS, newdprov);
+            cCmd.append(cmd);
+
+            //Reference the created impl by ID
+            dprov=QsarFactory.eINSTANCE.createDescriptorproviderType();
+            dprov.setId(newdprov.getId());
+
+        }
+
+        modelDescriptor.setProvider( dprov.getId() );
+
+        //Add found impl to descriptor element
+        //      cmd=SetCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__PROVIDER, dprov.getId());
+        //      cCmd.append(cmd);
+
+        //Parameters
+        if (impl.getParameters()!=null){
+            for (DescriptorParameter param : impl.getParameters()){
+
+                ParameterType modelParam=QsarFactory.eINSTANCE.createParameterType();
+                modelParam.setKey(param.getKey());
+                modelParam.setValue(param.getValue());
+                cmd=AddCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__PARAMETER, modelParam);
+                cCmd.append(cmd);
+
+            }
+        }
+
+        //Add the descriptor to descriptorList last, for notification issues
+        cmd=AddCommand.create(editingDomain, qsarModel.getDescriptorlist(), QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTORS, modelDescriptor);
         cCmd.append(cmd);
 
-        //Reference the created impl by ID
-        dprov=QsarFactory.eINSTANCE.createDescriptorproviderType();
-        dprov.setId(newdprov.getId());
-        
-      }
-      
-      modelDescriptor.setProvider( dprov.getId() );
+        //Execute the compiund command
+        editingDomain.getCommandStack().execute(cCmd);        
+    }
 
-      //Add found impl to descriptor element
-//      cmd=SetCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__PROVIDER, dprov.getId());
-//      cCmd.append(cmd);
 
-      //Parameters
-      if (impl.getParameters()!=null){
-        for (DescriptorParameter param : impl.getParameters()){
 
-          ParameterType modelParam=QsarFactory.eINSTANCE.createParameterType();
-          modelParam.setKey(param.getKey());
-          modelParam.setValue(param.getValue());
-          cmd=AddCommand.create(editingDomain, modelDescriptor, QsarPackage.Literals.DESCRIPTOR_TYPE__PARAMETER, modelParam);
-          cCmd.append(cmd);
+    public void removeDescriptorsFromModel( QsarType qsarModel,
+                                            EditingDomain editingDomain,
+                                            List<DescriptorType> list ) {
+
+        CompoundCommand ccmd=new CompoundCommand();
+
+        //Collect commands from selection
+        for (DescriptorType descType : list){
+
+            Command cmd=RemoveCommand.create(editingDomain, qsarModel.getDescriptorlist(), QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTORS, descType);
+            ccmd.append(cmd);
+            logger.debug("Removing descriptor: " + descType.getId());
+
+            //Also delete any descriptorresults for this descriptor
+            for (DescriptorresultType dres : qsarModel.getDescriptorresultlist().getDescriptorresult()){
+                if (dres.getDescriptorid().equals( descType.getId() )){
+                    cmd=RemoveCommand.create(editingDomain, qsarModel.getDescriptorresultlist(), QsarPackage.Literals.DESCRIPTORRESULTLISTS_TYPE__DESCRIPTORRESULT, dres);
+                    ccmd.append(cmd);
+                    logger.debug("   Removing corresponding descriptorresult: " + dres);
+                }
+            }
+
+            //Check for unused descriptorproviders and remove them too
+            for (DescriptorproviderType prov : qsarModel.getDescriptorproviders()){
+                boolean remove=true;
+                for (DescriptorType desc : qsarModel.getDescriptorlist().getDescriptors()){
+                    if (desc.getProvider().equals( prov.getId() )){
+                        //Nope, still used
+                        remove=false;
+                    }
+                }
+                if (remove){
+                    cmd=RemoveCommand.create(editingDomain, qsarModel.getDescriptorproviders(), QsarPackage.Literals.QSAR_TYPE__DESCRIPTORPROVIDERS, prov);
+                    ccmd.append(cmd);
+                    logger.debug("  No uses of qsar provider " + prov.getId() +" so removed.");
+                }
+            }
 
         }
-      }
-      
-      //Add the descriptor to descriptorList last, for notification issues
-      cmd=AddCommand.create(editingDomain, qsarModel.getDescriptorlist(), QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTORS, modelDescriptor);
-      cCmd.append(cmd);
 
-      //Execute the compiund command
-      editingDomain.getCommandStack().execute(cCmd);        
+        //Execute the commands as one 
+        editingDomain.getCommandStack().execute(ccmd);
+
     }
 
 }
