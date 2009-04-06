@@ -1,5 +1,7 @@
 package net.bioclipse.qsar.descriptor;
 
+import net.bioclipse.qsar.DescriptorType;
+
 /**
  * Base implementation of a descriptor result.
  * @author ola
@@ -7,7 +9,7 @@ package net.bioclipse.qsar.descriptor;
  */
 public class DescriptorResult implements IDescriptorResult{
 
-	String descriptorId;
+	DescriptorType descriptor;
 	String[] labels;
 	Float[] values;
 
@@ -25,16 +27,6 @@ public class DescriptorResult implements IDescriptorResult{
 
 	//Constructor
 	public DescriptorResult() {
-	}
-
-
-	public String getDescriptorId() {
-		return descriptorId;
-	}
-
-
-	public void setDescriptorId(String descriptorId) {
-		this.descriptorId = descriptorId;
 	}
 
 
@@ -61,12 +53,19 @@ public class DescriptorResult implements IDescriptorResult{
     public String toString() {
 	    if (labels==null || labels.length<=0) return "null";
 	    
-	    String ret="DescriptorResult for descriptor=" + descriptorId +": ";
+	    String ret="DescriptorResult for descriptor=" + descriptor +": ";
 	    for (int i=0; i< labels.length;i++){
 	        ret=ret+labels[i] + "=" + values[i];
 	    }
 
 	    return ret;
+    }
+    
+    public DescriptorType getDescriptor() {
+        return descriptor;
+    }
+    public void setDescriptor( DescriptorType descriptor ) {
+        this.descriptor = descriptor;
     }
 
 }

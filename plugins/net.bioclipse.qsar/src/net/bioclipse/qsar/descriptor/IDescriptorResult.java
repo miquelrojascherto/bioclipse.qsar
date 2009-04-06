@@ -11,6 +11,8 @@
 
 package net.bioclipse.qsar.descriptor;
 
+import net.bioclipse.qsar.DescriptorType;
+
 /**
  * Interface for results of a descriptorcalculation
  * @author ola
@@ -18,25 +20,22 @@ package net.bioclipse.qsar.descriptor;
  */
 public interface IDescriptorResult {
 
-	String getDescriptorId();
+    public DescriptorType getDescriptor();
+    public void setDescriptor( DescriptorType descriptor );
 
-	void setDescriptorId(String descriptorId);
+    String[] getLabels();
+    void setLabels(String[] labels);
 
-	String[] getLabels();
+    Float[] getValues();
+    void setValues(Float[] values);
 
-	void setLabels(String[] labels);
+    /**
+     * Should be null if no error
+     * @return
+     */
+    String getErrorMessage();
 
-	Float[] getValues();
+    void setErrorMessage(String errorMessage);
 
-	void setValues(Float[] values);
 
-	/**
-	 * Should be null if no error
-	 * @return
-	 */
-	String getErrorMessage();
-
-	void setErrorMessage(String errorMessage);
-
-	
 }
