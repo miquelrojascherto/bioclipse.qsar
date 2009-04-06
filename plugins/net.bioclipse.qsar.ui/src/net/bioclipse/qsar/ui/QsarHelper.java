@@ -44,7 +44,7 @@ public class QsarHelper {
      */
     public static boolean isDirtyInPreference( DescriptorType desc, IProject project) {
         IEclipsePreferences node = new InstanceScope().getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
-        System.out.println(" READ PREFERENCE: " + project.getName()+"_"+desc.getId() +" = " + node.getBoolean( project.getName()+"_"+desc.getId(), true));
+//        System.out.println(" READ PREFERENCE: " + project.getName()+"_"+desc.getId() +" = " + node.getBoolean( project.getName()+"_"+desc.getId(), true));
         return node.getBoolean( project.getName()+"_"+desc.getId(), true);
     }
 
@@ -54,7 +54,7 @@ public class QsarHelper {
      */
     public static boolean isDirtyInPreference( StructureType structure, IProject project) {
         IEclipsePreferences node = new InstanceScope().getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
-        System.out.println(" READ PREFERENCE: " + project.getName()+"_"+structure.getId() +" = " + node.getBoolean( project.getName()+"_"+structure.getId(), true));
+//        System.out.println(" READ PREFERENCE: " + project.getName()+"_"+structure.getId() +" = " + node.getBoolean( project.getName()+"_"+structure.getId(), true));
         return node.getBoolean( project.getName()+"_"+structure.getId(), true);
     }
 
