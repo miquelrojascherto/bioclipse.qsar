@@ -42,6 +42,9 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.jobs.Job;
 
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -635,6 +638,15 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
             editingDomain.getCommandStack().flush();
 
             updateProblemIndication = false;
+            
+            try {
+                Job.getJobManager().join(ResourcesPlugin.FAMILY_AUTO_BUILD, null);
+            } catch ( OperationCanceledException e1 ) {
+                e1.printStackTrace();
+            } catch ( InterruptedException e1 ) {
+                e1.printStackTrace();
+            }
+
             
             try {
                 ResourcesPlugin.getWorkspace().run(

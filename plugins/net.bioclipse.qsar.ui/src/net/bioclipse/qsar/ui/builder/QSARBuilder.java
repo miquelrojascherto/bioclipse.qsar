@@ -177,7 +177,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
     ) throws CoreException
     {
         if (shouldBuild(kind)) {
-            
+
             ResourcesPlugin.getWorkspace().run(
                                                new IWorkspaceRunnable() {
                                                    public void run(IProgressMonitor monitor)
@@ -186,8 +186,8 @@ public class QSARBuilder extends IncrementalProjectBuilder
                                                        buildQSARfile(monitor);
                                                    }
                                                },
-//                                               getProject(),
-//                                               IWorkspace.AVOID_UPDATE,
+                                               //                                               getProject(),
+                                               //                                               IWorkspace.AVOID_UPDATE,
                                                monitor
             );
         }
@@ -219,8 +219,9 @@ public class QSARBuilder extends IncrementalProjectBuilder
      *         <code>false</code>.
      */
     private boolean shouldBuild(int kind) {
-        if (kind == FULL_BUILD)
+        if (kind == FULL_BUILD){
             return true;
+        }
         IResourceDelta delta = getDelta(getProject());
         if (delta == null)
             return false;
@@ -233,7 +234,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
         }
         return false;
     }
-    
+
     private IFile getQsarFile(){
         return getProject().getFile( "qsar.xml" );
     }
@@ -280,14 +281,14 @@ public class QSARBuilder extends IncrementalProjectBuilder
         QsarType qsarModel=readModelFromProjectFile();
         if (qsarModel==null){
             logger.debug( "Building qsar project '" + getProject() + "' skipped " +
-            		"since project file could not be parsed." );
+            "since project file could not be parsed." );
             return;
         }
 
         logger.debug( "******************************************\n" +
                       "Building qsar project: " + getProject().getName() );
         logger.debug( "******************************************");
-        
+
         QsarHelper.setBuildStatus( getProject(), "RUNNING" );
         QsarHelper.setBuildTime( getProject(), "" );
         stopwatch=new Stopwatch();
@@ -345,13 +346,13 @@ public class QSARBuilder extends IncrementalProjectBuilder
 
         //Save qsarmodel
         saveModelToProjectFile(qsarModel);
-        
+
         //Make all structures and descriptors not dirty and save the prefs
         makeAllNonDirty(qsarModel);
 
 
         //Serialize qsarmodel to CSV file
-        //TODO
+        serializeToCSV(qsarModel);
 
         //Serialize mols with results to CML
         //TODO
@@ -364,11 +365,189 @@ public class QSARBuilder extends IncrementalProjectBuilder
 
     }
 
+    private void serializeToCSV( QsarType qsarModel ) {
+
+        List<String> columnLabels=new ArrayList<String>();
+        List<String> rowLabels=new ArrayList<String>();
+        List<String> responseColumn=new ArrayList<String>();
+        float[][] dataset;
+
+        //===============================
+        //Set up row and column labels + compute size of dataset
+        //===============================
+        
+        //First, give any structures missing a response an NaN
+        fillEmptyRespones(qsarModel);
+
+        //Set up rowlabels and fill responseColumn
+        String firstStructureID="";
+        for (ResourceType resource : qsarModel.getStructurelist().getResources()){
+            for (StructureType structure : resource.getStructure()){
+                firstStructureID=structure.getId();
+                rowLabels.add( structure.getId() );
+                for (ResponseType resp : qsarModel.getResponselist().getResponse()){
+                    if (structure.getId().equals( resp.getStructureID())){
+                        responseColumn.add( ""+resp.getValue() );
+                    }
+                }
+            }
+        }
+        
+        if (responseColumn.size()!=rowLabels.size()){
+            logger.error("Responses and rows have different length. Serialize to CSV failed.");
+            return;
+        }
+
+        //Set up columnheaders
+        for (DescriptorresultType descres : qsarModel.getDescriptorresultlist().getDescriptorresult()){
+
+            //We only want for one structure so get first one
+            if (descres.getStructureid().equals( firstStructureID )){
+                //Get values in order
+                for (int i=0; i<descres.getDescriptorvalue().size();i++){
+                    DescriptorvalueType val = descres.getDescriptorvalue().get( i );
+                    columnLabels.add( val.getLabel());
+                }
+            }
+        }
+        logger.debug("============================================");
+        logger.debug("Dataset dimensions: " + rowLabels.size() +" rows and " 
+                     + columnLabels.size() + " columns");
+
+        //==============================
+        //Compute dataset from qsarmodel
+        //==============================
+        dataset=new float[rowLabels.size()][columnLabels.size()];
+
+        //For each row=structureid
+        int currentrow=0;
+        for (ResourceType resource : qsarModel.getStructurelist().getResources()){
+            for (StructureType structure : resource.getStructure()){
+
+                //For each column
+                int currentcol=0;
+                for (DescriptorresultType descres : qsarModel.getDescriptorresultlist().getDescriptorresult()){
+
+                    //If this is the structure, get values from this descriptorresult
+                    if (descres.getStructureid().equals( structure.getId() )){
+                        for (int i=0; i<descres.getDescriptorvalue().size();i++){
+                            DescriptorvalueType val = descres.getDescriptorvalue().get( i );
+                            try{
+                                float pval=Float.parseFloat( val.getValue() );
+                                dataset[currentrow][currentcol]=pval;
+                            }catch (NumberFormatException e){
+                                dataset[currentrow][currentcol]=Float.NaN;
+                            }
+                            currentcol++;
+                        }
+                    }
+                }
+
+                currentrow++;
+            }
+        }
+
+
+
+        //Serialize dataset to file
+        //=========================
+        logger.debug("============================================");
+        logger.debug("Serializing to CSV");
+        logger.debug("============================================");
+        String SEPARATOR=",";
+        String NEWLINE="\n";
+        DecimalFormat formatter = new DecimalFormat("0.00");
+
+        StringBuffer buffer=new StringBuffer();    
+
+        buffer.append(SEPARATOR + "RESPONSE");
+
+        //Serialize one row at a time
+        //Start with colheaders
+        for (String colheader : columnLabels){
+            buffer.append(SEPARATOR + colheader);
+        }
+        buffer.append(NEWLINE);
+        for (int i=0;i< dataset.length; i++){
+
+            //Add label first in line
+            buffer.append(rowLabels.get(i));
+            buffer.append(SEPARATOR + responseColumn.get(i));
+
+            //Add descriptor values
+            for (int j=0;j< dataset[i].length; j++){
+                String toAppend="";
+                //Serialize NaN as String
+                if (Double.isNaN(dataset[i][j])) toAppend="NaN";
+                else toAppend=formatter.format(dataset[i][j]);
+                buffer.append(SEPARATOR + toAppend);
+            }
+            buffer.append(NEWLINE);
+        }
+
+        logger.debug(buffer.toString());
+
+        logger.debug("============================================");
+        logger.debug("============================================");
+
+        //Write this String to file
+        InputStream is=new ByteArrayInputStream(buffer.toString().getBytes());
+        BufferedInputStream source=new BufferedInputStream(is);
+
+        try {
+            IFile datasetFile=getProject().getFile("dataset.csv");
+            if (datasetFile.exists()){
+                datasetFile.setContents(source, true,true, new NullProgressMonitor());
+            }else{
+                datasetFile.create(source, true, new NullProgressMonitor());
+            }
+            datasetFile.setDerived(true);
+            logger.debug("Wrote file dataset.csv");
+        } catch (CoreException e) {
+            logger.error("Writing of file dataset.csv FAILED");
+            e.printStackTrace();
+        }
+        logger.debug("============================================");
+
+        //        if (listOfErrorMessages.size()>0){
+        //            logger.error("Finished with the following errors: ");
+        //            for (String er: listOfErrorMessages){
+        //                logger.error(er);
+        //            }
+        //
+        //        }else{
+        //            logger.debug("No errors to report");
+        //        }
+        logger.debug("============================================");
+
+    }
+
+    private void fillEmptyRespones( QsarType qsarModel ) {
+
+        for (ResourceType resource : qsarModel.getStructurelist().getResources()){
+            for (StructureType structure : resource.getStructure()){
+                ResponseType response=null;
+                for (ResponseType resp : qsarModel.getResponselist().getResponse()){
+                    if (resp.getStructureID().equals( structure.getId() ))
+                        response=resp;
+                }
+                if (response==null){
+                    response=QsarFactory.eINSTANCE.createResponseType();
+                    response.setStructureID( structure.getId() );
+                    qsarModel.getResponselist().getResponse().add( response );
+                }
+            }
+        }
+        
+        // TODO Auto-generated method stub
+        
+    }
+
     private void handleInterruptedBuild() {
 
         stopwatch.stop();
         QsarHelper.setBuildStatus(getProject(), "INTERRUPTED");
-        
+
     }
 
     private void makeAllNonDirty(QsarType qsarModel) {
@@ -414,11 +593,11 @@ public class QSARBuilder extends IncrementalProjectBuilder
 
                 //Loop over all descriptors
                 for (IDescriptorResult descres : resultMap.get( mol )){
-                    
+
                     logger.debug( " ## Attempting to store struct: " 
                                   + structure.getId() + " - AND - " 
                                   + descres.getDescriptor().getOntologyid());
-                    
+
                     //If this descriptorresult already exists in qsarmodel, use it
                     DescriptorresultType dres=getDescriptorResultFromQsarModel(qsarModel, descres, structure);
                     if (dres==null){
@@ -428,7 +607,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
                         dres.setStructureid( structure.getId());
                         qsarModel.getDescriptorresultlist().getDescriptorresult().add( dres );
                     }
-                    
+
                     //Remove all values, we have new!
                     dres.getDescriptorvalue().clear();
 
@@ -460,9 +639,9 @@ public class QSARBuilder extends IncrementalProjectBuilder
      * @return
      */
     private DescriptorresultType getDescriptorResultFromQsarModel(
-                                                                   QsarType qsarModel, IDescriptorResult descres,
-                                                                   StructureType structure ) {
-        
+                                                                  QsarType qsarModel, IDescriptorResult descres,
+                                                                  StructureType structure ) {
+
         for (DescriptorresultType lres : qsarModel.getDescriptorresultlist().getDescriptorresult()){
             if (lres.getDescriptorid().equals( descres.getDescriptor().getId() ) && 
                     lres.getStructureid().equals( structure.getId() ))
@@ -581,10 +760,10 @@ public class QSARBuilder extends IncrementalProjectBuilder
         for (DescriptorType desc : allDescriptors){
             for (StructureType structure : structureMap.keySet()){
                 IMolecule mol = structureMap.get( structure );
-                
-//                logger.debug("Combo: " + structure.getId() + "--" + desc.getId() + " is dirty: " + QsarHelper.isDirtyInPreference(desc, getProject()));
-//                logger.debug("Combo: " + structure.getId() + "--" + desc.getId() + " has response empty: " + isResponseEmpty(desc, structure, qsarModel));
-                
+
+                //                logger.debug("Combo: " + structure.getId() + "--" + desc.getId() + " is dirty: " + QsarHelper.isDirtyInPreference(desc, getProject()));
+                //                logger.debug("Combo: " + structure.getId() + "--" + desc.getId() + " has response empty: " + isResponseEmpty(desc, structure, qsarModel));
+
                 //If descriptor is dirty
                 if (QsarHelper.isDirtyInPreference(desc, getProject())
                         || isResponseEmpty(desc, structure, qsarModel)       
@@ -612,9 +791,9 @@ public class QSARBuilder extends IncrementalProjectBuilder
 
     private boolean isResponseEmpty( DescriptorType desc, StructureType structure, QsarType qsarModel) {
 
-        
+
         for (DescriptorresultType res: qsarModel.getDescriptorresultlist().getDescriptorresult()){
-            
+
             if (res.getDescriptorid().equals( desc.getId() ) 
                     &&
                     res.getStructureid().equals( structure.getId() )){
@@ -752,8 +931,8 @@ public class QSARBuilder extends IncrementalProjectBuilder
         logger.debug("QSAR file: " + qsarfile.getRawLocation().toOSString());
 
         // Get the URI of the model file.
-//        URI fileURI = URI.createFileURI(qsarfile.getRawLocation().toOSString());
-        
+        //        URI fileURI = URI.createFileURI(qsarfile.getRawLocation().toOSString());
+
         URI uri=URI.createPlatformResourceURI(getQsarFile().getFullPath().toString(), true);
 
         // Demand load the resource for this file.
@@ -783,13 +962,13 @@ public class QSARBuilder extends IncrementalProjectBuilder
         root.setQsar( qsarModel );
 
         ResourceSet resourceSet=new ResourceSetImpl();
-//        URI fileURI;
+        //        URI fileURI;
         try {
             //For now, only one QSAR file per project
-//            IFile qsarfile = getProject().getFile("qsar.xml");
-//            fileURI = URI.createFileURI(qsarfile.getRawLocation().toOSString());
+            //            IFile qsarfile = getProject().getFile("qsar.xml");
+            //            fileURI = URI.createFileURI(qsarfile.getRawLocation().toOSString());
             URI uri=URI.createPlatformResourceURI(getQsarFile().getFullPath().toString(), true);
-            
+
             Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("xml", new QsarResourceFactoryImpl());
 
             Resource resource=resourceSet.createResource(uri);
@@ -802,13 +981,13 @@ public class QSARBuilder extends IncrementalProjectBuilder
 
             //Save to file
             resource.save(opts);
-            
+
             getProject().getFile( "qsar.xml" ).refreshLocal( 0, new NullProgressMonitor());
 
             //Serialize to byte[] and print to sysout
-//            ByteArrayOutputStream os=new ByteArrayOutputStream();
-//            resource.save(os, opts);
-//            System.out.println(new String(os.toByteArray()));
+            //            ByteArrayOutputStream os=new ByteArrayOutputStream();
+            //            resource.save(os, opts);
+            //            System.out.println(new String(os.toByteArray()));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -1502,7 +1681,7 @@ FIXME HERE
             logger.error(e);
         }
     }
-    
+
     public class Stopwatch {
         private long start;
         private long stop;
@@ -1521,7 +1700,7 @@ FIXME HERE
 
         //return nice string
         public String toString() {
-            
+
             int seconds = (int) ((elapsedTimeMillis() / 1000) % 60);
             int minutes = (int) ((elapsedTimeMillis() / 1000) / 60);
             if (minutes>0)
