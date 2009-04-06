@@ -20,6 +20,7 @@ public class DummyCalculator implements IDescriptorCalculator {
     /**
      * For each molecule and descriptor, return an array of values
      */
+    @Deprecated
     public Map<IMolecule, List<IDescriptorResult>> calculateDescriptor(
                                                                        List<? extends IMolecule> molecules, 
                                                                        List<DescriptorType> descriptorTypes, IProgressMonitor monitor){
@@ -34,23 +35,22 @@ public class DummyCalculator implements IDescriptorCalculator {
 
             //Loop over all descriptors
             for (DescriptorType descType : descriptorTypes){
-                String descriptorID=descType.getId();
 
                 //Dummy result
                 DescriptorResult res=new DescriptorResult();
 
                 //If descriptor is supported, add content
-                if (getSupportedDescriptorIDs().contains(descriptorID)){
+                if (getSupportedDescriptorIDs().contains(descType.getOntologyid())){
 
-                    if (descriptorID.equals("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticBondsCount")){
+                    if (descType.getOntologyid().equals("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticBondsCount")){
                         //Return error result, fake a calculation has gone wrong
                         res.setErrorMessage("Failed to calculate descriptor " +
-                                            "'" + descriptorID + 
+                                            "'" + descType.getOntologyid() + 
                         "'. Reason: Unknown");
                     }
                     else{
                         //Return correct result
-                        res.setDescriptorId(descriptorID);
+                        res.setDescriptor( descType );
                         Float[] returnvalue=new Float[]{new Float(15.2456), new Float(47.01), new Float(-6.44)};
                         res.setValues(returnvalue);
                         String[] labels=new String[]{"label1","label2","label3"};
@@ -62,7 +62,7 @@ public class DummyCalculator implements IDescriptorCalculator {
                 //If this descriptor is not supported, add error msg
                 //This should not happen
                 else{
-                    res.setErrorMessage("DescriptorID '" + descriptorID + 
+                    res.setErrorMessage("DescriptorID '" + descType.getOntologyid() + 
                     "' is not supported by DummyProvider.");
                 }
 
@@ -108,23 +108,22 @@ public class DummyCalculator implements IDescriptorCalculator {
 
             //Loop over all descriptors
             for (DescriptorType descType : moldesc.get( mol )){
-                String descriptorID=descType.getOntologyid();
 
                 //Dummy result
                 DescriptorResult res=new DescriptorResult();
 
                 //If descriptor is supported, add content
-                if (getSupportedDescriptorIDs().contains(descriptorID)){
+                if (getSupportedDescriptorIDs().contains(descType.getOntologyid())){
 
-                    if (descriptorID.equals("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticBondsCount")){
+                    if (descType.getOntologyid().equals("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticBondsCount")){
                         //Return error result, fake a calculation has gone wrong
                         res.setErrorMessage("Failed to calculate descriptor " +
-                                            "'" + descriptorID + 
+                                            "'" + descType.getOntologyid() + 
                         "'. Reason: Unknown");
                     }
                     else{
                         //Return correct result
-                        res.setDescriptorId(descriptorID);
+                        res.setDescriptor( descType );
                         Float[] returnvalue=new Float[]{new Float(15.2456), new Float(47.01), new Float(-6.44)};
                         res.setValues(returnvalue);
                         String[] labels=new String[]{"label1","label2","label3"};
@@ -136,7 +135,7 @@ public class DummyCalculator implements IDescriptorCalculator {
                 //If this descriptor is not supported, add error msg
                 //This should not happen
                 else{
-                    res.setErrorMessage("DescriptorID '" + descriptorID + 
+                    res.setErrorMessage("DescriptorID '" + descType.getOntologyid() + 
                     "' is not supported by DummyProvider.");
                 }
 

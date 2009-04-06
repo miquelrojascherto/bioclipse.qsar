@@ -458,7 +458,7 @@ public class TestQsarManager {
 		IDescriptorResult res=qsar.calculate(mol, descriptorID);
 		assertNotNull(res);
 		assertNull("Error message was not null but: " + res.getErrorMessage(), res.getErrorMessage());
-		assertEquals(descriptorID, res.getDescriptorId());
+		assertEquals(descriptorID, res.getDescriptor().getOntologyid());
 		assertEquals(3, res.getLabels().length);
 		assertEquals(3, res.getValues().length);
 
@@ -523,25 +523,25 @@ public class TestQsarManager {
 		assertNull(dres22.getErrorMessage());
 
 		System.out.println("Mol: " + mol1.getSMILES());
-		System.out.println("Desc " + dres1.getDescriptorId() +": " + 
+		System.out.println("Desc " + dres1.getDescriptor().getOntologyid() +": " + 
 				dres1.getLabels()[0] + "=" + dres1.getValues()[0] +", " + 
 				dres1.getLabels()[1] + "=" + dres1.getValues()[1] +", " + 
 				dres1.getLabels()[2] + "=" + dres1.getValues()[2] +", ");
 
 		System.out.println("Mol: " + mol1.getSMILES());
-		System.out.println("Desc " + dres11.getDescriptorId() +": " + 
+		System.out.println("Desc " + dres11.getDescriptor().getOntologyid() +": " + 
 				dres11.getLabels()[0] + "=" + dres11.getValues()[0] +", " + 
 				dres11.getLabels()[1] + "=" + dres11.getValues()[1] +", " + 
 				dres11.getLabels()[2] + "=" + dres11.getValues()[2] +", ");
 
 		System.out.println("Mol: " + mol2.getSMILES());
-		System.out.println("Desc " + dres2.getDescriptorId() +": " + 
+		System.out.println("Desc " + dres2.getDescriptor().getOntologyid() +": " + 
 				dres2.getLabels()[0] + "=" + dres2.getValues()[0] +", " + 
 				dres2.getLabels()[1] + "=" + dres2.getValues()[1] +", " + 
 				dres2.getLabels()[2] + "=" + dres2.getValues()[2] +", ");
 
 		System.out.println("Mol: " + mol2.getSMILES());
-		System.out.println("Desc " + dres22.getDescriptorId() +": " + 
+		System.out.println("Desc " + dres22.getDescriptor().getOntologyid() +": " + 
 				dres22.getLabels()[0] + "=" + dres22.getValues()[0] +", " + 
 				dres22.getLabels()[1] + "=" + dres22.getValues()[1] +", " + 
 				dres22.getLabels()[2] + "=" + dres22.getValues()[2] +", ");
@@ -601,19 +601,19 @@ public class TestQsarManager {
 	    assertNull(dres2.getErrorMessage());
 
 	    System.out.println("Mol: " + mol1.getSMILES());
-	    System.out.println("Desc " + dres1.getDescriptorId() +": " + 
+	    System.out.println("Desc " + dres1.getDescriptor().getOntologyid() +": " + 
 	        dres1.getLabels()[0] + "=" + dres1.getValues()[0] +", " + 
 	        dres1.getLabels()[1] + "=" + dres1.getValues()[1] +", " + 
 	        dres1.getLabels()[2] + "=" + dres1.getValues()[2] +", ");
 
 	    System.out.println("Mol: " + mol1.getSMILES());
-	    System.out.println("Desc " + dres11.getDescriptorId() +": " + 
+	    System.out.println("Desc " + dres11.getDescriptor().getOntologyid() +": " + 
 	        dres11.getLabels()[0] + "=" + dres11.getValues()[0] +", " + 
 	        dres11.getLabels()[1] + "=" + dres11.getValues()[1] +", " + 
 	        dres11.getLabels()[2] + "=" + dres11.getValues()[2] +", ");
 
 	    System.out.println("Mol: " + mol2.getSMILES());
-	    System.out.println("Desc " + dres2.getDescriptorId() +": " + 
+	    System.out.println("Desc " + dres2.getDescriptor().getOntologyid() +": " + 
 	        dres2.getLabels()[0] + "=" + dres2.getValues()[0] +", " + 
 	        dres2.getLabels()[1] + "=" + dres2.getValues()[1] +", " + 
 	        dres2.getLabels()[2] + "=" + dres2.getValues()[2] +", ");
