@@ -83,13 +83,10 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
     private QsarEditorSelectionProvider selectionProvider;
     private EditingDomain editingDomain;
 
-    private QsarType qsarModel;
-    private ResponsesListType responsesList;
 
-
-
-    public ResponsesPage(FormEditor editor, QsarType qsarModel, 
-                         EditingDomain editingDomain, QsarEditorSelectionProvider selectionProvider) {
+    public ResponsesPage(FormEditor editor,
+                         EditingDomain editingDomain, 
+                         QsarEditorSelectionProvider selectionProvider) {
 
         super(editor, "qsar.responses", "Responses");
         this.editingDomain=editingDomain;
@@ -97,12 +94,12 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
         //Get Managers via OSGI
         cdk=Activator.getDefault().getCDKManager();
 
-        this.qsarModel = qsarModel;
 
         formatter = new DecimalFormat("0.00");
         this.selectionProvider=selectionProvider;
 
-        this.responsesList=qsarModel.getResponselist();
+        QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
+        ResponsesListType responsesList = qsarModel.getResponselist();
         if (responsesList==null){
             responsesList=QsarFactory.eINSTANCE.createResponsesListType();
             qsarModel.setResponselist(responsesList);
@@ -273,6 +270,9 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
 
         //Populate selected descriptors from the read qsar model 
         //		populateResponsesViewerFromModel();
+        QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
+        ResponsesListType responsesList = qsarModel.getResponselist();
+
         if (responsesList.eContents()!=null){
             responsesViewer.setInput(responsesList.eContents().toArray());
         }
@@ -289,6 +289,9 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
     private void synchronizeResponesWithModel() {
 
         List<ICDKMolecule> allMolecules=new ArrayList<ICDKMolecule>();
+
+        QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
+        ResponsesListType responsesList = qsarModel.getResponselist();
 
         //Loop over all resources
         for (ResourceType molres : qsarModel.getStructurelist().getResources()){
@@ -326,6 +329,8 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
 
 
 
+        QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
+        ResponsesListType responsesList = qsarModel.getResponselist();
         responsesViewer.setInput(responsesList.eContents().toArray());
 
         /*		
@@ -400,6 +405,9 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
 
 
     public void activatePage() {
+
+        QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
+        ResponsesListType responsesList = qsarModel.getResponselist();
 
         selectionProvider.setSelectionProviderDelegate( responsesViewer );
         synchronizeResponesWithModel();
