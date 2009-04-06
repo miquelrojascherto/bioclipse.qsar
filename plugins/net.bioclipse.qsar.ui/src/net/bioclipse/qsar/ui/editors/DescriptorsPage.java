@@ -417,16 +417,7 @@ private Table paramsTable;
 //				DescriptorImpl impl2 = qsar.getDescriptorByID(desc.getId());
 				DescriptorImpl impl = qsar.getPreferredImpl(desc.getId());
 				if (impl!=null){
-					
-					
-//					
-//					DescriptorInstance inst = new DescriptorInstance(desc,impl);
-//
-//					//Add this instance to rightViewer's model
-//					selectedDescriptors.add(inst);
-				    
-//				    System.out.println("Qsar model: " + qsarModel);
-					
+
 				    QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
 				    qsar.addDescriptorToModel(qsarModel, editingDomain, desc, impl);
 					
@@ -457,54 +448,9 @@ private Table paramsTable;
     protected void deleteSelectedDescriptors() {
     	
     	IStructuredSelection ssel=(IStructuredSelection) rightViewer.getSelection();
-		
-    	CompoundCommand ccmd=new CompoundCommand();
-
-      DescriptorlistType descriptorList = getDescriptorListFromModel();
-
-    	//Collect commands from selection
-    	for (Iterator<?> it=ssel.iterator(); it.hasNext();){
-    		Object obj = it.next();
-    		
-    		if (obj instanceof DescriptorType) {
-				DescriptorType descType = (DescriptorType) obj;
-				Command cmd=RemoveCommand.create(editingDomain, descriptorList, QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTORS, descType);
-				ccmd.append(cmd);
-        logger.debug("Removing descriptor: " + descType.getId());
-				
-        //Also delete any descriptorresults for this descriptor
-        QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
-        for (DescriptorresultType dres : qsarModel.getDescriptorresultlist().getDescriptorresult()){
-            if (dres.getDescriptorid().equals( descType.getId() )){
-                cmd=RemoveCommand.create(editingDomain, qsarModel.getDescriptorresultlist(), QsarPackage.Literals.DESCRIPTORRESULTLISTS_TYPE__DESCRIPTORRESULT, dres);
-                ccmd.append(cmd);
-                logger.debug("   Removing corresponding descriptorresult: " + dres);
-            }
-        }
-        
-        //Check for unused descriptorproviders and remove them too
-        for (DescriptorproviderType prov : qsarModel.getDescriptorproviders()){
-            boolean remove=true;
-            for (DescriptorType desc : qsarModel.getDescriptorlist().getDescriptors()){
-                if (desc.getProvider().equals( prov.getId() )){
-                    //Nope, still used
-                    remove=false;
-                }
-            }
-            if (remove){
-                cmd=RemoveCommand.create(editingDomain, qsarModel.getDescriptorproviders(), QsarPackage.Literals.QSAR_TYPE__DESCRIPTORPROVIDERS, prov);
-                ccmd.append(cmd);
-                logger.debug("  No uses of qsar provider " + prov.getId() +" so removed.");
-            }
-        }
-
-			}
-    		
-    		
-    	}
-
-		//Execute the commands
-		editingDomain.getCommandStack().execute(ccmd);
+    	
+      QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
+      qsar.removeDescriptorsFromModel(qsarModel, editingDomain, ssel.toList());
 
     }
 
