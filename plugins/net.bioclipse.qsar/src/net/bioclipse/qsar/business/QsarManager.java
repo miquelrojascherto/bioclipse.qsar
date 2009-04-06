@@ -1286,6 +1286,24 @@ public class QsarManager implements IQsarManager{
                     }
                 }
             }
+            
+            //Also remove all descriptorresults, if any
+            if (qsarModel.getDescriptorresultlist()!=null && qsarModel.getDescriptorresultlist().getDescriptorresult().size()>0){
+                for (DescriptorresultType descres : qsarModel.getDescriptorresultlist().getDescriptorresult()){
+
+                    for (StructureType structure : resource.getStructure()){
+                        if (descres.getStructureid().equals( structure.getId() )){
+                            //Remove this descriptorresult
+                            cmd=RemoveCommand.create(editingDomain, 
+                                                     qsarModel.getDescriptorresultlist(), 
+                                                     QsarPackage.Literals.
+                                                     DESCRIPTORRESULTLISTS_TYPE__DESCRIPTORRESULT, descres);
+                            ccmd.append(cmd);
+                        }
+                    }
+                }
+            }
+
 
         }
 
