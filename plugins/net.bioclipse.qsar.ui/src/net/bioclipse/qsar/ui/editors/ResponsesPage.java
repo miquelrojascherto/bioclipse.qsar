@@ -420,28 +420,6 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
         
     }
 
-    public class Stopwatch {
-        private long start;
-        private long stop;
-
-        public void start() {
-            start = System.currentTimeMillis(); // start timing
-        }
-
-        public void stop() {
-            stop = System.currentTimeMillis(); // stop timing
-        }
-
-        public long elapsedTimeMillis() {
-            return stop - start;
-        }
-
-        //return number of seconds
-        public String toString() {
-            return "" + Long.toString(elapsedTimeMillis()/1000); // print execution time
-        }
-    }
-
     public EditingDomain getEditingDomain() {
         return editingDomain;
     }

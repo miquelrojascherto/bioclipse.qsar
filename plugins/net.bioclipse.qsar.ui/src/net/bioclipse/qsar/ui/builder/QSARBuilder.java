@@ -136,6 +136,8 @@ public class QSARBuilder extends IncrementalProjectBuilder
         int charEnd;
     }
 
+    private Stopwatch stopwatch;
+
     /**
      * When called by Eclipse, this builder should perform an audit as
      * necessary. If the build kind is <code>INCREMENTAL_BUILD</code>
@@ -258,13 +260,10 @@ public class QSARBuilder extends IncrementalProjectBuilder
             return;
 
         //Scan plugin for molecules and descriptors to build
-        logger.debug("Building descriptors...");
         scanQsarFile(monitor);
 
         if (checkCancel(monitor))
             return;
-
-        logger.debug("Building descriptors completed.");
 
         monitor.done();
     }
@@ -288,6 +287,11 @@ public class QSARBuilder extends IncrementalProjectBuilder
         logger.debug( "******************************************\n" +
                       "Building qsar project: " + getProject().getName() );
         logger.debug( "******************************************");
+        
+        QsarHelper.setBuildStatus( getProject(), "RUNNING" );
+        QsarHelper.setBuildTime( getProject(), "" );
+        stopwatch=new Stopwatch();
+        stopwatch.start();
 
         //Verify at least one structure and one descriptor
         //================================================
@@ -300,15 +304,19 @@ public class QSARBuilder extends IncrementalProjectBuilder
         //================================================
         Map<StructureType, IMolecule> structureMap=extractMoleculesFromQSARType(qsarModel);
         logger.debug("Structures: \n" + debugStructureMap(structureMap) );
-        if (checkCancel(monitor))
+        if (checkCancel(monitor)){
+            handleInterruptedBuild();
             return;
+        }
 
         //List descriptors for calculation
         //================================================
         List<DescriptorType> allDescriptors=qsarModel.getDescriptorlist().getDescriptors();
         logger.debug("Descriptors: \n" + debugDescList(allDescriptors) );
-        if (checkCancel(monitor))
+        if (checkCancel(monitor)){
+            handleInterruptedBuild();
             return;
+        }
 
         //Figure out which combos need calculations: dirty or no existing responses
         //================================================
@@ -324,8 +332,10 @@ public class QSARBuilder extends IncrementalProjectBuilder
         //Calculate all changed descriptors
         Map<IMolecule, List<IDescriptorResult>> resultMap = qsar.calculate(molDescMap, monitor);
         logger.debug("Calculation results: \n" + debugResultMap(resultMap));
-        if (checkCancel(monitor))
+        if (checkCancel(monitor)){
+            handleInterruptedBuild();
             return;
+        }
 
         monitor.worked(1);
         monitor.subTask("Processing descriptor results");
@@ -339,10 +349,6 @@ public class QSARBuilder extends IncrementalProjectBuilder
         //Make all structures and descriptors not dirty and save the prefs
         makeAllNonDirty(qsarModel);
 
-        //FIXME: remove and continue when finished above
-        if (true) return;
-
-
 
         //Serialize qsarmodel to CSV file
         //TODO
@@ -350,9 +356,20 @@ public class QSARBuilder extends IncrementalProjectBuilder
         //Serialize mols with results to CML
         //TODO
 
+        stopwatch.stop();
+        QsarHelper.setBuildStatus(getProject(), "FINISHED");
+        QsarHelper.setBuildTime(getProject(), stopwatch.toString());
+
+        logger .debug ("** Building qsar project: " + getProject().getName() + " FINISHED. **" );
 
     }
 
+    private void handleInterruptedBuild() {
+
+        stopwatch.stop();
+        QsarHelper.setBuildStatus(getProject(), "INTERRUPTED");
+        
+    }
 
     private void makeAllNonDirty(QsarType qsarModel) {
 
@@ -1486,7 +1503,34 @@ FIXME HERE
         }
     }
     
-    
+    public class Stopwatch {
+        private long start;
+        private long stop;
+
+        public void start() {
+            start = System.currentTimeMillis(); // start timing
+        }
+
+        public void stop() {
+            stop = System.currentTimeMillis(); // stop timing
+        }
+
+        public long elapsedTimeMillis() {
+            return stop - start;
+        }
+
+        //return nice string
+        public String toString() {
+            
+            int seconds = (int) ((elapsedTimeMillis() / 1000) % 60);
+            int minutes = (int) ((elapsedTimeMillis() / 1000) / 60);
+            if (minutes>0)
+                return "" + minutes + " mins and " + seconds + " s";
+            else
+                return "" + seconds + " s";
+        }
+    }
+
 
 
 }

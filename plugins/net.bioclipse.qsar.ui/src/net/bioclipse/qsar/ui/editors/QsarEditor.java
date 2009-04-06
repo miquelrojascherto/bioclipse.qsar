@@ -175,6 +175,7 @@ import net.bioclipse.qsar.QsarType;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.init.Activator;
 import net.bioclipse.qsar.provider.QsarItemProviderAdapterFactory;
+import net.bioclipse.qsar.ui.QsarHelper;
 import net.bioclipse.ui.editors.XMLEditor;
 
 import net.sf.bibtexml.provider.BibtexmlItemProviderAdapterFactory;
@@ -647,6 +648,8 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
                                                                    try {
                                                                        resource.load(Collections.EMPTY_MAP);
 //                                                                       getQsarModel( resource );
+                                                                       
+                                                                       QsarHelper.updateTransientProperties(getQsarModel(), getActiveProject());
                                                                        
                                                                        //Force a page change to pick up model reload on page
                                                                        setActivePage( getActivePage() );

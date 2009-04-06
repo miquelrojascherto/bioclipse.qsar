@@ -13,6 +13,9 @@ package net.bioclipse.qsar.ui.editors;
 import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.qsar.QsarType;
+import net.bioclipse.qsar.ResourceType;
+import net.bioclipse.qsar.ResponseType;
+import net.bioclipse.qsar.ui.QsarHelper;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IProject;
@@ -57,7 +60,7 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
     private QsarEditorSelectionProvider selectionProvider;
     private EditingDomain editingDomain;
 
-    private IProject activeProject;
+    private IProject project;
 
     private QsarEditor editor;
 
@@ -73,7 +76,6 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
 
     private Label lblCalculationStatus;
 
-
     public OverviewPage(FormEditor editor, 
                         EditingDomain editingDomain, QsarEditorSelectionProvider selectionProvider) {
 
@@ -85,7 +87,10 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
 
         this.editor=(QsarEditor) editor;
 
+        this.project=this.editor.getActiveProject();
+
         this.selectionProvider=selectionProvider;
+        editor.addPageChangedListener(this);
 
     }
 
@@ -101,8 +106,8 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
         form.setText("QSAR responses");
         toolkit.decorateFormHeading(form.getForm());
 
-        activeProject=((QsarEditor)getEditor()).getActiveProject();
-        ToolbarHelper.setupToolbar(form, activeProject);
+        project=((QsarEditor)getEditor()).getActiveProject();
+        ToolbarHelper.setupToolbar(form, project);
 
         TableWrapLayout layout=new TableWrapLayout();
         layout.numColumns=2;
@@ -130,33 +135,58 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
 
         QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
 
-        if (qsarModel.getDescriptorlist()!=null && 
-                qsarModel.getDescriptorlist().getDescriptors()!=null){
-            int ndesc=qsarModel.getDescriptorlist().getDescriptors().size();
-            lblNumDescriptors.setText(""+ndesc);
-        }
-
+        //Resoures and structures
         if (qsarModel.getStructurelist()!=null && 
                 qsarModel.getStructurelist().getResources()!=null){
             int ndesc=qsarModel.getStructurelist().getResources().size();
             lblNumFiles.setText(""+ndesc);
+
+            //Count total # structures
+            int numStructures=0;
+            for (ResourceType res : qsarModel.getStructurelist().getResources()){
+                if (res.getNoMols()>0){
+                    numStructures=numStructures+res.getNoMols();
+                }
+            }
+            lblNumStructures.setText( ""+numStructures );
+        }else{
+            lblNumFiles.setText("N/A");
+            lblNumStructures.setText("N/A");
         }
 
+        //Descriptors
+        if (qsarModel.getDescriptorlist()!=null && 
+                qsarModel.getDescriptorlist().getDescriptors()!=null){
+            int ndesc=qsarModel.getDescriptorlist().getDescriptors().size();
+            lblNumDescriptors.setText(""+ndesc);
+        }else{
+            lblNumDescriptors.setText("N/A");
+        }
+
+        //Responses
         if (qsarModel.getResponselist()!=null && 
                 qsarModel.getResponselist().getResponse()!=null){
             int ndesc=qsarModel.getResponselist().getResponse().size();
             lblNumResponses.setText(""+ndesc);
+
+            //Count total # missing values
+            int numMissing=0;
+            for (ResponseType res : qsarModel.getResponselist().getResponse()){
+                if (Float.isNaN( res.getValue()) && res.getArrayValues()==null){
+                    numMissing++;
+                }
+            }
+            lblNumMissingResponses.setText( ""+numMissing );
+
+        }else{
+            lblNumResponses.setText("N/A");
+            lblNumMissingResponses.setText("N/A");
         }
 
-
-
-        lblNumStructures.setText("N/A");
-        lblNumMissingResponses.setText("N/A");
-
         //Should be either Calculating, finished, and finsished with <a>errors</a>
-        lblCalculationStatus.setText("N/A");
+        lblCalculationStatus.setText(QsarHelper.getBuildStatus( project ));
+        lblCalculationTime.setText(QsarHelper.getBuildTime( project ));
 
-        lblCalculationTime.setText("N/A");
         lblDatasetRows.setText("N/A");
         lblDatasetColumns.setText("N/A");
 
@@ -398,7 +428,7 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
                     @Override
                     public IStatus runInWorkspace(IProgressMonitor monitor)
                     throws CoreException {
-                        activeProject.build(IncrementalProjectBuilder.FULL_BUILD, monitor);
+                        project.build(IncrementalProjectBuilder.FULL_BUILD, monitor);
                         return Status.OK_STATUS;
                     }
 
