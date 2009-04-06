@@ -764,9 +764,6 @@ private Table paramsTable;
 
 	public void pageChanged(PageChangedEvent event) {
 
-	    //Always sync model on page change
-//	    qsarModel=((QsarEditor)getEditor()).getQsarModel();
-
 	    if (event.getSelectedPage()!=this) return;
 
 	    if (rightViewer!=null){

@@ -1646,7 +1646,7 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
         }
 
         //Create the MoleculesPage
-        molPage=new MoleculesPage(this, qsarModel, editingDomain, selectionProvider);
+        molPage=new MoleculesPage(this, editingDomain, selectionProvider);
         descPage=new DescriptorsPage(this, editingDomain, selectionProvider);
         responsesPage=new ResponsesPage(this, qsarModel, editingDomain, selectionProvider);
         overviewPage=new OverviewPage(this, qsarModel, editingDomain, selectionProvider);

@@ -121,16 +121,13 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
     private QsarEditorSelectionProvider selectionProvider;
     private EditingDomain editingDomain;
 
-    private StructurelistType structList;
-    private QsarType qsarModel;
     private IProject activeProject;
 
 
-    public MoleculesPage(FormEditor editor, QsarType qsarModel, 
+    public MoleculesPage(FormEditor editor, 
                          EditingDomain editingDomain, QsarEditorSelectionProvider selectionProvider) {
 
         super(editor, "qsar.molecules", "Molecules");
-        this.qsarModel=qsarModel;
         this.editingDomain=editingDomain;
 
         //Get managers
@@ -142,8 +139,10 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 
         this.selectionProvider=selectionProvider;
 
+        QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
+
         //Get mollist from qsar model, init if empty (should not be)
-        structList=qsarModel.getStructurelist();
+        StructurelistType structList = qsarModel.getStructurelist();
         if (structList==null){
             structList=QsarFactory.eINSTANCE.createStructurelistType();
             qsarModel.setStructurelist( structList);
@@ -403,6 +402,9 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 
         List<IResource> resourcesToAdd=new ArrayList<IResource>();
         
+        QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
+        StructurelistType structList = qsarModel.getStructurelist();
+        
         //Copy files to project if needed
         for (IResource resource : resources){
 
@@ -517,6 +519,9 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
         ObservableMapLabelProvider labelProvider =
             new ObservableQSARLabelProvider(observeMaps);
         molViewer.setLabelProvider(labelProvider);
+
+        QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
+        StructurelistType structList = qsarModel.getStructurelist();
 
         // Person#addresses is the Viewer's input
         molViewer.setInput(EMFEditObservables.observeList(Realm.getDefault(), editingDomain, structList,
@@ -897,6 +902,7 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
             return;
         }
 
+        QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
         qsar.removeResourcesFromModel(qsarModel, editingDomain, ssel.toList());
 
         molViewer.refresh();
@@ -955,6 +961,10 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
     public void pageChanged(PageChangedEvent event) {
 
         if (event.getSelectedPage()!=this) return;
+
+        if (molViewer!=null){
+            populateMolsViewerFromModel();
+        }
 
         activatePage();
 
