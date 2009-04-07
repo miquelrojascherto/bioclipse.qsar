@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: %pluginName
+Bundle-Name: Bioclipse QSAR
 Bundle-SymbolicName: net.bioclipse.qsar;singleton:=true
-Bundle-Version: 2.0.0.B20090227
+Bundle-Version: 2.0.0.B20090407
 Bundle-ClassPath: .,
  lib/antlr-2.7.5.jar,
  lib/arq-extra.jar,
@@ -20,7 +20,7 @@ Bundle-ClassPath: .,
  lib/wstx-asl-3.0.0.jar,
  lib/xercesImpl.jar,
  lib/xml-apis.jar
-Bundle-Vendor: %providerName
+Bundle-Vendor: The Bioclipse Team
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.eclipse.core.runtime,
