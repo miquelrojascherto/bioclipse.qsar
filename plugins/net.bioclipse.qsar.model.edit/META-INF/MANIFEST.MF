@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: %pluginName
+Bundle-Name: Qsar Edit
 Bundle-SymbolicName: net.bioclipse.qsar.model.edit;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 2.0.0.B20090407
 Bundle-ClassPath: .
 Bundle-Activator: net.bioclipse.qsar.provider.QsarmodelEditPlugin$Implementation
-Bundle-Vendor: %providerName
+Bundle-Vendor: The Bioclipse Team
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: net.bioclipse.qsar.provider
