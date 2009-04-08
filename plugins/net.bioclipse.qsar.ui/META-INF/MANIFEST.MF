@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: QSAR UI
+Bundle-Name: Bioclipse QSAR
 Bundle-SymbolicName: net.bioclipse.qsar.ui;singleton:=true
 Bundle-Version: 2.0.0.B20090407
 Bundle-Activator: net.bioclipse.qsar.ui.Activator
