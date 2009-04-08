@@ -413,6 +413,12 @@ public class QSARBuilder extends IncrementalProjectBuilder
         logger.debug("============================================");
         logger.debug("Dataset dimensions: " + rowLabels.size() +" rows and " 
                      + columnLabels.size() + " columns");
+        
+        //If <2 rows and <2 cols, then do not save csv file
+        if (rowLabels.size()<2 || columnLabels.size()<2){
+            logger.debug( "To few columns or rows to save CSV so skipped." );
+            return;
+        }
 
         //==============================
         //Compute dataset from qsarmodel
