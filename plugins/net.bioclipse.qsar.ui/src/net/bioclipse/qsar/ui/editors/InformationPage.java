@@ -12,16 +12,33 @@ package net.bioclipse.qsar.ui.editors;
 
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
+import net.bioclipse.qsar.ResponseunitType;
+import net.bioclipse.qsar.StructurelistType;
+import net.sf.bibtexml.BibTeXMLEntriesClass;
+import net.sf.bibtexml.BibtexmlFactory;
+import net.sf.bibtexml.BibtexmlPackage;
 
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.observable.Realm;
+import org.eclipse.core.databinding.observable.map.IObservableMap;
+import org.eclipse.core.databinding.observable.set.IObservableSet;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
+import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
 import org.eclipse.jface.dialogs.IPageChangedListener;
 import org.eclipse.jface.dialogs.PageChangedEvent;
+import org.eclipse.jface.viewers.ColumnPixelData;
+import org.eclipse.jface.viewers.TableLayout;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.*;
 import org.eclipse.swt.graphics.Color;
@@ -38,6 +55,8 @@ public class InformationPage extends FormPage implements IEditingDomainProvider,
     private CTabFolder tabFolder;
     private AdapterFactoryEditingDomain editingDomain;
     private ScrolledForm form;
+//    private TableViewer refViewer;
+//    private Table refTable;
 
     class TextSection {
         String text;
@@ -212,16 +231,68 @@ public class InformationPage extends FormPage implements IEditingDomainProvider,
         layout.numColumns = 2;
         layout.marginWidth = 0;
 
-        Label lblUnit = toolkit.createLabel( tabContent, "unit", SWT.NONE);
-        GridData gd2 = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
-        lblUnit.setLayoutData(gd2);
+        TableViewer refViewer = new TableViewer(tabContent, SWT.BORDER | SWT.MULTI);
+        Table refTable = refViewer.getTable();
+        toolkit.adapt(refTable, true, true);
+        GridData gd=new GridData(GridData.FILL_BOTH);
+        refTable.setLayoutData( gd );
 
-        Text txtUnits = toolkit.createText(tabContent, "we", SWT.MULTI|SWT.WRAP);
-        GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-        txtUnits.setLayoutData(gd);
-        gd.heightHint=30;
+        refTable.setHeaderVisible(true);
+        //          molTable.setLinesVisible(true);
+        toolkit.adapt(refTable, true, true);
+
+        //Add name columns
+        TableLayout tableLayout = new TableLayout();
+        refTable.setLayout(tableLayout);
+        TableViewerColumn ixcol=new TableViewerColumn(refViewer,SWT.BORDER);
+        ixcol.getColumn().setText("Title");
+        tableLayout.addColumnData(new ColumnPixelData(150));
+
+        TableViewerColumn col=new TableViewerColumn(refViewer,SWT.BORDER);
+        col.getColumn().setText("Authors");
+        tableLayout.addColumnData(new ColumnPixelData(100));
+
+        col=new TableViewerColumn(refViewer,SWT.BORDER);
+        col.getColumn().setText("journal");
+        tableLayout.addColumnData(new ColumnPixelData(100));
+        
+        col=new TableViewerColumn(refViewer,SWT.BORDER);
+        col.getColumn().setText("Year");
+        tableLayout.addColumnData(new ColumnPixelData(50));
+
+        col=new TableViewerColumn(refViewer,SWT.BORDER);
+        col.getColumn().setText("URL");
+        tableLayout.addColumnData(new ColumnPixelData(100));
 
 
+        
+        // The content provider is responsible to handle add and
+        // remove notification for the Person#address EList
+        ObservableListContentProvider provider = new ObservableListContentProvider();
+        refViewer.setContentProvider(provider);
+
+        // The label provider in turn handles the addresses
+        // The EStructuralFeature[] defines which fields get shown
+        // in the TableViewer columns
+        IObservableSet knownElements = provider.getKnownElements();
+        IObservableMap[] observeMaps = EMFEditObservables.
+        observeMaps(editingDomain, knownElements, new EStructuralFeature[]{
+                BibtexmlPackage.Literals.ARTICLE_TYPE__AUTHOR,
+                BibtexmlPackage.Literals.ARTICLE_TYPE__TITLE,
+                BibtexmlPackage.Literals.ARTICLE_TYPE__JOURNAL,
+                BibtexmlPackage.Literals.ARTICLE_TYPE__YEAR,
+                BibtexmlPackage.Literals.ARTICLE_TYPE__URL
+                });
+        ObservableMapLabelProvider labelProvider =
+            new ObservableQSARLabelProvider(observeMaps);
+        refViewer.setLabelProvider(labelProvider);
+
+        QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
+        EObject entryList = qsarModel.getMetadata();
+
+        // Set the Viewer's input
+        refViewer.setInput(EMFEditObservables.observeList(Realm.getDefault(), editingDomain, entryList,
+                                                          QsarPackage.Literals.METADATA_TYPE__REFERENCE));
 
 
     }
@@ -237,16 +308,62 @@ public class InformationPage extends FormPage implements IEditingDomainProvider,
         layout.numColumns = 2;
         layout.marginWidth = 0;
 
-        Label lblUnit = toolkit.createLabel( tabContent, "unit", SWT.NONE);
-        GridData gd2 = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
-        lblUnit.setLayoutData(gd2);
+        TableViewer unitViewer = new TableViewer(tabContent, SWT.BORDER | SWT.MULTI);
+        Table unitTable = unitViewer.getTable();
+        toolkit.adapt(unitTable, true, true);
+        GridData gd=new GridData(GridData.FILL_BOTH);
+        unitTable.setLayoutData( gd );
 
-        Text txtUnits = toolkit.createText(tabContent, "we", SWT.MULTI|SWT.WRAP);
-        GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-        txtUnits.setLayoutData(gd);
-        gd.heightHint=30;
+        unitTable.setHeaderVisible(true);
+        //          molTable.setLinesVisible(true);
+        toolkit.adapt(unitTable, true, true);
+
+        //Add name columns
+        TableLayout tableLayout = new TableLayout();
+        unitTable.setLayout(tableLayout);
+        TableViewerColumn ixcol=new TableViewerColumn(unitViewer,SWT.BORDER);
+        ixcol.getColumn().setText("Name");
+        tableLayout.addColumnData(new ColumnPixelData(150));
+
+        TableViewerColumn col=new TableViewerColumn(unitViewer,SWT.BORDER);
+        col.getColumn().setText("Shortname");
+        tableLayout.addColumnData(new ColumnPixelData(100));
+
+        col=new TableViewerColumn(unitViewer,SWT.BORDER);
+        col.getColumn().setText("Description");
+        tableLayout.addColumnData(new ColumnPixelData(100));
+        
+        col=new TableViewerColumn(unitViewer,SWT.BORDER);
+        col.getColumn().setText("URL");
+        tableLayout.addColumnData(new ColumnPixelData(50));
 
 
+        
+        // The content provider is responsible to handle add and
+        // remove notification for the Person#address EList
+        ObservableListContentProvider provider = new ObservableListContentProvider();
+        unitViewer.setContentProvider(provider);
+
+        // The label provider in turn handles the addresses
+        // The EStructuralFeature[] defines which fields get shown
+        // in the TableViewer columns
+        IObservableSet knownElements = provider.getKnownElements();
+        IObservableMap[] observeMaps = EMFEditObservables.
+        observeMaps(editingDomain, knownElements, new EStructuralFeature[]{
+                QsarPackage.Literals.RESPONSEUNIT_TYPE__NAME,
+                QsarPackage.Literals.RESPONSEUNIT_TYPE__SHORTNAME,
+                QsarPackage.Literals.RESPONSEUNIT_TYPE__DESCRIPTION,
+                QsarPackage.Literals.RESPONSEUNIT_TYPE__URL
+                });
+        ObservableMapLabelProvider labelProvider =
+            new ObservableQSARLabelProvider(observeMaps);
+        unitViewer.setLabelProvider(labelProvider);
+
+        QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
+
+        // Set the Viewer's input
+        unitViewer.setInput(EMFEditObservables.observeList(Realm.getDefault(), editingDomain, qsarModel,
+                                                          QsarPackage.Literals.QSAR_TYPE__RESPONSEUNIT));
 
 
     }
