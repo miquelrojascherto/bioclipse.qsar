@@ -30,8 +30,8 @@ http://www.eclipse.org/legal/epl-v10.html
    </license>
 
    <requires>
-      <import feature="net.bioclipse.cdk_feature" version="2.0.0.B20090213"/>
-      <import feature="net.bioclipse.core_feature" version="2.0.0.B20090227"/>
+      <import feature="net.bioclipse.cdk_feature" version="2.0.0.B20090409" match="greaterOrEqual"/>
+      <import feature="net.bioclipse.core_feature" version="2.0.0.B20090409" match="greaterOrEqual"/>
    </requires>
 
    <plugin
