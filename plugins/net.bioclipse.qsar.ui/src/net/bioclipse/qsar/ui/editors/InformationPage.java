@@ -10,10 +10,17 @@
  *******************************************************************************/
 package net.bioclipse.qsar.ui.editors;
 
+import net.bioclipse.qsar.QsarPackage;
+import net.bioclipse.qsar.QsarType;
+
+import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.emf.databinding.EMFObservables;
+import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IPageChangedListener;
 import org.eclipse.jface.dialogs.PageChangedEvent;
 import org.eclipse.swt.SWT;
@@ -29,10 +36,11 @@ import org.eclipse.ui.forms.widgets.*;
  *
  */
 public class InformationPage extends FormPage implements IEditingDomainProvider, IPageChangedListener{
+
     private CTabFolder tabFolder;
-    private Text text;
     private AdapterFactoryEditingDomain editingDomain;
     private QsarEditorSelectionProvider selectionProvider;
+    private ScrolledForm form;
 
     class TextSection {
         String text;
@@ -51,28 +59,27 @@ public class InformationPage extends FormPage implements IEditingDomainProvider,
         editor.addPageChangedListener(this);
 
     }
-    protected void createFormContent(IManagedForm managedForm) {
-        
 
-        
-        ScrolledForm form = managedForm.getForm();
+    protected void createFormContent(IManagedForm managedForm) {
+
+        form = managedForm.getForm();
         FormToolkit toolkit = managedForm.getToolkit();
         form.setText("Qsar Model Information");
-        
+
         toolkit.decorateFormHeading(form.getForm());
-        
+
         IProject project=((QsarEditor)getEditor()).getActiveProject();
         ToolbarHelper.setupToolbar(form, project);
-        
+
         //		form.setBackgroundImage(FormArticlePlugin.getDefault().getImage(
         //				FormArticlePlugin.IMG_FORM_BG));
-        
+
         GridLayout layout = new GridLayout();
         layout.marginWidth = 10;
         form.getBody().setLayout(layout);
         tabFolder = new CTabFolder(form.getBody(), SWT.FLAT|SWT.TOP);
         toolkit.adapt(tabFolder, true, true);
-        GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+        GridData gd = new GridData(GridData.FILL_BOTH);
         gd.heightHint = 0;
         tabFolder.setLayoutData(gd);
         Color selectedColor = toolkit.getColors().getColor(IFormColors.SEPARATOR);
@@ -80,61 +87,176 @@ public class InformationPage extends FormPage implements IEditingDomainProvider,
         //tabFolder.setCursor(FormsResources.getHandCursor());
 
         toolkit.paintBordersFor(tabFolder);
-        createTabs(toolkit);
-        createText(toolkit, form.getBody());
-        tabFolder.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(SelectionEvent e) {
-                updateSelection();
-            }
-        });
+
+        //Add the tabs
+        createGeneralTab(toolkit);
+        createReferenceTab( toolkit);
+        createUnitsTab(toolkit);
+
         tabFolder.setSelection(0);
-        updateSelection();		
         
-//        PlatformUI.getWorkbench().getHelpSystem().setHelp(form.getBody(), IHelpContextIds.MANIFEST_FEATURE_INFO);
+        //        PlatformUI.getWorkbench().getHelpSystem().setHelp(form.getBody(), IHelpContextIds.MANIFEST_FEATURE_INFO);
     }
-    
-    private void createTabs(FormToolkit toolkit) {
-        createGeneralTab(toolkit, "General info", ".");
-        createTab(toolkit, "Description", "A description of the QSAR dataset.");
-        createTab(toolkit, "Copyright", "This is where the copyright should go");
-        createTab(toolkit, "License", "This is where the license for the QSAR dataset should go.");
-    }
-    private void createText(FormToolkit toolkit, Composite parent) {
-        Composite tabContent = toolkit.createComposite(parent);
+
+    private void createGeneralTab(FormToolkit toolkit) {
+        CTabItem item = new CTabItem(tabFolder, SWT.NULL);
+        item.setText( "General information" );
+
+        QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
+
+        Composite tabContent = toolkit.createComposite(tabFolder);
+        item.setControl( tabContent );
         tabContent.setLayoutData(new GridData(GridData.FILL_BOTH));
         GridLayout layout = new GridLayout();
         tabContent.setLayout(layout);
         layout.numColumns = 2;
         layout.marginWidth = 0;
-        GridData gd;
-        text = toolkit.createText(tabContent, "", SWT.MULTI|SWT.WRAP); //$NON-NLS-1$
-        gd = new GridData(GridData.FILL_BOTH);
-        gd.verticalSpan = 2;
-        text.setLayoutData(gd);
-        Button apply = toolkit.createButton(tabContent, "Apply", SWT.PUSH);
-        apply.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL|GridData.VERTICAL_ALIGN_BEGINNING));
-        Button reset = toolkit.createButton(tabContent, "Reset", SWT.PUSH);
-        reset.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL|GridData.VERTICAL_ALIGN_BEGINNING));
-    }
-    private void updateSelection() {
-        CTabItem item = tabFolder.getSelection();
-        TextSection section = (TextSection)item.getData();
-        if (section!=null)
-            text.setText(section.text);
-    }
-    private void createTab(FormToolkit toolkit, String title, String content) {
-        CTabItem item = new CTabItem(tabFolder, SWT.NULL);
-        TextSection section = new TextSection(content);
-        item.setText(title);
-        item.setData(section);
+
+        //Dataset Name
+        //=============
+        Label lblDatasetName = toolkit.createLabel( tabContent, "Dataset Name:", SWT.NONE);
+        GridData gd2 = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+        lblDatasetName.setLayoutData(gd2);
+
+        Text txtDatasetName = toolkit.createText(tabContent, "", SWT.MULTI|SWT.WRAP);
+        GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+        txtDatasetName.setLayoutData(gd);
+        gd.heightHint=16;
+        
+        // Bind to EMF
+        DataBindingContext bindingContext = new DataBindingContext();
+        bindingContext.bindValue(SWTObservables.observeText(txtDatasetName, SWT.Modify), 
+                                 EMFEditObservables.observeValue(editingDomain,
+                                 qsarModel.getMetadata(),
+                                 QsarPackage.Literals.METADATA_TYPE__DATASETNAME),
+                                 null, null);
+
+        //Authors
+        //=============
+        Label lblAuthors = toolkit.createLabel( tabContent, "Author(s)", SWT.NONE);
+        GridData gd3 = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+        lblAuthors.setLayoutData(gd3);
+
+        Text txtAuthors = toolkit.createText(tabContent, "", SWT.MULTI|SWT.WRAP);
+        GridData gd4 = new GridData(GridData.FILL_HORIZONTAL);
+        txtAuthors.setLayoutData(gd4);
+        gd4.heightHint=40;
+        
+        // Bind to EMF
+        bindingContext.bindValue(SWTObservables.observeText(txtAuthors, SWT.Modify), 
+                                 EMFEditObservables.observeValue(editingDomain,
+                                 qsarModel.getMetadata(),
+                                 QsarPackage.Literals.METADATA_TYPE__AUTHORS),
+                                 null, null);
+
+        //Description
+        //=============
+        Label lblDescription = toolkit.createLabel( tabContent, "Description:", SWT.NONE);
+        GridData gd9 = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+        lblDescription.setLayoutData(gd9);
+
+        Text txtDescription = toolkit.createText(tabContent, "", SWT.MULTI|SWT.WRAP);
+        GridData gd10 = new GridData(GridData.FILL_HORIZONTAL);
+        txtDescription.setLayoutData(gd10);
+        gd10.heightHint=70;
+
+        // Bind to EMF
+        bindingContext.bindValue(SWTObservables.observeText(txtDescription, SWT.Modify), 
+                                 EMFEditObservables.observeValue(editingDomain,
+                                 qsarModel.getMetadata(),
+                                 QsarPackage.Literals.METADATA_TYPE__DESCRIPTION),
+                                 null, null);
+
+
+        //URL
+        //=============
+        Label lblUrl = toolkit.createLabel( tabContent, "URL:", SWT.NONE);
+        GridData gd5 = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+        lblUrl.setLayoutData(gd5);
+
+        Text txtUrl = toolkit.createText(tabContent, "", SWT.MULTI|SWT.WRAP);
+        GridData gd6 = new GridData(GridData.FILL_HORIZONTAL);
+        txtUrl.setLayoutData(gd6);
+        gd6.heightHint=16;
+
+        // Bind to EMF
+        bindingContext.bindValue(SWTObservables.observeText(txtUrl, SWT.Modify), 
+                                 EMFEditObservables.observeValue(editingDomain,
+                                 qsarModel.getMetadata(),
+                                 QsarPackage.Literals.METADATA_TYPE__URL),
+                                 null, null);
+
+        //License
+        //=============
+        Label lblLicense = toolkit.createLabel( tabContent, "License:", SWT.NONE);
+        GridData gd7 = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+        lblLicense.setLayoutData(gd7);
+
+        Text txtLicense = toolkit.createText(tabContent, "", SWT.MULTI|SWT.WRAP);
+        GridData gd8 = new GridData(GridData.FILL_BOTH);
+        txtLicense.setLayoutData(gd8);
+        
+        // Bind to EMF
+        bindingContext.bindValue(SWTObservables.observeText(txtLicense, SWT.Modify), 
+                                 EMFEditObservables.observeValue(editingDomain,
+                                 qsarModel.getMetadata(),
+                                 QsarPackage.Literals.METADATA_TYPE__LICENSE),
+                                 null, null);
+
+
     }
 
-    private void createGeneralTab(FormToolkit toolkit, String title, String content) {
+    private void createReferenceTab( FormToolkit toolkit ) {
         CTabItem item = new CTabItem(tabFolder, SWT.NULL);
-        Text txtDatasetName = toolkit.createText( tabFolder, "wee" );
-        item.setText(title);
-//        item.setData(section);
+        item.setText( "References" );
+
+        Composite tabContent = toolkit.createComposite(tabFolder);
+        item.setControl( tabContent );
+        tabContent.setLayoutData(new GridData(GridData.FILL_BOTH));
+        GridLayout layout = new GridLayout();
+        tabContent.setLayout(layout);
+        layout.numColumns = 2;
+        layout.marginWidth = 0;
+
+        Label lblUnit = toolkit.createLabel( tabContent, "unit", SWT.NONE);
+        GridData gd2 = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+        lblUnit.setLayoutData(gd2);
+
+        Text txtUnits = toolkit.createText(tabContent, "we", SWT.MULTI|SWT.WRAP);
+        GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+        txtUnits.setLayoutData(gd);
+        gd.heightHint=30;
+
+
+
+
     }
+    private void createUnitsTab( FormToolkit toolkit ) {
+        CTabItem item = new CTabItem(tabFolder, SWT.NULL);
+        item.setText( "Response units" );
+
+        Composite tabContent = toolkit.createComposite(tabFolder);
+        item.setControl( tabContent );
+        tabContent.setLayoutData(new GridData(GridData.FILL_BOTH));
+        GridLayout layout = new GridLayout();
+        tabContent.setLayout(layout);
+        layout.numColumns = 2;
+        layout.marginWidth = 0;
+
+        Label lblUnit = toolkit.createLabel( tabContent, "unit", SWT.NONE);
+        GridData gd2 = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+        lblUnit.setLayoutData(gd2);
+
+        Text txtUnits = toolkit.createText(tabContent, "we", SWT.MULTI|SWT.WRAP);
+        GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+        txtUnits.setLayoutData(gd);
+        gd.heightHint=30;
+
+
+
+
+    }
+
 
     public EditingDomain getEditingDomain() {
         return editingDomain;

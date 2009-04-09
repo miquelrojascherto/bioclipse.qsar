@@ -1669,14 +1669,14 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
         descPage=new DescriptorsPage(this, editingDomain, selectionProvider);
         responsesPage=new ResponsesPage(this, editingDomain, selectionProvider);
         overviewPage=new OverviewPage(this, editingDomain, selectionProvider);
-//        informationPage=new InformationPage(this, editingDomain, selectionProvider);
+        informationPage=new InformationPage(this, editingDomain, selectionProvider);
         
         try {
             //Overview page comes first with summary
             overviewPageIndex=addPage(overviewPage);
 
             //Molecules page with interactions
-//            infoPageIndex=addPage(informationPage);
+            infoPageIndex=addPage(informationPage);
 
             //Molecules page with interactions
             molPageIndex=addPage(molPage);
