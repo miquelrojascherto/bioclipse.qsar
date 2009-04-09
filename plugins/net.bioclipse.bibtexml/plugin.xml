@@ -19,7 +19,7 @@
 
    <extension point="org.eclipse.emf.ecore.extension_parser">
       <parser
-            type="bibtexml"
+            type="xml"
             class="net.sf.bibtexml.util.BibtexmlResourceFactoryImpl"/>
    </extension>
 
