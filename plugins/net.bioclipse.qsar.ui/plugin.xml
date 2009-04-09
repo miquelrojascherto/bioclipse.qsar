@@ -9,7 +9,7 @@
             default="true"
             filenames="qsar.xml"
             icon="icons/descriptor.png"
-            contributorClass="org.eclipse.emf.edit.ui.action.EditingDomainActionBarContributor"
+            contributorClass="net.bioclipse.qsar.ui.editors.QsarActionBarContributor"
             class="net.bioclipse.qsar.ui.editors.QsarEditor"
             id="net.bioclipse.qsar.ui.editor2.QsarEditor">
       </editor>
