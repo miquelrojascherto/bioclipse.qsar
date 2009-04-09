@@ -23,7 +23,9 @@ import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
 import net.bioclipse.qsar.ResourceType;
 import net.bioclipse.qsar.StructureType;
+import net.bioclipse.qsar.business.QsarManager;
 
+import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Platform;
@@ -37,6 +39,8 @@ import org.osgi.service.prefs.BackingStoreException;
 
 
 public class QsarHelper {
+
+    private static final Logger logger = Logger.getLogger(QsarHelper.class);
 
     public static void setChangedInPreference( DescriptorType desc, IProject project, boolean newValue ) {
 
@@ -126,8 +130,7 @@ public class QsarHelper {
 
                     }
                 } catch ( Exception e ) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    logger.error("Could not parse molecule file: " + resource.getFile());
                 }
             }else{
                 resource.setNo2d( pno2D );
@@ -137,11 +140,6 @@ public class QsarHelper {
 
         }
 
-        //no2d and no3d requires parsing so store as preferences
-
-        //      System.out.println(" READ PREFERENCE: " + project.getName()+"_"+structure.getId() +" = " + node.getBoolean( project.getName()+"_"+structure.getId(), true));
-
-        // TODO
 
     }
 

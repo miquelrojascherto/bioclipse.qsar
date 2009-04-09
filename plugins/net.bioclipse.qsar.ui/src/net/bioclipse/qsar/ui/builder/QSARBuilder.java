@@ -56,6 +56,7 @@ import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.impl.DocumentRootImpl;
 import net.bioclipse.qsar.ui.QsarHelper;
 import net.bioclipse.qsar.util.QsarResourceFactoryImpl;
+import net.sf.bibtexml.BibtexmlPackage;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.ICommand;
@@ -85,6 +86,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.edit.command.SetCommand;
@@ -917,6 +919,10 @@ public class QSARBuilder extends IncrementalProjectBuilder
         @SuppressWarnings("unused")
         QsarPackage qsarPackage=QsarPackage.eINSTANCE;
 
+        // Register the package -- only needed for stand-alone!
+        @SuppressWarnings("unused")
+        BibtexmlPackage bibPackage=BibtexmlPackage.eINSTANCE;
+
         // Create a resource set.
         ResourceSet resourceSet = new ResourceSetImpl();
 
@@ -931,6 +937,14 @@ public class QSARBuilder extends IncrementalProjectBuilder
         resourceSet.getPackageRegistry().put
         (QsarPackage.eNS_URI, 
          QsarPackage.eINSTANCE);
+
+        // Register the package to ensure it is available during loading.
+        //
+        resourceSet.getPackageRegistry().put
+        (BibtexmlPackage.eNS_URI, 
+         BibtexmlPackage.eINSTANCE);
+
+        EcoreUtil.resolveAll( resourceSet );
 
 
         IFile qsarfile = getQsarFile();

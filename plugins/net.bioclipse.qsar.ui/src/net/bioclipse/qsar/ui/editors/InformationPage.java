@@ -235,6 +235,7 @@ public class InformationPage extends FormPage implements IEditingDomainProvider,
         Table refTable = refViewer.getTable();
         toolkit.adapt(refTable, true, true);
         GridData gd=new GridData(GridData.FILL_BOTH);
+        gd.verticalSpan=2;
         refTable.setLayoutData( gd );
 
         refTable.setHeaderVisible(true);
@@ -264,7 +265,28 @@ public class InformationPage extends FormPage implements IEditingDomainProvider,
         col.getColumn().setText("URL");
         tableLayout.addColumnData(new ColumnPixelData(100));
 
+        Button btnAdd=toolkit.createButton(tabContent, "Add...", SWT.PUSH);
+        btnAdd.addListener(SWT.Selection, new Listener() {
+            public void handleEvent(Event e) {
+//                addRef();
+            }
+        });
+        GridData gd2=new GridData();
+        gd2.verticalAlignment=SWT.BEGINNING;
+        gd2.widthHint=60;
+        btnAdd.setLayoutData( gd2 );
 
+        Button btnDel=toolkit.createButton(tabContent, "Remove", SWT.PUSH);
+        btnDel.addListener(SWT.Selection, new Listener() {
+            public void handleEvent(Event e) {
+//                deleteRef();
+            }
+        });
+        gd2=new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
+        gd2.widthHint=60;
+        btnDel.setLayoutData( gd2 );
+
+   
         
         // The content provider is responsible to handle add and
         // remove notification for the Person#address EList
@@ -278,8 +300,8 @@ public class InformationPage extends FormPage implements IEditingDomainProvider,
         IObservableMap[] observeMaps = EMFEditObservables.
         observeMaps(editingDomain, knownElements, new EStructuralFeature[]{
                 BibtexmlPackage.Literals.ARTICLE_TYPE__AUTHOR,
-                BibtexmlPackage.Literals.ARTICLE_TYPE__TITLE,
-                BibtexmlPackage.Literals.ARTICLE_TYPE__JOURNAL,
+                BibtexmlPackage.Literals.BIB_TE_XML_ENTRIES_CLASS__ARTICLE,
+                BibtexmlPackage.Literals.BIB_TE_XML_ENTRY_TYPE__ID,
                 BibtexmlPackage.Literals.ARTICLE_TYPE__YEAR,
                 BibtexmlPackage.Literals.ARTICLE_TYPE__URL
                 });
@@ -312,6 +334,7 @@ public class InformationPage extends FormPage implements IEditingDomainProvider,
         Table unitTable = unitViewer.getTable();
         toolkit.adapt(unitTable, true, true);
         GridData gd=new GridData(GridData.FILL_BOTH);
+        gd.verticalSpan=2;
         unitTable.setLayoutData( gd );
 
         unitTable.setHeaderVisible(true);
@@ -335,8 +358,28 @@ public class InformationPage extends FormPage implements IEditingDomainProvider,
         
         col=new TableViewerColumn(unitViewer,SWT.BORDER);
         col.getColumn().setText("URL");
-        tableLayout.addColumnData(new ColumnPixelData(50));
+        tableLayout.addColumnData(new ColumnPixelData(150));
 
+        Button btnAdd=toolkit.createButton(tabContent, "Add...", SWT.PUSH);
+        btnAdd.addListener(SWT.Selection, new Listener() {
+            public void handleEvent(Event e) {
+//                addUnit();
+            }
+        });
+        GridData gd2=new GridData();
+        gd2.verticalAlignment=SWT.BEGINNING;
+        gd2.widthHint=60;
+        btnAdd.setLayoutData( gd2 );
+
+        Button btnDel=toolkit.createButton(tabContent, "Remove", SWT.PUSH);
+        btnDel.addListener(SWT.Selection, new Listener() {
+            public void handleEvent(Event e) {
+//                deleteUnit();
+            }
+        });
+        gd2=new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
+        gd2.widthHint=60;
+        btnDel.setLayoutData( gd2 );
 
         
         // The content provider is responsible to handle add and
@@ -374,8 +417,6 @@ public class InformationPage extends FormPage implements IEditingDomainProvider,
     }
 
     public void pageChanged( PageChangedEvent event ) {
-
-        System.out.println("PAGECHANGE IN INFOPAGE NOT IMPLEMENTED!");
 
     }
 }
