@@ -15,7 +15,6 @@ import net.bioclipse.qsar.QsarType;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.emf.databinding.EMFObservables;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -25,7 +24,6 @@ import org.eclipse.jface.dialogs.IPageChangedListener;
 import org.eclipse.jface.dialogs.PageChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.*;
-import org.eclipse.swt.events.*;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
@@ -39,7 +37,6 @@ public class InformationPage extends FormPage implements IEditingDomainProvider,
 
     private CTabFolder tabFolder;
     private AdapterFactoryEditingDomain editingDomain;
-    private QsarEditorSelectionProvider selectionProvider;
     private ScrolledForm form;
 
     class TextSection {
@@ -48,13 +45,10 @@ public class InformationPage extends FormPage implements IEditingDomainProvider,
     }
 
     public InformationPage(QsarEditor editor,
-                           AdapterFactoryEditingDomain editingDomain,
-                           QsarEditorSelectionProvider selectionProvider) {
+                           AdapterFactoryEditingDomain editingDomain) {
 
         super(editor, "qsar.model.information", "Information");
         this.editingDomain=editingDomain;
-
-        this.selectionProvider=selectionProvider;
 
         editor.addPageChangedListener(this);
 

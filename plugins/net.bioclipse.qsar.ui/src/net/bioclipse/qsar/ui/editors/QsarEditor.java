@@ -134,6 +134,7 @@ import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.databinding.edit.EMFEditObservables;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EValidator;
@@ -193,15 +194,14 @@ import org.eclipse.ui.actions.WorkspaceModifyOperation;
  * @generated
  */
 public class QsarEditor extends FormEditor implements IEditingDomainProvider, 
-                                                 ISelectionProvider, IAdaptable{
+                                                 ISelectionProvider, IAdaptable, IMenuListener{
 
     private static final Logger logger = Logger.getLogger(QsarEditor.class);
 
     private IProject activeProject;
 
 //    private QsarType qsarModel;
-    private Resource resource;
-    private ResourceSetImpl resourceSet;
+//    private Resource resource;
 
     public int textEditorIndex;
     public int molPageIndex;
@@ -215,7 +215,7 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
     private ResponsesPage responsesPage;
     private OverviewPage overviewPage;
 
-    private QsarEditorSelectionProvider selectionProvider;
+//    private QsarEditorSelectionProvider selectionProvider;
     private XMLEditor xmlEditor;
 
     private IQsarManager qsar;
@@ -388,8 +388,6 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
             if (p instanceof ContentOutline) {
                 if (((ContentOutline)p).getCurrentPage() == contentOutlinePage) {
                     getActionBarContributor().setActiveEditor(QsarEditor.this);
-
-                    setCurrentViewer(contentOutlineViewer);
                 }
             }
             else if (p instanceof PropertySheet) {
@@ -945,66 +943,6 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
         }
     }
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setCurrentViewerPane(ViewerPane viewerPane) {
-        if (currentViewerPane != viewerPane) {
-            if (currentViewerPane != null) {
-                currentViewerPane.showFocus(false);
-            }
-            currentViewerPane = viewerPane;
-        }
-        setCurrentViewer(currentViewerPane.getViewer());
-    }
-
-    /**
-     * This makes sure that one content viewer, either for the current page or the outline view, if it has focus,
-     * is the current one.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setCurrentViewer(Viewer viewer) {
-        // If it is changing...
-        //
-        if (currentViewer != viewer) {
-            if (selectionChangedListener == null) {
-                // Create the listener on demand.
-                //
-                selectionChangedListener =
-                    new ISelectionChangedListener() {
-                    // This just notifies those things that are affected by the section.
-                    //
-                    public void selectionChanged(SelectionChangedEvent selectionChangedEvent) {
-                        setSelection(selectionChangedEvent.getSelection());
-                    }
-                };
-            }
-
-            // Stop listening to the old one.
-            //
-            if (currentViewer != null) {
-                currentViewer.removeSelectionChangedListener(selectionChangedListener);
-            }
-
-            // Start listening to the new one.
-            //
-            if (viewer != null) {
-                viewer.addSelectionChangedListener(selectionChangedListener);
-            }
-
-            // Remember it.
-            //
-            currentViewer = viewer;
-
-            // Set the editors selection based on the current viewer's selection.
-            //
-            setSelection(currentViewer == null ? StructuredSelection.EMPTY : currentViewer.getSelection());
-        }
-    }
 
 
 
@@ -1017,7 +955,7 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
     public void createModel() {
         URI resourceURI = EditUIUtil.getURI(getEditorInput());
         Exception exception = null;
-        resource = null;
+        Resource resource = null;
         try {
             // Load the resource through the editing domain.
             //
@@ -1028,6 +966,7 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
             resource = editingDomain.getResourceSet().getResource(resourceURI, false);
         }
 
+        //Validate input
         Diagnostic diagnostic = analyzeResourceProblems(resource, exception);
         if (diagnostic.getSeverity() != Diagnostic.OK) {
             resourceToDiagnosticMap.put(resource,  analyzeResourceProblems(resource, exception));
@@ -1047,11 +986,16 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
 
     public QsarType getQsarModel() {
 
+        //There can be only one resource
+        Resource resource=getEditingDomain().getResourceSet().getResources().get( 0 );
+
         if (resource != null) {
             DocumentRoot root = (DocumentRoot) resource.getContents().get(0);
 
             //Store the model in editor
             return root.getQsar();
+        }else{
+            logger.error("Could not get resource from EditingDomain.");
         }
         
         return null;
@@ -1657,19 +1601,17 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
         
         QsarType qsarModel = getQsarModel();
 
-        selectionProvider=new QsarEditorSelectionProvider();
-
         if (getEditorInput() instanceof IFileEditorInput) {
             IFileEditorInput finput = (IFileEditorInput) getEditorInput();
             activeProject=finput.getFile().getProject();
         }
 
         //Create the MoleculesPage
-        molPage=new MoleculesPage(this, editingDomain, selectionProvider);
-        descPage=new DescriptorsPage(this, editingDomain, selectionProvider);
-        responsesPage=new ResponsesPage(this, editingDomain, selectionProvider);
-        overviewPage=new OverviewPage(this, editingDomain, selectionProvider);
-        informationPage=new InformationPage(this, editingDomain, selectionProvider);
+        molPage=new MoleculesPage(this, editingDomain);
+        descPage=new DescriptorsPage(this, editingDomain);
+        responsesPage=new ResponsesPage(this, editingDomain);
+        overviewPage=new OverviewPage(this, editingDomain);
+        informationPage=new InformationPage(this, editingDomain);
         
         try {
             //Overview page comes first with summary
@@ -1694,8 +1636,6 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
         } catch (PartInitException e) {
             LogUtils.debugTrace(logger, e);
         }
-
-        getSite().setSelectionProvider( selectionProvider );
 
     }
 

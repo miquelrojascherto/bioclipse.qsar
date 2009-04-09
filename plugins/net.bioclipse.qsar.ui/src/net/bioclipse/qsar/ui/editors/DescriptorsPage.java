@@ -10,56 +10,34 @@
  *******************************************************************************/
 package net.bioclipse.qsar.ui.editors;
 
-import java.lang.reflect.InvocationTargetException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.DescriptorlistType;
-import net.bioclipse.qsar.DescriptorproviderType;
-import net.bioclipse.qsar.DescriptorresultType;
 import net.bioclipse.qsar.ParameterType;
 import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
-import net.bioclipse.qsar.ResponseType;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorModel;
-import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
-import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
-import net.bioclipse.qsar.ui.QsarHelper;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.core.databinding.observable.set.IObservableSet;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IncrementalProjectBuilder;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.resources.WorkspaceJob;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.edit.command.AddCommand;
-import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
 import org.eclipse.jface.dialogs.IPageChangedListener;
@@ -98,7 +76,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Tree;
-import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
@@ -144,7 +121,7 @@ private Table paramsTable;
 
     
 	public DescriptorsPage(FormEditor editor, 
-			EditingDomain editingDomain, QsarEditorSelectionProvider selectionProvider) {
+			EditingDomain editingDomain) {
 
 		super(editor, "qsar.descriptors", "Descriptors");
 		this.editingDomain=editingDomain;
@@ -152,10 +129,8 @@ private Table paramsTable;
 		//Get Managers via OSGI
         qsar=net.bioclipse.qsar.init.Activator.getDefault().getQsarManager();
 		cdk=Activator.getDefault().getCDKManager();
-		QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
 
 		formatter = new DecimalFormat("0.00");
-        this.selectionProvider=selectionProvider;
         
 		editor.addPageChangedListener(this);
 
@@ -345,7 +320,7 @@ private Table paramsTable;
                   //Space key, toggle selection
                   if (e.keyCode==32){
 
-                	  IStructuredSelection msel=(IStructuredSelection) descViewer.getSelection();
+//                	  IStructuredSelection msel=(IStructuredSelection) descViewer.getSelection();
                       //TODO: implement
                       
                   }

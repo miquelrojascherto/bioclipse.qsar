@@ -57,7 +57,6 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
 
     ICDKManager cdk;
 
-    private QsarEditorSelectionProvider selectionProvider;
     private EditingDomain editingDomain;
 
     private IProject project;
@@ -77,7 +76,7 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
     private Label lblCalculationStatus;
 
     public OverviewPage(FormEditor editor, 
-                        EditingDomain editingDomain, QsarEditorSelectionProvider selectionProvider) {
+                        EditingDomain editingDomain) {
 
         super(editor, "qsar.overview", "Overview");
         this.editingDomain=editingDomain;
@@ -89,7 +88,6 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
 
         this.project=this.editor.getActiveProject();
 
-        this.selectionProvider=selectionProvider;
         editor.addPageChangedListener(this);
 
     }

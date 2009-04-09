@@ -10,7 +10,6 @@
  *******************************************************************************/
 package net.bioclipse.qsar.ui.editors;
 
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,6 @@ import java.util.List;
 import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.cdk.domain.ICDKMolecule;
-import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
@@ -29,12 +27,9 @@ import net.bioclipse.qsar.StructureType;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
-import org.eclipse.emf.edit.command.DeleteCommand;
-import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
@@ -53,7 +48,6 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -85,8 +79,7 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
 
 
     public ResponsesPage(FormEditor editor,
-                         EditingDomain editingDomain, 
-                         QsarEditorSelectionProvider selectionProvider) {
+                         EditingDomain editingDomain) {
 
         super(editor, "qsar.responses", "Responses");
         this.editingDomain=editingDomain;
@@ -96,7 +89,6 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
 
 
         formatter = new DecimalFormat("0.00");
-        this.selectionProvider=selectionProvider;
 
         QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
         ResponsesListType responsesList = qsarModel.getResponselist();
@@ -245,7 +237,7 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
                 //Space key, toggle selection
                 if (e.keyCode==32){
 
-                    IStructuredSelection msel=(IStructuredSelection) responsesViewer.getSelection();
+//                    IStructuredSelection msel=(IStructuredSelection) responsesViewer.getSelection();
                     //TODO: implement
 
                 }
@@ -288,7 +280,7 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
      */
     private void synchronizeResponesWithModel() {
 
-        List<ICDKMolecule> allMolecules=new ArrayList<ICDKMolecule>();
+//        List<ICDKMolecule> allMolecules=new ArrayList<ICDKMolecule>();
 
         QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
         ResponsesListType responsesList = qsarModel.getResponselist();
@@ -327,7 +319,7 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
 
     private void populateResponsesViewerFromModel() {
 
-
+        //FIXME: is this unused for a reason?
 
         QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
         ResponsesListType responsesList = qsarModel.getResponselist();

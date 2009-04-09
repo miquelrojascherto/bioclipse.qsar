@@ -50,6 +50,7 @@ import org.eclipse.jface.viewers.Viewer;
 
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.forms.editor.IFormPage;
 
 /**
  * This is the action bar contributor for the Qsar model editor.
@@ -228,7 +229,7 @@ public class QsarActionBarContributor
 
         addGlobalActions(submenuManager);
     }
-
+    
     /**
      * When the active editor changes, this remembers the change and registers with it as a selection provider.
      * <!-- begin-user-doc -->
@@ -440,6 +441,13 @@ public class QsarActionBarContributor
     @Override
     protected boolean removeAllReferencesOnDelete() {
         return true;
+    }
+    
+    @Override
+    public void propertyChanged( Object source, int id ) {
+    
+        // TODO Auto-generated method stub
+        super.propertyChanged( source, id );
     }
 
 }

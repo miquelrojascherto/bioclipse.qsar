@@ -26,7 +26,6 @@ import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
 import net.bioclipse.qsar.ResourceType;
-import net.bioclipse.qsar.ResponseType;
 import net.bioclipse.qsar.StructurelistType;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.ui.dialogs.WSFileDialog;
@@ -48,12 +47,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
@@ -118,14 +114,13 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
     IQsarManager qsar;
     DecimalFormat formatter;
 
-    private QsarEditorSelectionProvider selectionProvider;
     private EditingDomain editingDomain;
 
     private IProject activeProject;
 
 
     public MoleculesPage(FormEditor editor, 
-                         EditingDomain editingDomain, QsarEditorSelectionProvider selectionProvider) {
+                         EditingDomain editingDomain) {
 
         super(editor, "qsar.molecules", "Molecules");
         this.editingDomain=editingDomain;
@@ -136,8 +131,6 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 
         //Set up formatter
         formatter = new DecimalFormat("0.00");
-
-        this.selectionProvider=selectionProvider;
 
         QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
 
@@ -186,10 +179,6 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
         preTableViewer.getTable().setEnabled(false); //TODO: change!
 
         addDragAndDrop();
-
-        //Post selections to Eclipse via our intermediate selectionprovider
-        selectionProvider.setSelectionProviderDelegate( molViewer );
-
 
     }
 
@@ -592,7 +581,7 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
                 //Space key, toggle selection
                 if (e.keyCode==32){
 
-                    IStructuredSelection msel=(IStructuredSelection) molViewer.getSelection();
+//                    IStructuredSelection msel=(IStructuredSelection) molViewer.getSelection();
                     //TODO: implement
 
                 }
@@ -606,7 +595,6 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 
             public void focusGained(FocusEvent e) {
                 molViewer.setSelection(null);
-                selectionProvider.setSelectionProviderDelegate( molViewer );
             }
 
             public void focusLost(FocusEvent e) {
@@ -894,6 +882,7 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
      * Handle the case when users press the Remove button next to moleculeviewer
      * or presses the delete button on something
      */
+    @SuppressWarnings("unchecked")
     protected void deleteSelectedMolecules() {
 
         IStructuredSelection ssel=(IStructuredSelection) molViewer.getSelection();
@@ -924,7 +913,6 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 
     public void activatePage() {
 
-        selectionProvider.setSelectionProviderDelegate( molViewer );
     }
 
     public class Stopwatch {
