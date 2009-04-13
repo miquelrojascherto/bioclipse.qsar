@@ -22,7 +22,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
-import net.bioclipse.cdk.domain.ICDKMolecule;
 import net.bioclipse.core.PublishedMethod;
 import net.bioclipse.core.Recorded;
 import net.bioclipse.core.business.BioclipseException;
@@ -42,7 +41,9 @@ import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 public interface IQsarManager extends IBioclipseManager{
 
     @Recorded
-    @PublishedMethod( methodSummary = "Calculates a descriptor for a molecule" )
+    @PublishedMethod( 
+                      params="IMolecule molecule, String descriptorImplID",
+                      methodSummary = "Calculates a descriptor for a molecule" )
     public IDescriptorResult calculate(IMolecule molecule, String descriptorImplID);
 
     public List<IDescriptorResult> calculate(IMolecule molecule,
@@ -54,14 +55,12 @@ public interface IQsarManager extends IBioclipseManager{
                                                                        throws OperationCanceledException;
 
     @Recorded
-    @PublishedMethod( methodSummary = "Calculates a list of descriptors for a " +
+    @PublishedMethod(params="List<? extends IMolecule> molecules, " +
+    		"List<String> descriptorIDs",
+         methodSummary = "Calculates a list of descriptors for a " +
     "list of molecules" )
     public Map<? extends IMolecule, List<IDescriptorResult>> calculateNoParams(
-                                                                               List<? extends IMolecule> molecules, List<String> descriptorIDs);
-
-
-
-
+         List<? extends IMolecule> molecules, List<String> descriptorIDs);
 
     @PublishedMethod( methodSummary = "Returns the available descriptor providers" )
     public List<String> getProviders();
@@ -92,20 +91,30 @@ public interface IQsarManager extends IBioclipseManager{
 
     /**
      * Get the descriptorModel as read from EP
-     * @return
      */
     public DescriptorModel getModel();
 
+    @Recorded
+    @PublishedMethod(methodSummary = "Get a list of descriptor IDs" )
     public List<String> getDescriptorIDs();
+    
     public List<Descriptor> getFullDescriptors();
+
     public Descriptor getDescriptorByID(String descriptorID);
 
     public List<Descriptor> getDescriptorsInCategory(DescriptorCategory category);
 
+    @Recorded
+    @PublishedMethod(params="String categoryID",
+                     methodSummary = "Get a list of descriptor IDs in a category" )
     public List<String> getDescriptorsInCategory(String categoryID);
 
     public List<DescriptorImpl> getFullDescriptorImpls();
 
+    @Recorded
+    @PublishedMethod(params="String descriptorID",
+                     methodSummary = "Get a list of descriptor implementations " +
+                     		"for a descriptor" )
     public List<String> getDescriptorImpls(String descriptorID);
 
     public List<DescriptorImpl> getDescriptorImplsForDescriptor(String descriptorID);
@@ -118,6 +127,8 @@ public interface IQsarManager extends IBioclipseManager{
                                         EditingDomain editingDomain, Descriptor desc, DescriptorImpl impl,
                                         List<DescriptorParameter> params);
 
+    @PublishedMethod(params="String descriptorID",
+                     methodSummary = "Return true if descriptorID exists" )
     boolean existsDescriptor( String descriptorID );
 
     /**
@@ -126,6 +137,10 @@ public interface IQsarManager extends IBioclipseManager{
      * @param monitor
      * @return
      */
+    @PublishedMethod(params="Map<IMolecule, List<DescriptorType>> molDescMap, " +
+    		"IProgressMonitor monitor ",
+    		methodSummary = "Calculate for all molecules, the descriptors in associated list." )
+    @Recorded
     public Map<IMolecule, List<IDescriptorResult>> calculate(
           Map<IMolecule, List<DescriptorType>> molDescMap,
           IProgressMonitor monitor );
