@@ -99,7 +99,6 @@ public class DescriptorsPage extends FormPage implements IEditingDomainProvider,
     ICDKManager cdk;
     DecimalFormat formatter;
     
-    private QsarEditorSelectionProvider selectionProvider;
 	private EditingDomain editingDomain;
 
 	/**
@@ -178,7 +177,6 @@ private Table paramsTable;
 		populateRightViewerFromModel();
 
         //Post selections to Eclipse via our intermediate selectionprovider
-        selectionProvider.setSelectionProviderDelegate( descViewer );
         descViewer.getTree().setFocus();
         
     }
@@ -303,7 +301,6 @@ private Table paramsTable;
 
 			public void focusGained(FocusEvent e) {
 		        rightViewer.setSelection(null);
-		        selectionProvider.setSelectionProviderDelegate( descViewer );
 			}
 
 			public void focusLost(FocusEvent e) {
@@ -468,7 +465,6 @@ private Table paramsTable;
 
 			public void focusGained(FocusEvent e) {
 		        descViewer.setSelection(null);
-		        selectionProvider.setSelectionProviderDelegate( rightViewer );
 			}
 
 			public void focusLost(FocusEvent e) {
@@ -648,7 +644,6 @@ private Table paramsTable;
 
 	public void activatePage() {
 
-        selectionProvider.setSelectionProviderDelegate( descViewer );
     }
 
     public class Stopwatch {

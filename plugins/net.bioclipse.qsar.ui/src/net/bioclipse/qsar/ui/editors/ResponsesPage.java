@@ -74,7 +74,6 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
     ICDKManager cdk;
     DecimalFormat formatter;
 
-    private QsarEditorSelectionProvider selectionProvider;
     private EditingDomain editingDomain;
 
 
@@ -269,9 +268,6 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
             responsesViewer.setInput(responsesList.eContents().toArray());
         }
 
-        //Post selections to Eclipse via our intermediate selectionprovider
-        selectionProvider.setSelectionProviderDelegate( responsesViewer );
-        //        responsesViewer.getTable().setFocus();
     }
 
 
@@ -401,7 +397,6 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
         QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
         ResponsesListType responsesList = qsarModel.getResponselist();
 
-        selectionProvider.setSelectionProviderDelegate( responsesViewer );
         synchronizeResponesWithModel();
         
         if (responsesList.eContents()!=null){
