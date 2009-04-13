@@ -33,7 +33,7 @@ public interface IDescriptorResult {
      * Should be null if no error
      * @return
      */
-    String getErrorMessage();
+    public String getErrorMessage();
 
     void setErrorMessage(String errorMessage);
 
