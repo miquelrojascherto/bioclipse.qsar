@@ -1247,9 +1247,8 @@ public class QsarManager implements IQsarManager{
                 resource.setNo2d( no2d );
                 resource.setNo3d( no3d );
                 resource.setNoMols( mols.size() );
-            } catch ( IOException e ) {
-            } catch ( BioclipseException e ) {
-            } catch ( CoreException e ) {
+            } catch ( Exception e ) {
+                logger.error("Error parsing file: " + resource.getFile());
             }
         }
     }
