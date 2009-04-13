@@ -23,10 +23,10 @@ public interface IDescriptorResult {
     public DescriptorType getDescriptor();
     public void setDescriptor( DescriptorType descriptor );
 
-    String[] getLabels();
+    public String[] getLabels();
     void setLabels(String[] labels);
 
-    Float[] getValues();
+    public Float[] getValues();
     void setValues(Float[] values);
 
     /**
