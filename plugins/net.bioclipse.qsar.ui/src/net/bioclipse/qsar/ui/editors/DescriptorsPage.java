@@ -11,6 +11,7 @@
 package net.bioclipse.qsar.ui.editors;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -129,7 +130,10 @@ private Table paramsTable;
         qsar=net.bioclipse.qsar.init.Activator.getDefault().getQsarManager();
 		cdk=Activator.getDefault().getCDKManager();
 
-		formatter = new DecimalFormat("0.00");
+    //We need to ensure that '.' is always decimal separator in all locales
+    DecimalFormatSymbols sym=new DecimalFormatSymbols();
+    sym.setDecimalSeparator( '.' );
+    formatter = new DecimalFormat("0.00", sym);
         
 		editor.addPageChangedListener(this);
 

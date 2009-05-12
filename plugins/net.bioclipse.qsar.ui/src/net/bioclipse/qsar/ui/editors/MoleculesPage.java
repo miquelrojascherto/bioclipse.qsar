@@ -15,6 +15,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -130,7 +131,10 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
         qsar=net.bioclipse.qsar.init.Activator.getDefault().getQsarManager();
 
         //Set up formatter
-        formatter = new DecimalFormat("0.00");
+        //We need to ensure that '.' is always decimal separator in all locales
+        DecimalFormatSymbols sym=new DecimalFormatSymbols();
+        sym.setDecimalSeparator( '.' );
+        formatter = new DecimalFormat("0.00", sym);
 
         QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
 
