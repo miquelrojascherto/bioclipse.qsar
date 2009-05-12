@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -464,7 +465,11 @@ public class QSARBuilder extends IncrementalProjectBuilder
         logger.debug("============================================");
         String SEPARATOR=",";
         String NEWLINE="\n";
-        DecimalFormat formatter = new DecimalFormat("0.00");
+        
+        //We need to ensure that '.' is always decimal separator in all locales
+        DecimalFormatSymbols sym=new DecimalFormatSymbols();
+        sym.setDecimalSeparator( '.' );
+        DecimalFormat formatter = new DecimalFormat("0.00", sym);
 
         StringBuffer buffer=new StringBuffer();    
 
