@@ -12,49 +12,34 @@ package net.bioclipse.qsar.ui.builder;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.cdk.domain.ICDKMolecule;
 import net.bioclipse.core.business.BioclipseException;
 import net.bioclipse.core.domain.IMolecule;
-import net.bioclipse.core.util.LogUtils;
 import net.bioclipse.qsar.DescriptorType;
-import net.bioclipse.qsar.DescriptorlistType;
 import net.bioclipse.qsar.DescriptorresultType;
 import net.bioclipse.qsar.DescriptorresultlistsType;
 import net.bioclipse.qsar.DescriptorvalueType;
 import net.bioclipse.qsar.DocumentRoot;
-import net.bioclipse.qsar.QSARConstants;
 import net.bioclipse.qsar.QsarFactory;
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
 import net.bioclipse.qsar.ResourceType;
 import net.bioclipse.qsar.ResponseType;
 import net.bioclipse.qsar.StructureType;
-import net.bioclipse.qsar.StructurelistType;
-import net.bioclipse.qsar.TypeType;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
-import net.bioclipse.qsar.impl.DocumentRootImpl;
 import net.bioclipse.qsar.ui.QsarHelper;
 import net.bioclipse.qsar.util.QsarResourceFactoryImpl;
 import net.sf.bibtexml.BibtexmlPackage;
@@ -62,41 +47,23 @@ import net.sf.bibtexml.BibtexmlPackage;
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
-import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.preferences.DefaultScope;
-import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.emf.edit.command.SetCommand;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.CMLWriter;
-import org.openscience.cdk.libio.cml.QSARCustomizer;
-import org.openscience.cdk.qsar.DescriptorSpecification;
-import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.result.DoubleArrayResult;
 
 /**
  * A Builder for QSAR projects that synchronizes the project file 
@@ -744,7 +711,8 @@ public class QSARBuilder extends IncrementalProjectBuilder
         String ret="";
         for (StructureType structure : structureMap.keySet()){
             try {
-                ret=ret+structure.getId() + " - " + structureMap.get( structure ).getSMILES();
+                ret=ret+structure.getId() + " - " + structureMap.get( structure )
+                .getSMILES(net.bioclipse.core.domain.IMolecule.Property.USE_CACHED_OR_CALCULATED);
                 if (QsarHelper.isDirtyInPreference( structure, getProject() ))
                     ret=ret+" - CHANGED\n";
                 else
