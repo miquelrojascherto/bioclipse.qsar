@@ -67,7 +67,7 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
     IQsarManager qsar;
 
     public CDKDescriptorCalculator() {
-        cdk=Activator.getDefault().getCDKManager();
+        cdk=Activator.getDefault().getJavaCDKManager();
         qsar=net.bioclipse.qsar.init.Activator.getDefault().getQsarManager();
     }
 
