@@ -1059,7 +1059,8 @@ public class QsarManager implements IQsarManager{
                                         List<IResource> resourcesToAdd, final IProgressMonitor monitor) throws IOException, BioclipseException, CoreException {
 
         ICDKManager cdk = net.bioclipse.cdk.business.Activator.getDefault().getJavaCDKManager();
-        IInChIManager inchi = net.bioclipse.inchi.business.Activator.getDefault().getInChIManager();
+        IInChIManager inchi = net.bioclipse.inchi.business.Activator
+            .getDefault().getJavaInChIManager();
 
         StructurelistType structList = qsarmodel.getStructurelist();
         CompoundCommand ccmd=new CompoundCommand();
