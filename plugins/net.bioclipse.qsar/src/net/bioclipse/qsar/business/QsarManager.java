@@ -1058,7 +1058,7 @@ public class QsarManager implements IQsarManager{
     public void addResourcesToQsarModel(QsarType qsarmodel, EditingDomain editingDomain, 
                                         List<IResource> resourcesToAdd, final IProgressMonitor monitor) throws IOException, BioclipseException, CoreException {
 
-        ICDKManager cdk = net.bioclipse.cdk.business.Activator.getDefault().getCDKManager();
+        ICDKManager cdk = net.bioclipse.cdk.business.Activator.getDefault().getJavaCDKManager();
         IInChIManager inchi = net.bioclipse.inchi.business.Activator.getDefault().getInChIManager();
 
         StructurelistType structList = qsarmodel.getStructurelist();
@@ -1223,7 +1223,7 @@ public class QsarManager implements IQsarManager{
      */
     public void addCalculatedPropertiesToQsarModel( QsarType qsarModel ) {
 
-        ICDKManager cdk = net.bioclipse.cdk.business.Activator.getDefault().getCDKManager();
+        ICDKManager cdk = net.bioclipse.cdk.business.Activator.getDefault().getJavaCDKManager();
 
         //Do resources first
         for (ResourceType resource : qsarModel.getStructurelist().getResources()){
