@@ -532,25 +532,29 @@ public class TestQsarManager {
 		assertNull(dres2.getErrorMessage());
 		assertNull(dres22.getErrorMessage());
 
-		System.out.println("Mol: " + mol1.getSMILES());
+		System.out.println("Mol: " +
+				mol1.getSMILES(IMolecule.Property.USE_CACHED_OR_CALCULATED));
 		System.out.println("Desc " + dres1.getDescriptor().getOntologyid() +": " + 
 				dres1.getLabels()[0] + "=" + dres1.getValues()[0] +", " + 
 				dres1.getLabels()[1] + "=" + dres1.getValues()[1] +", " + 
 				dres1.getLabels()[2] + "=" + dres1.getValues()[2] +", ");
 
-		System.out.println("Mol: " + mol1.getSMILES());
+		System.out.println("Mol: " + 
+				mol1.getSMILES(IMolecule.Property.USE_CACHED_OR_CALCULATED));
 		System.out.println("Desc " + dres11.getDescriptor().getOntologyid() +": " + 
 				dres11.getLabels()[0] + "=" + dres11.getValues()[0] +", " + 
 				dres11.getLabels()[1] + "=" + dres11.getValues()[1] +", " + 
 				dres11.getLabels()[2] + "=" + dres11.getValues()[2] +", ");
 
-		System.out.println("Mol: " + mol2.getSMILES());
+		System.out.println("Mol: " + 
+				mol2.getSMILES(IMolecule.Property.USE_CACHED_OR_CALCULATED));
 		System.out.println("Desc " + dres2.getDescriptor().getOntologyid() +": " + 
 				dres2.getLabels()[0] + "=" + dres2.getValues()[0] +", " + 
 				dres2.getLabels()[1] + "=" + dres2.getValues()[1] +", " + 
 				dres2.getLabels()[2] + "=" + dres2.getValues()[2] +", ");
 
-		System.out.println("Mol: " + mol2.getSMILES());
+		System.out.println("Mol: " + 
+				mol1.getSMILES(IMolecule.Property.USE_CACHED_OR_CALCULATED));
 		System.out.println("Desc " + dres22.getDescriptor().getOntologyid() +": " + 
 				dres22.getLabels()[0] + "=" + dres22.getValues()[0] +", " + 
 				dres22.getLabels()[1] + "=" + dres22.getValues()[1] +", " + 
@@ -610,19 +614,22 @@ public class TestQsarManager {
 	    assertNull(dres11.getErrorMessage());
 	    assertNull(dres2.getErrorMessage());
 
-	    System.out.println("Mol: " + mol1.getSMILES());
+	    System.out.println("Mol: " + 
+				mol1.getSMILES(IMolecule.Property.USE_CACHED_OR_CALCULATED));
 	    System.out.println("Desc " + dres1.getDescriptor().getOntologyid() +": " + 
 	        dres1.getLabels()[0] + "=" + dres1.getValues()[0] +", " + 
 	        dres1.getLabels()[1] + "=" + dres1.getValues()[1] +", " + 
 	        dres1.getLabels()[2] + "=" + dres1.getValues()[2] +", ");
 
-	    System.out.println("Mol: " + mol1.getSMILES());
+	    System.out.println("Mol: " + 
+				mol1.getSMILES(IMolecule.Property.USE_CACHED_OR_CALCULATED));
 	    System.out.println("Desc " + dres11.getDescriptor().getOntologyid() +": " + 
 	        dres11.getLabels()[0] + "=" + dres11.getValues()[0] +", " + 
 	        dres11.getLabels()[1] + "=" + dres11.getValues()[1] +", " + 
 	        dres11.getLabels()[2] + "=" + dres11.getValues()[2] +", ");
 
-	    System.out.println("Mol: " + mol2.getSMILES());
+	    System.out.println("Mol: " + 
+				mol2.getSMILES(IMolecule.Property.USE_CACHED_OR_CALCULATED));
 	    System.out.println("Desc " + dres2.getDescriptor().getOntologyid() +": " + 
 	        dres2.getLabels()[0] + "=" + dres2.getValues()[0] +", " + 
 	        dres2.getLabels()[1] + "=" + dres2.getValues()[1] +", " + 
