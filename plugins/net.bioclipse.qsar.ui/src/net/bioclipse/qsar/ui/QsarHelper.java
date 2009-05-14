@@ -91,7 +91,7 @@ public class QsarHelper {
         //If exists in prefs, add them
         IEclipsePreferences node = new InstanceScope().getNode(net.bioclipse.qsar.ui.Activator.PLUGIN_ID);
 
-        ICDKManager cdk=Activator.getDefault().getCDKManager();
+        ICDKManager cdk=Activator.getDefault().getJavaCDKManager();
 
         //NoMols is easy, just count number of structures
         for (ResourceType resource : qsarModel.getStructurelist().getResources()){

@@ -82,7 +82,7 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
         this.editingDomain=editingDomain;
 
         //Get Managers via OSGI
-        cdk=Activator.getDefault().getCDKManager();
+        cdk=Activator.getDefault().getJavaCDKManager();
 
         this.editor=(QsarEditor) editor;
 

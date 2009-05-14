@@ -85,7 +85,7 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
         this.editingDomain=editingDomain;
 
         //Get Managers via OSGI
-        cdk=Activator.getDefault().getCDKManager();
+        cdk=Activator.getDefault().getJavaCDKManager();
 
 
         //We need to ensure that '.' is always decimal separator in all locales

@@ -832,7 +832,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
 
         Map<StructureType, IMolecule> retmap=new HashMap<StructureType, IMolecule>();
 
-        ICDKManager cdk=Activator.getDefault().getCDKManager();
+        ICDKManager cdk=Activator.getDefault().getJavaCDKManager();
 
         for (ResourceType resource : qsarType.getStructurelist().getResources()){
 

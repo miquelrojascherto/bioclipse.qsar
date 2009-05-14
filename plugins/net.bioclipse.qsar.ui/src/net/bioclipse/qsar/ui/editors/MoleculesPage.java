@@ -127,7 +127,7 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
         this.editingDomain=editingDomain;
 
         //Get managers
-        cdk=Activator.getDefault().getCDKManager();
+        cdk=Activator.getDefault().getJavaCDKManager();
         qsar=net.bioclipse.qsar.init.Activator.getDefault().getQsarManager();
 
         //Set up formatter

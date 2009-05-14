@@ -128,7 +128,7 @@ private Table paramsTable;
 
 		//Get Managers via OSGI
         qsar=net.bioclipse.qsar.init.Activator.getDefault().getQsarManager();
-		cdk=Activator.getDefault().getCDKManager();
+		cdk=Activator.getDefault().getJavaCDKManager();
 
     //We need to ensure that '.' is always decimal separator in all locales
     DecimalFormatSymbols sym=new DecimalFormatSymbols();
