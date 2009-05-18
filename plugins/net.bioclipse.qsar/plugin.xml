@@ -19,6 +19,7 @@
 <plugin>
 
    <extension-point id="descriptorProvider" name="descriptorProvider" schema="schema/descriptorProvider.exsd"/>
+   <extension-point id="qsarUnit" name="QsarUnit" schema="schema/qsarUnit.exsd"/>
 
    <extension
          point="net.bioclipse.scripting.contribution">
@@ -35,5 +36,37 @@
             class="net.bioclipse.qsar.prefs.QSARPreferenceInitializer">
       </initializer>
    </extension>
+   <extension
+         point="net.bioclipse.qsar.qsarUnit">
+         <responseUnit
+               id="ic50"
+               name="Half maximal inhibitory concentration (IC50)"
+               shortname="IC50"
+               description="Measure of the effectiveness of a compound in inhibiting biological or biochemical function."
+               url="http://en.wikipedia.org/wiki/IC50">
+         </responseUnit>
+         <responseUnit
+               id="ec50"
+               name="half maximal effective concentration (EC50)"
+               shortname="EC50"
+               description="concentration of a drug or antibody which induces a response halfway between the baseline and maximum. It is commonly used as a measure of drug potency."
+               url="http://en.wikipedia.org/wiki/EC50">
+         </responseUnit>
+         <responseUnit
+               id="ld50"
+               name="median lethal dose (LD50)"
+               shortname="LD50"
+               description="dose required to kill half the members of a tested population."
+               url="http://en.wikipedia.org/wiki/LD50">
+         </responseUnit>
+         <responseUnit
+               id="Kd"
+               name="Dissociation constant"
+               shortname="Kd"
+               description="measures the propensity of a larger object to separate (dissociate) reversibly into smaller components."
+               url="http://en.wikipedia.org/wiki/Kd">
+         </responseUnit>
+   </extension>
+
 
 </plugin>
