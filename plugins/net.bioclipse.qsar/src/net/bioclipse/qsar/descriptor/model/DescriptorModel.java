@@ -19,24 +19,34 @@ import java.util.List;
  */
 public class DescriptorModel {
 
-	List<DescriptorCategory> categories;
-	List<DescriptorProvider> providers;
+    List<DescriptorCategory> categories;
+    List<DescriptorProvider> providers;
+    List<ResponseUnit> units;
 
-	
-	public DescriptorModel() {
-	}
 
-	public List<DescriptorCategory> getCategories() {
-		return categories;
-	}
-	public void setCategories(List<DescriptorCategory> categories) {
-		this.categories = categories;
-	}
-	public List<DescriptorProvider> getProviders() {
-		return providers;
-	}
-	public void setProviders(List<DescriptorProvider> providers) {
-		this.providers = providers;
-	}
-	
+    public DescriptorModel() {
+    }
+
+    public List<DescriptorCategory> getCategories() {
+        return categories;
+    }
+    public void setCategories(List<DescriptorCategory> categories) {
+        this.categories = categories;
+    }
+
+    public List<DescriptorProvider> getProviders() {
+        return providers;
+    }
+    public void setProviders(List<DescriptorProvider> providers) {
+        this.providers = providers;
+    }
+
+
+    public List<ResponseUnit> getUnits() {
+        return units;
+    }
+    public void setUnits( List<ResponseUnit> units ) {
+        this.units = units;
+    }
+
 }

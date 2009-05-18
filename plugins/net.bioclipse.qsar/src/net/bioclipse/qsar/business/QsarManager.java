@@ -47,6 +47,7 @@ import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorModel;
 import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
+import net.bioclipse.qsar.descriptor.model.ResponseUnit;
 import net.bioclipse.qsar.init.Activator;
 import net.bioclipse.qsar.prefs.QSARPreferenceInitializer;
 import net.bioclipse.qsar.prefs.QsarPreferenceHelper;
@@ -124,231 +125,18 @@ public class QsarManager implements IQsarManager{
         }
 
         //Create new list of providers
-        List<DescriptorProvider> provlist = new ArrayList<DescriptorProvider>();
-        model.setProviders(provlist);
+        model.setProviders(QsarHelper.readProvidersAndDescriptorImplsfromEP());
+
+        //Create new list of providers
+        model.setUnits( QsarHelper.readUnitsFromEP());
 
         //        //Add categories from extension point
         //        addCategories(serviceObjectExtensions, catlist);
         //TODO: might be used to complement categories from ontology at later point
 
-        //Add descriptor providers and implementations from extension point
-        addProvidersAndDescriptorImpls(provlist);
 
     }
 
-
-    /**
-     * Remnant from when categories were contributed by extension points.
-     * Could possibly be used in future to complement Ontology at runtime.
-     * @param serviceObjectExtensions
-     * @param catlist
-     */
-    @Deprecated
-    private void addCategories(IExtension[] serviceObjectExtensions,
-                               List<DescriptorCategory> catlist) {
-
-        for(IExtension extension : serviceObjectExtensions) {
-            for( IConfigurationElement element
-                    : extension.getConfigurationElements() ) {
-
-                if (element.getName().equals("category")){
-
-                    String pid=element.getAttribute("id");
-                    String pname=element.getAttribute("name");
-
-                    DescriptorCategory category=new DescriptorCategory(pid, pname);
-                    String picon=element.getAttribute("icon");
-                    category.setIcon_path(picon);
-
-                    catlist.add(category);
-
-                    logger.debug("Added descriptor category: " + pname);
-
-                }
-
-            }
-        }
-    }
-
-    /**
-     * Add descriptor providers and their implementations. Requires that 
-     * categories are properly intialized before from ontology. 
-     * @param provlist The List to add providers to
-     */
-    private void addProvidersAndDescriptorImpls(List<DescriptorProvider> provlist) {
-
-        //Initialize implementations via extension points
-        IExtensionRegistry registry = Platform.getExtensionRegistry();
-
-        if ( registry == null )
-            throw new RuntimeException("Registry is null, no services can " +
-            "be read. Workbench not started?");
-        // it likely means that the Eclipse workbench has not
-        // started, for example when running tests
-
-        /*
-         * service objects
-         */
-        IExtensionPoint serviceObjectExtensionPoint = registry
-        .getExtensionPoint(QSARConstants.DESCRIPTOR_EXTENSION_POINT);
-
-        IExtension[] serviceObjectExtensions
-        = serviceObjectExtensionPoint.getExtensions();
-
-
-        for(IExtension extension : serviceObjectExtensions) {
-            for( IConfigurationElement element
-                    : extension.getConfigurationElements() ) {
-
-                if (element.getName().equals(QSARConstants.PROVIDER_ELEMENT_NAME)){
-
-                    try {
-                        String pid=element.getAttribute("id");
-                        String pname=element.getAttribute("name");
-
-                        DescriptorProvider provider=new DescriptorProvider(pid, pname);
-                        String picon=element.getAttribute("icon");
-                        provider.setIcon_path(picon);
-
-                        String pshortname=element.getAttribute("shortName");
-                        provider.setShortName(pshortname);
-
-                        String pvendor=element.getAttribute("vendor");
-                        provider.setVendor(pvendor);
-
-                        String pvers=element.getAttribute("version");
-                        provider.setVersion(pvers);
-
-                        String pns=element.getAttribute("namespace");
-                        provider.setNamesapce(pns);
-
-                        IDescriptorCalculator calculator;
-                        calculator = (IDescriptorCalculator) 
-                        element.createExecutableExtension("calculator");
-                        provider.setCalculator(calculator);
-
-                        String cml=element.getAttribute("acceptsCml");
-                        if (cml!=null){
-                            if (cml.equalsIgnoreCase("true")){
-                                provider.setAcceptsCml(true);
-                            }
-                            else{
-                                //If not explicitly true, then false
-                                provider.setAcceptsCml(false);
-                            }
-                        }
-
-                        String molfile=element.getAttribute("acceptsMolfile");
-                        if (molfile!=null){
-                            if (molfile.equalsIgnoreCase("true")){
-                                provider.setAcceptsMolfile(true);
-                            }
-                            else{
-                                //If not explicitly true, then false
-                                provider.setAcceptsMolfile(false);
-                            }
-                        }
-
-                        String smiles=element.getAttribute("acceptsSmiles");
-                        if (smiles!=null){
-                            if (smiles.equalsIgnoreCase("true")){
-                                provider.setAcceptsSmiles(true);
-                            }
-                            else{
-                                //If not explicitly true, then false
-                                provider.setAcceptsSmiles(false);
-                            }
-                        }
-
-                        //Get descriptor children
-                        provider.setDescriptorImpls(new ArrayList<DescriptorImpl>());
-                        for( IConfigurationElement providerChild
-                                : element.getChildren(QSARConstants.DESCRIMPL_ELEMENT_NAME) ) {
-
-                            String did=providerChild.getAttribute("id");
-                            String dname=providerChild.getAttribute("name");
-
-                            DescriptorImpl descImpl=new DescriptorImpl(did, dname);
-                            String dicon=providerChild.getAttribute("icon");
-                            descImpl.setIcon_path(dicon);
-
-                            String ddef=providerChild.getAttribute("definition");
-                            descImpl.setDefinition(ddef);
-
-                            String ddesc=providerChild.getAttribute("description");
-                            descImpl.setDescription(ddesc);
-
-                            String dns=element.getAttribute("namespace");
-                            descImpl.setNamesapce(dns);
-
-
-                            String req3d=providerChild.getAttribute("requires3D");
-                            if (req3d!=null){
-                                if (req3d.equalsIgnoreCase("true")){
-                                    descImpl.setRequires3D(true);
-                                }
-                                else{
-                                    //If not explicitly true, then false
-                                    descImpl.setRequires3D(false);
-                                }
-                            }
-
-                            //                        String dcat=providerChild.getAttribute("category");
-                            //                        DescriptorCategory foundcat=null;
-                            //                        for (DescriptorCategory cat : getFullCategories()){
-                            //                        	if (cat.getId().equals(dcat)){
-                            //                        		foundcat=cat;
-                            //                        	}
-                            //                        }
-                            //                        if (foundcat!=null){
-                            //                        	desc.setCategory(foundcat);
-                            //                        }else {
-                            //                        	logger.error("Descriptor category: " + dcat + 
-                            //                          " for the descriptor: " + did + "could not be found");
-                            //                        }
-
-                            //Get descriptor children=parameters
-                            List<DescriptorParameter> pparams=new ArrayList<DescriptorParameter>();
-                            for( IConfigurationElement param
-                                    : providerChild.getChildren(QSARConstants.PARAMETER_ELEMENT_NAME) ) {
-
-                                String pakey=param.getAttribute("key");
-                                String padef=param.getAttribute("defaultvalue");
-                                DescriptorParameter dparam=new DescriptorParameter(pakey, padef);
-
-                                String padescr=param.getAttribute("description");
-                                dparam.setDescription(padescr);
-
-                                pparams.add(dparam);
-                            }
-                            if (pparams.size()>0)
-                                descImpl.setParameters(pparams);
-
-
-
-                            //Add parent provider to descriptor
-                            descImpl.setProvider(provider);
-
-                            provider.getDescriptorImpls().add(descImpl);
-                            logger.debug("  Added descriptor: " + dname);
-
-                        }
-
-                        provlist.add(provider);
-                        logger.debug("Added descriptor provider: " + pname);
-
-                    } catch (CoreException e) {
-                        logger.error("Could not initialize EP. Reason: " + e.getMessage());
-                        e.printStackTrace();
-                    }
-
-
-
-                }
-
-            }
-        }
-    }
 
 
     /*====================================================
@@ -373,6 +161,20 @@ public class QsarManager implements IQsarManager{
     }
 
     /**
+     * 
+     * @return
+     */
+    public List<String> getResponseUnits() {
+        if (model==null) initializeDescriptorModel();
+        List<String> ret=new ArrayList<String>();
+        for (ResponseUnit unit : model.getUnits()){
+            ret.add(unit.getId());
+        }
+        return ret;
+    }
+    
+
+    /**
      * Get all descriptor providers. Read from EP if not initialized.
      * @return List<String> of provider ID's.
      */
@@ -395,6 +197,16 @@ public class QsarManager implements IQsarManager{
         if (model==null) initializeDescriptorModel();
         return model.getCategories();
     }
+    
+    /**
+     * Get all response unites. Read from EP if not initialized.
+     * @return List of categories.
+     */
+    public List<ResponseUnit> getFullResponseUnits() {
+        if (model==null) initializeDescriptorModel();
+        return model.getUnits();
+    }
+
 
     /**
      * Get all descriptor providers. Read from EP if not initialized.

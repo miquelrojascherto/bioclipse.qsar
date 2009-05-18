@@ -19,7 +19,7 @@
 <plugin>
 
    <extension-point id="descriptorProvider" name="descriptorProvider" schema="schema/descriptorProvider.exsd"/>
-   <extension-point id="qsarUnit" name="QsarUnit" schema="schema/qsarUnit.exsd"/>
+   <extension-point id="responseUnit" name="ResponseUnit" schema="schema/qsarUnit.exsd"/>
 
    <extension
          point="net.bioclipse.scripting.contribution">
@@ -37,7 +37,7 @@
       </initializer>
    </extension>
    <extension
-         point="net.bioclipse.qsar.qsarUnit">
+         point="net.bioclipse.qsar.responseUnit">
          <responseUnit
                id="ic50"
                name="Half maximal inhibitory concentration (IC50)"

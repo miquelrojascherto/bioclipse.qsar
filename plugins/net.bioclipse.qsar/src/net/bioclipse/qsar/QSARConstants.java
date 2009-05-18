@@ -26,4 +26,9 @@ public interface QSARConstants {
 	public static final String DESCRIMPL_ELEMENT_NAME = "descriptorImpl";
 	public static final String PARAMETER_ELEMENT_NAME = "parameter";
 
+	 //Matches extension point
+  public static final String RESPONSEUNITS_EXTENSION_POINT = 
+    "net.bioclipse.qsar.responseUnit";
+  public static final Object RESPONSEUNITS_ELEMENT_NAME = "responseUnit";
+
 }

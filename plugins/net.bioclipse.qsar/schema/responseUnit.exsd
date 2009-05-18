@@ -3,7 +3,7 @@
 <schema targetNamespace="net.bioclipse.qsar" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="net.bioclipse.qsar" id="qsarUnit" name="QsarUnit"/>
+         <meta.schema plugin="net.bioclipse.qsar" id="responseUnit" name="ResponseUnit"/>
       </appInfo>
       <documentation>
          Units for response values in a QSAR analysis

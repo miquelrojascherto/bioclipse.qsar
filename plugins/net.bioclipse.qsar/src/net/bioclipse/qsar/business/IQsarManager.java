@@ -22,6 +22,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
+import net.bioclipse.core.PublishedClass;
 import net.bioclipse.core.PublishedMethod;
 import net.bioclipse.core.Recorded;
 import net.bioclipse.core.business.BioclipseException;
@@ -37,7 +38,9 @@ import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
 import net.bioclipse.qsar.descriptor.model.DescriptorModel;
 import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
+import net.bioclipse.qsar.descriptor.model.ResponseUnit;
 
+@PublishedClass("A manager for QSAR")
 public interface IQsarManager extends IBioclipseManager{
 
     @Recorded
@@ -69,6 +72,10 @@ public interface IQsarManager extends IBioclipseManager{
     @PublishedMethod( methodSummary = "Returns the available descriptor categories" )
     public List<String> getCategories();
     public List<DescriptorCategory> getFullCategories();
+
+    @PublishedMethod( methodSummary = "Returns the available response units" )
+    List<String> getResponseUnits();
+    List<ResponseUnit> getFullResponseUnits();
 
 
     @PublishedMethod( methodSummary = "Returns the ID's of available descriptors " +
@@ -163,7 +170,6 @@ public interface IQsarManager extends IBioclipseManager{
     public void removeDescriptorsFromModel( QsarType qsarModel,
                                             EditingDomain editingDomain,
                                             List<DescriptorType> list );
-
 
 
 }
