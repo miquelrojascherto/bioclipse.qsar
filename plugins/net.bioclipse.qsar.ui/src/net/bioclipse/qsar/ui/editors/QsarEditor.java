@@ -99,6 +99,7 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.forms.editor.FormEditor;
@@ -958,9 +959,10 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
      * This is the method called to load a resource into the editing domain's resource set based on the editor's input.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @throws PartInitException 
      * @generated
      */
-    public void createModel() {
+    public void createModel() throws PartInitException {
         URI resourceURI = EditUIUtil.getURI(getEditorInput());
         Exception exception = null;
         Resource resource = null;
@@ -977,9 +979,25 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
         //Validate input
         Diagnostic diagnostic = analyzeResourceProblems(resource, exception);
         if (diagnostic.getSeverity() != Diagnostic.OK) {
-            resourceToDiagnosticMap.put(resource,  analyzeResourceProblems(resource, exception));
+            resourceToDiagnosticMap.put(resource,  diagnostic);
+
+            if (diagnostic.getSeverity()== Diagnostic.WARNING){
+                MessageDialog.openWarning( getSite().getShell(),
+                                           "Warning",
+                                           diagnostic.getException().getMessage() );
+            }
+            else if (diagnostic.getSeverity()== Diagnostic.ERROR){
+                MessageDialog.openError( getSite().getShell(),
+                                           "Error",
+                                           diagnostic.getException().getMessage() );
+                throw new PartInitException(diagnostic.getException().getMessage());
+            }
         }
         editingDomain.getResourceSet().eAdapters().add(problemIndicationAdapter);
+        
+        if (resourceToDiagnosticMap.size()>0){
+            //Warnings or errors
+        }
 
         //Calculate non-stored properties like num of mols, no2D etc
         qsar=Activator.getDefault().getQsarManager();
@@ -1419,7 +1437,7 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
      * @generated
      */
     @Override
-    public void init(IEditorSite site, IEditorInput editorInput) {
+    public void init(IEditorSite site, IEditorInput editorInput) throws PartInitException {
         setSite(site);
         setInputWithNotify(editorInput);
         setPartName(editorInput.getName());
@@ -1605,10 +1623,12 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
 
         // Creates the model from the editor input
         //
-        createModel();
+        try {
+            createModel();
+        } catch ( PartInitException e1 ) {
+            throw new RuntimeException(e1.getMessage());
+        }
         
-        QsarType qsarModel = getQsarModel();
-
         if (getEditorInput() instanceof IFileEditorInput) {
             IFileEditorInput finput = (IFileEditorInput) getEditorInput();
             activeProject=finput.getFile().getProject();

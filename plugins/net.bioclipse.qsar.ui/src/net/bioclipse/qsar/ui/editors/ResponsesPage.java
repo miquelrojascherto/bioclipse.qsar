@@ -138,7 +138,7 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
         responsesTable.setLayout(tableLayout);
 
         TableViewerColumn molCol=new TableViewerColumn(responsesViewer, SWT.NONE);
-        molCol.getColumn().setText("ID");
+        molCol.getColumn().setText("Structure");
         tableLayout.addColumnData(new ColumnPixelData(250));
         molCol.setLabelProvider(new ColumnLabelProvider(){
             @Override
