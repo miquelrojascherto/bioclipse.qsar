@@ -10,12 +10,14 @@
  *******************************************************************************/
 package net.bioclipse.qsar.ui.editors;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
-import net.bioclipse.qsar.ResponseunitType;
-import net.bioclipse.qsar.StructurelistType;
-import net.sf.bibtexml.BibTeXMLEntriesClass;
-import net.sf.bibtexml.BibtexmlFactory;
+import net.bioclipse.qsar.business.IQsarManager;
+import net.bioclipse.qsar.descriptor.model.ResponseUnit;
+import net.bioclipse.qsar.init.Activator;
 import net.sf.bibtexml.BibtexmlPackage;
 
 import org.eclipse.core.databinding.DataBindingContext;
@@ -23,10 +25,12 @@ import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.core.databinding.observable.set.IObservableSet;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
@@ -35,15 +39,19 @@ import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
 import org.eclipse.jface.dialogs.IPageChangedListener;
 import org.eclipse.jface.dialogs.PageChangedEvent;
+import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnPixelData;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.*;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
+import org.eclipse.ui.dialogs.ListDialog;
 import org.eclipse.ui.forms.*;
 import org.eclipse.ui.forms.editor.*;
 import org.eclipse.ui.forms.widgets.*;
@@ -55,6 +63,7 @@ public class InformationPage extends FormPage implements IEditingDomainProvider,
     private CTabFolder tabFolder;
     private AdapterFactoryEditingDomain editingDomain;
     private ScrolledForm form;
+    private TableViewer unitViewer;
 //    private TableViewer refViewer;
 //    private Table refTable;
 
@@ -333,7 +342,7 @@ public class InformationPage extends FormPage implements IEditingDomainProvider,
         layout.numColumns = 2;
         layout.marginWidth = 0;
 
-        TableViewer unitViewer = new TableViewer(tabContent, SWT.BORDER | SWT.MULTI);
+        unitViewer = new TableViewer(tabContent, SWT.BORDER | SWT.MULTI);
         Table unitTable = unitViewer.getTable();
         toolkit.adapt(unitTable, true, true);
         GridData gd=new GridData(GridData.FILL_BOTH);
@@ -366,7 +375,8 @@ public class InformationPage extends FormPage implements IEditingDomainProvider,
         Button btnAdd=toolkit.createButton(tabContent, "Add...", SWT.PUSH);
         btnAdd.addListener(SWT.Selection, new Listener() {
             public void handleEvent(Event e) {
-//                addUnit();
+                addUnit();
+                unitViewer.refresh();
             }
         });
         GridData gd2=new GridData();
@@ -414,6 +424,49 @@ public class InformationPage extends FormPage implements IEditingDomainProvider,
 
     }
 
+
+    protected void addUnit() {
+
+        
+        List<ResponseUnit> list = Activator.getDefault().getQsarManager().getFullResponseUnits();
+        
+        ListDialog dlg=new ListDialog(getSite().getShell());
+        dlg.setContentProvider( new ArrayContentProvider() );
+        dlg.setLabelProvider( new LabelProvider(){
+            @Override
+            public String getText( Object element ) {
+                if ( element instanceof ResponseUnit ) {
+                    ResponseUnit unit = (ResponseUnit) element;
+                    return "" + unit.getShortname() + " - " + unit.getName();
+                }
+                return super.getText( element );
+            }
+            
+        } );
+        
+        dlg.setInput( list );
+        
+        int res=dlg.open();
+        if (res==Window.CANCEL) return;
+        
+        Object[] objs = dlg.getResult();
+        if (objs==null) return;
+
+        System.out.println("Got back: " + objs.length + " selections");
+
+        //Add selected units to model
+        QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
+        IQsarManager qsar = Activator.getDefault().getQsarManager();
+        List<ResponseUnit> toAddList=new ArrayList<ResponseUnit>();
+        for (Object u : objs){
+            ResponseUnit newUnit =(ResponseUnit) u;
+            toAddList.add( newUnit );
+            System.out.println("Added new unit: " + newUnit + " to qsar model");
+        }
+        
+        qsar.addResponseUnitToModel( qsarModel, editingDomain, toAddList );
+        
+    }
 
     public EditingDomain getEditingDomain() {
         return editingDomain;

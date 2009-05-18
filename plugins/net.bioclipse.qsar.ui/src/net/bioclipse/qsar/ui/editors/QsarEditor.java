@@ -176,6 +176,7 @@ import org.eclipse.emf.edit.ui.view.ExtendedPropertySheetPage;
 import net.bioclipse.core.util.LogUtils;
 import net.bioclipse.qsar.DocumentRoot;
 import net.bioclipse.qsar.QsarType;
+import net.bioclipse.qsar.ResourceType;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.init.Activator;
 import net.bioclipse.qsar.provider.QsarItemProviderAdapterFactory;
@@ -533,6 +534,13 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
                                     }
                                     else if (!savedResources.remove(resource)) {
                                         changedResources.add(resource);
+                                    }
+                                }
+                                
+                                //See if this is a resource that is linked in QSAR model
+                                for (ResourceType lres : getQsarModel().getStructurelist().getResources()){
+                                    if (lres.getFile().equals( delta.getResource().getFullPath().toOSString() )){
+                                        System.out.println("There was a change in a linked file: " + delta.getKind());
                                     }
                                 }
                             }
@@ -1650,6 +1658,24 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
         this.activeProject = activeProject;
     }
 
+//    public void resourceChanged( IResourceChangeEvent event ) {
+//
+//        IResource resource=event.getResource();
+//        
+//        //Only interested in resources in this QSAR project
+//        if (!(resource.getProject()==activeProject)) return;
+//
+//        //Check if this resource is linked to in model
+//        for (ResourceType rt :getQsarModel().getStructurelist().getResources()){
+//            if (rt.getFile().equals( resource.getFullPath().toOSString() )){
+//                System.out.println("The included resource: " + resource.getName() + " was changed!");
+//            }
+//        }
+//        
+//        // TODO Auto-generated method stub
+//        
+//    }
+//
     
 //    public QsarType getQsarModel() {
 //    

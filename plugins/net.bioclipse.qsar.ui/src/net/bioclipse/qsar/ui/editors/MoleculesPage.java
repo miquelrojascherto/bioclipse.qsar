@@ -416,8 +416,8 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 
                 try {
                     //Verify this is a file with at least one molecule
-                    List<ICDKMolecule> mollist = cdk.loadMolecules(file);
-                    if (mollist!=null && mollist.size()>0){
+                    int x=cdk.getNoMolecules( file.getFullPath().toOSString());
+                    if (x>0){
 
                         //If resource is in another project,
                         //copy it to molecules folder as use that copy
@@ -461,7 +461,7 @@ public class MoleculesPage extends FormPage implements IEditingDomainProvider, I
 
 
                         if (!skipFile){
-                            resourcesToAdd.add( resource );
+                            resourcesToAdd.add( file );
                         }
                     }
                 } catch (final Exception e) {
