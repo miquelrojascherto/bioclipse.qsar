@@ -30,6 +30,7 @@ import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
 import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
+import net.bioclipse.qsar.descriptor.model.ResponseUnit;
 import net.bioclipse.qsar.init.Activator;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -106,6 +107,30 @@ public class TestQsarManager {
 		assertTrue(lstFull.size()==(lst.size()));
 
 	}
+	
+	 @Test
+	  public void testGetStandardResponseValues(){
+
+	    //Get category IDs
+	    List<String> lst = qsar.getResponseUnits();
+	    assertNotNull(lst);
+	    assertTrue(lst.size()>=4);
+
+	    System.out.println("=======================");
+	    System.out.println("Response IDs:");
+	    for (String str : lst){
+	      System.out.println("  - " + str);
+	    }
+	    System.out.println("=======================");
+
+	    //Get category classes
+	    List<ResponseUnit> lstFull = qsar.getFullResponseUnits();
+	    assertNotNull(lstFull);
+	    
+	    //Should have same size as IDs
+	    assertTrue(lstFull.size()==(lst.size()));
+
+	  }
 
 	@Test
 	public void testGetCategoryByID(){
