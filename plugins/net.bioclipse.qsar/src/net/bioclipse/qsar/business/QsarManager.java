@@ -37,6 +37,7 @@ import net.bioclipse.qsar.QsarPackage;
 import net.bioclipse.qsar.QsarType;
 import net.bioclipse.qsar.ResourceType;
 import net.bioclipse.qsar.ResponseType;
+import net.bioclipse.qsar.ResponseunitType;
 import net.bioclipse.qsar.StructureType;
 import net.bioclipse.qsar.StructurelistType;
 import net.bioclipse.qsar.descriptor.IDescriptorCalculator;
@@ -1122,7 +1123,7 @@ public class QsarManager implements IQsarManager{
 
 
     /**
-     * Add a descriptor to teh QSAR model
+     * Add a descriptor to the QSAR model
      */
     public void addDescriptorToModel( QsarType qsarModel, 
                                       EditingDomain editingDomain,
@@ -1196,7 +1197,7 @@ public class QsarManager implements IQsarManager{
         cmd=AddCommand.create(editingDomain, qsarModel.getDescriptorlist(), QsarPackage.Literals.DESCRIPTORLIST_TYPE__DESCRIPTORS, modelDescriptor);
         cCmd.append(cmd);
 
-        //Execute the compiund command
+        //Execute the compound command
         editingDomain.getCommandStack().execute(cCmd);        
     }
 
@@ -1247,4 +1248,62 @@ public class QsarManager implements IQsarManager{
 
     }
 
+    /**
+     * Add a list of response values to the QSAR model
+     */
+    public void addResponseUnitToModel( QsarType qsarModel, 
+                                      EditingDomain editingDomain,
+                                      List<ResponseUnit> list) {
+
+        //Collect all in a compound command, for ability 
+        //to undo everything at the same time
+        CompoundCommand cCmd = new CompoundCommand();
+        Command cmd;
+        for (ResponseUnit storedunit : list){
+            
+            ResponseunitType unit1=QsarFactory.eINSTANCE.createResponseunitType();
+            unit1.setId( storedunit.getId() );
+            unit1.setName( storedunit.getName() );
+            unit1.setShortname( storedunit.getShortname() );
+            unit1.setDescription( storedunit.getDescription());
+            unit1.setURL( storedunit.getUrl() );
+            
+            cmd=AddCommand.create(editingDomain, qsarModel, 
+                                  QsarPackage.Literals.QSAR_TYPE__RESPONSEUNIT, unit1);
+            logger.debug("Adding response value: " + unit1.getId());
+            cCmd.append(cmd);
+        }
+
+        //Execute the compound command
+        editingDomain.getCommandStack().execute(cCmd);        
+    }
+
+    
+    public void removeResponseUnitsFromModel( QsarType qsarModel,
+                                            EditingDomain editingDomain,
+                                            List<ResponseUnit> list ) {
+
+        CompoundCommand ccmd=new CompoundCommand();
+
+        //Collect commands from selection
+        for (ResponseUnit unit : list){
+            
+            //Look up in model
+            for ( ResponseunitType rtype : qsarModel.getResponseunit()){
+                
+                if (rtype.getId().equals( unit.getId() )){
+                    Command cmd=RemoveCommand.create(editingDomain, qsarModel, 
+                           QsarPackage.Literals.QSAR_TYPE__RESPONSEUNIT, rtype);
+                    ccmd.append(cmd);
+                    logger.debug("Removing response value: " + unit.getId());
+                }
+            }
+        }
+
+        //Execute the commands as one 
+        editingDomain.getCommandStack().execute(ccmd);
+
+    }
+
+    
 }

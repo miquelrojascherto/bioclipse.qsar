@@ -160,16 +160,22 @@ public interface IQsarManager extends IBioclipseManager{
                                                            CoreException;
 
     public void addCalculatedPropertiesToQsarModel( QsarType qsarModel );
-
     public void removeResourcesFromModel( QsarType qsarModel,
                                           EditingDomain editingDomain, List<ResourceType> list );
 
     public void addDescriptorToModel( QsarType qsarModel, EditingDomain editingDomain, Descriptor desc,
                                       DescriptorImpl impl );
-
     public void removeDescriptorsFromModel( QsarType qsarModel,
                                             EditingDomain editingDomain,
                                             List<DescriptorType> list );
+
+    void addResponseUnitToModel( QsarType qsarModel,
+                                 EditingDomain editingDomain,
+                                 List<ResponseUnit> list );
+    void removeResponseUnitsFromModel( QsarType qsarModel,
+                                       EditingDomain editingDomain,
+                                       List<ResponseUnit> list );
+
 
 
 }
