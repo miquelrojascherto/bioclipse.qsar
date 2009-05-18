@@ -103,7 +103,10 @@ public class InformationPage extends FormPage implements IEditingDomainProvider,
 
         //Add the tabs
         createGeneralTab(toolkit);
-        createReferenceTab( toolkit);
+
+        //TODO: Update when implemented, as of now it does not work
+        //        createReferenceTab( toolkit);
+        
         createUnitsTab(toolkit);
 
         tabFolder.setSelection(0);
