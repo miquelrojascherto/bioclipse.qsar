@@ -22,20 +22,31 @@ import net.bioclipse.core.domain.IMolecule;
 import net.bioclipse.core.domain.SMILESMolecule;
 import net.bioclipse.qsar.DescriptorType;
 import net.bioclipse.qsar.QSARConstants;
+import net.bioclipse.qsar.QsarFactory;
+import net.bioclipse.qsar.QsarPackage;
+import net.bioclipse.qsar.QsarType;
+import net.bioclipse.qsar.ResponseunitType;
 import net.bioclipse.qsar.business.IQsarManager;
 import net.bioclipse.qsar.business.QsarManager;
 import net.bioclipse.qsar.descriptor.IDescriptorResult;
 import net.bioclipse.qsar.descriptor.model.Descriptor;
 import net.bioclipse.qsar.descriptor.model.DescriptorImpl;
 import net.bioclipse.qsar.descriptor.model.DescriptorCategory;
+import net.bioclipse.qsar.descriptor.model.DescriptorModel;
 import net.bioclipse.qsar.descriptor.model.DescriptorParameter;
 import net.bioclipse.qsar.descriptor.model.DescriptorProvider;
 import net.bioclipse.qsar.descriptor.model.ResponseUnit;
 import net.bioclipse.qsar.init.Activator;
+import net.bioclipse.qsar.provider.QsarmodelEditPlugin;
+import net.bioclipse.qsar.util.QsarAdapterFactory;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.emf.common.command.BasicCommandStack;
+import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.junit.Test;
 
 public class TestQsarManager {
@@ -61,11 +72,36 @@ public class TestQsarManager {
       assertNotNull( "Must run as PluginTest.", Activator.PLUGIN_ID );
       
   }
+  
+  @Test
+  public void testAddRemoveResponseValues(){
+
+      QsarAdapterFactory factory=new QsarAdapterFactory();
+      EditingDomain editingDomain=new AdapterFactoryEditingDomain(factory, new BasicCommandStack());
+
+      QsarType qsarModel=QsarFactory.eINSTANCE.createQsarType();
+
+      assertEquals( 0, qsarModel.getResponseunit().size() );
+      List<ResponseUnit> list=new ArrayList<ResponseUnit>();
+      
+      ResponseUnit unit1=new ResponseUnit("ic50", "half maximal inhibitory concentration (IC50)");
+      unit1.setShortname( "IC50" );
+      unit1.setDescription( "Measure of the effectiveness of a compound in inhibiting biological or biochemical function");
+      unit1.setUrl( "http://en.wikipedia.org/wiki/IC50" );
+      list.add( unit1 );
+      
+      qsar.addResponseUnitToModel( qsarModel, editingDomain, list );
+      assertEquals( 1, qsarModel.getResponseunit().size() );
+      qsar.removeResponseUnitsFromModel( qsarModel, editingDomain, list );
+      assertEquals( 0, qsarModel.getResponseunit().size() );
+      
+  }
+
 	
 	@Test
 	public void testGetPreferences(){
 
-        String descriptorID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain";
+    String descriptorID="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain";
 
 		IEclipsePreferences prefs = new DefaultScope().getNode(Activator.PLUGIN_ID);
 		assertNotNull(prefs);
@@ -671,6 +707,6 @@ public class TestQsarManager {
 	    
 
 	  }
-	
+
 
 }
