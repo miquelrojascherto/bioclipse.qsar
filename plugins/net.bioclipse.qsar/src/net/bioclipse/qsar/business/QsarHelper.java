@@ -25,9 +25,7 @@ public class QsarHelper {
 
 
     /**
-     * Add descriptor providers and their implementations. Requires that 
-     * categories are properly intialized before from ontology. 
-     * @param provlist The List to add providers to
+     * Read all descriptor providers and their implementations from EP.
      */
     public static List<DescriptorProvider> readProvidersAndDescriptorImplsfromEP() {
 

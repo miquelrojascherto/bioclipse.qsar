@@ -98,62 +98,6 @@ public class JenaReader {
 		
 		Property propDate=schema.getProperty("http://dublincore.org/date");
 
-/*		
-		//Add all categories
-		for (StmtIterator i = infmodel.listStatements(null, propIsClassifiedAs, catRes); i.hasNext(); ) {
-			Statement stmt = i.nextStatement();
-
-			Resource category=stmt.getSubject();
-//			System.out.println(" * " + PrintUtil.print(category));
-			
-			String catid=category.getURI();
-			String catname="";
-			if (category.hasProperty(RDFS.label)){
-				catname=category.getProperty(RDFS.label).getString();
-			} else {
-				catname=catid;
-			}
-
-			System.out.println(" ## Added category: " + catname + " with id: " + catid);
-			DescriptorCategory descCat=new DescriptorCategory(catid, catname);
-
-			categories.add(descCat);
-
-			//For each category, add all descriptors
-			for (StmtIterator ii = infmodel.listStatements(null, propIsClassifiedAs, category); ii.hasNext(); ) {
-				Statement stmt2 = ii.nextStatement();
-				Resource descriptor=stmt2.getSubject();
-
-				String descid=descriptor.getURI();
-				String descname=descriptor.getProperty(RDFS.label).getString();
-				Descriptor desc=new Descriptor(descid,descname);
-
-				if (descriptor.hasProperty(propDescription)){
-					String description=descriptor.getProperty(propDescription).getString();
-					desc.setDescription(description);
-				}
-				if (descriptor.hasProperty(propDefinition)){
-					String def=descriptor.getProperty(propDefinition).getString();
-					desc.setDefinition(def);
-				}
-				if (descriptor.hasProperty(propDate)){
-					String date=descriptor.getProperty(propDate).getString();
-					desc.setDate(date);
-				}			
-			}			
-
-		}
-
-		
-		
-		//Set collected list of categories in model
-		descriptorModel.setCategories(categories);
-
-		
-		*/
-		
-		
-
 		//Find all categories of type descriptorCategory
 		//===================================
 		for (StmtIterator i = infmodel.listStatements(null, propIsClassifiedAs, 
