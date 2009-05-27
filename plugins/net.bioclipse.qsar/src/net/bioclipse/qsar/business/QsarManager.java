@@ -85,7 +85,7 @@ public class QsarManager implements IQsarManager{
     DescriptorModel model;
 
     //For console namespace
-    public String getNamespace() {
+    public String getManagerName() {
         return "qsar";
     }
 
