@@ -211,11 +211,14 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
     public int responsesPageIndex;
     public int overviewPageIndex;
     public int infoPageIndex;
+    public int reportPageIndex;
 
     private MoleculesPage molPage;
     private DescriptorsPage descPage;
     private ResponsesPage responsesPage;
     private OverviewPage overviewPage;
+    private InformationPage informationPage;
+    private ReportPage reportPage;
 
 //    private QsarEditorSelectionProvider selectionProvider;
     private XMLEditor xmlEditor;
@@ -596,7 +599,6 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
 
     private AdapterFactoryLabelProvider labelProvider;
 
-    private InformationPage informationPage;
 
 
     /**
@@ -1012,6 +1014,9 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
 
     public QsarType getQsarModel() {
 
+        if (getEditingDomain().getResourceSet().getResources()==null || getEditingDomain().getResourceSet().getResources().size()<=0)
+            return null;
+        
         //There can be only one resource
         Resource resource=getEditingDomain().getResourceSet().getResources().get( 0 );
 
@@ -1640,6 +1645,7 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
         responsesPage=new ResponsesPage(this, editingDomain);
         overviewPage=new OverviewPage(this, editingDomain);
         informationPage=new InformationPage(this, editingDomain);
+        reportPage=new ReportPage(this, editingDomain);
         
         try {
             //Overview page comes first with summary
@@ -1660,6 +1666,8 @@ public class QsarEditor extends FormEditor implements IEditingDomainProvider,
             xmlEditor = new XMLEditor();
             textEditorIndex = addPage(xmlEditor, getEditorInput());
             setPageText(textEditorIndex, "Source");
+            
+            reportPageIndex=addPage( reportPage );
 
         } catch (PartInitException e) {
             LogUtils.debugTrace(logger, e);

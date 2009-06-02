@@ -10,14 +10,19 @@
  *******************************************************************************/
 package net.bioclipse.qsar.ui.editors;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
 import net.bioclipse.qsar.QsarType;
 import net.bioclipse.qsar.ResourceType;
 import net.bioclipse.qsar.ResponseType;
 import net.bioclipse.qsar.ui.QsarHelper;
+import net.bioclipse.qsar.ui.birt.BirtHelper;
 
 import org.apache.log4j.Logger;
+import org.eclipse.birt.report.viewer.utilities.WebViewer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.resources.WorkspaceJob;
@@ -35,6 +40,10 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.browser.IWebBrowser;
+import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.editor.FormEditor;
@@ -75,6 +84,10 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
 
     private Label lblCalculationStatus;
 
+    private Label lblDatasetName;
+
+    private Label lblAuthors;
+
     public OverviewPage(FormEditor editor, 
                         EditingDomain editingDomain) {
 
@@ -112,6 +125,7 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
         layout.makeColumnsEqualWidth=true;
         form.getBody().setLayout(layout);
 
+        createInformationSection(form, toolkit);
         createMoleculesSection(form, toolkit);
         createDescriptorsSection(form, toolkit);
         createResponsesSection(form, toolkit);
@@ -126,6 +140,7 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
 
 
 
+
     /**
      * Update the values based on the QSAR model
      */
@@ -133,7 +148,7 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
 
         QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
 
-        //Resoures and structures
+        //Resources and structures
         if (qsarModel.getStructurelist()!=null && 
                 qsarModel.getStructurelist().getResources()!=null){
             int ndesc=qsarModel.getStructurelist().getResources().size();
@@ -161,6 +176,19 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
             lblNumDescriptors.setText("N/A");
         }
 
+        //Information
+        if (qsarModel.getMetadata()!=null){
+            if (qsarModel.getMetadata().getDatasetname()!=null){
+                lblDatasetName.setText(qsarModel.getMetadata().getDatasetname());
+            }else{
+                lblDatasetName.setText("N/A");
+            }
+            if (qsarModel.getMetadata().getAuthors()!=null){
+                lblAuthors.setText(qsarModel.getMetadata().getAuthors());
+            }else{
+                lblAuthors.setText("N/A");
+            }
+        }
         //Responses
         if (qsarModel.getResponselist()!=null && 
                 qsarModel.getResponselist().getResponse()!=null){
@@ -457,7 +485,6 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
 
 
         TableWrapData td = new TableWrapData(TableWrapData.FILL_GRAB);
-        td.colspan=2;
         molSection.setLayoutData(td);
 
         molSection.addExpansionListener(new ExpansionAdapter() {
@@ -473,7 +500,7 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
         sectionClient.setLayout(new GridLayout(2,false));
         molSection.setClient(sectionClient);
 
-        //Hyperlink to build
+        //Hyperlink to export QSAR.ML
         Hyperlink link = toolkit.createHyperlink(sectionClient,"Export QSAR-ML", SWT.WRAP);
         link.addHyperlinkListener(new HyperlinkAdapter() {
             public void linkActivated(HyperlinkEvent e) {
@@ -483,11 +510,12 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
         GridData gd=new GridData(GridData.FILL_BOTH);
         link.setLayoutData(gd);
 
-        Label lblMolErrorText=toolkit.createLabel(sectionClient, " as a file");
+        Label lblMolErrorText=toolkit.createLabel(sectionClient, "");
         GridData gdtxt3=new GridData(GridData.FILL_BOTH);
         lblMolErrorText.setLayoutData(gdtxt3);
 
 
+        //Hyperlink to export QSAR project
         Hyperlink link2 = toolkit.createHyperlink(sectionClient,"Export QSAR project", SWT.WRAP);
         link2.addHyperlinkListener(new HyperlinkAdapter() {
             public void linkActivated(HyperlinkEvent e) {
@@ -497,11 +525,89 @@ public class OverviewPage extends FormPage implements IEditingDomainProvider, IP
         GridData gd2=new GridData(GridData.FILL_BOTH);
         link2.setLayoutData(gd2);
 
-        Label lblMolErrorText2=toolkit.createLabel(sectionClient, " an archive to allow for " +
-        "exchanging of complete dataset setup.");
+        Label lblMolErrorText2=toolkit.createLabel(sectionClient, "", SWT.WRAP);
 
         GridData gdtxt32=new GridData(GridData.FILL_BOTH);
         lblMolErrorText2.setLayoutData(gdtxt32);
+        
+        //Hyperlink to open report
+        Hyperlink linkReport = toolkit.createHyperlink(sectionClient,"Create Report", SWT.WRAP);
+        linkReport.addHyperlinkListener(new HyperlinkAdapter() {
+            public void linkActivated(HyperlinkEvent e) {
+                
+                //Generate and open BIRT report
+                
+                QsarType qsarModel = ((QsarEditor)getEditor()).getQsarModel();
+//                BirtHelper.openReportInBrowser(qsarModel);
+                BirtHelper.openScriptedReportInBrowser2( qsarModel );
+                
+            }
+        });
+        GridData gdReport=new GridData(GridData.FILL_BOTH);
+        linkReport.setLayoutData(gdReport);
+
+        Label lblReport=toolkit.createLabel(sectionClient, "");
+
+        GridData gdReport2=new GridData(GridData.FILL_BOTH);
+        lblReport.setLayoutData(gdReport2);
+
+
+    }
+
+    private void createInformationSection(final ScrolledForm form, FormToolkit toolkit) {
+
+        Section molSection =
+            toolkit.createSection(
+                                  form.getBody(), Section.TWISTIE | Section.DESCRIPTION | 
+                                  Section.EXPANDED | Section.TITLE_BAR);
+        molSection.setActiveToggleColor(
+                                        toolkit.getHyperlinkGroup().getActiveForeground());
+        molSection.setToggleColor(
+                                  toolkit.getColors().getColor(IFormColors.SEPARATOR));
+        toolkit.createCompositeSeparator(molSection);
+
+
+        TableWrapData td = new TableWrapData(TableWrapData.FILL_GRAB);
+        molSection.setLayoutData(td);
+
+        molSection.addExpansionListener(new ExpansionAdapter() {
+            public void expansionStateChanged(ExpansionEvent e) {
+                form.reflow(true);
+            }
+        });
+        molSection.setText("Information");
+        molSection.setDescription("Metadata about the datase");
+
+        Composite sectionClient = toolkit.createComposite(molSection);
+        sectionClient.setLayout(new GridLayout(2,false));
+        molSection.setClient(sectionClient);
+
+        Label lblMoltext=toolkit.createLabel(sectionClient, "Dataset name:");
+        GridData gdtxt=new GridData(GridData.FILL_BOTH);
+        lblMoltext.setLayoutData(gdtxt);
+
+        lblDatasetName=toolkit.createLabel(sectionClient, "N/A");
+        GridData gdtxt2=new GridData(GridData.FILL_BOTH);
+        lblDatasetName.setLayoutData(gdtxt2);
+
+        Label lblMolRestext=toolkit.createLabel(sectionClient, "Authors:");
+        GridData gdtxtres=new GridData(GridData.FILL_BOTH);
+        lblMolRestext.setLayoutData(gdtxtres);
+
+        lblAuthors=toolkit.createLabel(sectionClient, "N/A");
+        GridData gdtxt2res=new GridData(GridData.FILL_BOTH);
+        lblAuthors.setLayoutData(gdtxt2res);
+
+        //Hyperlink to build
+        Hyperlink link = toolkit.createHyperlink(sectionClient,"Edit information...", SWT.WRAP);
+        link.addHyperlinkListener(new HyperlinkAdapter() {
+            public void linkActivated(HyperlinkEvent e) {
+                editor.setActivePage("qsar.model.information");
+            }
+        });
+        GridData gd=new GridData(GridData.FILL_BOTH);
+        gd.horizontalSpan=2;
+        link.setLayoutData(gd);
 
     }
 

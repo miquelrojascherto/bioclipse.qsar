@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Bioclipse QSAR
 Bundle-SymbolicName: net.bioclipse.qsar.ui;singleton:=true
-Bundle-Version: 2.0.0.B20090417
+Bundle-Version: 2.0.0.RC1
 Bundle-Activator: net.bioclipse.qsar.ui.Activator
 Bundle-Vendor: The Bioclipse Team
 Require-Bundle: net.bioclipse.core,
@@ -35,7 +35,13 @@ Require-Bundle: net.bioclipse.core,
  org.eclipse.emf.databinding,
  org.eclipse.emf.databinding.edit,
  org.eclipse.emf.edit.ui,
- net.bioclipse.chemoinformatics
+ net.bioclipse.chemoinformatics,
+ org.eclipse.birt.core;bundle-version="2.3.2",
+ org.eclipse.birt.report.engine;bundle-version="2.3.2",
+ org.eclipse.birt.report.model;bundle-version="2.3.2",
+ org.eclipse.birt.report.runtime;bundle-version="2.3.2",
+ org.eclipse.birt.report.viewer;bundle-version="2.3.2",
+ org.eclipse.birt.resources;bundle-version="2.3.2"
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.log4j
 Export-Package: net.bioclipse.qsar.ui,

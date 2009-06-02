@@ -10,10 +10,17 @@
  *******************************************************************************/
 package net.bioclipse.qsar.ui.editors;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 import net.bioclipse.cdk.business.Activator;
 import net.bioclipse.cdk.business.ICDKManager;
@@ -25,6 +32,7 @@ import net.bioclipse.qsar.ResourceType;
 import net.bioclipse.qsar.ResponseType;
 import net.bioclipse.qsar.ResponsesListType;
 import net.bioclipse.qsar.StructureType;
+import net.bioclipse.qsar.ui.dialogs.ImportResultsDialog;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IProject;
@@ -56,6 +64,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.ui.forms.IManagedForm;
@@ -351,7 +360,54 @@ public class ResponsesPage extends FormPage implements IEditingDomainProvider, I
 
     protected void importResponses() {
 
-        showMessage("Not implemented yet");
+//        ImportResultsDialog dlg=new ImportResultsDialog(getSite().getShell());
+        
+        FileDialog dlg=new FileDialog(getSite().getShell(),SWT.OPEN);
+        String path=((QsarEditor)getEditor()).getActiveProject().getRawLocation().toOSString();
+        dlg.setFilterPath( path );
+        dlg.setText( "Select a text file with column 1=StructureID and column2=response value" );
+        dlg.open();
+
+        String filepath=path+dlg.getFileName();
+        
+        logger.debug("Import file path is: " + filepath);
+
+        Map<String, Float> values=new HashMap<String, Float>();
+        
+        //Read the file as csv or tsv
+            BufferedReader r;
+            try {
+                r = new BufferedReader(new FileReader(filepath));
+                String line=r.readLine();
+                int linenr=1;
+                while(line!=null){
+                    
+                    StringTokenizer tk=new StringTokenizer(line);
+                    if (tk.countTokens()==2) {
+                        String structid=tk.nextToken();
+                        String stringvalue=tk.nextToken();
+                        try{
+                            Float floatval=Float.parseFloat( stringvalue );
+                            values.put(structid, floatval);
+                        }catch (NumberFormatException e){
+                            
+                        }
+                    }
+                    line=r.readLine();
+                }
+            } catch ( FileNotFoundException e1 ) {
+                e1.printStackTrace();
+            } catch ( IOException e ) {
+                e.printStackTrace();
+            }
+            
+            logger.debug("=======================");
+            logger.debug("Read values in file:");
+            logger.debug("=======================");
+            for (String sid : values.keySet()){
+                logger.debug(sid +" - " + values.get( sid ));
+            }
+            logger.debug("=======================");
 
     }
 
