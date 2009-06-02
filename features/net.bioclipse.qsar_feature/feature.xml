@@ -2,7 +2,7 @@
 <feature
       id="net.bioclipse.qsar_feature"
       label="QSAR Feature"
-      version="2.0.0.B20090520"
+      version="2.0.0.RC1"
       provider-name="The Bioclipse Project"
       plugin="net.bioclipse.qsar.ui">
 
@@ -28,9 +28,34 @@ The Eclipse Public License accompanies this distribution, and
 is available at http://www.eclipse.org/legal/epl-v10.html
    </license>
 
+   <includes
+         id="org.mozilla.rhino"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.datatools.connectivity.oda.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.datatools.enablement.oda.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.birt.report.runtime"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.birt.report.data.oda.jdbc.dbprofile.feature"
+         version="0.0.0"/>
+
    <requires>
-      <import feature="net.bioclipse.cdk_feature" version="2.0.0.B20090520" match="greaterOrEqual"/>
-      <import feature="net.bioclipse.chemoinformatics_feature" version="2.0.0.B20090520" match="greaterOrEqual"/>
+      <import feature="net.bioclipse.cdk_feature" version="2.0.0.RC1" match="greaterOrEqual"/>
+      <import feature="net.bioclipse.chemoinformatics_feature" version="2.0.0.RC1" match="greaterOrEqual"/>
+      <import feature="org.mozilla.rhino" version="1.6.7.v20071217-1567w31191325"/>
+      <import feature="org.eclipse.datatools.connectivity.oda.feature" version="1.6.2.v200810071455-7F27SBcMAAxCcHmCNWi"/>
+      <import feature="org.eclipse.datatools.enablement.oda.feature" version="1.6.2.v200810071455-797P78CYQCD5DjGdEURT"/>
+      <import feature="org.eclipse.birt.report.data.oda.jdbc.dbprofile.feature" version="2.3.2.r232_v20081010-67859cADAamA55V5A89"/>
+      <import feature="org.eclipse.birt.report.runtime" version="2.3.2.r232_v20081010-7k8E7fELFluav5n_2NEXh3W6B9_"/>
    </requires>
 
    <plugin
@@ -167,6 +192,137 @@ is available at http://www.eclipse.org/legal/epl-v10.html
 
    <plugin
          id="net.bioclipse.bibtexml.edit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.batik.css"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.w3c.css.sac"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.batik.transcoder"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.batik.util"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.commons.logging"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="com.lowagie.itext"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.w3c.dom.svg"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.batik.xml"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.batik.bridge"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.batik.dom"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.batik.dom.svg"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.batik.ext.awt"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.batik.parser"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.batik.svggen"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.batik.util.gui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.w3c.sac"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.w3c.dom.smil"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="javax.wsdl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="javax.wsdl"
          download-size="0"
          install-size="0"
          version="0.0.0"
