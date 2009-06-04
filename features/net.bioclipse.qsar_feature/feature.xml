@@ -50,12 +50,12 @@ is available at http://www.eclipse.org/legal/epl-v10.html
 
    <requires>
       <import feature="net.bioclipse.cdk_feature" version="2.0.0.RC1" match="greaterOrEqual"/>
-      <import feature="net.bioclipse.chemoinformatics_feature" version="2.0.0.RC1" match="greaterOrEqual"/>
       <import feature="org.mozilla.rhino" version="1.6.7.v20071217-1567w31191325"/>
       <import feature="org.eclipse.datatools.connectivity.oda.feature" version="1.6.2.v200810071455-7F27SBcMAAxCcHmCNWi"/>
       <import feature="org.eclipse.datatools.enablement.oda.feature" version="1.6.2.v200810071455-797P78CYQCD5DjGdEURT"/>
       <import feature="org.eclipse.birt.report.data.oda.jdbc.dbprofile.feature" version="2.3.2.r232_v20081010-67859cADAamA55V5A89"/>
       <import feature="org.eclipse.birt.report.runtime" version="2.3.2.r232_v20081010-7k8E7fELFluav5n_2NEXh3W6B9_"/>
+      <import feature="net.bioclipse.chemoinformatics_feature" version="2.0.0.RC1" match="greaterOrEqual"/>
    </requires>
 
    <plugin
