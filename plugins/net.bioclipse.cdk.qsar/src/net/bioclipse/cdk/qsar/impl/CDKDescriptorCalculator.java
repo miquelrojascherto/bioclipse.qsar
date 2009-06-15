@@ -162,7 +162,7 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
 
         for (IMolecule mol : molecules){
             try {
-                ICDKMolecule cdkmol=cdk.create(mol);
+                ICDKMolecule cdkmol=cdk.asCDKMolecule(mol);
 
                 List<IDescriptorResult> retlist = doCalculate(cdkmol, descriptorTypes, monitor);
                 allResults.put(mol, retlist);
@@ -469,7 +469,7 @@ public class CDKDescriptorCalculator implements IDescriptorCalculator {
 
         for (IMolecule mol : moldesc.keySet()){
             try {
-                ICDKMolecule cdkmol=cdk.create(mol);
+                ICDKMolecule cdkmol=cdk.asCDKMolecule(mol);
 
                 List<IDescriptorResult> retlist = doCalculate(cdkmol, moldesc.get( mol ), monitor);
                 allResults.put(mol, retlist);
