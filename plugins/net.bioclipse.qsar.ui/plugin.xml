@@ -125,5 +125,15 @@
       	</appcontext>
 	 </extension>
 
+   <extension
+         point="org.eclipse.ui.cheatsheets.cheatSheetContent">
+      <cheatsheet
+            category="net.bioclipse.chemoinformatics.cheatsheet.category"
+            composite="false"
+            contentFile="cheatsheets/calcprops.xml"
+            id="net.bioclipse.qsar.ui.calcpropscdk"
+            name="Calculate properties with CDK scripts"/>
+   </extension>
+
 
 </plugin>

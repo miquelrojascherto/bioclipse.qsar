@@ -712,7 +712,7 @@ public class QSARBuilder extends IncrementalProjectBuilder
         for (StructureType structure : structureMap.keySet()){
             try {
                 ret=ret+structure.getId() + " - " + structureMap.get( structure )
-                .getSMILES(net.bioclipse.core.domain.IMolecule.Property.USE_CACHED_OR_CALCULATED);
+                .toSMILES();
                 if (QsarHelper.isDirtyInPreference( structure, getProject() ))
                     ret=ret+" - CHANGED\n";
                 else
